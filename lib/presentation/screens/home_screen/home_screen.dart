@@ -1,8 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moki_tutor/domain/di/di.dart';
+import 'bloc/home_bloc.dart';
 import 'package:moki_tutor/presentation/auto_router/app_router.gr.dart';
+import 'package:moki_tutor/presentation/player/course_player_screen.dart';
+import 'package:moki_tutor/presentation/player/player_screen.dart';
+import 'package:moki_tutor/presentation/player/subject_player_screen.dart';
 
+@RoutePage()
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -12,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  HomeBloc? _bloc;
 
   @override
   void initState() {
@@ -19,71 +27,124 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    _bloc ??= Di.of(context).buildHomeBloc();
+    super.didChangeDependencies();
+  }
+
+  // @override
+  // void dispose() {
+  //   _bloc?.close();
+  //   super.dispose();
+  // }
+
+  @override
   Widget build(BuildContext context) {
-    return AutoTabsRouter(
-      // list of your tab routes
-      // routes used here must be declaraed as children
-      // routes of /dashboard
-      routes: const [
-        CoursesScreenRoute(),
-        RecordingScreenRoute(),
-        AssemblingScreenRoute(),
-        ProfileScreenRoute(),
-      ],
-      builder: (context, child, animation) {
-        // obtain the scoped TabsRouter controller using context
-        final tabsRouter = AutoTabsRouter.of(context);
-        // Here we're building our Scaffold inside of AutoTabsRouter
-        // to access the tabsRouter controller provided in this context
-        //
-        //alterntivly you could use a global key
-        return Scaffold(
-          body: FadeTransition(
-            opacity: animation,
-            // the passed child is techinaclly our animated selected-tab page
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                NavigationRail(
-                    destinations: const [
-                      NavigationRailDestination(
-                          label: Text('Курсы'), icon: Icon(Icons.list)),
-                      NavigationRailDestination(
-                          label: Text('Запись'), icon: Icon(Icons.mic_sharp)),
-                      NavigationRailDestination(
-                          label: Text('Составление'), icon: Icon(Icons.add)),
-                      NavigationRailDestination(
-                          label: Text('Профиль'),
-                          icon: Icon(Icons.account_circle)),
-                    ],
-                    extended: true,
-                    selectedIndex: _selectedIndex,
-                    onDestinationSelected: (int index) {
-                      _selectedIndex = index;
-                      tabsRouter.setActiveIndex(index);
-                    }),
-                const VerticalDivider(),
-                Expanded(child: child),
-              ],
-            ),
+    return BlocProvider(
+        create: (context) => _bloc!,
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) => state.map(
+            notInitialized: (_) => const Scaffold(),
+            initializationCompleted: (state) {
+              if (state.isRefreshed != null) {
+                if (state.isRefreshed == true) {
+                  _selectedIndex = 0;
+                }
+              }
+              return AutoTabsRouter(
+                // list of your tab routes
+                // routes used here must be declaraed as children
+                // routes of /dashboard
+                routes: [
+                  const CoursesRouter(),
+                  const SubjectsRouter(),
+                  const RecordsRouter(),
+                  state.isAuthorized
+                      ? const ProfileRouter()
+                      : const LoginRouter()
+                ],
+                builder: (context, child) {
+                  // obtain the scoped TabsRouter controller using context
+                  final tabsRouter = AutoTabsRouter.of(context);
+                  // Here we're building our Scaffold inside of AutoTabsRouter
+                  // to access the tabsRouter controller provided in this context
+                  //
+                  //alterntivly you could use a global key
+                  return Stack(children: [
+                    Scaffold(
+                      body: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          NavigationRail(
+                              minExtendedWidth: 160,
+                              destinations: [
+                                const NavigationRailDestination(
+                                    label: Text('Курсы'),
+                                    icon: Icon(Icons.list)),
+                                const NavigationRailDestination(
+                                    label: Text('Темы'),
+                                    icon: Icon(Icons.list)),
+                                const NavigationRailDestination(
+                                    label: Text('Записи'),
+                                    icon: Icon(Icons.list)),
+                                // const NavigationRailDestination(
+                                //     label: Text('Новая тема'),
+                                //     icon: Icon(Icons.add)),
+                                // const NavigationRailDestination(
+                                //     label: Text('Новая запись'),
+                                //     icon: Icon(Icons.mic_sharp)),
+                                state.isAuthorized
+                                    ? const NavigationRailDestination(
+                                        label: Text('Профиль'),
+                                        icon: Icon(Icons.account_circle))
+                                    : const NavigationRailDestination(
+                                        label: Text('Логин'),
+                                        icon: Icon(Icons.login_rounded)),
+                              ],
+                              extended: true,
+                              selectedIndex: _selectedIndex,
+                              onDestinationSelected: (int index) {
+                                _selectedIndex = index;
+                                tabsRouter.setActiveIndex(index);
+                              }),
+                          const VerticalDivider(),
+                          Expanded(child: child),
+                        ],
+                      ),
+                    ),
+                    // bottomNavigationBar: BottomNavigationBar(
+                    //   currentIndex: tabsRouter.activeIndex,
+                    //   onTap: (index) {
+                    //     // here we switch between tabs
+                    //     tabsRouter.setActiveIndex(index);
+                    //   },
+                    //   items: const [
+                    //     BottomNavigationBarItem(
+                    //         label: 'Courses', icon: Icon(Icons.list)),
+                    //     BottomNavigationBarItem(
+                    //         label: 'Asembling', icon: Icon(Icons.add)),
+                    //     BottomNavigationBarItem(
+                    //         label: 'Profile', icon: Icon(Icons.verified_user_rounded)),
+                    //   ],
+                    // )
+
+                    state.isPlayerScreenOpened
+                        ? PlayerScreen(
+                            record: state.record!,
+                          )
+                        : state.isSubjectPlayerScreeinOpened
+                            ? SubjectPlayerScreen(subject: state.subject!)
+                            : state.isCoursePlayerScreenOpened
+                                ? CoursePlayerScreen(
+                                    course: state.course!,
+                                    remote: state.remote,
+                                  )
+                                : const SizedBox()
+                  ]);
+                },
+              );
+            },
           ),
-          // bottomNavigationBar: BottomNavigationBar(
-          //   currentIndex: tabsRouter.activeIndex,
-          //   onTap: (index) {
-          //     // here we switch between tabs
-          //     tabsRouter.setActiveIndex(index);
-          //   },
-          //   items: const [
-          //     BottomNavigationBarItem(
-          //         label: 'Courses', icon: Icon(Icons.list)),
-          //     BottomNavigationBarItem(
-          //         label: 'Asembling', icon: Icon(Icons.add)),
-          //     BottomNavigationBarItem(
-          //         label: 'Profile', icon: Icon(Icons.verified_user_rounded)),
-          //   ],
-          // )
-        );
-      },
-    );
+        ));
   }
 }

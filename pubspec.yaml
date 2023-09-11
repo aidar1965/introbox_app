@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.5 <3.0.0"
+  sdk: ">=3.0.1 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -30,26 +30,52 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  bloc: ^8.0.3
-  auto_route: ^4.2.1
-  freezed: ^2.0.4
-  freezed_annotation: ^2.0.3
-  cupertino_icons: ^1.0.2
-  record: ^4.3.1
-  audioplayers: ^1.0.1
-  path_provider: ^2.0.11
-  path: ^1.8.1
-  file_picker: ^4.6.1
+  flutter_bloc: ^8.1.3
+  auto_route: ^7.4.0
+  freezed: ^2.4.2
+  freezed_annotation: ^2.4.1
+  cupertino_icons: ^1.0.6
+  audioplayers: ^5.1.0
+  path_provider: ^2.1.1
+  path: ^1.8.3
+  file_picker: ^5.5.0
   flutter:
     sdk: flutter
+  # hive: ^2.2.3
+  # hive_flutter: ^1.1.0
+  nanoid: ^1.0.0
+  window_manager: ^0.3.5
+  flutter_secure_storage: ^9.0.0
+  dio: ^5.3.2
+  pretty_dio_logger: ^1.3.1
+  jwt_decoder: ^2.0.1
+  pinput: ^3.0.1
+  json_serializable: ^6.7.1
+  dio_smart_retry: ^5.0.0
+  dynamic_height_grid_view: ^0.0.3
+  intl: ^0.18.0
+  equatable: ^2.0.5
+  archive: ^3.3.9
+  audio_video_progress_bar: ^2.0.0
+  easy_localization: ^3.0.1
+  file: ^6.0.0
+  record: ^4.4.4
+  sqlite3: ^2.1.0
+  sqlite3_flutter_libs: ^0.5.16
+
+dependency_overrides:
+  collection:
+  analyzer:
 
 dev_dependencies:
-  auto_route_generator: ^4.2.0
-  build_runner: ^2.1.11
-  flutter_lints: ^2.0.0
+  auto_route_generator: ^7.3.1
+  build_runner: ^2.4.6
+  flutter_lints: ^2.0.3
+  # hive_generator: ^1.1.3
   flutter_test:
     sdk: flutter
-
+  msix: ^3.16.1
+  easy_localization_loader:  1.0.1+1 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
@@ -63,6 +89,8 @@ flutter:
   assets:
     - assets/images/
     - assets/audio/
+    - assets/icons/
+    - assets/languages/
   # assets:
       # - assets/audio
   #   - images/a_dot_burr.jpeg
@@ -76,6 +104,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+
+  fonts:
+    - family: MokiIcons
+      fonts: 
+        - asset: assets/icons/icomoon.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

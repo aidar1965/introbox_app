@@ -4,7 +4,12 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   audioplayers_linux
+  flutter_secure_storage_linux
   record_linux
+  screen_retriever
+  smart_auth
+  sqlite3_flutter_libs
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
