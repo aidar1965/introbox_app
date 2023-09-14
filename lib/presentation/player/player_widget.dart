@@ -4,7 +4,7 @@ import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import '../../domain/models/subject.dart';
 
 enum PlayerStatus { pause, play, stop }
@@ -20,7 +20,7 @@ class PlayerWidget extends StatefulWidget {
       this.onSecondPassed})
       : super(key: key);
 
-  final Record record;
+  final Fragment record;
   final bool? isLast;
   final Subject? subject;
   final void Function()? onEnd;
@@ -35,7 +35,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   late String recordDuration;
   final AudioPlayer player = AudioPlayer();
   int recordDurationInSeconds = 0;
-  late Record record;
+  late Fragment record;
   late Subject? subject;
   @override
   void initState() {
@@ -124,8 +124,8 @@ class _PlayerWidgetState extends State<PlayerWidget> {
     }
   }
 
-  void _getDuration(Record newRecord) {
-    player.setSourceDeviceFile(newRecord.audioPath);
+  void _getDuration(Fragment newFragment) {
+    player.setSourceDeviceFile(newFragment.audioPath);
 
     setState(() {
       recordDurationInSeconds = record.duration;

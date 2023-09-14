@@ -1,8 +1,9 @@
 part of 'edit_record_bloc.dart';
 
 @freezed
-class EditRecordState with _$EditRecordState {
-  const factory EditRecordState.pending() = _Pending;
-  const factory EditRecordState.dataReceived(List<RecordCategory> categoties,
-      List<RecordCategory> selectedCategoties) = _DataReceived;
+class EditFragmentState with _$EditFragmentState {
+  const factory EditFragmentState.pending() = _Pending;
+  const factory EditFragmentState.dataReceived(
+      List<FragmentCategory> categoties,
+      List<FragmentCategory> selectedCategoties) = _DataReceived;
 }

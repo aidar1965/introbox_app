@@ -1,27 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:moki_tutor/domain/interfaces/i_category_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
-import 'package:moki_tutor/domain/models/record_category.dart';
+import 'package:moki_tutor/domain/models/fragment_category.dart';
 import 'package:nanoid/nanoid.dart';
+
+import '../locator/locator.dart';
 
 class CategoriesRepository extends ChangeNotifier
     implements ICategoryRepository {
-  List<RecordCategory>? _categories;
-
-  final ILocalDB db;
-
-  CategoriesRepository(this.db) {
+  CategoriesRepository() {
     init();
   }
+  List<FragmentCategory>? _categories;
+
+  final ILocalDB db = getIt<ILocalDB>();
 
   @override
-  void addCategory(RecordCategory category) {
-    db.addCategory(category);
+  void addCategory(String name) {
+    db.addCategory(name);
     getCategories();
   }
 
   @override
-  List<RecordCategory> get categories => _categories ?? [];
+  List<FragmentCategory> get categories => _categories ?? [];
 
   @override
   void addChangeListener(Function() listener) => addListener(listener);
@@ -35,28 +36,30 @@ class CategoriesRepository extends ChangeNotifier
     notifyListeners();
   }
 
-  void getCategories() async {
+  void getCategories() {
     _categories = db.getCategories();
     if (_categories == null) {
       var nanoId = nanoid(12);
-      db.addCategory(RecordCategory(name: 'Default category', id: nanoId));
+      db.addCategory('Default category');
       _categories = db.getCategories();
     } else if (_categories!.isEmpty) {
-      var nanoId = await nanoid(12);
-      db.addCategory(RecordCategory(name: 'Default category', id: nanoId));
+      var nanoId = nanoid(12);
+      db.addCategory(
+        'Default category',
+      );
       _categories = db.getCategories();
     }
     notifyListeners();
   }
 
   @override
-  void editCategory(RecordCategory category) {
+  void editCategory(FragmentCategory category) {
     db.editCategory(category: category);
     getCategories();
   }
 
   @override
-  void deleteCategory(RecordCategory category) {
+  void deleteCategory(FragmentCategory category) {
     db.deleteCategory(category);
     getCategories();
   }

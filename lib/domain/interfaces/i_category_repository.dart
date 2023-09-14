@@ -1,10 +1,10 @@
-import 'package:moki_tutor/domain/models/record_category.dart';
+import 'package:moki_tutor/domain/models/fragment_category.dart';
 
 abstract class ICategoryRepository {
-  List<RecordCategory> get categories;
-  void addCategory(RecordCategory category);
-  void editCategory(RecordCategory category);
-  void deleteCategory(RecordCategory category);
+  List<FragmentCategory> get categories;
+  void addCategory(String name);
+  void editCategory(FragmentCategory category);
+  void deleteCategory(FragmentCategory category);
 
   void init();
   void addChangeListener(Function() listener);

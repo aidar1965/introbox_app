@@ -2,7 +2,7 @@ import 'dart:io';
 
 import '../models/course.dart';
 import '../models/user.dart';
-import '../models/record.dart';
+import '../models/fragment.dart';
 
 abstract class IApi {
   Future<void> otpRequest({required String phone, required String lang});
@@ -15,7 +15,7 @@ abstract class IApi {
 
   Future<void> publishCourse({required Course course});
 
-  Future<void> publishRecord({required Record record});
+  Future<void> publishFragment({required Fragment record});
 
   Future<List<Course>?>? getPublishedCourses();
 }

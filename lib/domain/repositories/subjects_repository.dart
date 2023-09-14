@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:moki_tutor/domain/interfaces/i_records_repository.dart';
+import 'package:moki_tutor/domain/interfaces/i_fragments_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
 import 'package:moki_tutor/domain/models/subject.dart';
@@ -9,7 +9,7 @@ import '../interfaces/i_local_db.dart';
 class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
   final ILocalDB db;
   final ISubjectCategoryRepository subjectCategoryRepository;
-  final IRecordsRepository recordsRepository;
+  final IFragmentsRepository recordsRepository;
 
   SubjectsRepository(
       {required this.db,

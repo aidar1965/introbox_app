@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/record_category.dart';
+import '../../../domain/models/fragment_category.dart';
 
 class CategoryList extends StatelessWidget {
   const CategoryList({
@@ -10,9 +10,9 @@ class CategoryList extends StatelessWidget {
     required this.selectCategory,
   }) : super(key: key);
 
-  final List<RecordCategory>? categories;
-  final List<RecordCategory>? selectedCategories;
-  final Function(RecordCategory category) selectCategory;
+  final List<FragmentCategory>? categories;
+  final List<FragmentCategory>? selectedCategories;
+  final Function(FragmentCategory category) selectCategory;
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/data/dto/record_dto.dart';
-import 'package:moki_tutor/domain/models/record.dart';
+import 'package:moki_tutor/domain/models/fragment.dart';
 
 part 'subject_dto.g.dart';
 

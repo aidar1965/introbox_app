@@ -5,13 +5,13 @@ import 'dart:developer' as dev;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:path/path.dart' as p;
-import 'package:nanoid/nanoid.dart';
 
 import '../../../../../domain/constants.dart';
 import '../../../../../domain/interfaces/i_category_repository.dart';
-import '../../../../../domain/interfaces/i_records_repository.dart';
-import '../../../../../domain/models/record.dart';
-import '../../../../../domain/models/record_category.dart';
+import '../../../../../domain/interfaces/i_fragments_repository.dart';
+import '../../../../../domain/locator/locator.dart';
+import '../../../../../domain/models/fragment.dart';
+import '../../../../../domain/models/fragment_category.dart';
 
 part 'edit_record_event.dart';
 part 'edit_record_state.dart';
@@ -23,38 +23,36 @@ Random _rnd = Random();
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
 
-class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
-  EditRecordBloc(
-      {required this.record,
-      required this.recordsRepository,
-      required this.categoryRepository})
-      : super(const _Pending()) {
-    on<EditRecordEvent>((event, emitter) => event.map(
+class EditFragmentBloc extends Bloc<EditFragmentEvent, EditFragmentState> {
+  EditFragmentBloc({
+    required this.record,
+  }) : super(const _Pending()) {
+    on<EditFragmentEvent>((event, emitter) => event.map(
           fetchCategories: (event) => _fetchCategories(event, emitter),
-          saveRecord: (event) => _saveRecord(event, emitter),
+          saveFragment: (event) => _saveFragment(event, emitter),
           addCategory: (event) => _addCategory(event, emitter),
           editCategory: (event) => _editCategory(event, emitter),
           deleteCategory: (event) => _deleteCategory(event, emitter),
           selectCategory: (event) => _selectCategory(event, emitter),
         ));
-    add(const EditRecordEvent.fetchCategories());
+    add(const EditFragmentEvent.fetchCategories());
     if (!isClosed) {
       categoryRepository.addChangeListener(
-          () => add(const EditRecordEvent.fetchCategories()));
+          () => add(const EditFragmentEvent.fetchCategories()));
     }
   }
 
-  final Record record;
-  final IRecordsRepository recordsRepository;
-  final ICategoryRepository categoryRepository;
+  final Fragment record;
+  final IFragmentsRepository recordsRepository = getIt<IFragmentsRepository>();
+  final ICategoryRepository categoryRepository = getIt<ICategoryRepository>();
 
-  List<RecordCategory> selectedCategories = [];
-  List<RecordCategory> categories = [];
+  List<FragmentCategory> selectedCategories = [];
+  List<FragmentCategory> categories = [];
 
   late String? title;
   late String? description;
 
-  void _saveRecord(_SaveRecord event, Emitter emitter) {
+  void _saveFragment(_SaveFragment event, Emitter emitter) {
     String imageRandomFilename;
     String audioRandomFilename;
     String directory;
@@ -80,7 +78,7 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
 
     file.copy(audioRandomFilename);
 
-    Record updatedRecord = record.copyWith(
+    Fragment updatedFragment = record.copyWith(
       title: event.title,
       description: event.description,
       duration: event.recordDuration,
@@ -90,22 +88,20 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
       isPublished: false,
     );
 
-    recordsRepository.updateRecord(updatedRecord);
+    recordsRepository.updateFragment(updatedFragment);
     //selectedCategories = [];
-    add(const EditRecordEvent.fetchCategories());
+    add(const EditFragmentEvent.fetchCategories());
   }
 
   Future<void> _fetchCategories(_FetchCategories event, Emitter emitter) async {
     categories = categoryRepository.categories;
     selectedCategories = record.categories ?? [];
 
-    emitter(EditRecordState.dataReceived(categories, selectedCategories));
+    emitter(EditFragmentState.dataReceived(categories, selectedCategories));
   }
 
   void _addCategory(_AddCategory event, Emitter emitter) {
-    var nanoId = nanoid(12);
-    categoryRepository
-        .addCategory(RecordCategory(id: nanoId, name: event.name));
+    categoryRepository.addCategory(event.name);
     //add(const RecordingEvent.fetchCategories());
   }
 
@@ -114,7 +110,7 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
   Future<void> _deleteCategory(_DeleteCategory event, Emitter emitter) async {}
 
   void _selectCategory(_SelectCategory event, Emitter emitter) {
-    emitter(const EditRecordState.pending());
+    emitter(const EditFragmentState.pending());
 
     if (selectedCategories.contains(event.category)) {
       selectedCategories.remove(event.category);
@@ -136,7 +132,7 @@ class EditRecordBloc extends Bloc<EditRecordEvent, EditRecordState> {
     //   selectedCategories.remove(removeCategory);
     // }
 
-    emitter(EditRecordState.dataReceived(categories, selectedCategories));
+    emitter(EditFragmentState.dataReceived(categories, selectedCategories));
   }
 
   @override

@@ -20,43 +20,43 @@ mixin _$RecordingEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
@@ -66,7 +66,7 @@ mixin _$RecordingEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
@@ -76,7 +76,7 @@ mixin _$RecordingEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -106,10 +106,10 @@ class _$RecordingEventCopyWithImpl<$Res, $Val extends RecordingEvent>
 }
 
 /// @nodoc
-abstract class _$$_SaveRecordCopyWith<$Res> {
-  factory _$$_SaveRecordCopyWith(
-          _$_SaveRecord value, $Res Function(_$_SaveRecord) then) =
-      __$$_SaveRecordCopyWithImpl<$Res>;
+abstract class _$$_SaveFragmentCopyWith<$Res> {
+  factory _$$_SaveFragmentCopyWith(
+          _$_SaveFragment value, $Res Function(_$_SaveFragment) then) =
+      __$$_SaveFragmentCopyWithImpl<$Res>;
   @useResult
   $Res call(
       {String title,
@@ -120,11 +120,11 @@ abstract class _$$_SaveRecordCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SaveRecordCopyWithImpl<$Res>
-    extends _$RecordingEventCopyWithImpl<$Res, _$_SaveRecord>
-    implements _$$_SaveRecordCopyWith<$Res> {
-  __$$_SaveRecordCopyWithImpl(
-      _$_SaveRecord _value, $Res Function(_$_SaveRecord) _then)
+class __$$_SaveFragmentCopyWithImpl<$Res>
+    extends _$RecordingEventCopyWithImpl<$Res, _$_SaveFragment>
+    implements _$$_SaveFragmentCopyWith<$Res> {
+  __$$_SaveFragmentCopyWithImpl(
+      _$_SaveFragment _value, $Res Function(_$_SaveFragment) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -136,7 +136,7 @@ class __$$_SaveRecordCopyWithImpl<$Res>
     Object? audioPath = null,
     Object? recordDuration = null,
   }) {
-    return _then(_$_SaveRecord(
+    return _then(_$_SaveFragment(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -163,8 +163,8 @@ class __$$_SaveRecordCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_SaveRecord implements _SaveRecord {
-  const _$_SaveRecord(
+class _$_SaveFragment implements _SaveFragment {
+  const _$_SaveFragment(
       {required this.title,
       this.description,
       final Map<String, int>? images,
@@ -193,14 +193,14 @@ class _$_SaveRecord implements _SaveRecord {
 
   @override
   String toString() {
-    return 'RecordingEvent.saveRecord(title: $title, description: $description, images: $images, audioPath: $audioPath, recordDuration: $recordDuration)';
+    return 'RecordingEvent.saveFragment(title: $title, description: $description, images: $images, audioPath: $audioPath, recordDuration: $recordDuration)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SaveRecord &&
+            other is _$_SaveFragment &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -218,23 +218,23 @@ class _$_SaveRecord implements _SaveRecord {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SaveRecordCopyWith<_$_SaveRecord> get copyWith =>
-      __$$_SaveRecordCopyWithImpl<_$_SaveRecord>(this, _$identity);
+  _$$_SaveFragmentCopyWith<_$_SaveFragment> get copyWith =>
+      __$$_SaveFragmentCopyWithImpl<_$_SaveFragment>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) {
-    return saveRecord(title, description, images, audioPath, recordDuration);
+    return saveFragment(title, description, images, audioPath, recordDuration);
   }
 
   @override
@@ -242,14 +242,14 @@ class _$_SaveRecord implements _SaveRecord {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) {
-    return saveRecord?.call(
+    return saveFragment?.call(
         title, description, images, audioPath, recordDuration);
   }
 
@@ -258,16 +258,17 @@ class _$_SaveRecord implements _SaveRecord {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) {
-    if (saveRecord != null) {
-      return saveRecord(title, description, images, audioPath, recordDuration);
+    if (saveFragment != null) {
+      return saveFragment(
+          title, description, images, audioPath, recordDuration);
     }
     return orElse();
   }
@@ -275,33 +276,33 @@ class _$_SaveRecord implements _SaveRecord {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
     required TResult Function(_SelectCategory value) selectCategory,
   }) {
-    return saveRecord(this);
+    return saveFragment(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
     TResult? Function(_SelectCategory value)? selectCategory,
   }) {
-    return saveRecord?.call(this);
+    return saveFragment?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -309,20 +310,20 @@ class _$_SaveRecord implements _SaveRecord {
     TResult Function(_SelectCategory value)? selectCategory,
     required TResult orElse(),
   }) {
-    if (saveRecord != null) {
-      return saveRecord(this);
+    if (saveFragment != null) {
+      return saveFragment(this);
     }
     return orElse();
   }
 }
 
-abstract class _SaveRecord implements RecordingEvent {
-  const factory _SaveRecord(
+abstract class _SaveFragment implements RecordingEvent {
+  const factory _SaveFragment(
       {required final String title,
       final String? description,
       final Map<String, int>? images,
       required final String audioPath,
-      required final int recordDuration}) = _$_SaveRecord;
+      required final int recordDuration}) = _$_SaveFragment;
 
   String get title;
   String? get description;
@@ -330,7 +331,7 @@ abstract class _SaveRecord implements RecordingEvent {
   String get audioPath;
   int get recordDuration;
   @JsonKey(ignore: true)
-  _$$_SaveRecordCopyWith<_$_SaveRecord> get copyWith =>
+  _$$_SaveFragmentCopyWith<_$_SaveFragment> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -400,13 +401,13 @@ class _$_AddCategory implements _AddCategory {
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) {
     return addCategory(name);
   }
@@ -416,12 +417,12 @@ class _$_AddCategory implements _AddCategory {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) {
     return addCategory?.call(name);
   }
@@ -431,12 +432,12 @@ class _$_AddCategory implements _AddCategory {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) {
     if (addCategory != null) {
@@ -448,7 +449,7 @@ class _$_AddCategory implements _AddCategory {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
@@ -461,7 +462,7 @@ class _$_AddCategory implements _AddCategory {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
@@ -474,7 +475,7 @@ class _$_AddCategory implements _AddCategory {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -538,13 +539,13 @@ class _$_FetchCategories implements _FetchCategories {
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) {
     return fetchCategories();
   }
@@ -554,12 +555,12 @@ class _$_FetchCategories implements _FetchCategories {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) {
     return fetchCategories?.call();
   }
@@ -569,12 +570,12 @@ class _$_FetchCategories implements _FetchCategories {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) {
     if (fetchCategories != null) {
@@ -586,7 +587,7 @@ class _$_FetchCategories implements _FetchCategories {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
@@ -599,7 +600,7 @@ class _$_FetchCategories implements _FetchCategories {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
@@ -612,7 +613,7 @@ class _$_FetchCategories implements _FetchCategories {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -637,7 +638,7 @@ abstract class _$$_EditCategoryCopyWith<$Res> {
           _$_EditCategory value, $Res Function(_$_EditCategory) then) =
       __$$_EditCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({String name, RecordCategory category});
+  $Res call({String name, FragmentCategory category});
 }
 
 /// @nodoc
@@ -662,7 +663,7 @@ class __$$_EditCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -675,7 +676,7 @@ class _$_EditCategory implements _EditCategory {
   @override
   final String name;
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString() {
@@ -706,13 +707,13 @@ class _$_EditCategory implements _EditCategory {
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) {
     return editCategory(name, category);
   }
@@ -722,12 +723,12 @@ class _$_EditCategory implements _EditCategory {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) {
     return editCategory?.call(name, category);
   }
@@ -737,12 +738,12 @@ class _$_EditCategory implements _EditCategory {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) {
     if (editCategory != null) {
@@ -754,7 +755,7 @@ class _$_EditCategory implements _EditCategory {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
@@ -767,7 +768,7 @@ class _$_EditCategory implements _EditCategory {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
@@ -780,7 +781,7 @@ class _$_EditCategory implements _EditCategory {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -797,10 +798,10 @@ class _$_EditCategory implements _EditCategory {
 
 abstract class _EditCategory implements RecordingEvent {
   const factory _EditCategory(
-      final String name, final RecordCategory category) = _$_EditCategory;
+      final String name, final FragmentCategory category) = _$_EditCategory;
 
   String get name;
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_EditCategoryCopyWith<_$_EditCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -812,7 +813,7 @@ abstract class _$$_DeleteCategoryCopyWith<$Res> {
           _$_DeleteCategory value, $Res Function(_$_DeleteCategory) then) =
       __$$_DeleteCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({RecordCategory category});
+  $Res call({FragmentCategory category});
 }
 
 /// @nodoc
@@ -832,7 +833,7 @@ class __$$_DeleteCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -843,7 +844,7 @@ class _$_DeleteCategory implements _DeleteCategory {
   const _$_DeleteCategory(this.category);
 
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString() {
@@ -873,13 +874,13 @@ class _$_DeleteCategory implements _DeleteCategory {
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) {
     return deleteCategory(category);
   }
@@ -889,12 +890,12 @@ class _$_DeleteCategory implements _DeleteCategory {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) {
     return deleteCategory?.call(category);
   }
@@ -904,12 +905,12 @@ class _$_DeleteCategory implements _DeleteCategory {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) {
     if (deleteCategory != null) {
@@ -921,7 +922,7 @@ class _$_DeleteCategory implements _DeleteCategory {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
@@ -934,7 +935,7 @@ class _$_DeleteCategory implements _DeleteCategory {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
@@ -947,7 +948,7 @@ class _$_DeleteCategory implements _DeleteCategory {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -963,10 +964,10 @@ class _$_DeleteCategory implements _DeleteCategory {
 }
 
 abstract class _DeleteCategory implements RecordingEvent {
-  const factory _DeleteCategory(final RecordCategory category) =
+  const factory _DeleteCategory(final FragmentCategory category) =
       _$_DeleteCategory;
 
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_DeleteCategoryCopyWith<_$_DeleteCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -978,7 +979,7 @@ abstract class _$$_SelectCategoryCopyWith<$Res> {
           _$_SelectCategory value, $Res Function(_$_SelectCategory) then) =
       __$$_SelectCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({RecordCategory category});
+  $Res call({FragmentCategory category});
 }
 
 /// @nodoc
@@ -998,7 +999,7 @@ class __$$_SelectCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -1009,7 +1010,7 @@ class _$_SelectCategory implements _SelectCategory {
   const _$_SelectCategory(this.category);
 
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString() {
@@ -1039,13 +1040,13 @@ class _$_SelectCategory implements _SelectCategory {
   TResult when<TResult extends Object?>({
     required TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)
-        saveRecord,
+        saveFragment,
     required TResult Function(String name) addCategory,
     required TResult Function() fetchCategories,
-    required TResult Function(String name, RecordCategory category)
+    required TResult Function(String name, FragmentCategory category)
         editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
   }) {
     return selectCategory(category);
   }
@@ -1055,12 +1056,12 @@ class _$_SelectCategory implements _SelectCategory {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
-    TResult? Function(String name, RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(String name, FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
   }) {
     return selectCategory?.call(category);
   }
@@ -1070,12 +1071,12 @@ class _$_SelectCategory implements _SelectCategory {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String title, String? description,
             Map<String, int>? images, String audioPath, int recordDuration)?
-        saveRecord,
+        saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
-    TResult Function(String name, RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(String name, FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     required TResult orElse(),
   }) {
     if (selectCategory != null) {
@@ -1087,7 +1088,7 @@ class _$_SelectCategory implements _SelectCategory {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_SaveRecord value) saveRecord,
+    required TResult Function(_SaveFragment value) saveFragment,
     required TResult Function(_AddCategory value) addCategory,
     required TResult Function(_FetchCategories value) fetchCategories,
     required TResult Function(_EditCategory value) editCategory,
@@ -1100,7 +1101,7 @@ class _$_SelectCategory implements _SelectCategory {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SaveRecord value)? saveRecord,
+    TResult? Function(_SaveFragment value)? saveFragment,
     TResult? Function(_AddCategory value)? addCategory,
     TResult? Function(_FetchCategories value)? fetchCategories,
     TResult? Function(_EditCategory value)? editCategory,
@@ -1113,7 +1114,7 @@ class _$_SelectCategory implements _SelectCategory {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_SaveRecord value)? saveRecord,
+    TResult Function(_SaveFragment value)? saveFragment,
     TResult Function(_AddCategory value)? addCategory,
     TResult Function(_FetchCategories value)? fetchCategories,
     TResult Function(_EditCategory value)? editCategory,
@@ -1129,10 +1130,10 @@ class _$_SelectCategory implements _SelectCategory {
 }
 
 abstract class _SelectCategory implements RecordingEvent {
-  const factory _SelectCategory(final RecordCategory category) =
+  const factory _SelectCategory(final FragmentCategory category) =
       _$_SelectCategory;
 
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_SelectCategoryCopyWith<_$_SelectCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1143,24 +1144,24 @@ mixin _$RecordingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)
+    required TResult Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)
         dataReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)?
+    TResult? Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)?
         dataReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)?
+    TResult Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)?
         dataReceived,
     required TResult orElse(),
   }) =>
@@ -1242,8 +1243,8 @@ class _$_Pending implements _Pending {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)
+    required TResult Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)
         dataReceived,
   }) {
     return pending();
@@ -1253,8 +1254,8 @@ class _$_Pending implements _Pending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)?
+    TResult? Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)?
         dataReceived,
   }) {
     return pending?.call();
@@ -1264,8 +1265,8 @@ class _$_Pending implements _Pending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)?
+    TResult Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)?
         dataReceived,
     required TResult orElse(),
   }) {
@@ -1318,8 +1319,8 @@ abstract class _$$_DataReceivedCopyWith<$Res> {
       __$$_DataReceivedCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<RecordCategory> categoties,
-      List<RecordCategory> selectedCategoties});
+      {List<FragmentCategory> categoties,
+      List<FragmentCategory> selectedCategoties});
 }
 
 /// @nodoc
@@ -1340,11 +1341,11 @@ class __$$_DataReceivedCopyWithImpl<$Res>
       null == categoties
           ? _value._categoties
           : categoties // ignore: cast_nullable_to_non_nullable
-              as List<RecordCategory>,
+              as List<FragmentCategory>,
       null == selectedCategoties
           ? _value._selectedCategoties
           : selectedCategoties // ignore: cast_nullable_to_non_nullable
-              as List<RecordCategory>,
+              as List<FragmentCategory>,
     ));
   }
 }
@@ -1352,22 +1353,22 @@ class __$$_DataReceivedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_DataReceived implements _DataReceived {
-  const _$_DataReceived(final List<RecordCategory> categoties,
-      final List<RecordCategory> selectedCategoties)
+  const _$_DataReceived(final List<FragmentCategory> categoties,
+      final List<FragmentCategory> selectedCategoties)
       : _categoties = categoties,
         _selectedCategoties = selectedCategoties;
 
-  final List<RecordCategory> _categoties;
+  final List<FragmentCategory> _categoties;
   @override
-  List<RecordCategory> get categoties {
+  List<FragmentCategory> get categoties {
     if (_categoties is EqualUnmodifiableListView) return _categoties;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categoties);
   }
 
-  final List<RecordCategory> _selectedCategoties;
+  final List<FragmentCategory> _selectedCategoties;
   @override
-  List<RecordCategory> get selectedCategoties {
+  List<FragmentCategory> get selectedCategoties {
     if (_selectedCategoties is EqualUnmodifiableListView)
       return _selectedCategoties;
     // ignore: implicit_dynamic_type
@@ -1406,8 +1407,8 @@ class _$_DataReceived implements _DataReceived {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)
+    required TResult Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)
         dataReceived,
   }) {
     return dataReceived(categoties, selectedCategoties);
@@ -1417,8 +1418,8 @@ class _$_DataReceived implements _DataReceived {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)?
+    TResult? Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)?
         dataReceived,
   }) {
     return dataReceived?.call(categoties, selectedCategoties);
@@ -1428,8 +1429,8 @@ class _$_DataReceived implements _DataReceived {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<RecordCategory> categoties,
-            List<RecordCategory> selectedCategoties)?
+    TResult Function(List<FragmentCategory> categoties,
+            List<FragmentCategory> selectedCategoties)?
         dataReceived,
     required TResult orElse(),
   }) {
@@ -1472,11 +1473,11 @@ class _$_DataReceived implements _DataReceived {
 }
 
 abstract class _DataReceived implements RecordingState {
-  const factory _DataReceived(final List<RecordCategory> categoties,
-      final List<RecordCategory> selectedCategoties) = _$_DataReceived;
+  const factory _DataReceived(final List<FragmentCategory> categoties,
+      final List<FragmentCategory> selectedCategoties) = _$_DataReceived;
 
-  List<RecordCategory> get categoties;
-  List<RecordCategory> get selectedCategoties;
+  List<FragmentCategory> get categoties;
+  List<FragmentCategory> get selectedCategoties;
   @JsonKey(ignore: true)
   _$$_DataReceivedCopyWith<_$_DataReceived> get copyWith =>
       throw _privateConstructorUsedError;

@@ -8,9 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../../domain/di/di.dart';
-import '../../../../../domain/models/record.dart';
-import '../../../../../domain/models/record_category.dart';
+import '../../../../domain/models/fragment.dart';
+import '../../../../domain/models/fragment_category.dart';
 
 import '../../../../domain/models/subject.dart';
 import '../../home_screen/bloc/home_bloc.dart';
@@ -55,14 +54,13 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
         'Редактирование темы',
       )),
       body: BlocProvider(
-        create: (context) => Di.of(context)
-            .buildEditSubjectBloc(widget.subject, forceCreate: true),
+        create: (context) => EditSubjectBloc(subject: widget.subject),
         child: BlocConsumer<EditSubjectBloc, EditSubjectState>(
           listener: (context, state) {
             state.mapOrNull(dataReceived: (state) async {
               if (state.playerStatus == PlayerStatus.play) {
                 await player
-                    .play(DeviceFileSource(state.playingRecord!.audioPath));
+                    .play(DeviceFileSource(state.playingFragment!.audioPath));
               }
             });
           },
@@ -139,13 +137,14 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              state.subjectRecords.isNotEmpty
+                              state.subjectFragments.isNotEmpty
                                   ? Flexible(
                                       flex: 3,
                                       child: ReorderableListView.builder(
-                                        itemCount: state.subjectRecords.length,
+                                        itemCount:
+                                            state.subjectFragments.length,
                                         itemBuilder: (context, index) {
-                                          var record = state.subjectRecords
+                                          var record = state.subjectFragments
                                               .elementAt(index);
 
                                           return ListTile(
@@ -201,7 +200,7 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                                                                   .of<EditSubjectBloc>(
                                                                       context)
                                                               .add(EditSubjectEvent
-                                                                  .addRecord(
+                                                                  .addFragment(
                                                                       record)),
                                                           icon: const Icon(
                                                             Icons.remove_circle,
@@ -315,14 +314,15 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              value: containsRecord(
-                                                  state.subjectRecords, record),
+                                              value: containsFragment(
+                                                  state.subjectFragments,
+                                                  record),
                                               onChanged: (value) {
                                                 BlocProvider.of<
                                                             EditSubjectBloc>(
                                                         context)
                                                     .add(EditSubjectEvent
-                                                        .addRecord(record));
+                                                        .addFragment(record));
                                               },
                                             );
                                           }),
@@ -337,7 +337,7 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
     );
   }
 
-  bool containsRecord(List<Record> records, Record record) {
+  bool containsFragment(List<Fragment> records, Fragment record) {
     bool contains = false;
     for (var r in records) {
       if (r.id == record.id) {
@@ -356,8 +356,8 @@ class _CategoryList extends StatelessWidget {
     this.selectedCategories,
   }) : super(key: key);
 
-  final List<RecordCategory>? categories;
-  final List<RecordCategory>? selectedCategories;
+  final List<FragmentCategory>? categories;
+  final List<FragmentCategory>? selectedCategories;
   final ScrollController firstListController = ScrollController();
 
   @override
@@ -401,7 +401,7 @@ class _AudioPlayerView extends StatefulWidget {
       : super(key: key);
   final PlayerStatus playerStatus;
   final AudioPlayer player;
-  final Record record;
+  final Fragment record;
 
   final int? secondsPassed;
 

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class User {
-  final String id;
+  final int id;
 
   final String phone;
 
@@ -26,7 +26,7 @@ class User {
   });
 
   User copyWith({
-    String? id,
+    int? id,
     String? phone,
     String? firstName,
     String? lastName,

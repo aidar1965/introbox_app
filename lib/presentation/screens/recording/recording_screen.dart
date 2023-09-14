@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/images_list.dart';
 
-import '../../../domain/di/di.dart';
 import 'bloc/recording_bloc.dart';
 import '../../player/player_widget.dart';
 import '../widgets/add_category_form.dart';
@@ -65,7 +64,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
 
   @override
   void didChangeDependencies() {
-    _bloc = Di.of(context).builRecordingBloc();
+    _bloc = RecordingBloc();
 
     super.didChangeDependencies();
   }
@@ -476,15 +475,17 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                                               ' Необходимо добавить аудио')));
                                                   return;
                                                 }
-                                                _bloc!.add(RecordingEvent.saveRecord(
-                                                    title: titleController.text,
-                                                    description:
-                                                        descriptionController
+                                                _bloc!.add(
+                                                    RecordingEvent.saveFragment(
+                                                        title: titleController
                                                             .text,
-                                                    images: imagesMap,
-                                                    audioPath: recordPath!,
-                                                    recordDuration:
-                                                        recordDurationInSeconds!));
+                                                        description:
+                                                            descriptionController
+                                                                .text,
+                                                        images: imagesMap,
+                                                        audioPath: recordPath!,
+                                                        recordDuration:
+                                                            recordDurationInSeconds!));
                                                 setState(() {
                                                   imagePath = null;
                                                   recordPath = null;

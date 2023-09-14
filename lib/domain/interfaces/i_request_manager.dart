@@ -1,32 +1,32 @@
-import 'package:moki_tutor/domain/models/record.dart';
-import 'package:moki_tutor/domain/models/record_category.dart';
+import 'package:moki_tutor/domain/models/fragment.dart';
+import 'package:moki_tutor/domain/models/fragment_category.dart';
 
 import '../models/course.dart';
 
 abstract class IRequestManager {
-  void createRecord(Record record);
+  void createFragment(Fragment record);
 
-  Future<void> updateRecord(
+  Future<void> updateFragment(
       {required int id,
       required String title,
       String? description,
       String? imagePath,
       required String audioPath});
 
-  Future<void> deleteRecord({
+  Future<void> deleteFragment({
     required int id,
   });
 
-  Future<List<RecordCategory>> getCategories();
+  Future<List<FragmentCategory>> getCategories();
 
-  Future<List<Record>> getRecords();
+  Future<List<Fragment>> getFragments();
 
-  void addCategory(RecordCategory category);
+  void addCategory(FragmentCategory category);
 
   Future<void> editCategory(
-      {required String name, required RecordCategory category});
+      {required String name, required FragmentCategory category});
 
-  Future<void> deleteCategory(RecordCategory category);
+  Future<void> deleteCategory(FragmentCategory category);
 
   void saveCourse(Course course);
 

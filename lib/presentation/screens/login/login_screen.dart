@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/domain/di/di.dart';
+import '../../auto_router/app_router.dart';
 import 'bloc/login_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -12,11 +12,11 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
     return BlocProvider(
-      create: (context) => Di.of(context).builLoginBloc(),
+      create: (context) => LoginBloc(),
       child: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) => state.mapOrNull(
             otpRoute: (state) =>
-                context.router.push(OtpScreenRoute(phone: state.phone))),
+                context.router.push(OtpRoute(phone: state.phone))),
         builder: (context, state) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -2,26 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/domain/interfaces/i_category_repository.dart';
-import 'package:moki_tutor/domain/interfaces/i_records_repository.dart';
+import 'package:moki_tutor/domain/interfaces/i_fragments_repository.dart';
 
-import 'package:moki_tutor/domain/interfaces/i_request_manager.dart';
-
-import '../../../../domain/models/record.dart';
-import '../../../../domain/models/record_category.dart';
+import '../../../../domain/locator/locator.dart';
+import '../../../../domain/models/fragment.dart';
+import '../../../../domain/models/fragment_category.dart';
 
 part 'records_bloc.freezed.dart';
 part 'records_event.dart';
 part 'records_state.dart';
 
-class RecordsBloc extends Bloc<RecordsEvent, RecordsState> {
-  RecordsBloc(
-      {required this.recordsRepository,
-      required this.requestManager,
-      required this.categoryRepository})
-      : super(const _Pending()) {
-    on<RecordsEvent>((event, emitter) => event.map(
+class FragmentsBloc extends Bloc<FragmentsEvent, FragmentsState> {
+  FragmentsBloc() : super(const _Pending()) {
+    on<FragmentsEvent>((event, emitter) => event.map(
           dataRequested: (event) => _dataRequested(emitter),
-          newRecord: (event) => _newRecording(emitter),
+          newFragment: (event) => _newRecording(emitter),
           selectCategory: (event) => _selectCategory(event, emitter),
           editCategory: (event) => _editCategory(event, emitter),
           deleteCategory: (event) => _deleteCategory(event, emitter),
@@ -30,31 +25,30 @@ class RecordsBloc extends Bloc<RecordsEvent, RecordsState> {
     recordsRepository.addChangeListener(
       () {
         records = recordsRepository.records;
-        _updateSelectedRecords();
-        add(const RecordsEvent.resendData());
+        _updateSelectedFragments();
+        add(const FragmentsEvent.resendData());
       },
     );
     categoryRepository.addChangeListener(
       () => add(
-        const RecordsEvent.dataRequested(),
+        const FragmentsEvent.dataRequested(),
       ),
     );
-    add(const RecordsEvent.dataRequested());
+    add(const FragmentsEvent.dataRequested());
   }
 
-  final IRequestManager requestManager;
-  final IRecordsRepository recordsRepository;
-  final ICategoryRepository categoryRepository;
+  final IFragmentsRepository recordsRepository = getIt<IFragmentsRepository>();
+  final ICategoryRepository categoryRepository = getIt<ICategoryRepository>();
 
-  List<Record> records = [];
-  List<RecordCategory> categories = [];
+  List<Fragment> records = [];
+  List<FragmentCategory> categories = [];
 
-  List<RecordCategory> selectedCategories = [];
+  List<FragmentCategory> selectedCategories = [];
 
-  List<Record> selectedRecords = [];
+  List<Fragment> selectedFragments = [];
 
   Future<void> _dataRequested(Emitter emitter) async {
-    selectedRecords = [];
+    selectedFragments = [];
     records = recordsRepository.records;
 
     categories = categoryRepository.categories;
@@ -63,53 +57,53 @@ class RecordsBloc extends Bloc<RecordsEvent, RecordsState> {
     }
 
     for (var record in records) {
-      selectedRecords.add(record);
+      selectedFragments.add(record);
     }
-    selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+    selectedFragments.sort((a, b) => b.date.compareTo(a.date));
 
-    emitter(RecordsState.dataReceived(
-        records: selectedRecords,
+    emitter(FragmentsState.dataReceived(
+        records: selectedFragments,
         categories: categories,
         selectedCategories: selectedCategories));
   }
 
   void _selectCategory(_SelectCategory event, Emitter emitter) async {
-    emitter(const RecordsState.pending());
+    emitter(const FragmentsState.pending());
     if (selectedCategories.contains(event.category)) {
       selectedCategories.remove(event.category);
     } else {
       selectedCategories.add(event.category);
     }
-    selectedRecords = [];
+    selectedFragments = [];
     for (var record in records) {
-      List<RecordCategory>? categoriesOfRecord = record.categories;
-      if (categoriesOfRecord != null) {
-        for (var element in categoriesOfRecord) {
+      List<FragmentCategory>? categoriesOfFragment = record.categories;
+      if (categoriesOfFragment != null) {
+        for (var element in categoriesOfFragment) {
           for (var sk in selectedCategories) {
-            if (sk.id == element.id && !selectedRecords.contains(record)) {
-              selectedRecords.add(record);
+            if (sk.id == element.id && !selectedFragments.contains(record)) {
+              selectedFragments.add(record);
             }
           }
         }
       }
     }
-    selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+    selectedFragments.sort((a, b) => b.date.compareTo(a.date));
 
     if (selectedCategories.isNotEmpty) {
-      emitter(RecordsState.dataReceived(
+      emitter(FragmentsState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
       ));
     } else {
-      selectedRecords = [];
+      selectedFragments = [];
       for (var element in records) {
-        if (element.categories!.isEmpty) selectedRecords.add(element);
+        if (element.categories!.isEmpty) selectedFragments.add(element);
       }
-      selectedRecords.sort((a, b) => b.date.compareTo(a.date));
-      emitter(RecordsState.dataReceived(
+      selectedFragments.sort((a, b) => b.date.compareTo(a.date));
+      emitter(FragmentsState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
       ));
     }
@@ -117,7 +111,7 @@ class RecordsBloc extends Bloc<RecordsEvent, RecordsState> {
 
   void _editCategory(_EditCategory event, Emitter emitter) {
     categoryRepository.editCategory(event.category);
-    add(const RecordsEvent.dataRequested());
+    add(const FragmentsEvent.dataRequested());
   }
 
   void _deleteCategory(_DeleteCategory event, Emitter emitter) {
@@ -125,30 +119,30 @@ class RecordsBloc extends Bloc<RecordsEvent, RecordsState> {
   }
 
   void _newRecording(Emitter emitter) {
-    emitter(RecordsState.dataReceived(
-        records: selectedRecords,
+    emitter(FragmentsState.dataReceived(
+        records: selectedFragments,
         categories: categories,
         selectedCategories: selectedCategories));
-    emitter(const RecordsState.addRecord());
+    emitter(const FragmentsState.addFragment());
   }
 
   void _resendData(_ResendData event, Emitter emitter) {
-    emitter(const RecordsState.pending());
-    emitter(RecordsState.dataReceived(
-        records: selectedRecords,
+    emitter(const FragmentsState.pending());
+    emitter(FragmentsState.dataReceived(
+        records: selectedFragments,
         categories: categories,
         selectedCategories: selectedCategories));
   }
 
-  void _updateSelectedRecords() {
+  void _updateSelectedFragments() {
     for (var r in records) {
-      for (var sr in selectedRecords) {
+      for (var sr in selectedFragments) {
         if (r == sr) {
-          selectedRecords.remove(sr);
-          selectedRecords.add(r);
+          selectedFragments.remove(sr);
+          selectedFragments.add(r);
         }
       }
     }
-    selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+    selectedFragments.sort((a, b) => b.date.compareTo(a.date));
   }
 }

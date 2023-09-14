@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../domain/di/di.dart';
 import '../../../../domain/models/course_category.dart';
 import '../../../../domain/models/subject.dart';
 import '../../../../domain/models/subject_category.dart';
@@ -23,7 +22,7 @@ class NewCourseScreen extends StatelessWidget {
         title: const Text('Новый курс'),
       ),
       body: BlocProvider(
-        create: (context) => Di.of(context).buildNewCourseBloc(),
+        create: (context) => NewCourseBloc(),
         child: BlocConsumer<NewCourseBloc, NewCourseState>(
             listener: (context, state) =>
                 state.mapOrNull(courseSaved: (_) => context.router.pop()),

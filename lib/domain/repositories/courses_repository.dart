@@ -11,15 +11,15 @@ import 'package:path/path.dart';
 
 import '../constants.dart';
 import '../interfaces/i_local_db.dart';
+import '../locator/locator.dart';
 
 class CoursesRepository extends ChangeNotifier implements ICoursesRepository {
-  final ILocalDB db;
-  final IApi api;
-  final ISubjectsRepository subjectsRepository;
+  final ILocalDB db = getIt<ILocalDB>();
+  final IApi api = getIt<IApi>();
+  final ISubjectsRepository subjectsRepository = getIt<ISubjectsRepository>();
 
   final httpRequestMapper = HttpRequestMapper();
-  CoursesRepository(
-      {required this.db, required this.api, required this.subjectsRepository}) {
+  CoursesRepository() {
     init();
     subjectsRepository.addChangeListener(() {
       init();

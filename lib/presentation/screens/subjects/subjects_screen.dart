@@ -4,13 +4,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/domain/di/di.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.gr.dart';
 
-import '../../../domain/models/record.dart';
+import '../../../domain/models/fragment.dart';
 import '../../../domain/models/subject.dart';
 import '../../../domain/models/subject_category.dart';
 
+import '../../auto_router/app_router.dart';
 import 'bloc/subjects_bloc.dart';
 import '../home_screen/bloc/home_bloc.dart';
 
@@ -23,10 +22,10 @@ class SubjectsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => Di.of(context).buildSubjectsBloc(),
+      create: (context) => SubjectsBloc(),
       child: BlocConsumer<SubjectsBloc, SubjectsState>(
           listener: (context, state) => state.mapOrNull(
-              addSubject: (_) => context.router.push(AssemblingScreenRoute())),
+              addSubject: (_) => context.router.push(AssemblingRoute())),
           buildWhen: (context, state) => state.map(
               pending: (_) => true,
               dataReceived: (_) => true,
@@ -146,7 +145,7 @@ class SubjectsView extends StatelessWidget {
                     Expanded(
                       child: ListView.builder(
                           itemCount: selectedSubject!.records.length,
-                          itemBuilder: (context, index) => RecordView(
+                          itemBuilder: (context, index) => FragmentView(
                               record:
                                   selectedSubject!.records.elementAt(index))),
                     ),
@@ -213,7 +212,7 @@ class SubjectView extends StatelessWidget {
           IconButton(
             iconSize: 24,
             onPressed: () =>
-                context.router.push(EditSubjectScreenRoute(subject: subject)),
+                context.router.push(EditSubjectRoute(subject: subject)),
             icon: const Icon(Icons.edit),
           ),
         ],
@@ -241,10 +240,10 @@ class SubjectCategoryItem extends StatelessWidget {
   }
 }
 
-class RecordView extends StatelessWidget {
-  const RecordView({Key? key, required this.record}) : super(key: key);
+class FragmentView extends StatelessWidget {
+  const FragmentView({Key? key, required this.record}) : super(key: key);
 
-  final Record record;
+  final Fragment record;
 
   @override
   Widget build(BuildContext context) {

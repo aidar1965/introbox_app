@@ -3,9 +3,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'record_dto.g.dart';
 
 @JsonSerializable()
-class RecordDto {
+class FragmentDto {
   @JsonKey(name: 'id')
-  final String id;
+  final int id;
 
   @JsonKey(name: 'title')
   final String title;
@@ -25,7 +25,7 @@ class RecordDto {
   @JsonKey(name: 'date')
   final DateTime date;
 
-  RecordDto(
+  FragmentDto(
       {required this.id,
       required this.title,
       required this.description,
@@ -34,6 +34,6 @@ class RecordDto {
       this.imagePath,
       required this.date});
 
-  static RecordDto fromJson(Object json) =>
-      _$RecordDtoFromJson(json as Map<String, dynamic>);
+  static FragmentDto fromJson(Object json) =>
+      _$FragmentDtoFromJson(json as Map<String, dynamic>);
 }

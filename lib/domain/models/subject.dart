@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'record.dart';
+import 'fragment.dart';
 import 'subject_category.dart';
 
 @immutable
@@ -11,7 +11,7 @@ class Subject extends Equatable {
 
   final String? description;
 
-  final List<Record> records;
+  final List<Fragment> records;
 
   final DateTime date;
 
@@ -31,7 +31,7 @@ class Subject extends Equatable {
   Subject copyWith(
       {String? title,
       String? description,
-      List<Record>? records,
+      List<Fragment>? records,
       DateTime? date,
       List<SubjectCategory>? subjectCategories,
       int? duration}) {

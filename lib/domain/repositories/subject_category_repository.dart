@@ -4,22 +4,20 @@ import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart'
 import 'package:moki_tutor/domain/models/subject_category.dart';
 import 'package:nanoid/nanoid.dart';
 
+import '../locator/locator.dart';
+
 class SubjectCategoryRepository extends ChangeNotifier
     implements ISubjectCategoryRepository {
-  final ILocalDB db;
+  final ILocalDB db = getIt<ILocalDB>();
 
   List<SubjectCategory> _subjectCategories = [];
-
-  SubjectCategoryRepository(this.db) {
-    init();
-  }
 
   @override
   void addChangeListener(Function() listener) => addListener(listener);
 
   @override
-  void addSubjectCategory({required SubjectCategory subjectCategory}) {
-    db.addSubjectCategory(subjectCategory);
+  void addSubjectCategory({required String name}) {
+    db.addSubjectCategory(name);
     _subjectCategories = db.getSubjectCategories();
     notifyListeners();
   }
@@ -32,12 +30,10 @@ class SubjectCategoryRepository extends ChangeNotifier
   }
 
   @override
-  void init() {
+  void init() async {
     _subjectCategories = db.getSubjectCategories();
     if (_subjectCategories.isEmpty) {
-      var nanoId = nanoid(12);
-      db.addSubjectCategory(
-          SubjectCategory(name: 'Default subject category', id: nanoid()));
+      db.addSubjectCategory('Default subject category');
       _subjectCategories = db.getSubjectCategories();
     }
     notifyListeners();

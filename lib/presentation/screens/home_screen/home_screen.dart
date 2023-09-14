@@ -2,12 +2,12 @@ import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/domain/di/di.dart';
+import '../../auto_router/app_router.dart';
 import 'bloc/home_bloc.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.gr.dart';
-import 'package:moki_tutor/presentation/player/course_player_screen.dart';
-import 'package:moki_tutor/presentation/player/player_screen.dart';
-import 'package:moki_tutor/presentation/player/subject_player_screen.dart';
+
+import '../../player/course_player_screen.dart';
+import '../../player/player_screen.dart';
+import '../../player/subject_player_screen.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() {
-    _bloc ??= Di.of(context).buildHomeBloc();
+    _bloc ??= HomeBloc();
     super.didChangeDependencies();
   }
 
@@ -56,12 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 // routes used here must be declaraed as children
                 // routes of /dashboard
                 routes: [
-                  const CoursesRouter(),
-                  const SubjectsRouter(),
-                  const RecordsRouter(),
-                  state.isAuthorized
-                      ? const ProfileRouter()
-                      : const LoginRouter()
+                  const CoursesRoute(),
+                  const SubjectsRoute(),
+                  const FragmentsRoute(),
+                  state.isAuthorized ? const ProfileRoute() : const LoginRoute()
                 ],
                 builder: (context, child) {
                   // obtain the scoped TabsRouter controller using context

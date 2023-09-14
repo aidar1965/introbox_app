@@ -43,9 +43,9 @@ class Constants {
   }
   // Hive
 
-  static const int hiveTypeRecord = 0;
+  static const int hiveTypeFragment = 0;
   static const int hiveTypCourse = 1;
-  static const int hiveTypeRecordCategory = 2;
+  static const int hiveTypeFragmentCategory = 2;
   static const int hiveTypeUser = 3;
   static const int hiveTypeSubjectCategory = 4;
   static const int hiveTypeSubjects = 5;

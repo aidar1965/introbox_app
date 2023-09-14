@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/domain/di/di.dart';
 
 import 'package:pinput/pinput.dart';
 
@@ -15,7 +14,7 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginBloc loginBloc = Di.of(context).builLoginBloc();
+    LoginBloc loginBloc = LoginBloc();
     return BlocProvider(
       create: (context) => loginBloc,
       child: BlocBuilder<LoginBloc, LoginState>(

@@ -1,11 +1,11 @@
 part of 'records_bloc.dart';
 
 @freezed
-class RecordsState with _$RecordsState {
-  const factory RecordsState.pending() = _Pending;
-  const factory RecordsState.dataReceived(
-      {required List<Record> records,
-      required List<RecordCategory> categories,
-      required List<RecordCategory> selectedCategories}) = _DataReceived;
-  const factory RecordsState.addRecord() = _AddRecord;
+class FragmentsState with _$FragmentsState {
+  const factory FragmentsState.pending() = _Pending;
+  const factory FragmentsState.dataReceived(
+      {required List<Fragment> records,
+      required List<FragmentCategory> categories,
+      required List<FragmentCategory> selectedCategories}) = _DataReceived;
+  const factory FragmentsState.addFragment() = _AddFragment;
 }

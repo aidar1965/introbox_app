@@ -6,7 +6,7 @@ import 'package:moki_tutor/data/dto/subject_dto.dart';
 import 'package:moki_tutor/data/dto/user_dto.dart';
 
 import '../../domain/models/course.dart';
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import '../../domain/models/subject.dart';
 import '../../domain/models/user.dart';
 
@@ -22,8 +22,8 @@ class HttpDataMapper {
         about: dto.about);
   }
 
-  Record mapRecord(RecordDto dto) {
-    return Record(
+  Fragment mapFragment(FragmentDto dto) {
+    return Fragment(
         id: dto.id,
         title: dto.title,
         duration: int.parse(dto.duration),
@@ -39,20 +39,20 @@ class HttpDataMapper {
         title: dto.title,
         description: dto.description,
         records: dto.recordsJson
-            .map((e) => RecordDto.fromJson(e))
-            .map(mapRecord)
+            .map((e) => FragmentDto.fromJson(e))
+            .map(mapFragment)
             .toList(),
         date: DateTime.parse(dto.date),
         duration: int.parse(dto.duration));
   }
 
-  List<Record> recordsFromJson(String dtoString) {
+  List<Fragment> recordsFromJson(String dtoString) {
     Iterable<Object?> deserializedData =
         jsonDecode(dtoString) as Iterable<Object?>;
 
     return deserializedData
-        .map((e) => RecordDto.fromJson(e!))
-        .map(mapRecord)
+        .map((e) => FragmentDto.fromJson(e!))
+        .map(mapFragment)
         .toList();
   }
 
@@ -96,5 +96,4 @@ class HttpDataMapper {
   }
 
   // Для отправки данных о рекордах на сервер при публикации
-
 }

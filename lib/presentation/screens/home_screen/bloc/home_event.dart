@@ -4,7 +4,7 @@ part of 'home_bloc.dart';
 class HomeEvent with _$HomeEvent {
   const factory HomeEvent.initialize() = _EventInitialize;
   const factory HomeEvent.userChanged() = _UserChanged;
-  const factory HomeEvent.openPlayer({required Record record}) = _OpenPlayer;
+  const factory HomeEvent.openPlayer({required Fragment record}) = _OpenPlayer;
   const factory HomeEvent.closePlayer() = _ClosePlayer;
   const factory HomeEvent.openSubjectPlayer({required Subject subject}) =
       _OpenSubjectPlayer;

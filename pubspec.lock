@@ -574,7 +574,7 @@ packages:
     source: hosted
     version: "3.2.0"
   get_it:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: get_it
       sha256: f79870884de16d689cf9a7d15eedf31ed61d750e813c538a6efb92660fea83c3
@@ -1066,22 +1066,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  sqlite3:
+  sqflite_common:
+    dependency: transitive
+    description:
+      name: sqflite_common
+      sha256: "1b92f368f44b0dee2425bb861cfa17b6f6cf3961f762ff6f941d20b33355660a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
+  sqflite_common_ffi:
     dependency: "direct main"
+    description:
+      name: sqflite_common_ffi
+      sha256: "0d5cc1be2eb18400ac6701c31211d44164393aa75886093002ecdd947be04f93"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0+2"
+  sqlite3:
+    dependency: transitive
     description:
       name: sqlite3
       sha256: db65233e6b99e99b2548932f55a987961bc06d82a31a0665451fa0b4fff4c3fb
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  sqlite3_flutter_libs:
-    dependency: "direct main"
-    description:
-      name: sqlite3_flutter_libs
-      sha256: fb115050b0c2589afe2085a62d77f5deda4db65db20a5c65a6e0c92fda89b45e
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.16"
   stack_trace:
     dependency: transitive
     description:

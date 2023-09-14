@@ -4,19 +4,20 @@ import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
 import 'package:moki_tutor/domain/models/course_category.dart';
 import 'package:nanoid/nanoid.dart';
 
+import '../locator/locator.dart';
+
 class CourseCategoryRepository extends ChangeNotifier
     implements ICourseCategoryRepository {
-  final ILocalDB db;
-
-  CourseCategoryRepository({required this.db}) {
+  CourseCategoryRepository() {
     init();
   }
+  final ILocalDB db = getIt<ILocalDB>();
 
   List<CourseCategory>? _courseCategories;
 
   @override
-  void addCategory(CourseCategory category) {
-    db.addCourseCategory(category);
+  void addCategory(String name) {
+    db.addCourseCategory(name);
     getCategories();
     notifyListeners();
   }
@@ -53,14 +54,12 @@ class CourseCategoryRepository extends ChangeNotifier
   void getCategories() {
     _courseCategories = db.getCourseCategories();
     if (_courseCategories == null) {
-      var nanoId = nanoid(12);
-      db.addCourseCategory(
-          CourseCategory(name: 'Default category', id: nanoId));
+      db.addCourseCategory('Default category');
       _courseCategories = db.getCourseCategories();
     } else if (_courseCategories!.isEmpty) {
-      var nanoId = nanoid(12);
       db.addCourseCategory(
-          CourseCategory(name: 'Default category', id: nanoId));
+        'Default category',
+      );
       _courseCategories = db.getCourseCategories();
     }
   }

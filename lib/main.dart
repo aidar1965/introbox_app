@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:moki_tutor/data/localDB/hive_db.dart';
-import 'package:moki_tutor/domain/di/environment.dart';
-import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.gr.dart';
-
 import 'domain/constants.dart';
-import 'domain/di/di.dart';
+import 'domain/interfaces/i_auth_controller.dart';
+import 'domain/locator/locator.dart';
+import 'presentation/auto_router/app_router.dart';
 import 'presentation/theme/themes.dart';
 
 Future<void> main() async {
@@ -16,8 +13,9 @@ Future<void> main() async {
   // Must add this line.
 
   await Constants.init();
-  ILocalDB db = HiveDB();
-  await db.init();
+
+  setup();
+  await getIt.allReady();
   runApp(EasyLocalization(
       supportedLocales: const [
         Locale('ru', 'RU'),
@@ -26,34 +24,48 @@ Future<void> main() async {
       ],
       path: 'assets/languages',
       fallbackLocale: const Locale('ru', 'RU'),
-      child: Application(
-        db: db,
-      )));
+      child: Application()));
 }
 
 // assuing this is the root widget of your App
-class Application extends StatelessWidget {
-  // make sure you don't initiate your router
-  // inside of the build function.
-  final _appRouter = AppRouter();
-  final ILocalDB db;
+class Application extends StatefulWidget {
+  const Application({
+    Key? key,
+  }) : super(key: key);
 
-  Application({Key? key, required this.db}) : super(key: key);
+  @override
+  State<Application> createState() => _ApplicationState();
+}
+
+class _ApplicationState extends State<Application> {
+  late AppRouter appRouter;
+  final IAuthController authController = getIt<IAuthController>();
+
+  late bool _isAuthenticated;
+
+  @override
+  void initState() {
+    super.initState();
+    _isAuthenticated = authController.isAuthenticated;
+    appRouter = AppRouter(isAuthenticated: _isAuthenticated);
+    authController.addChangeListener(() {
+      setState(() {
+        _isAuthenticated = authController.isAuthenticated;
+      });
+      appRouter = AppRouter(isAuthenticated: _isAuthenticated);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Di(
-      environment: Environment.buildEnvironment(db),
-      child: MaterialApp.router(
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        debugShowCheckedModeBanner: false,
-        title: 'Moki Tutor',
-        theme: AppTheme.getTheme(),
-        routerDelegate: _appRouter.delegate(),
-        routeInformationParser: _appRouter.defaultRouteParser(),
-      ),
+    return MaterialApp.router(
+      routerConfig: appRouter.config(),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      debugShowCheckedModeBanner: false,
+      title: 'Moki Tutor',
+      theme: AppTheme.getTheme(),
     );
   }
 }

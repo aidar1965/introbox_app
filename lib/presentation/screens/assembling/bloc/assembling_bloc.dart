@@ -6,12 +6,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
 import 'package:nanoid/nanoid.dart';
 
-import 'package:moki_tutor/domain/interfaces/i_request_manager.dart';
-
 import '../../../../domain/interfaces/i_category_repository.dart';
+import '../../../../domain/interfaces/i_fragments_repository.dart';
 import '../../../../domain/interfaces/i_subject_repository.dart';
-import '../../../../domain/models/record.dart';
-import '../../../../domain/models/record_category.dart';
+import '../../../../domain/locator/locator.dart';
+import '../../../../domain/models/fragment.dart';
+import '../../../../domain/models/fragment_category.dart';
 import '../../../../domain/models/subject.dart';
 import '../../../../domain/models/subject_category.dart';
 import '../../../player/player_widget.dart';
@@ -21,19 +21,14 @@ part 'assembling_event.dart';
 part 'assembling_state.dart';
 
 class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
-  AssemblingBloc(
-      {required this.requestManager,
-      required this.categoryRepository,
-      required this.subjectsRepository,
-      required this.subjectCategoryRepository})
-      : super(const _Pending()) {
+  AssemblingBloc() : super(const _Pending()) {
     on<AssemblingEvent>((event, emitter) => event.map(
-          addRecord: (event) => _addRecord(event, emitter),
+          addFragment: (event) => _addFragment(event, emitter),
           fetchInitialData: (event) => _fetchInitialData(event, emitter),
           selectCategory: (event) => _selectCategory(event, emitter),
           onReorder: (event) => _onReordering(event, emitter),
           setPlayerStatus: (event) => _setPlayerStatus(event, emitter),
-          playRecord: (event) => _playRecord(event, emitter),
+          playFragment: (event) => _playFragment(event, emitter),
           startTimer: (event) => _startTimer(event, emitter),
           stopTimer: (event) => _stopTimer(event, emitter),
           clearTimer: (event) => _clearTimer(event, emitter),
@@ -55,22 +50,24 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     add(const AssemblingEvent.fetchInitialData());
   }
 
-  final IRequestManager requestManager;
-  final ICategoryRepository categoryRepository;
-  final ISubjectsRepository subjectsRepository;
-  final ISubjectCategoryRepository subjectCategoryRepository;
+  final IFragmentsRepository fragmentsRepository =
+      getIt<IFragmentsRepository>();
+  final ICategoryRepository categoryRepository = getIt<ICategoryRepository>();
+  final ISubjectsRepository subjectsRepository = getIt<ISubjectsRepository>();
+  final ISubjectCategoryRepository subjectCategoryRepository =
+      getIt<ISubjectCategoryRepository>();
 
-  List<RecordCategory> selectedCategories = [];
-  List<RecordCategory> categories = [];
+  List<FragmentCategory> selectedCategories = [];
+  List<FragmentCategory> categories = [];
   List<SubjectCategory> selectedSubjectCategories = [];
   List<SubjectCategory> subjectCategories = [];
 
-  List<Record> records = [];
-  List<Record> subjectRecords = [];
-  List<Record> selectedRecords = [];
+  List<Fragment> records = [];
+  List<Fragment> subjectFragments = [];
+  List<Fragment> selectedFragments = [];
 
   PlayerStatus? playerStatus;
-  Record? playingRecord;
+  Fragment? playingFragment;
 
   Timer? timer;
   int secondsPassed = 0;
@@ -84,18 +81,18 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     for (var cat in categories) {
       selectedCategories.add(cat);
     }
-    records = await requestManager.getRecords();
+    records = fragmentsRepository.records;
     for (var record in records) {
-      if (!selectedRecords.contains(record)) {
-        selectedRecords.add(record);
+      if (!selectedFragments.contains(record)) {
+        selectedFragments.add(record);
       }
     }
-    selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+    selectedFragments.sort((a, b) => b.date.compareTo(a.date));
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories));
   }
@@ -106,64 +103,63 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     } else {
       selectedCategories.add(event.category);
     }
-    selectedRecords = [];
+    selectedFragments = [];
     for (var record in records) {
-      List<RecordCategory>? categoriesOfRecord = record.categories;
-      if (categoriesOfRecord != null) {
-        for (var element in categoriesOfRecord) {
+      List<FragmentCategory>? categoriesOfFragment = record.categories;
+      if (categoriesOfFragment != null) {
+        for (var element in categoriesOfFragment) {
           for (var sk in selectedCategories) {
             if (sk.id == element.id) {
-              if (!selectedRecords.contains(record)) {
-                selectedRecords.add(record);
+              if (!selectedFragments.contains(record)) {
+                selectedFragments.add(record);
               }
             }
           }
         }
       }
     }
-    selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+    selectedFragments.sort((a, b) => b.date.compareTo(a.date));
 
     emitter((const AssemblingState.pending()));
     if (selectedCategories.isNotEmpty) {
       emitter(AssemblingState.dataReceived(
           categories: categories,
-          records: selectedRecords,
+          records: selectedFragments,
           selectedCategories: selectedCategories,
-          subjectRecords: subjectRecords,
+          subjectFragments: subjectFragments,
           subjectCategories: subjectCategories,
           selectedSubjectCategories: selectedSubjectCategories,
           playerStatus: playerStatus,
-          playingRecord: playingRecord));
+          playingFragment: playingFragment));
     } else {
-      selectedRecords = [];
+      selectedFragments = [];
       for (var element in records) {
-        if (element.categories!.isEmpty) selectedRecords.add(element);
+        if (element.categories!.isEmpty) selectedFragments.add(element);
       }
-      selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+      selectedFragments.sort((a, b) => b.date.compareTo(a.date));
       emitter(AssemblingState.dataReceived(
           categories: categories,
-          records: selectedRecords,
+          records: selectedFragments,
           selectedCategories: selectedCategories,
-          subjectRecords: subjectRecords,
+          subjectFragments: subjectFragments,
           subjectCategories: subjectCategories,
           selectedSubjectCategories: selectedSubjectCategories,
           playerStatus: playerStatus,
-          playingRecord: playingRecord));
+          playingFragment: playingFragment));
     }
   }
 
   void _addSubjectCategory(_AddSubjectCategory event, Emitter emitter) {
-    subjectCategoryRepository.addSubjectCategory(
-        subjectCategory: SubjectCategory(id: nanoId, name: event.name));
+    subjectCategoryRepository.addSubjectCategory(name: event.name);
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
         playerStatus: playerStatus,
-        playingRecord: playingRecord));
+        playingFragment: playingFragment));
   }
 
   void _selectSubjectCategory(_SelectSubjectCategory event, Emitter emitter) {
@@ -175,38 +171,38 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     }
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
         playerStatus: playerStatus,
-        playingRecord: playingRecord));
+        playingFragment: playingFragment));
   }
 
-  void _addRecord(_AddRecord event, Emitter emitter) {
+  void _addFragment(_AddFragment event, Emitter emitter) {
     secondsPassed = 0;
-    if (subjectRecords.contains(event.record)) {
-      subjectRecords.remove(event.record);
+    if (subjectFragments.contains(event.record)) {
+      subjectFragments.remove(event.record);
     } else {
-      subjectRecords.add(event.record);
+      subjectFragments.add(event.record);
     }
-    if (subjectRecords.isNotEmpty) {
-      playingRecord = subjectRecords.first;
+    if (subjectFragments.isNotEmpty) {
+      playingFragment = subjectFragments.first;
     } else {
-      playingRecord = null;
+      playingFragment = null;
     }
 
     emitter((const AssemblingState.pending()));
-    selectedRecords.sort((a, b) => b.date.compareTo(a.date));
+    selectedFragments.sort((a, b) => b.date.compareTo(a.date));
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
-        playingRecord: playingRecord,
+        playingFragment: playingFragment,
         playerStatus: PlayerStatus.stop));
   }
 
@@ -217,18 +213,18 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     if (newIndex > oldIndex) {
       newIndex = newIndex - 1;
     }
-    final element = subjectRecords.removeAt(oldIndex);
-    subjectRecords.insert(newIndex, element);
-    playingRecord = subjectRecords.first;
+    final element = subjectFragments.removeAt(oldIndex);
+    subjectFragments.insert(newIndex, element);
+    playingFragment = subjectFragments.first;
     emitter((const AssemblingState.pending()));
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
-        playingRecord: playingRecord,
+        playingFragment: playingFragment,
         playerStatus: PlayerStatus.stop));
   }
 
@@ -236,18 +232,18 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     playerStatus = event.playerStatus;
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
-        playingRecord: playingRecord,
+        playingFragment: playingFragment,
         playerStatus: playerStatus));
   }
 
-  void _playRecord(_PlayRecord event, Emitter emitter) {
+  void _playFragment(_PlayFragment event, Emitter emitter) {
     add(const AssemblingEvent.setPlayerStatus(PlayerStatus.stop));
-    playingRecord = event.record;
+    playingFragment = event.record;
     playerStatus = PlayerStatus.play;
     emitter((const AssemblingState.pending()));
     add(AssemblingEvent.setPlayerStatus(playerStatus!));
@@ -258,14 +254,14 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
       add(const AssemblingEvent.resendData());
       secondsPassed++;
       // log(secondsPassed.toString());
-      if (secondsPassed > playingRecord!.duration) {
+      if (secondsPassed > playingFragment!.duration) {
         add(const AssemblingEvent.clearTimer());
-        for (int index = 0; index < subjectRecords.length; index++) {
-          if (playingRecord!.id == subjectRecords[index].id) {
-            if (index + 1 < subjectRecords.length) {
-              playingRecord = subjectRecords[index + 1];
+        for (int index = 0; index < subjectFragments.length; index++) {
+          if (playingFragment!.id == subjectFragments[index].id) {
+            if (index + 1 < subjectFragments.length) {
+              playingFragment = subjectFragments[index + 1];
               secondsPassed = 0;
-              add(AssemblingEvent.playRecord(playingRecord!));
+              add(AssemblingEvent.playFragment(playingFragment!));
               add(const AssemblingEvent.startTimer());
               break;
             }
@@ -280,13 +276,13 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     add(const AssemblingEvent.setPlayerStatus(PlayerStatus.pause));
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
         playerStatus: playerStatus,
-        playingRecord: playingRecord,
+        playingFragment: playingFragment,
         secondsPassed: secondsPassed));
   }
 
@@ -297,13 +293,13 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     add(const AssemblingEvent.setPlayerStatus(PlayerStatus.stop));
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
         playerStatus: playerStatus,
-        playingRecord: playingRecord,
+        playingFragment: playingFragment,
         secondsPassed: secondsPassed));
   }
 
@@ -311,13 +307,13 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     emitter(const AssemblingState.pending());
     emitter(AssemblingState.dataReceived(
         categories: categories,
-        records: selectedRecords,
+        records: selectedFragments,
         selectedCategories: selectedCategories,
-        subjectRecords: subjectRecords,
+        subjectFragments: subjectFragments,
         subjectCategories: subjectCategories,
         selectedSubjectCategories: selectedSubjectCategories,
         playerStatus: playerStatus,
-        playingRecord: playingRecord,
+        playingFragment: playingFragment,
         secondsPassed: secondsPassed));
   }
 
@@ -327,7 +323,7 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
         title: event.title,
         description: event.description,
         id: nanoId,
-        records: subjectRecords,
+        records: subjectFragments,
         date: DateTime.now(),
         subjectCategories: selectedSubjectCategories,
         duration: _subjectDuration());
@@ -335,11 +331,11 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
     selectedCategories = [];
     categories = [];
     records = [];
-    subjectRecords = [];
-    selectedRecords = [];
+    subjectFragments = [];
+    selectedFragments = [];
 
     playerStatus = null;
-    playingRecord = null;
+    playingFragment = null;
 
     timer?.cancel();
 
@@ -355,8 +351,8 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
 
   int _subjectDuration() {
     int duration = 0;
-    for (var subjectRecord in subjectRecords) {
-      duration = duration + subjectRecord.duration;
+    for (var subjectFragment in subjectFragments) {
+      duration = duration + subjectFragment.duration;
     }
     return duration;
   }

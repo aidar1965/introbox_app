@@ -3,17 +3,17 @@ import 'package:flutter/foundation.dart';
 import 'package:equatable/equatable.dart';
 
 @immutable
-class RecordCategory extends Equatable {
-  final String id;
+class FragmentCategory extends Equatable {
+  final int id;
 
   final String name;
-  const RecordCategory({required this.name, required this.id});
+  const FragmentCategory({required this.name, required this.id});
 
-  RecordCategory copyWith({
-    String? id,
+  FragmentCategory copyWith({
+    int? id,
     String? name,
   }) {
-    return RecordCategory(
+    return FragmentCategory(
       id: id ?? this.id,
       name: name ?? this.name,
     );

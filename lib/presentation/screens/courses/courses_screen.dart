@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/domain/di/di.dart';
+import 'package:moki_tutor/presentation/auto_router/app_router.dart';
 
 import '../../../domain/models/course.dart';
 import '../../../domain/models/course_category.dart';
-import '../../../domain/models/record.dart';
+import '../../../domain/models/fragment.dart';
 import '../home_screen/bloc/home_bloc.dart';
 import 'bloc/courses_bloc.dart';
 
@@ -16,10 +16,10 @@ class CoursesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CoursesBloc>(
-      create: (context) => Di.of(context).builCoursesBloc(),
+      create: (context) => CoursesBloc(),
       child: BlocConsumer<CoursesBloc, CoursesState>(
         listener: (context, state) => state.whenOrNull(
-          newCourse: () => context.router.push(const NewCourseScreenRoute()),
+          newCourse: () => context.router.push(const NewCourseRoute()),
         ),
         buildWhen: (_, state) => state.maybeMap(
           pending: (_) => true,
@@ -184,7 +184,7 @@ class _CoursesView extends StatelessWidget {
                           const SizedBox(width: 20),
                           IconButton(
                               onPressed: () => context.router
-                                  .push(EditCourseScreenRoute(course: course)),
+                                  .push(EditCourseRoute(course: course)),
                               icon: const Icon(Icons.edit)),
                           const SizedBox(width: 20),
                           course.isPublished == false
@@ -287,7 +287,7 @@ class _PublishedCoursesView extends StatelessWidget {
   }
 }
 
-String _getDuration(List<Record> records) {
+String _getDuration(List<Fragment> records) {
   int duration = 0;
   for (var record in records) {
     duration += record.duration;

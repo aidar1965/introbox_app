@@ -6,7 +6,7 @@ import 'package:moki_tutor/domain/interfaces/i_api.dart';
 import 'package:moki_tutor/domain/models/user.dart';
 import 'package:moki_tutor/domain/models/course.dart';
 
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import 'http_client/http_client.dart';
 
 typedef _Response = Response<Object?>?;
@@ -34,7 +34,7 @@ class Api implements IApi {
   Future<void> publishCourse({required Course course}) async {}
 
   @override
-  Future<void> publishRecord({required Record record}) async {}
+  Future<void> publishFragment({required Fragment record}) async {}
 
   @override
   Future<void> updateUser({required User user}) async {}

@@ -1,14 +1,14 @@
 part of 'records_bloc.dart';
 
 @freezed
-class RecordsEvent with _$RecordsEvent {
-  const factory RecordsEvent.dataRequested() = _DataRequested;
-  const factory RecordsEvent.newRecord() = _NewRecord;
-  const factory RecordsEvent.selectCategory(RecordCategory category) =
+class FragmentsEvent with _$FragmentsEvent {
+  const factory FragmentsEvent.dataRequested() = _DataRequested;
+  const factory FragmentsEvent.newFragment() = _NewFragment;
+  const factory FragmentsEvent.selectCategory(FragmentCategory category) =
       _SelectCategory;
-  const factory RecordsEvent.editCategory(RecordCategory category) =
+  const factory FragmentsEvent.editCategory(FragmentCategory category) =
       _EditCategory;
-  const factory RecordsEvent.deleteCategory(RecordCategory category) =
+  const factory FragmentsEvent.deleteCategory(FragmentCategory category) =
       _DeleteCategory;
-  const factory RecordsEvent.resendData() = _ResendData;
+  const factory FragmentsEvent.resendData() = _ResendData;
 }

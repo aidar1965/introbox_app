@@ -4,13 +4,13 @@ part of 'edit_subject_bloc.dart';
 class EditSubjectState with _$EditSubjectState {
   const factory EditSubjectState.pending() = _Pending;
   const factory EditSubjectState.dataReceived(
-      {List<RecordCategory>? categories,
-      List<RecordCategory>? selectedCategories,
+      {List<FragmentCategory>? categories,
+      List<FragmentCategory>? selectedCategories,
       required List<SubjectCategory> subjectCategories,
       required List<SubjectCategory> selectedSubjectCategories,
-      List<Record>? records,
-      required List<Record> subjectRecords,
+      List<Fragment>? records,
+      required List<Fragment> subjectFragments,
       PlayerStatus? playerStatus,
-      Record? playingRecord,
+      Fragment? playingFragment,
       int? secondsPassed}) = _DataReceived;
 }

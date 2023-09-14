@@ -4,13 +4,13 @@ part of 'assembling_bloc.dart';
 class AssemblingState with _$AssemblingState {
   const factory AssemblingState.pending() = _Pending;
   const factory AssemblingState.dataReceived(
-      {List<RecordCategory>? categories,
-      List<RecordCategory>? selectedCategories,
+      {List<FragmentCategory>? categories,
+      List<FragmentCategory>? selectedCategories,
       required List<SubjectCategory> subjectCategories,
       required List<SubjectCategory> selectedSubjectCategories,
-      List<Record>? records,
-      required List<Record> subjectRecords,
+      List<Fragment>? records,
+      required List<Fragment> subjectFragments,
       PlayerStatus? playerStatus,
-      Record? playingRecord,
+      Fragment? playingFragment,
       int? secondsPassed}) = _DataReceived;
 }

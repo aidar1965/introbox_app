@@ -2,19 +2,27 @@ import 'package:moki_tutor/domain/models/subject.dart';
 
 import '../models/course.dart';
 import '../models/course_category.dart';
-import '../models/record.dart';
-import '../models/record_category.dart';
+import '../models/fragment.dart';
+import '../models/fragment_category.dart';
 import '../models/subject_category.dart';
 import '../models/user.dart';
 
 abstract class ILocalDB {
   Future<void> init();
 
-  void createRecord(Record record);
+  void addFragment(
+      {required String title,
+      String? description,
+      String? imagePath,
+      required int duration,
+      required String audioPath,
+      required DateTime date,
+      String? images,
+      List<FragmentCategory>? selectedCategories});
 
-  void updateRecord({required Record record});
+  void updateFragment({required Fragment record});
 
-  void deleteRecord({
+  void deleteFragment({
     required int id,
   });
 
@@ -22,25 +30,25 @@ abstract class ILocalDB {
 
   void updateSubject(Subject subject);
 
-  List<RecordCategory> getCategories();
+  List<FragmentCategory> getCategories();
 
   List<SubjectCategory> getSubjectCategories();
 
   List<CourseCategory> getCourseCategories();
 
-  List<Record> getRecords();
+  List<Fragment> getFragments();
 
-  void addCategory(RecordCategory category);
+  void addCategory(String name);
 
-  void addSubjectCategory(SubjectCategory subjectCategory);
+  void addSubjectCategory(String name);
 
   void deleteSubjectCategory(SubjectCategory subjectCategory);
 
-  void editCategory({required RecordCategory category});
+  void editCategory({required FragmentCategory category});
 
   void editSubjectCategory({required SubjectCategory subjectCategory});
 
-  void deleteCategory(RecordCategory category);
+  void deleteCategory(FragmentCategory category);
 
   void saveCourse(Course course);
 
@@ -56,7 +64,7 @@ abstract class ILocalDB {
 
   void removeLocalUser();
 
-  void addCourseCategory(CourseCategory category);
-  void editCourseCategory(CourseCategory category);
+  void addCourseCategory(String name);
+  void editCourseCategory(String name);
   void deleteCourseCategory(CourseCategory category);
 }

@@ -3,7 +3,7 @@ import '../models/course_category.dart';
 abstract class ICourseCategoryRepository {
   List<CourseCategory> get categories;
 
-  void addCategory(CourseCategory category);
+  void addCategory(String name);
   void editCategory(CourseCategory category);
   void deleteCategory(CourseCategory category);
   void getCategories();

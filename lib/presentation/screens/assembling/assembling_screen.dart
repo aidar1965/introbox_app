@@ -8,9 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../domain/di/di.dart';
-import '../../../../domain/models/record.dart';
-import '../../../../domain/models/record_category.dart';
+import '../../../domain/models/fragment.dart';
+import '../../../domain/models/fragment_category.dart';
 import '../home_screen/bloc/home_bloc.dart';
 import 'bloc/assembling_bloc.dart';
 import '../../player/player_widget.dart';
@@ -39,13 +38,13 @@ class AssemblingScreen extends StatelessWidget {
       floatingActionButton:
           IconButton(onPressed: () {}, icon: const Icon(Icons.play_circle)),
       body: BlocProvider(
-        create: (context) => Di.of(context).builAssemblingBloc(),
+        create: (context) => AssemblingBloc(),
         child: BlocConsumer<AssemblingBloc, AssemblingState>(
           listener: (context, state) {
             state.mapOrNull(dataReceived: (state) async {
               if (state.playerStatus == PlayerStatus.play) {
                 await player
-                    .play(DeviceFileSource(state.playingRecord!.audioPath));
+                    .play(DeviceFileSource(state.playingFragment!.audioPath));
               }
             });
           },
@@ -123,13 +122,14 @@ class AssemblingScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 20,
                               ),
-                              state.subjectRecords.isNotEmpty
+                              state.subjectFragments.isNotEmpty
                                   ? Flexible(
                                       flex: 3,
                                       child: ReorderableListView.builder(
-                                        itemCount: state.subjectRecords.length,
+                                        itemCount:
+                                            state.subjectFragments.length,
                                         itemBuilder: (context, index) {
-                                          var record = state.subjectRecords
+                                          var record = state.subjectFragments
                                               .elementAt(index);
 
                                           return ListTile(
@@ -185,7 +185,7 @@ class AssemblingScreen extends StatelessWidget {
                                                                   .of<AssemblingBloc>(
                                                                       context)
                                                               .add(AssemblingEvent
-                                                                  .addRecord(
+                                                                  .addFragment(
                                                                       record)),
                                                           icon: const Icon(
                                                             Icons.remove_circle,
@@ -300,13 +300,13 @@ class AssemblingScreen extends StatelessWidget {
                                                   ),
                                                 ],
                                               ),
-                                              value: state.subjectRecords
+                                              value: state.subjectFragments
                                                   .contains(record),
                                               onChanged: (value) {
                                                 BlocProvider.of<AssemblingBloc>(
                                                         context)
                                                     .add(AssemblingEvent
-                                                        .addRecord(record));
+                                                        .addFragment(record));
                                               },
                                             );
                                           }),
@@ -329,8 +329,8 @@ class _CategoryList extends StatelessWidget {
     this.selectedCategories,
   }) : super(key: key);
 
-  final List<RecordCategory>? categories;
-  final List<RecordCategory>? selectedCategories;
+  final List<FragmentCategory>? categories;
+  final List<FragmentCategory>? selectedCategories;
   final ScrollController firstListController = ScrollController();
 
   @override
@@ -375,7 +375,7 @@ class _AudioPlayerView extends StatefulWidget {
       : super(key: key);
   final PlayerStatus playerStatus;
   final AudioPlayer player;
-  final Record record;
+  final Fragment record;
 
   final int? secondsPassed;
 

@@ -15,34 +15,34 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$RecordsEvent {
+mixin _$FragmentsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) =>
@@ -50,7 +50,7 @@ mixin _$RecordsEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
@@ -60,7 +60,7 @@ mixin _$RecordsEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
@@ -70,7 +70,7 @@ mixin _$RecordsEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
@@ -81,16 +81,16 @@ mixin _$RecordsEvent {
 }
 
 /// @nodoc
-abstract class $RecordsEventCopyWith<$Res> {
-  factory $RecordsEventCopyWith(
-          RecordsEvent value, $Res Function(RecordsEvent) then) =
-      _$RecordsEventCopyWithImpl<$Res, RecordsEvent>;
+abstract class $FragmentsEventCopyWith<$Res> {
+  factory $FragmentsEventCopyWith(
+          FragmentsEvent value, $Res Function(FragmentsEvent) then) =
+      _$FragmentsEventCopyWithImpl<$Res, FragmentsEvent>;
 }
 
 /// @nodoc
-class _$RecordsEventCopyWithImpl<$Res, $Val extends RecordsEvent>
-    implements $RecordsEventCopyWith<$Res> {
-  _$RecordsEventCopyWithImpl(this._value, this._then);
+class _$FragmentsEventCopyWithImpl<$Res, $Val extends FragmentsEvent>
+    implements $FragmentsEventCopyWith<$Res> {
+  _$FragmentsEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -107,7 +107,7 @@ abstract class _$$_DataRequestedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_DataRequestedCopyWithImpl<$Res>
-    extends _$RecordsEventCopyWithImpl<$Res, _$_DataRequested>
+    extends _$FragmentsEventCopyWithImpl<$Res, _$_DataRequested>
     implements _$$_DataRequestedCopyWith<$Res> {
   __$$_DataRequestedCopyWithImpl(
       _$_DataRequested _value, $Res Function(_$_DataRequested) _then)
@@ -121,13 +121,13 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsEvent.dataRequested()';
+    return 'FragmentsEvent.dataRequested()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'RecordsEvent.dataRequested'));
+    properties.add(DiagnosticsProperty('type', 'FragmentsEvent.dataRequested'));
   }
 
   @override
@@ -143,10 +143,10 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) {
     return dataRequested();
@@ -156,10 +156,10 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) {
     return dataRequested?.call();
@@ -169,10 +169,10 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) {
@@ -186,7 +186,7 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
@@ -199,7 +199,7 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
@@ -212,7 +212,7 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
@@ -226,46 +226,46 @@ class _$_DataRequested with DiagnosticableTreeMixin implements _DataRequested {
   }
 }
 
-abstract class _DataRequested implements RecordsEvent {
+abstract class _DataRequested implements FragmentsEvent {
   const factory _DataRequested() = _$_DataRequested;
 }
 
 /// @nodoc
-abstract class _$$_NewRecordCopyWith<$Res> {
-  factory _$$_NewRecordCopyWith(
-          _$_NewRecord value, $Res Function(_$_NewRecord) then) =
-      __$$_NewRecordCopyWithImpl<$Res>;
+abstract class _$$_NewFragmentCopyWith<$Res> {
+  factory _$$_NewFragmentCopyWith(
+          _$_NewFragment value, $Res Function(_$_NewFragment) then) =
+      __$$_NewFragmentCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NewRecordCopyWithImpl<$Res>
-    extends _$RecordsEventCopyWithImpl<$Res, _$_NewRecord>
-    implements _$$_NewRecordCopyWith<$Res> {
-  __$$_NewRecordCopyWithImpl(
-      _$_NewRecord _value, $Res Function(_$_NewRecord) _then)
+class __$$_NewFragmentCopyWithImpl<$Res>
+    extends _$FragmentsEventCopyWithImpl<$Res, _$_NewFragment>
+    implements _$$_NewFragmentCopyWith<$Res> {
+  __$$_NewFragmentCopyWithImpl(
+      _$_NewFragment _value, $Res Function(_$_NewFragment) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NewRecord with DiagnosticableTreeMixin implements _NewRecord {
-  const _$_NewRecord();
+class _$_NewFragment with DiagnosticableTreeMixin implements _NewFragment {
+  const _$_NewFragment();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsEvent.newRecord()';
+    return 'FragmentsEvent.newFragment()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'RecordsEvent.newRecord'));
+    properties.add(DiagnosticsProperty('type', 'FragmentsEvent.newFragment'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NewRecord);
+        (other.runtimeType == runtimeType && other is _$_NewFragment);
   }
 
   @override
@@ -275,41 +275,41 @@ class _$_NewRecord with DiagnosticableTreeMixin implements _NewRecord {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) {
-    return newRecord();
+    return newFragment();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) {
-    return newRecord?.call();
+    return newFragment?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) {
-    if (newRecord != null) {
-      return newRecord();
+    if (newFragment != null) {
+      return newFragment();
     }
     return orElse();
   }
@@ -318,48 +318,48 @@ class _$_NewRecord with DiagnosticableTreeMixin implements _NewRecord {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
     required TResult Function(_ResendData value) resendData,
   }) {
-    return newRecord(this);
+    return newFragment(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
     TResult? Function(_ResendData value)? resendData,
   }) {
-    return newRecord?.call(this);
+    return newFragment?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
     TResult Function(_ResendData value)? resendData,
     required TResult orElse(),
   }) {
-    if (newRecord != null) {
-      return newRecord(this);
+    if (newFragment != null) {
+      return newFragment(this);
     }
     return orElse();
   }
 }
 
-abstract class _NewRecord implements RecordsEvent {
-  const factory _NewRecord() = _$_NewRecord;
+abstract class _NewFragment implements FragmentsEvent {
+  const factory _NewFragment() = _$_NewFragment;
 }
 
 /// @nodoc
@@ -368,12 +368,12 @@ abstract class _$$_SelectCategoryCopyWith<$Res> {
           _$_SelectCategory value, $Res Function(_$_SelectCategory) then) =
       __$$_SelectCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({RecordCategory category});
+  $Res call({FragmentCategory category});
 }
 
 /// @nodoc
 class __$$_SelectCategoryCopyWithImpl<$Res>
-    extends _$RecordsEventCopyWithImpl<$Res, _$_SelectCategory>
+    extends _$FragmentsEventCopyWithImpl<$Res, _$_SelectCategory>
     implements _$$_SelectCategoryCopyWith<$Res> {
   __$$_SelectCategoryCopyWithImpl(
       _$_SelectCategory _value, $Res Function(_$_SelectCategory) _then)
@@ -388,7 +388,7 @@ class __$$_SelectCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -401,18 +401,18 @@ class _$_SelectCategory
   const _$_SelectCategory(this.category);
 
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsEvent.selectCategory(category: $category)';
+    return 'FragmentsEvent.selectCategory(category: $category)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'RecordsEvent.selectCategory'))
+      ..add(DiagnosticsProperty('type', 'FragmentsEvent.selectCategory'))
       ..add(DiagnosticsProperty('category', category));
   }
 
@@ -438,10 +438,10 @@ class _$_SelectCategory
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) {
     return selectCategory(category);
@@ -451,10 +451,10 @@ class _$_SelectCategory
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) {
     return selectCategory?.call(category);
@@ -464,10 +464,10 @@ class _$_SelectCategory
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) {
@@ -481,7 +481,7 @@ class _$_SelectCategory
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
@@ -494,7 +494,7 @@ class _$_SelectCategory
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
@@ -507,7 +507,7 @@ class _$_SelectCategory
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
@@ -521,11 +521,11 @@ class _$_SelectCategory
   }
 }
 
-abstract class _SelectCategory implements RecordsEvent {
-  const factory _SelectCategory(final RecordCategory category) =
+abstract class _SelectCategory implements FragmentsEvent {
+  const factory _SelectCategory(final FragmentCategory category) =
       _$_SelectCategory;
 
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_SelectCategoryCopyWith<_$_SelectCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -537,12 +537,12 @@ abstract class _$$_EditCategoryCopyWith<$Res> {
           _$_EditCategory value, $Res Function(_$_EditCategory) then) =
       __$$_EditCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({RecordCategory category});
+  $Res call({FragmentCategory category});
 }
 
 /// @nodoc
 class __$$_EditCategoryCopyWithImpl<$Res>
-    extends _$RecordsEventCopyWithImpl<$Res, _$_EditCategory>
+    extends _$FragmentsEventCopyWithImpl<$Res, _$_EditCategory>
     implements _$$_EditCategoryCopyWith<$Res> {
   __$$_EditCategoryCopyWithImpl(
       _$_EditCategory _value, $Res Function(_$_EditCategory) _then)
@@ -557,7 +557,7 @@ class __$$_EditCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -568,18 +568,18 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   const _$_EditCategory(this.category);
 
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsEvent.editCategory(category: $category)';
+    return 'FragmentsEvent.editCategory(category: $category)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'RecordsEvent.editCategory'))
+      ..add(DiagnosticsProperty('type', 'FragmentsEvent.editCategory'))
       ..add(DiagnosticsProperty('category', category));
   }
 
@@ -605,10 +605,10 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) {
     return editCategory(category);
@@ -618,10 +618,10 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) {
     return editCategory?.call(category);
@@ -631,10 +631,10 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) {
@@ -648,7 +648,7 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
@@ -661,7 +661,7 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
@@ -674,7 +674,7 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
@@ -688,10 +688,11 @@ class _$_EditCategory with DiagnosticableTreeMixin implements _EditCategory {
   }
 }
 
-abstract class _EditCategory implements RecordsEvent {
-  const factory _EditCategory(final RecordCategory category) = _$_EditCategory;
+abstract class _EditCategory implements FragmentsEvent {
+  const factory _EditCategory(final FragmentCategory category) =
+      _$_EditCategory;
 
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_EditCategoryCopyWith<_$_EditCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -703,12 +704,12 @@ abstract class _$$_DeleteCategoryCopyWith<$Res> {
           _$_DeleteCategory value, $Res Function(_$_DeleteCategory) then) =
       __$$_DeleteCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({RecordCategory category});
+  $Res call({FragmentCategory category});
 }
 
 /// @nodoc
 class __$$_DeleteCategoryCopyWithImpl<$Res>
-    extends _$RecordsEventCopyWithImpl<$Res, _$_DeleteCategory>
+    extends _$FragmentsEventCopyWithImpl<$Res, _$_DeleteCategory>
     implements _$$_DeleteCategoryCopyWith<$Res> {
   __$$_DeleteCategoryCopyWithImpl(
       _$_DeleteCategory _value, $Res Function(_$_DeleteCategory) _then)
@@ -723,7 +724,7 @@ class __$$_DeleteCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -736,18 +737,18 @@ class _$_DeleteCategory
   const _$_DeleteCategory(this.category);
 
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsEvent.deleteCategory(category: $category)';
+    return 'FragmentsEvent.deleteCategory(category: $category)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'RecordsEvent.deleteCategory'))
+      ..add(DiagnosticsProperty('type', 'FragmentsEvent.deleteCategory'))
       ..add(DiagnosticsProperty('category', category));
   }
 
@@ -773,10 +774,10 @@ class _$_DeleteCategory
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) {
     return deleteCategory(category);
@@ -786,10 +787,10 @@ class _$_DeleteCategory
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) {
     return deleteCategory?.call(category);
@@ -799,10 +800,10 @@ class _$_DeleteCategory
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) {
@@ -816,7 +817,7 @@ class _$_DeleteCategory
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
@@ -829,7 +830,7 @@ class _$_DeleteCategory
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
@@ -842,7 +843,7 @@ class _$_DeleteCategory
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
@@ -856,11 +857,11 @@ class _$_DeleteCategory
   }
 }
 
-abstract class _DeleteCategory implements RecordsEvent {
-  const factory _DeleteCategory(final RecordCategory category) =
+abstract class _DeleteCategory implements FragmentsEvent {
+  const factory _DeleteCategory(final FragmentCategory category) =
       _$_DeleteCategory;
 
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_DeleteCategoryCopyWith<_$_DeleteCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -875,7 +876,7 @@ abstract class _$$_ResendDataCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ResendDataCopyWithImpl<$Res>
-    extends _$RecordsEventCopyWithImpl<$Res, _$_ResendData>
+    extends _$FragmentsEventCopyWithImpl<$Res, _$_ResendData>
     implements _$$_ResendDataCopyWith<$Res> {
   __$$_ResendDataCopyWithImpl(
       _$_ResendData _value, $Res Function(_$_ResendData) _then)
@@ -889,13 +890,13 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsEvent.resendData()';
+    return 'FragmentsEvent.resendData()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'RecordsEvent.resendData'));
+    properties.add(DiagnosticsProperty('type', 'FragmentsEvent.resendData'));
   }
 
   @override
@@ -911,10 +912,10 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataRequested,
-    required TResult Function() newRecord,
-    required TResult Function(RecordCategory category) selectCategory,
-    required TResult Function(RecordCategory category) editCategory,
-    required TResult Function(RecordCategory category) deleteCategory,
+    required TResult Function() newFragment,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) editCategory,
+    required TResult Function(FragmentCategory category) deleteCategory,
     required TResult Function() resendData,
   }) {
     return resendData();
@@ -924,10 +925,10 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataRequested,
-    TResult? Function()? newRecord,
-    TResult? Function(RecordCategory category)? selectCategory,
-    TResult? Function(RecordCategory category)? editCategory,
-    TResult? Function(RecordCategory category)? deleteCategory,
+    TResult? Function()? newFragment,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? editCategory,
+    TResult? Function(FragmentCategory category)? deleteCategory,
     TResult? Function()? resendData,
   }) {
     return resendData?.call();
@@ -937,10 +938,10 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataRequested,
-    TResult Function()? newRecord,
-    TResult Function(RecordCategory category)? selectCategory,
-    TResult Function(RecordCategory category)? editCategory,
-    TResult Function(RecordCategory category)? deleteCategory,
+    TResult Function()? newFragment,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? editCategory,
+    TResult Function(FragmentCategory category)? deleteCategory,
     TResult Function()? resendData,
     required TResult orElse(),
   }) {
@@ -954,7 +955,7 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_DataRequested value) dataRequested,
-    required TResult Function(_NewRecord value) newRecord,
+    required TResult Function(_NewFragment value) newFragment,
     required TResult Function(_SelectCategory value) selectCategory,
     required TResult Function(_EditCategory value) editCategory,
     required TResult Function(_DeleteCategory value) deleteCategory,
@@ -967,7 +968,7 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_DataRequested value)? dataRequested,
-    TResult? Function(_NewRecord value)? newRecord,
+    TResult? Function(_NewFragment value)? newFragment,
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_EditCategory value)? editCategory,
     TResult? Function(_DeleteCategory value)? deleteCategory,
@@ -980,7 +981,7 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_DataRequested value)? dataRequested,
-    TResult Function(_NewRecord value)? newRecord,
+    TResult Function(_NewFragment value)? newFragment,
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_EditCategory value)? editCategory,
     TResult Function(_DeleteCategory value)? deleteCategory,
@@ -994,39 +995,39 @@ class _$_ResendData with DiagnosticableTreeMixin implements _ResendData {
   }
 }
 
-abstract class _ResendData implements RecordsEvent {
+abstract class _ResendData implements FragmentsEvent {
   const factory _ResendData() = _$_ResendData;
 }
 
 /// @nodoc
-mixin _$RecordsState {
+mixin _$FragmentsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<Record> records,
-            List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)
+            List<Fragment> records,
+            List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)
         dataReceived,
-    required TResult Function() addRecord,
+    required TResult Function() addFragment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult? Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult? Function()? addRecord,
+    TResult? Function()? addFragment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult Function()? addRecord,
+    TResult Function()? addFragment,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1034,37 +1035,37 @@ mixin _$RecordsState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Pending value) pending,
     required TResult Function(_DataReceived value) dataReceived,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Pending value)? pending,
     TResult? Function(_DataReceived value)? dataReceived,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Pending value)? pending,
     TResult Function(_DataReceived value)? dataReceived,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RecordsStateCopyWith<$Res> {
-  factory $RecordsStateCopyWith(
-          RecordsState value, $Res Function(RecordsState) then) =
-      _$RecordsStateCopyWithImpl<$Res, RecordsState>;
+abstract class $FragmentsStateCopyWith<$Res> {
+  factory $FragmentsStateCopyWith(
+          FragmentsState value, $Res Function(FragmentsState) then) =
+      _$FragmentsStateCopyWithImpl<$Res, FragmentsState>;
 }
 
 /// @nodoc
-class _$RecordsStateCopyWithImpl<$Res, $Val extends RecordsState>
-    implements $RecordsStateCopyWith<$Res> {
-  _$RecordsStateCopyWithImpl(this._value, this._then);
+class _$FragmentsStateCopyWithImpl<$Res, $Val extends FragmentsState>
+    implements $FragmentsStateCopyWith<$Res> {
+  _$FragmentsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1081,7 +1082,7 @@ abstract class _$$_PendingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_PendingCopyWithImpl<$Res>
-    extends _$RecordsStateCopyWithImpl<$Res, _$_Pending>
+    extends _$FragmentsStateCopyWithImpl<$Res, _$_Pending>
     implements _$$_PendingCopyWith<$Res> {
   __$$_PendingCopyWithImpl(_$_Pending _value, $Res Function(_$_Pending) _then)
       : super(_value, _then);
@@ -1094,13 +1095,13 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsState.pending()';
+    return 'FragmentsState.pending()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'RecordsState.pending'));
+    properties.add(DiagnosticsProperty('type', 'FragmentsState.pending'));
   }
 
   @override
@@ -1117,11 +1118,11 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<Record> records,
-            List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)
+            List<Fragment> records,
+            List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)
         dataReceived,
-    required TResult Function() addRecord,
+    required TResult Function() addFragment,
   }) {
     return pending();
   }
@@ -1130,10 +1131,10 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult? Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult? Function()? addRecord,
+    TResult? Function()? addFragment,
   }) {
     return pending?.call();
   }
@@ -1142,10 +1143,10 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult Function()? addRecord,
+    TResult Function()? addFragment,
     required TResult orElse(),
   }) {
     if (pending != null) {
@@ -1159,7 +1160,7 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   TResult map<TResult extends Object?>({
     required TResult Function(_Pending value) pending,
     required TResult Function(_DataReceived value) dataReceived,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
   }) {
     return pending(this);
   }
@@ -1169,7 +1170,7 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Pending value)? pending,
     TResult? Function(_DataReceived value)? dataReceived,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
   }) {
     return pending?.call(this);
   }
@@ -1179,7 +1180,7 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Pending value)? pending,
     TResult Function(_DataReceived value)? dataReceived,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     required TResult orElse(),
   }) {
     if (pending != null) {
@@ -1189,7 +1190,7 @@ class _$_Pending with DiagnosticableTreeMixin implements _Pending {
   }
 }
 
-abstract class _Pending implements RecordsState {
+abstract class _Pending implements FragmentsState {
   const factory _Pending() = _$_Pending;
 }
 
@@ -1200,14 +1201,14 @@ abstract class _$$_DataReceivedCopyWith<$Res> {
       __$$_DataReceivedCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<Record> records,
-      List<RecordCategory> categories,
-      List<RecordCategory> selectedCategories});
+      {List<Fragment> records,
+      List<FragmentCategory> categories,
+      List<FragmentCategory> selectedCategories});
 }
 
 /// @nodoc
 class __$$_DataReceivedCopyWithImpl<$Res>
-    extends _$RecordsStateCopyWithImpl<$Res, _$_DataReceived>
+    extends _$FragmentsStateCopyWithImpl<$Res, _$_DataReceived>
     implements _$$_DataReceivedCopyWith<$Res> {
   __$$_DataReceivedCopyWithImpl(
       _$_DataReceived _value, $Res Function(_$_DataReceived) _then)
@@ -1224,15 +1225,15 @@ class __$$_DataReceivedCopyWithImpl<$Res>
       records: null == records
           ? _value._records
           : records // ignore: cast_nullable_to_non_nullable
-              as List<Record>,
+              as List<Fragment>,
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<RecordCategory>,
+              as List<FragmentCategory>,
       selectedCategories: null == selectedCategories
           ? _value._selectedCategories
           : selectedCategories // ignore: cast_nullable_to_non_nullable
-              as List<RecordCategory>,
+              as List<FragmentCategory>,
     ));
   }
 }
@@ -1241,32 +1242,32 @@ class __$$_DataReceivedCopyWithImpl<$Res>
 
 class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   const _$_DataReceived(
-      {required final List<Record> records,
-      required final List<RecordCategory> categories,
-      required final List<RecordCategory> selectedCategories})
+      {required final List<Fragment> records,
+      required final List<FragmentCategory> categories,
+      required final List<FragmentCategory> selectedCategories})
       : _records = records,
         _categories = categories,
         _selectedCategories = selectedCategories;
 
-  final List<Record> _records;
+  final List<Fragment> _records;
   @override
-  List<Record> get records {
+  List<Fragment> get records {
     if (_records is EqualUnmodifiableListView) return _records;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_records);
   }
 
-  final List<RecordCategory> _categories;
+  final List<FragmentCategory> _categories;
   @override
-  List<RecordCategory> get categories {
+  List<FragmentCategory> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
   }
 
-  final List<RecordCategory> _selectedCategories;
+  final List<FragmentCategory> _selectedCategories;
   @override
-  List<RecordCategory> get selectedCategories {
+  List<FragmentCategory> get selectedCategories {
     if (_selectedCategories is EqualUnmodifiableListView)
       return _selectedCategories;
     // ignore: implicit_dynamic_type
@@ -1275,14 +1276,14 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsState.dataReceived(records: $records, categories: $categories, selectedCategories: $selectedCategories)';
+    return 'FragmentsState.dataReceived(records: $records, categories: $categories, selectedCategories: $selectedCategories)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'RecordsState.dataReceived'))
+      ..add(DiagnosticsProperty('type', 'FragmentsState.dataReceived'))
       ..add(DiagnosticsProperty('records', records))
       ..add(DiagnosticsProperty('categories', categories))
       ..add(DiagnosticsProperty('selectedCategories', selectedCategories));
@@ -1318,11 +1319,11 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<Record> records,
-            List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)
+            List<Fragment> records,
+            List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)
         dataReceived,
-    required TResult Function() addRecord,
+    required TResult Function() addFragment,
   }) {
     return dataReceived(records, categories, selectedCategories);
   }
@@ -1331,10 +1332,10 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult? Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult? Function()? addRecord,
+    TResult? Function()? addFragment,
   }) {
     return dataReceived?.call(records, categories, selectedCategories);
   }
@@ -1343,10 +1344,10 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult Function()? addRecord,
+    TResult Function()? addFragment,
     required TResult orElse(),
   }) {
     if (dataReceived != null) {
@@ -1360,7 +1361,7 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   TResult map<TResult extends Object?>({
     required TResult Function(_Pending value) pending,
     required TResult Function(_DataReceived value) dataReceived,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
   }) {
     return dataReceived(this);
   }
@@ -1370,7 +1371,7 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Pending value)? pending,
     TResult? Function(_DataReceived value)? dataReceived,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
   }) {
     return dataReceived?.call(this);
   }
@@ -1380,7 +1381,7 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Pending value)? pending,
     TResult Function(_DataReceived value)? dataReceived,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     required TResult orElse(),
   }) {
     if (dataReceived != null) {
@@ -1390,57 +1391,57 @@ class _$_DataReceived with DiagnosticableTreeMixin implements _DataReceived {
   }
 }
 
-abstract class _DataReceived implements RecordsState {
+abstract class _DataReceived implements FragmentsState {
   const factory _DataReceived(
-          {required final List<Record> records,
-          required final List<RecordCategory> categories,
-          required final List<RecordCategory> selectedCategories}) =
+          {required final List<Fragment> records,
+          required final List<FragmentCategory> categories,
+          required final List<FragmentCategory> selectedCategories}) =
       _$_DataReceived;
 
-  List<Record> get records;
-  List<RecordCategory> get categories;
-  List<RecordCategory> get selectedCategories;
+  List<Fragment> get records;
+  List<FragmentCategory> get categories;
+  List<FragmentCategory> get selectedCategories;
   @JsonKey(ignore: true)
   _$$_DataReceivedCopyWith<_$_DataReceived> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AddRecordCopyWith<$Res> {
-  factory _$$_AddRecordCopyWith(
-          _$_AddRecord value, $Res Function(_$_AddRecord) then) =
-      __$$_AddRecordCopyWithImpl<$Res>;
+abstract class _$$_AddFragmentCopyWith<$Res> {
+  factory _$$_AddFragmentCopyWith(
+          _$_AddFragment value, $Res Function(_$_AddFragment) then) =
+      __$$_AddFragmentCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_AddRecordCopyWithImpl<$Res>
-    extends _$RecordsStateCopyWithImpl<$Res, _$_AddRecord>
-    implements _$$_AddRecordCopyWith<$Res> {
-  __$$_AddRecordCopyWithImpl(
-      _$_AddRecord _value, $Res Function(_$_AddRecord) _then)
+class __$$_AddFragmentCopyWithImpl<$Res>
+    extends _$FragmentsStateCopyWithImpl<$Res, _$_AddFragment>
+    implements _$$_AddFragmentCopyWith<$Res> {
+  __$$_AddFragmentCopyWithImpl(
+      _$_AddFragment _value, $Res Function(_$_AddFragment) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_AddRecord with DiagnosticableTreeMixin implements _AddRecord {
-  const _$_AddRecord();
+class _$_AddFragment with DiagnosticableTreeMixin implements _AddFragment {
+  const _$_AddFragment();
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RecordsState.addRecord()';
+    return 'FragmentsState.addFragment()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'RecordsState.addRecord'));
+    properties.add(DiagnosticsProperty('type', 'FragmentsState.addFragment'));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_AddRecord);
+        (other.runtimeType == runtimeType && other is _$_AddFragment);
   }
 
   @override
@@ -1451,39 +1452,39 @@ class _$_AddRecord with DiagnosticableTreeMixin implements _AddRecord {
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<Record> records,
-            List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)
+            List<Fragment> records,
+            List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)
         dataReceived,
-    required TResult Function() addRecord,
+    required TResult Function() addFragment,
   }) {
-    return addRecord();
+    return addFragment();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult? Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult? Function()? addRecord,
+    TResult? Function()? addFragment,
   }) {
-    return addRecord?.call();
+    return addFragment?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Record> records, List<RecordCategory> categories,
-            List<RecordCategory> selectedCategories)?
+    TResult Function(List<Fragment> records, List<FragmentCategory> categories,
+            List<FragmentCategory> selectedCategories)?
         dataReceived,
-    TResult Function()? addRecord,
+    TResult Function()? addFragment,
     required TResult orElse(),
   }) {
-    if (addRecord != null) {
-      return addRecord();
+    if (addFragment != null) {
+      return addFragment();
     }
     return orElse();
   }
@@ -1493,9 +1494,9 @@ class _$_AddRecord with DiagnosticableTreeMixin implements _AddRecord {
   TResult map<TResult extends Object?>({
     required TResult Function(_Pending value) pending,
     required TResult Function(_DataReceived value) dataReceived,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
   }) {
-    return addRecord(this);
+    return addFragment(this);
   }
 
   @override
@@ -1503,9 +1504,9 @@ class _$_AddRecord with DiagnosticableTreeMixin implements _AddRecord {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Pending value)? pending,
     TResult? Function(_DataReceived value)? dataReceived,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
   }) {
-    return addRecord?.call(this);
+    return addFragment?.call(this);
   }
 
   @override
@@ -1513,16 +1514,16 @@ class _$_AddRecord with DiagnosticableTreeMixin implements _AddRecord {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Pending value)? pending,
     TResult Function(_DataReceived value)? dataReceived,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     required TResult orElse(),
   }) {
-    if (addRecord != null) {
-      return addRecord(this);
+    if (addFragment != null) {
+      return addFragment(this);
     }
     return orElse();
   }
 }
 
-abstract class _AddRecord implements RecordsState {
-  const factory _AddRecord() = _$_AddRecord;
+abstract class _AddFragment implements FragmentsState {
+  const factory _AddFragment() = _$_AddFragment;
 }

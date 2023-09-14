@@ -2,11 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../domain/interfaces/i_api.dart';
 import '../../../../domain/interfaces/i_user_repository.dart';
+import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/user.dart';
 import '../../../player/player_widget.dart';
 
 import '../../../../domain/models/course.dart';
-import '../../../../domain/models/record.dart';
+import '../../../../domain/models/fragment.dart';
 import '../../../../domain/models/subject.dart';
 
 part 'home_event.dart';
@@ -14,8 +15,7 @@ part 'home_state.dart';
 part 'home_bloc.freezed.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc({required this.userRepository, required this.api})
-      : super(const _StateNotInitialized()) {
+  HomeBloc() : super(const _StateNotInitialized()) {
     on<HomeEvent>((event, emitter) => event.map(
           initialize: (event) async => await _initialize(event, emitter),
           userChanged: (event) => _userChanged(event, emitter),
@@ -33,8 +33,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     add(const HomeEvent.initialize());
   }
 
-  final IUserRepository userRepository;
-  final IApi api;
+  final IUserRepository userRepository = getIt<IUserRepository>();
+  final IApi api = getIt<IApi>();
 
   User? _user;
 

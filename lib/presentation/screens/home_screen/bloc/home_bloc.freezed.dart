@@ -20,7 +20,7 @@ mixin _$HomeEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -32,7 +32,7 @@ mixin _$HomeEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -44,7 +44,7 @@ mixin _$HomeEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -149,7 +149,7 @@ class _$_EventInitialize implements _EventInitialize {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -164,7 +164,7 @@ class _$_EventInitialize implements _EventInitialize {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -179,7 +179,7 @@ class _$_EventInitialize implements _EventInitialize {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -287,7 +287,7 @@ class _$_UserChanged implements _UserChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -302,7 +302,7 @@ class _$_UserChanged implements _UserChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -317,7 +317,7 @@ class _$_UserChanged implements _UserChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -391,7 +391,7 @@ abstract class _$$_OpenPlayerCopyWith<$Res> {
           _$_OpenPlayer value, $Res Function(_$_OpenPlayer) then) =
       __$$_OpenPlayerCopyWithImpl<$Res>;
   @useResult
-  $Res call({Record record});
+  $Res call({Fragment record});
 }
 
 /// @nodoc
@@ -411,7 +411,7 @@ class __$$_OpenPlayerCopyWithImpl<$Res>
       record: null == record
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
-              as Record,
+              as Fragment,
     ));
   }
 }
@@ -422,7 +422,7 @@ class _$_OpenPlayer implements _OpenPlayer {
   const _$_OpenPlayer({required this.record});
 
   @override
-  final Record record;
+  final Fragment record;
 
   @override
   String toString() {
@@ -451,7 +451,7 @@ class _$_OpenPlayer implements _OpenPlayer {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -466,7 +466,7 @@ class _$_OpenPlayer implements _OpenPlayer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -481,7 +481,7 @@ class _$_OpenPlayer implements _OpenPlayer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -546,9 +546,9 @@ class _$_OpenPlayer implements _OpenPlayer {
 }
 
 abstract class _OpenPlayer implements HomeEvent {
-  const factory _OpenPlayer({required final Record record}) = _$_OpenPlayer;
+  const factory _OpenPlayer({required final Fragment record}) = _$_OpenPlayer;
 
-  Record get record;
+  Fragment get record;
   @JsonKey(ignore: true)
   _$$_OpenPlayerCopyWith<_$_OpenPlayer> get copyWith =>
       throw _privateConstructorUsedError;
@@ -594,7 +594,7 @@ class _$_ClosePlayer implements _ClosePlayer {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -609,7 +609,7 @@ class _$_ClosePlayer implements _ClosePlayer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -624,7 +624,7 @@ class _$_ClosePlayer implements _ClosePlayer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -759,7 +759,7 @@ class _$_OpenSubjectPlayer implements _OpenSubjectPlayer {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -774,7 +774,7 @@ class _$_OpenSubjectPlayer implements _OpenSubjectPlayer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -789,7 +789,7 @@ class _$_OpenSubjectPlayer implements _OpenSubjectPlayer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -903,7 +903,7 @@ class _$_CloseSubjectPlayer implements _CloseSubjectPlayer {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -918,7 +918,7 @@ class _$_CloseSubjectPlayer implements _CloseSubjectPlayer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -933,7 +933,7 @@ class _$_CloseSubjectPlayer implements _CloseSubjectPlayer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -1075,7 +1075,7 @@ class _$_OpenCoursePlayer implements _OpenCoursePlayer {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -1090,7 +1090,7 @@ class _$_OpenCoursePlayer implements _OpenCoursePlayer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -1105,7 +1105,7 @@ class _$_OpenCoursePlayer implements _OpenCoursePlayer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -1220,7 +1220,7 @@ class _$_CloseCoursePlayer implements _CloseCoursePlayer {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() userChanged,
-    required TResult Function(Record record) openPlayer,
+    required TResult Function(Fragment record) openPlayer,
     required TResult Function() closePlayer,
     required TResult Function(Subject subject) openSubjectPlayer,
     required TResult Function() closeSubjectPlayer,
@@ -1235,7 +1235,7 @@ class _$_CloseCoursePlayer implements _CloseCoursePlayer {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialize,
     TResult? Function()? userChanged,
-    TResult? Function(Record record)? openPlayer,
+    TResult? Function(Fragment record)? openPlayer,
     TResult? Function()? closePlayer,
     TResult? Function(Subject subject)? openSubjectPlayer,
     TResult? Function()? closeSubjectPlayer,
@@ -1250,7 +1250,7 @@ class _$_CloseCoursePlayer implements _CloseCoursePlayer {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? userChanged,
-    TResult Function(Record record)? openPlayer,
+    TResult Function(Fragment record)? openPlayer,
     TResult Function()? closePlayer,
     TResult Function(Subject subject)? openSubjectPlayer,
     TResult Function()? closeSubjectPlayer,
@@ -1329,7 +1329,7 @@ mixin _$HomeState {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)
@@ -1345,7 +1345,7 @@ mixin _$HomeState {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)?
@@ -1361,7 +1361,7 @@ mixin _$HomeState {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)?
@@ -1455,7 +1455,7 @@ class _$_StateNotInitialized implements _StateNotInitialized {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)
@@ -1474,7 +1474,7 @@ class _$_StateNotInitialized implements _StateNotInitialized {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)?
@@ -1493,7 +1493,7 @@ class _$_StateNotInitialized implements _StateNotInitialized {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)?
@@ -1558,7 +1558,7 @@ abstract class _$$_StateInitializationCompletedCopyWith<$Res> {
       bool isPlayerScreenOpened,
       bool isSubjectPlayerScreeinOpened,
       bool isCoursePlayerScreenOpened,
-      Record? record,
+      Fragment? record,
       Subject? subject,
       Course? course,
       bool? remote});
@@ -1610,7 +1610,7 @@ class __$$_StateInitializationCompletedCopyWithImpl<$Res>
       record: freezed == record
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
-              as Record?,
+              as Fragment?,
       subject: freezed == subject
           ? _value.subject
           : subject // ignore: cast_nullable_to_non_nullable
@@ -1652,7 +1652,7 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
   @override
   final bool isCoursePlayerScreenOpened;
   @override
-  final Record? record;
+  final Fragment? record;
   @override
   final Subject? subject;
   @override
@@ -1720,7 +1720,7 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)
@@ -1748,7 +1748,7 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)?
@@ -1776,7 +1776,7 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
             bool isPlayerScreenOpened,
             bool isSubjectPlayerScreeinOpened,
             bool isCoursePlayerScreenOpened,
-            Record? record,
+            Fragment? record,
             Subject? subject,
             Course? course,
             bool? remote)?
@@ -1840,7 +1840,7 @@ abstract class _StateInitializationCompleted implements HomeState {
       required final bool isPlayerScreenOpened,
       required final bool isSubjectPlayerScreeinOpened,
       required final bool isCoursePlayerScreenOpened,
-      final Record? record,
+      final Fragment? record,
       final Subject? subject,
       final Course? course,
       final bool? remote}) = _$_StateInitializationCompleted;
@@ -1850,7 +1850,7 @@ abstract class _StateInitializationCompleted implements HomeState {
   bool get isPlayerScreenOpened;
   bool get isSubjectPlayerScreeinOpened;
   bool get isCoursePlayerScreenOpened;
-  Record? get record;
+  Fragment? get record;
   Subject? get subject;
   Course? get course;
   bool? get remote;

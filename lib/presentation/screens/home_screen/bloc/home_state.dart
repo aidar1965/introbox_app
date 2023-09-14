@@ -10,7 +10,7 @@ class HomeState with _$HomeState {
       required bool isPlayerScreenOpened,
       required bool isSubjectPlayerScreeinOpened,
       required bool isCoursePlayerScreenOpened,
-      Record? record,
+      Fragment? record,
       Subject? subject,
       Course? course,
       bool? remote}) = _StateInitializationCompleted;

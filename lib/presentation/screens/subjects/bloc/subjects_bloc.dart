@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
 
+import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/subject.dart';
 import '../../../../domain/models/subject_category.dart';
 
@@ -11,10 +12,7 @@ part 'subjects_state.dart';
 part 'subjects_bloc.freezed.dart';
 
 class SubjectsBloc extends Bloc<SubjectsEvent, SubjectsState> {
-  SubjectsBloc(
-      {required this.subjectsRepository,
-      required this.subjectCategoryRepository})
-      : super(const _Pending()) {
+  SubjectsBloc() : super(const _Pending()) {
     on<SubjectsEvent>((event, emitter) => event.map(
           dataRequested: (event) => _dataRequested(event, emitter),
           newSubject: (_) => _newSubject(emitter),
@@ -33,8 +31,9 @@ class SubjectsBloc extends Bloc<SubjectsEvent, SubjectsState> {
     add(const SubjectsEvent.dataRequested());
   }
 
-  final ISubjectsRepository subjectsRepository;
-  final ISubjectCategoryRepository subjectCategoryRepository;
+  final ISubjectsRepository subjectsRepository = getIt<ISubjectsRepository>();
+  final ISubjectCategoryRepository subjectCategoryRepository =
+      getIt<ISubjectCategoryRepository>();
 
   List<Subject> subjects = [];
   List<SubjectCategory> categories = [];

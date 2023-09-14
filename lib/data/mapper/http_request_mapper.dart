@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:nanoid/nanoid.dart';
 import 'package:path/path.dart';
@@ -10,7 +9,7 @@ import 'package:http_parser/src/media_type.dart';
 
 import '../../domain/constants.dart';
 import '../../domain/models/course.dart';
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import '../../domain/models/subject.dart';
 import '../../domain/models/user.dart';
 
@@ -84,7 +83,7 @@ class HttpRequestMapper {
   }
 }
 
-String recordsToJson(List<Record> records) {
+String recordsToJson(List<Fragment> records) {
   final List<Map<String, dynamic>> recordMaps = [];
   for (var record in records) {
     final Map<String, dynamic> recordMap = {};

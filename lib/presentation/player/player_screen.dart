@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:moki_tutor/presentation/player/player_widget.dart';
 
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import '../screens/home_screen/bloc/home_bloc.dart';
 
 @RoutePage()
@@ -14,7 +14,7 @@ class PlayerScreen extends StatefulWidget {
   const PlayerScreen({Key? key, required this.record, this.remote = false})
       : super(key: key);
 
-  final Record record;
+  final Fragment record;
   final bool? remote;
 
   @override

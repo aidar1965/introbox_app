@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moki_tutor/presentation/player/player_widget.dart';
 
 import '../../domain/models/course.dart';
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import '../../domain/models/subject.dart';
 import '../screens/home_screen/bloc/home_bloc.dart';
 
@@ -27,12 +27,12 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   double leftOpacity = 0.0;
   double rightOpacity = 0.0;
 
-  late Record record;
+  late Fragment record;
   late bool isLast;
   late Subject subject;
   late bool isLastSubject;
 
-  late int numberOfRecords;
+  late int numberOfFragments;
   late int numberOfSubjects;
   int currentIndex = 0;
   int currentSubjectIndex = 0;
@@ -44,9 +44,9 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
 
     subject = widget.course.subjects.first;
     record = subject.records.first;
-    numberOfRecords = subject.records.length;
+    numberOfFragments = subject.records.length;
     numberOfSubjects = widget.course.subjects.length;
-    isLast = currentIndex == numberOfRecords - 1;
+    isLast = currentIndex == numberOfFragments - 1;
     isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
     if (widget.remote != null) {
       remote = widget.remote!;
@@ -77,12 +77,12 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() => rightOpacity = 0.0);
   }
 
-  void _playNextRecord() {
-    if (currentIndex < numberOfRecords - 1) {
+  void _playNextFragment() {
+    if (currentIndex < numberOfFragments - 1) {
       setState(() {
         currentIndex++;
         record = subject.records.elementAt(currentIndex);
-        isLast = currentIndex == numberOfRecords - 1;
+        isLast = currentIndex == numberOfFragments - 1;
       });
     } else {
       if (currentSubjectIndex < numberOfSubjects - 1) {
@@ -91,11 +91,11 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     }
   }
 
-  void _playPreviousRecord() {
+  void _playPreviousFragment() {
     setState(() {
       currentIndex--;
       record = subject.records.elementAt(currentIndex);
-      isLast = currentIndex == numberOfRecords - 1;
+      isLast = currentIndex == numberOfFragments - 1;
     });
   }
 
@@ -103,9 +103,9 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex++;
       subject = widget.course.subjects.elementAt(currentSubjectIndex);
-      numberOfRecords = subject.records.length;
+      numberOfFragments = subject.records.length;
       currentIndex = 0;
-      isLast = currentIndex == numberOfRecords - 1;
+      isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
       record = subject.records.first;
     });
@@ -115,9 +115,9 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex--;
       subject = widget.course.subjects.elementAt(currentSubjectIndex);
-      numberOfRecords = subject.records.length;
+      numberOfFragments = subject.records.length;
       currentIndex = 0;
-      isLast = currentIndex == numberOfRecords - 1;
+      isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
       record = subject.records.first;
     });
@@ -127,24 +127,24 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex = indx;
       subject = theSubject;
-      numberOfRecords = subject.records.length;
+      numberOfFragments = subject.records.length;
       currentIndex = 0;
-      isLast = currentIndex == numberOfRecords - 1;
+      isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
       record = subject.records.first;
     });
   }
 
-  void _playRecord(Subject theSubject, int theSubjectIndex, Record theRecord,
-      int theRecordIndex) {
+  void _playFragment(Subject theSubject, int theSubjectIndex,
+      Fragment theFragment, int theFragmentIndex) {
     setState(() {
       currentSubjectIndex = theSubjectIndex;
       subject = theSubject;
-      numberOfRecords = subject.records.length;
-      currentIndex = theRecordIndex;
-      isLast = currentIndex == numberOfRecords - 1;
+      numberOfFragments = subject.records.length;
+      currentIndex = theFragmentIndex;
+      isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
-      record = theRecord;
+      record = theFragment;
     });
   }
 
@@ -226,7 +226,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                                 subject: subject,
                                 isLast: isLast,
                                 onEnd: () {
-                                  _playNextRecord();
+                                  _playNextFragment();
                                 }),
                           ),
                         ),
@@ -259,7 +259,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                             child: const Icon(Icons.keyboard_arrow_right,
                                 color: Colors.black, size: 48),
                             onPressed: () {
-                              _playNextRecord();
+                              _playNextFragment();
                             },
                           )
                         : const SizedBox(),
@@ -322,7 +322,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                               size: 48,
                             ),
                             onPressed: () {
-                              _playPreviousRecord();
+                              _playPreviousFragment();
                             },
                           )
                         : const SizedBox(),
@@ -383,7 +383,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                         itemBuilder: (BuildContext context, int ind) {
                           var therecord = thesubject.records.elementAt(ind);
                           return GestureDetector(
-                              onTap: () => _playRecord(
+                              onTap: () => _playFragment(
                                   thesubject, index, therecord, ind),
                               child: MouseRegion(
                                   cursor: SystemMouseCursors.click,

@@ -9,6 +9,7 @@ import 'package:moki_tutor/domain/models/course.dart';
 import 'package:moki_tutor/domain/models/subject_category.dart';
 import 'package:nanoid/nanoid.dart';
 
+import '../../../../../domain/locator/locator.dart';
 import '../../../../../domain/models/course_category.dart';
 import '../../../../../domain/models/subject.dart';
 
@@ -17,12 +18,7 @@ part 'new_course_state.dart';
 part 'new_course_bloc.freezed.dart';
 
 class NewCourseBloc extends Bloc<NewCourseEvent, NewCourseState> {
-  NewCourseBloc(
-      {required this.subjectsRepository,
-      required this.coursesRepository,
-      required this.courseCategoryRepository,
-      required this.subjectCategoryRepository})
-      : super(const _Pending()) {
+  NewCourseBloc() : super(const _Pending()) {
     on<NewCourseEvent>((event, emitter) => event.map(
           dataRequested: (event) => _dataRequested(event, emitter),
           addCourseCategory: (event) => _addCourseCategory(event, emitter),
@@ -44,10 +40,12 @@ class NewCourseBloc extends Bloc<NewCourseEvent, NewCourseState> {
     add(const NewCourseEvent.dataRequested());
   }
 
-  final ICoursesRepository coursesRepository;
-  final ICourseCategoryRepository courseCategoryRepository;
-  final ISubjectsRepository subjectsRepository;
-  final ISubjectCategoryRepository subjectCategoryRepository;
+  final ICoursesRepository coursesRepository = getIt<ICoursesRepository>();
+  final ICourseCategoryRepository courseCategoryRepository =
+      getIt<ICourseCategoryRepository>();
+  final ISubjectsRepository subjectsRepository = getIt<ISubjectsRepository>();
+  final ISubjectCategoryRepository subjectCategoryRepository =
+      getIt<ISubjectCategoryRepository>();
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -91,8 +89,9 @@ class NewCourseBloc extends Bloc<NewCourseEvent, NewCourseState> {
   void _addCourseCategory(_AddCourseCategory event, Emitter emitter) {
     var nanoId = nanoid(12);
     emitter(const NewCourseState.pending());
-    courseCategoryRepository
-        .addCategory(CourseCategory(name: event.name, id: nanoId));
+    courseCategoryRepository.addCategory(
+      event.name,
+    );
     emitter(NewCourseState.dataReceived(
         courseCategories: courseCategories,
         subjects: selectedSubjects,

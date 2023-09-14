@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:moki_tutor/domain/models/record_category.dart';
+import 'package:moki_tutor/domain/models/fragment_category.dart';
 import 'package:path/path.dart';
 
 @immutable
-class Record extends Equatable {
-  final String id;
+class Fragment extends Equatable {
+  final int id;
 
   final String title;
 
@@ -22,7 +22,7 @@ class Record extends Equatable {
 
   final String audioPath;
 
-  final List<RecordCategory>? categories;
+  final List<FragmentCategory>? categories;
 
   final bool isPublished;
 
@@ -30,7 +30,7 @@ class Record extends Equatable {
 
   final Map<String, int>? images;
 
-  const Record(
+  const Fragment(
       {required this.id,
       required this.title,
       this.description,
@@ -43,17 +43,17 @@ class Record extends Equatable {
       required this.date,
       this.images});
 
-  Record copyWith(
+  Fragment copyWith(
       {String? title,
       String? description,
       String? imagePath,
       int? duration,
       String? folder,
       String? audioPath,
-      List<RecordCategory>? categories,
+      List<FragmentCategory>? categories,
       bool? isPublished,
       Map<String, int>? images}) {
-    return Record(
+    return Fragment(
         id: id,
         title: title ?? this.title,
         description: description ?? this.description,

@@ -6,37 +6,36 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/di/di.dart';
-import '../../../../domain/models/record_category.dart';
+import '../../../../domain/models/fragment_category.dart';
 import 'bloc/edit_record_bloc.dart';
 import '../../../player/player_widget.dart';
 import '../../../widgets/add_image_widget.dart';
 import '../../../widgets/images_list.dart';
 
-import '../../../../domain/models/record.dart';
+import '../../../../domain/models/fragment.dart';
 import '../../widgets/add_category_form.dart';
 import '../../widgets/category_list.dart';
 
 @RoutePage()
-class EditRecordScreen extends StatefulWidget {
-  const EditRecordScreen({
+class EditFragmentScreen extends StatefulWidget {
+  const EditFragmentScreen({
     Key? key,
     required this.record,
   }) : super(key: key);
 
-  final Record record;
+  final Fragment record;
 
   @override
-  State<EditRecordScreen> createState() => _EditRecordScreenState();
+  State<EditFragmentScreen> createState() => _EditFragmentScreenState();
 }
 
-class _EditRecordScreenState extends State<EditRecordScreen> {
+class _EditFragmentScreenState extends State<EditFragmentScreen> {
   @override
   void dispose() {
     super.dispose();
   }
 
-  late Record _record;
+  late Fragment _record;
   late Map<String, int> imagesMap;
 
   @override
@@ -49,14 +48,14 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => Di.of(context).buildEditRecordrBloc(widget.record),
-      child: BlocConsumer<EditRecordBloc, EditRecordState>(
+      create: (context) => EditFragmentBloc(record: widget.record),
+      child: BlocConsumer<EditFragmentBloc, EditFragmentState>(
           listener: (context, state) {
             // TODO: implement listener
           },
           builder: (context, state) => state.map(
               pending: (_) => const _PendingView(),
-              dataReceived: (state) => EditRecordView(
+              dataReceived: (state) => EditFragmentView(
                   record: _record,
                   categories: state.categoties,
                   selectedCategories: state.selectedCategoties))),
@@ -64,26 +63,26 @@ class _EditRecordScreenState extends State<EditRecordScreen> {
   }
 }
 
-class EditRecordView extends StatefulWidget {
-  const EditRecordView({
+class EditFragmentView extends StatefulWidget {
+  const EditFragmentView({
     Key? key,
     required this.record,
     required this.categories,
     required this.selectedCategories,
   }) : super(key: key);
 
-  final Record record;
-  final List<RecordCategory> categories;
-  final List<RecordCategory> selectedCategories;
+  final Fragment record;
+  final List<FragmentCategory> categories;
+  final List<FragmentCategory> selectedCategories;
 
   @override
-  State<EditRecordView> createState() => _EditRecordViewState();
+  State<EditFragmentView> createState() => _EditFragmentViewState();
 }
 
-class _EditRecordViewState extends State<EditRecordView> {
+class _EditFragmentViewState extends State<EditFragmentView> {
   final ScrollController secondScrollController = ScrollController();
   late FilePickerResult? file;
-  late Record _record;
+  late Fragment _record;
   late Map<String, int> imagesMap;
   final AudioPlayer player = AudioPlayer();
   late final TextEditingController titleController;
@@ -136,8 +135,8 @@ class _EditRecordViewState extends State<EditRecordView> {
                       categories: widget.categories,
                       selectedCategories: widget.selectedCategories,
                       selectCategory: (category) =>
-                          BlocProvider.of<EditRecordBloc>(context)
-                              .add(EditRecordEvent.selectCategory(category)),
+                          BlocProvider.of<EditFragmentBloc>(context)
+                              .add(EditFragmentEvent.selectCategory(category)),
                     ),
                     const SizedBox(
                       height: 20,
@@ -154,8 +153,9 @@ class _EditRecordViewState extends State<EditRecordView> {
 
                               if (categoryName != null) {
                                 // ignore: use_build_context_synchronously
-                                BlocProvider.of<EditRecordBloc>(context).add(
-                                    EditRecordEvent.addCategory(categoryName));
+                                BlocProvider.of<EditFragmentBloc>(context).add(
+                                    EditFragmentEvent.addCategory(
+                                        categoryName));
                               }
                             },
                             child: const Text('Добавить категорию')),
@@ -196,8 +196,8 @@ class _EditRecordViewState extends State<EditRecordView> {
                     width: 200,
                     child: ElevatedButton(
                         onPressed: () {
-                          BlocProvider.of<EditRecordBloc>(context).add(
-                              EditRecordEvent.saveRecord(
+                          BlocProvider.of<EditFragmentBloc>(context).add(
+                              EditFragmentEvent.saveFragment(
                                   record: _record,
                                   title: titleController.text,
                                   description: descriptionController.text,
@@ -241,7 +241,7 @@ class _AudioImageView extends StatefulWidget {
     required this.onFileSelect,
   }) : super(key: key);
 
-  final Record record;
+  final Fragment record;
 
   final Function(FilePickerResult selectedFile) onFileSelect;
 
@@ -256,7 +256,7 @@ class _AudioImageViewState extends State<_AudioImageView> {
 
   FilePickerResult? file;
   ScrollController secondScrollController = ScrollController();
-  late Record _record;
+  late Fragment _record;
 
   @override
   void initState() {

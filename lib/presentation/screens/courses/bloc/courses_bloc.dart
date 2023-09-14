@@ -8,6 +8,7 @@ import 'package:moki_tutor/domain/interfaces/i_courses_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
+import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/course.dart';
 import '../../../../domain/models/course_category.dart';
 
@@ -16,12 +17,7 @@ part 'courses_state.dart';
 part 'courses_bloc.freezed.dart';
 
 class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
-  CoursesBloc(
-      {required this.coursesRepository,
-      required this.subjectsRepository,
-      required this.courseCategoryRepository,
-      required this.userRepository})
-      : super(const _Pending()) {
+  CoursesBloc() : super(const _Pending()) {
     on<CoursesEvent>((event, emitter) => event.map(
           initialDataRequested: (event) =>
               _initialDataRequested(event, emitter),
@@ -50,10 +46,11 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
     log('courses bloc opened');
   }
 
-  final ICoursesRepository coursesRepository;
-  final ISubjectsRepository subjectsRepository;
-  final ICourseCategoryRepository courseCategoryRepository;
-  final IUserRepository userRepository;
+  final ICoursesRepository coursesRepository = getIt<ICoursesRepository>();
+  final ISubjectsRepository subjectsRepository = getIt<ISubjectsRepository>();
+  final ICourseCategoryRepository courseCategoryRepository =
+      getIt<ICourseCategoryRepository>();
+  final IUserRepository userRepository = getIt<IUserRepository>();
 
   List<Course> courses = [];
   List<Course> publishedCourses = [];

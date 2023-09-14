@@ -5,18 +5,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/data/api/request_exception.dart';
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
+import '../../../../domain/locator/locator.dart';
+
 part 'login_bloc.freezed.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required this.userRepository}) : super(const _Initial()) {
+  LoginBloc() : super(const _Initial()) {
     on<LoginEvent>((event, emitter) => event.map(
         phoneConfirmed: (event) => _phoneConfirmed(event, emitter),
         loginWithOtp: (event) => _loginWithOtp(event, emitter)));
   }
 
-  final IUserRepository userRepository;
+  final IUserRepository userRepository = getIt<IUserRepository>();
 
   void _phoneConfirmed(_PhoneConfirmed event, Emitter emitter) async {
     emitter(const LoginState.initial());

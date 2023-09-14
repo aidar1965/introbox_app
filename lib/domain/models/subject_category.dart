@@ -3,13 +3,13 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class SubjectCategory extends Equatable {
-  final String id;
+  final int id;
 
   final String name;
   const SubjectCategory({required this.name, required this.id});
 
   SubjectCategory copyWith({
-    String? id,
+    int? id,
     String? name,
   }) {
     return SubjectCategory(

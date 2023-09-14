@@ -19,14 +19,14 @@ mixin _$AssemblingEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -37,13 +37,13 @@ mixin _$AssemblingEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -54,13 +54,13 @@ mixin _$AssemblingEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -76,10 +76,10 @@ mixin _$AssemblingEvent {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -93,10 +93,10 @@ mixin _$AssemblingEvent {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -110,10 +110,10 @@ mixin _$AssemblingEvent {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -181,14 +181,14 @@ class _$_FetchInitialData implements _FetchInitialData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -202,13 +202,13 @@ class _$_FetchInitialData implements _FetchInitialData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -222,13 +222,13 @@ class _$_FetchInitialData implements _FetchInitialData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -250,10 +250,10 @@ class _$_FetchInitialData implements _FetchInitialData {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -270,10 +270,10 @@ class _$_FetchInitialData implements _FetchInitialData {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -290,10 +290,10 @@ class _$_FetchInitialData implements _FetchInitialData {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -318,7 +318,7 @@ abstract class _$$_SelectCategoryCopyWith<$Res> {
           _$_SelectCategory value, $Res Function(_$_SelectCategory) then) =
       __$$_SelectCategoryCopyWithImpl<$Res>;
   @useResult
-  $Res call({RecordCategory category});
+  $Res call({FragmentCategory category});
 }
 
 /// @nodoc
@@ -338,7 +338,7 @@ class __$$_SelectCategoryCopyWithImpl<$Res>
       null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as RecordCategory,
+              as FragmentCategory,
     ));
   }
 }
@@ -349,7 +349,7 @@ class _$_SelectCategory implements _SelectCategory {
   const _$_SelectCategory(this.category);
 
   @override
-  final RecordCategory category;
+  final FragmentCategory category;
 
   @override
   String toString() {
@@ -378,14 +378,14 @@ class _$_SelectCategory implements _SelectCategory {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -399,13 +399,13 @@ class _$_SelectCategory implements _SelectCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -419,13 +419,13 @@ class _$_SelectCategory implements _SelectCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -447,10 +447,10 @@ class _$_SelectCategory implements _SelectCategory {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -467,10 +467,10 @@ class _$_SelectCategory implements _SelectCategory {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -487,10 +487,10 @@ class _$_SelectCategory implements _SelectCategory {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -506,10 +506,10 @@ class _$_SelectCategory implements _SelectCategory {
 }
 
 abstract class _SelectCategory implements AssemblingEvent {
-  const factory _SelectCategory(final RecordCategory category) =
+  const factory _SelectCategory(final FragmentCategory category) =
       _$_SelectCategory;
 
-  RecordCategory get category;
+  FragmentCategory get category;
   @JsonKey(ignore: true)
   _$$_SelectCategoryCopyWith<_$_SelectCategory> get copyWith =>
       throw _privateConstructorUsedError;
@@ -582,14 +582,14 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -603,13 +603,13 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -623,13 +623,13 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -651,10 +651,10 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -671,10 +671,10 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -691,10 +691,10 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -785,14 +785,14 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -806,13 +806,13 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -826,13 +826,13 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -854,10 +854,10 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -874,10 +874,10 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -894,10 +894,10 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -922,20 +922,20 @@ abstract class _AddSubjectCategory implements AssemblingEvent {
 }
 
 /// @nodoc
-abstract class _$$_AddRecordCopyWith<$Res> {
-  factory _$$_AddRecordCopyWith(
-          _$_AddRecord value, $Res Function(_$_AddRecord) then) =
-      __$$_AddRecordCopyWithImpl<$Res>;
+abstract class _$$_AddFragmentCopyWith<$Res> {
+  factory _$$_AddFragmentCopyWith(
+          _$_AddFragment value, $Res Function(_$_AddFragment) then) =
+      __$$_AddFragmentCopyWithImpl<$Res>;
   @useResult
-  $Res call({Record record});
+  $Res call({Fragment record});
 }
 
 /// @nodoc
-class __$$_AddRecordCopyWithImpl<$Res>
-    extends _$AssemblingEventCopyWithImpl<$Res, _$_AddRecord>
-    implements _$$_AddRecordCopyWith<$Res> {
-  __$$_AddRecordCopyWithImpl(
-      _$_AddRecord _value, $Res Function(_$_AddRecord) _then)
+class __$$_AddFragmentCopyWithImpl<$Res>
+    extends _$AssemblingEventCopyWithImpl<$Res, _$_AddFragment>
+    implements _$$_AddFragmentCopyWith<$Res> {
+  __$$_AddFragmentCopyWithImpl(
+      _$_AddFragment _value, $Res Function(_$_AddFragment) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -943,33 +943,33 @@ class __$$_AddRecordCopyWithImpl<$Res>
   $Res call({
     Object? record = null,
   }) {
-    return _then(_$_AddRecord(
+    return _then(_$_AddFragment(
       null == record
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
-              as Record,
+              as Fragment,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_AddRecord implements _AddRecord {
-  const _$_AddRecord(this.record);
+class _$_AddFragment implements _AddFragment {
+  const _$_AddFragment(this.record);
 
   @override
-  final Record record;
+  final Fragment record;
 
   @override
   String toString() {
-    return 'AssemblingEvent.addRecord(record: $record)';
+    return 'AssemblingEvent.addFragment(record: $record)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddRecord &&
+            other is _$_AddFragment &&
             (identical(other.record, record) || other.record == record));
   }
 
@@ -979,61 +979,61 @@ class _$_AddRecord implements _AddRecord {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddRecordCopyWith<_$_AddRecord> get copyWith =>
-      __$$_AddRecordCopyWithImpl<_$_AddRecord>(this, _$identity);
+  _$$_AddFragmentCopyWith<_$_AddFragment> get copyWith =>
+      __$$_AddFragmentCopyWithImpl<_$_AddFragment>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
   }) {
-    return addRecord(record);
+    return addFragment(record);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
   }) {
-    return addRecord?.call(record);
+    return addFragment?.call(record);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -1041,8 +1041,8 @@ class _$_AddRecord implements _AddRecord {
     TResult Function(String title, String? description)? saveSubject,
     required TResult orElse(),
   }) {
-    if (addRecord != null) {
-      return addRecord(record);
+    if (addFragment != null) {
+      return addFragment(record);
     }
     return orElse();
   }
@@ -1055,17 +1055,17 @@ class _$_AddRecord implements _AddRecord {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
   }) {
-    return addRecord(this);
+    return addFragment(this);
   }
 
   @override
@@ -1075,17 +1075,17 @@ class _$_AddRecord implements _AddRecord {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
   }) {
-    return addRecord?.call(this);
+    return addFragment?.call(this);
   }
 
   @override
@@ -1095,10 +1095,10 @@ class _$_AddRecord implements _AddRecord {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -1106,19 +1106,19 @@ class _$_AddRecord implements _AddRecord {
     TResult Function(_SaveSubject value)? saveSubject,
     required TResult orElse(),
   }) {
-    if (addRecord != null) {
-      return addRecord(this);
+    if (addFragment != null) {
+      return addFragment(this);
     }
     return orElse();
   }
 }
 
-abstract class _AddRecord implements AssemblingEvent {
-  const factory _AddRecord(final Record record) = _$_AddRecord;
+abstract class _AddFragment implements AssemblingEvent {
+  const factory _AddFragment(final Fragment record) = _$_AddFragment;
 
-  Record get record;
+  Fragment get record;
   @JsonKey(ignore: true)
-  _$$_AddRecordCopyWith<_$_AddRecord> get copyWith =>
+  _$$_AddFragmentCopyWith<_$_AddFragment> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1188,14 +1188,14 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -1209,13 +1209,13 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -1229,13 +1229,13 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -1257,10 +1257,10 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -1277,10 +1277,10 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -1297,10 +1297,10 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -1400,14 +1400,14 @@ class _$_OnReorder implements _OnReorder {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -1421,13 +1421,13 @@ class _$_OnReorder implements _OnReorder {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -1441,13 +1441,13 @@ class _$_OnReorder implements _OnReorder {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -1469,10 +1469,10 @@ class _$_OnReorder implements _OnReorder {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -1489,10 +1489,10 @@ class _$_OnReorder implements _OnReorder {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -1509,10 +1509,10 @@ class _$_OnReorder implements _OnReorder {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -1539,20 +1539,20 @@ abstract class _OnReorder implements AssemblingEvent {
 }
 
 /// @nodoc
-abstract class _$$_PlayRecordCopyWith<$Res> {
-  factory _$$_PlayRecordCopyWith(
-          _$_PlayRecord value, $Res Function(_$_PlayRecord) then) =
-      __$$_PlayRecordCopyWithImpl<$Res>;
+abstract class _$$_PlayFragmentCopyWith<$Res> {
+  factory _$$_PlayFragmentCopyWith(
+          _$_PlayFragment value, $Res Function(_$_PlayFragment) then) =
+      __$$_PlayFragmentCopyWithImpl<$Res>;
   @useResult
-  $Res call({Record record});
+  $Res call({Fragment record});
 }
 
 /// @nodoc
-class __$$_PlayRecordCopyWithImpl<$Res>
-    extends _$AssemblingEventCopyWithImpl<$Res, _$_PlayRecord>
-    implements _$$_PlayRecordCopyWith<$Res> {
-  __$$_PlayRecordCopyWithImpl(
-      _$_PlayRecord _value, $Res Function(_$_PlayRecord) _then)
+class __$$_PlayFragmentCopyWithImpl<$Res>
+    extends _$AssemblingEventCopyWithImpl<$Res, _$_PlayFragment>
+    implements _$$_PlayFragmentCopyWith<$Res> {
+  __$$_PlayFragmentCopyWithImpl(
+      _$_PlayFragment _value, $Res Function(_$_PlayFragment) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1560,33 +1560,33 @@ class __$$_PlayRecordCopyWithImpl<$Res>
   $Res call({
     Object? record = null,
   }) {
-    return _then(_$_PlayRecord(
+    return _then(_$_PlayFragment(
       null == record
           ? _value.record
           : record // ignore: cast_nullable_to_non_nullable
-              as Record,
+              as Fragment,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_PlayRecord implements _PlayRecord {
-  const _$_PlayRecord(this.record);
+class _$_PlayFragment implements _PlayFragment {
+  const _$_PlayFragment(this.record);
 
   @override
-  final Record record;
+  final Fragment record;
 
   @override
   String toString() {
-    return 'AssemblingEvent.playRecord(record: $record)';
+    return 'AssemblingEvent.playFragment(record: $record)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PlayRecord &&
+            other is _$_PlayFragment &&
             (identical(other.record, record) || other.record == record));
   }
 
@@ -1596,61 +1596,61 @@ class _$_PlayRecord implements _PlayRecord {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PlayRecordCopyWith<_$_PlayRecord> get copyWith =>
-      __$$_PlayRecordCopyWithImpl<_$_PlayRecord>(this, _$identity);
+  _$$_PlayFragmentCopyWith<_$_PlayFragment> get copyWith =>
+      __$$_PlayFragmentCopyWithImpl<_$_PlayFragment>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
   }) {
-    return playRecord(record);
+    return playFragment(record);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
   }) {
-    return playRecord?.call(record);
+    return playFragment?.call(record);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -1658,8 +1658,8 @@ class _$_PlayRecord implements _PlayRecord {
     TResult Function(String title, String? description)? saveSubject,
     required TResult orElse(),
   }) {
-    if (playRecord != null) {
-      return playRecord(record);
+    if (playFragment != null) {
+      return playFragment(record);
     }
     return orElse();
   }
@@ -1672,17 +1672,17 @@ class _$_PlayRecord implements _PlayRecord {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
   }) {
-    return playRecord(this);
+    return playFragment(this);
   }
 
   @override
@@ -1692,17 +1692,17 @@ class _$_PlayRecord implements _PlayRecord {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
   }) {
-    return playRecord?.call(this);
+    return playFragment?.call(this);
   }
 
   @override
@@ -1712,10 +1712,10 @@ class _$_PlayRecord implements _PlayRecord {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -1723,19 +1723,19 @@ class _$_PlayRecord implements _PlayRecord {
     TResult Function(_SaveSubject value)? saveSubject,
     required TResult orElse(),
   }) {
-    if (playRecord != null) {
-      return playRecord(this);
+    if (playFragment != null) {
+      return playFragment(this);
     }
     return orElse();
   }
 }
 
-abstract class _PlayRecord implements AssemblingEvent {
-  const factory _PlayRecord(final Record record) = _$_PlayRecord;
+abstract class _PlayFragment implements AssemblingEvent {
+  const factory _PlayFragment(final Fragment record) = _$_PlayFragment;
 
-  Record get record;
+  Fragment get record;
   @JsonKey(ignore: true)
-  _$$_PlayRecordCopyWith<_$_PlayRecord> get copyWith =>
+  _$$_PlayFragmentCopyWith<_$_PlayFragment> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1778,14 +1778,14 @@ class _$_StartTimer implements _StartTimer {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -1799,13 +1799,13 @@ class _$_StartTimer implements _StartTimer {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -1819,13 +1819,13 @@ class _$_StartTimer implements _StartTimer {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -1847,10 +1847,10 @@ class _$_StartTimer implements _StartTimer {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -1867,10 +1867,10 @@ class _$_StartTimer implements _StartTimer {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -1887,10 +1887,10 @@ class _$_StartTimer implements _StartTimer {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -1948,14 +1948,14 @@ class _$_StopTimer implements _StopTimer {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -1969,13 +1969,13 @@ class _$_StopTimer implements _StopTimer {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -1989,13 +1989,13 @@ class _$_StopTimer implements _StopTimer {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -2017,10 +2017,10 @@ class _$_StopTimer implements _StopTimer {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -2037,10 +2037,10 @@ class _$_StopTimer implements _StopTimer {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -2057,10 +2057,10 @@ class _$_StopTimer implements _StopTimer {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -2118,14 +2118,14 @@ class _$_ClearTimer implements _ClearTimer {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -2139,13 +2139,13 @@ class _$_ClearTimer implements _ClearTimer {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -2159,13 +2159,13 @@ class _$_ClearTimer implements _ClearTimer {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -2187,10 +2187,10 @@ class _$_ClearTimer implements _ClearTimer {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -2207,10 +2207,10 @@ class _$_ClearTimer implements _ClearTimer {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -2227,10 +2227,10 @@ class _$_ClearTimer implements _ClearTimer {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -2288,14 +2288,14 @@ class _$_ResendData implements _ResendData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -2309,13 +2309,13 @@ class _$_ResendData implements _ResendData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -2329,13 +2329,13 @@ class _$_ResendData implements _ResendData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -2357,10 +2357,10 @@ class _$_ResendData implements _ResendData {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -2377,10 +2377,10 @@ class _$_ResendData implements _ResendData {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -2397,10 +2397,10 @@ class _$_ResendData implements _ResendData {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -2493,14 +2493,14 @@ class _$_SaveSubject implements _SaveSubject {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() fetchInitialData,
-    required TResult Function(RecordCategory category) selectCategory,
+    required TResult Function(FragmentCategory category) selectCategory,
     required TResult Function(SubjectCategory subjectCategory)
         selectSubjectCategory,
     required TResult Function(String name) addSubjectCategory,
-    required TResult Function(Record record) addRecord,
+    required TResult Function(Fragment record) addFragment,
     required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
     required TResult Function(int oldIndex, int newIndex) onReorder,
-    required TResult Function(Record record) playRecord,
+    required TResult Function(Fragment record) playFragment,
     required TResult Function() startTimer,
     required TResult Function() stopTimer,
     required TResult Function() clearTimer,
@@ -2514,13 +2514,13 @@ class _$_SaveSubject implements _SaveSubject {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? fetchInitialData,
-    TResult? Function(RecordCategory category)? selectCategory,
+    TResult? Function(FragmentCategory category)? selectCategory,
     TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult? Function(String name)? addSubjectCategory,
-    TResult? Function(Record record)? addRecord,
+    TResult? Function(Fragment record)? addFragment,
     TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult? Function(int oldIndex, int newIndex)? onReorder,
-    TResult? Function(Record record)? playRecord,
+    TResult? Function(Fragment record)? playFragment,
     TResult? Function()? startTimer,
     TResult? Function()? stopTimer,
     TResult? Function()? clearTimer,
@@ -2534,13 +2534,13 @@ class _$_SaveSubject implements _SaveSubject {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? fetchInitialData,
-    TResult Function(RecordCategory category)? selectCategory,
+    TResult Function(FragmentCategory category)? selectCategory,
     TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
     TResult Function(String name)? addSubjectCategory,
-    TResult Function(Record record)? addRecord,
+    TResult Function(Fragment record)? addFragment,
     TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
     TResult Function(int oldIndex, int newIndex)? onReorder,
-    TResult Function(Record record)? playRecord,
+    TResult Function(Fragment record)? playFragment,
     TResult Function()? startTimer,
     TResult Function()? stopTimer,
     TResult Function()? clearTimer,
@@ -2562,10 +2562,10 @@ class _$_SaveSubject implements _SaveSubject {
     required TResult Function(_SelectSubjectCategory value)
         selectSubjectCategory,
     required TResult Function(_AddSubjectCategory value) addSubjectCategory,
-    required TResult Function(_AddRecord value) addRecord,
+    required TResult Function(_AddFragment value) addFragment,
     required TResult Function(_SetPlayerStatus value) setPlayerStatus,
     required TResult Function(_OnReorder value) onReorder,
-    required TResult Function(_PlayRecord value) playRecord,
+    required TResult Function(_PlayFragment value) playFragment,
     required TResult Function(_StartTimer value) startTimer,
     required TResult Function(_StopTimer value) stopTimer,
     required TResult Function(_ClearTimer value) clearTimer,
@@ -2582,10 +2582,10 @@ class _$_SaveSubject implements _SaveSubject {
     TResult? Function(_SelectCategory value)? selectCategory,
     TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult? Function(_AddRecord value)? addRecord,
+    TResult? Function(_AddFragment value)? addFragment,
     TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult? Function(_OnReorder value)? onReorder,
-    TResult? Function(_PlayRecord value)? playRecord,
+    TResult? Function(_PlayFragment value)? playFragment,
     TResult? Function(_StartTimer value)? startTimer,
     TResult? Function(_StopTimer value)? stopTimer,
     TResult? Function(_ClearTimer value)? clearTimer,
@@ -2602,10 +2602,10 @@ class _$_SaveSubject implements _SaveSubject {
     TResult Function(_SelectCategory value)? selectCategory,
     TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
     TResult Function(_AddSubjectCategory value)? addSubjectCategory,
-    TResult Function(_AddRecord value)? addRecord,
+    TResult Function(_AddFragment value)? addFragment,
     TResult Function(_SetPlayerStatus value)? setPlayerStatus,
     TResult Function(_OnReorder value)? onReorder,
-    TResult Function(_PlayRecord value)? playRecord,
+    TResult Function(_PlayFragment value)? playFragment,
     TResult Function(_StartTimer value)? startTimer,
     TResult Function(_StopTimer value)? stopTimer,
     TResult Function(_ClearTimer value)? clearTimer,
@@ -2638,14 +2638,14 @@ mixin _$AssemblingState {
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)
         dataReceived,
   }) =>
@@ -2654,14 +2654,14 @@ mixin _$AssemblingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
     TResult? Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)?
         dataReceived,
   }) =>
@@ -2670,14 +2670,14 @@ mixin _$AssemblingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
     TResult Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)?
         dataReceived,
     required TResult orElse(),
@@ -2761,14 +2761,14 @@ class _$_Pending implements _Pending {
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)
         dataReceived,
   }) {
@@ -2780,14 +2780,14 @@ class _$_Pending implements _Pending {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
     TResult? Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)?
         dataReceived,
   }) {
@@ -2799,14 +2799,14 @@ class _$_Pending implements _Pending {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
     TResult Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)?
         dataReceived,
     required TResult orElse(),
@@ -2860,14 +2860,14 @@ abstract class _$$_DataReceivedCopyWith<$Res> {
       __$$_DataReceivedCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<RecordCategory>? categories,
-      List<RecordCategory>? selectedCategories,
+      {List<FragmentCategory>? categories,
+      List<FragmentCategory>? selectedCategories,
       List<SubjectCategory> subjectCategories,
       List<SubjectCategory> selectedSubjectCategories,
-      List<Record>? records,
-      List<Record> subjectRecords,
+      List<Fragment>? records,
+      List<Fragment> subjectFragments,
       PlayerStatus? playerStatus,
-      Record? playingRecord,
+      Fragment? playingFragment,
       int? secondsPassed});
 }
 
@@ -2887,20 +2887,20 @@ class __$$_DataReceivedCopyWithImpl<$Res>
     Object? subjectCategories = null,
     Object? selectedSubjectCategories = null,
     Object? records = freezed,
-    Object? subjectRecords = null,
+    Object? subjectFragments = null,
     Object? playerStatus = freezed,
-    Object? playingRecord = freezed,
+    Object? playingFragment = freezed,
     Object? secondsPassed = freezed,
   }) {
     return _then(_$_DataReceived(
       categories: freezed == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<RecordCategory>?,
+              as List<FragmentCategory>?,
       selectedCategories: freezed == selectedCategories
           ? _value._selectedCategories
           : selectedCategories // ignore: cast_nullable_to_non_nullable
-              as List<RecordCategory>?,
+              as List<FragmentCategory>?,
       subjectCategories: null == subjectCategories
           ? _value._subjectCategories
           : subjectCategories // ignore: cast_nullable_to_non_nullable
@@ -2912,19 +2912,19 @@ class __$$_DataReceivedCopyWithImpl<$Res>
       records: freezed == records
           ? _value._records
           : records // ignore: cast_nullable_to_non_nullable
-              as List<Record>?,
-      subjectRecords: null == subjectRecords
-          ? _value._subjectRecords
-          : subjectRecords // ignore: cast_nullable_to_non_nullable
-              as List<Record>,
+              as List<Fragment>?,
+      subjectFragments: null == subjectFragments
+          ? _value._subjectFragments
+          : subjectFragments // ignore: cast_nullable_to_non_nullable
+              as List<Fragment>,
       playerStatus: freezed == playerStatus
           ? _value.playerStatus
           : playerStatus // ignore: cast_nullable_to_non_nullable
               as PlayerStatus?,
-      playingRecord: freezed == playingRecord
-          ? _value.playingRecord
-          : playingRecord // ignore: cast_nullable_to_non_nullable
-              as Record?,
+      playingFragment: freezed == playingFragment
+          ? _value.playingFragment
+          : playingFragment // ignore: cast_nullable_to_non_nullable
+              as Fragment?,
       secondsPassed: freezed == secondsPassed
           ? _value.secondsPassed
           : secondsPassed // ignore: cast_nullable_to_non_nullable
@@ -2937,25 +2937,25 @@ class __$$_DataReceivedCopyWithImpl<$Res>
 
 class _$_DataReceived implements _DataReceived {
   const _$_DataReceived(
-      {final List<RecordCategory>? categories,
-      final List<RecordCategory>? selectedCategories,
+      {final List<FragmentCategory>? categories,
+      final List<FragmentCategory>? selectedCategories,
       required final List<SubjectCategory> subjectCategories,
       required final List<SubjectCategory> selectedSubjectCategories,
-      final List<Record>? records,
-      required final List<Record> subjectRecords,
+      final List<Fragment>? records,
+      required final List<Fragment> subjectFragments,
       this.playerStatus,
-      this.playingRecord,
+      this.playingFragment,
       this.secondsPassed})
       : _categories = categories,
         _selectedCategories = selectedCategories,
         _subjectCategories = subjectCategories,
         _selectedSubjectCategories = selectedSubjectCategories,
         _records = records,
-        _subjectRecords = subjectRecords;
+        _subjectFragments = subjectFragments;
 
-  final List<RecordCategory>? _categories;
+  final List<FragmentCategory>? _categories;
   @override
-  List<RecordCategory>? get categories {
+  List<FragmentCategory>? get categories {
     final value = _categories;
     if (value == null) return null;
     if (_categories is EqualUnmodifiableListView) return _categories;
@@ -2963,9 +2963,9 @@ class _$_DataReceived implements _DataReceived {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<RecordCategory>? _selectedCategories;
+  final List<FragmentCategory>? _selectedCategories;
   @override
-  List<RecordCategory>? get selectedCategories {
+  List<FragmentCategory>? get selectedCategories {
     final value = _selectedCategories;
     if (value == null) return null;
     if (_selectedCategories is EqualUnmodifiableListView)
@@ -2992,9 +2992,9 @@ class _$_DataReceived implements _DataReceived {
     return EqualUnmodifiableListView(_selectedSubjectCategories);
   }
 
-  final List<Record>? _records;
+  final List<Fragment>? _records;
   @override
-  List<Record>? get records {
+  List<Fragment>? get records {
     final value = _records;
     if (value == null) return null;
     if (_records is EqualUnmodifiableListView) return _records;
@@ -3002,24 +3002,25 @@ class _$_DataReceived implements _DataReceived {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<Record> _subjectRecords;
+  final List<Fragment> _subjectFragments;
   @override
-  List<Record> get subjectRecords {
-    if (_subjectRecords is EqualUnmodifiableListView) return _subjectRecords;
+  List<Fragment> get subjectFragments {
+    if (_subjectFragments is EqualUnmodifiableListView)
+      return _subjectFragments;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_subjectRecords);
+    return EqualUnmodifiableListView(_subjectFragments);
   }
 
   @override
   final PlayerStatus? playerStatus;
   @override
-  final Record? playingRecord;
+  final Fragment? playingFragment;
   @override
   final int? secondsPassed;
 
   @override
   String toString() {
-    return 'AssemblingState.dataReceived(categories: $categories, selectedCategories: $selectedCategories, subjectCategories: $subjectCategories, selectedSubjectCategories: $selectedSubjectCategories, records: $records, subjectRecords: $subjectRecords, playerStatus: $playerStatus, playingRecord: $playingRecord, secondsPassed: $secondsPassed)';
+    return 'AssemblingState.dataReceived(categories: $categories, selectedCategories: $selectedCategories, subjectCategories: $subjectCategories, selectedSubjectCategories: $selectedSubjectCategories, records: $records, subjectFragments: $subjectFragments, playerStatus: $playerStatus, playingFragment: $playingFragment, secondsPassed: $secondsPassed)';
   }
 
   @override
@@ -3037,11 +3038,11 @@ class _$_DataReceived implements _DataReceived {
                 other._selectedSubjectCategories, _selectedSubjectCategories) &&
             const DeepCollectionEquality().equals(other._records, _records) &&
             const DeepCollectionEquality()
-                .equals(other._subjectRecords, _subjectRecords) &&
+                .equals(other._subjectFragments, _subjectFragments) &&
             (identical(other.playerStatus, playerStatus) ||
                 other.playerStatus == playerStatus) &&
-            (identical(other.playingRecord, playingRecord) ||
-                other.playingRecord == playingRecord) &&
+            (identical(other.playingFragment, playingFragment) ||
+                other.playingFragment == playingFragment) &&
             (identical(other.secondsPassed, secondsPassed) ||
                 other.secondsPassed == secondsPassed));
   }
@@ -3054,9 +3055,9 @@ class _$_DataReceived implements _DataReceived {
       const DeepCollectionEquality().hash(_subjectCategories),
       const DeepCollectionEquality().hash(_selectedSubjectCategories),
       const DeepCollectionEquality().hash(_records),
-      const DeepCollectionEquality().hash(_subjectRecords),
+      const DeepCollectionEquality().hash(_subjectFragments),
       playerStatus,
-      playingRecord,
+      playingFragment,
       secondsPassed);
 
   @JsonKey(ignore: true)
@@ -3070,14 +3071,14 @@ class _$_DataReceived implements _DataReceived {
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)
         dataReceived,
   }) {
@@ -3087,9 +3088,9 @@ class _$_DataReceived implements _DataReceived {
         subjectCategories,
         selectedSubjectCategories,
         records,
-        subjectRecords,
+        subjectFragments,
         playerStatus,
-        playingRecord,
+        playingFragment,
         secondsPassed);
   }
 
@@ -3098,14 +3099,14 @@ class _$_DataReceived implements _DataReceived {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
     TResult? Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)?
         dataReceived,
   }) {
@@ -3115,9 +3116,9 @@ class _$_DataReceived implements _DataReceived {
         subjectCategories,
         selectedSubjectCategories,
         records,
-        subjectRecords,
+        subjectFragments,
         playerStatus,
-        playingRecord,
+        playingFragment,
         secondsPassed);
   }
 
@@ -3126,14 +3127,14 @@ class _$_DataReceived implements _DataReceived {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
     TResult Function(
-            List<RecordCategory>? categories,
-            List<RecordCategory>? selectedCategories,
+            List<FragmentCategory>? categories,
+            List<FragmentCategory>? selectedCategories,
             List<SubjectCategory> subjectCategories,
             List<SubjectCategory> selectedSubjectCategories,
-            List<Record>? records,
-            List<Record> subjectRecords,
+            List<Fragment>? records,
+            List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
-            Record? playingRecord,
+            Fragment? playingFragment,
             int? secondsPassed)?
         dataReceived,
     required TResult orElse(),
@@ -3145,9 +3146,9 @@ class _$_DataReceived implements _DataReceived {
           subjectCategories,
           selectedSubjectCategories,
           records,
-          subjectRecords,
+          subjectFragments,
           playerStatus,
-          playingRecord,
+          playingFragment,
           secondsPassed);
     }
     return orElse();
@@ -3187,24 +3188,24 @@ class _$_DataReceived implements _DataReceived {
 
 abstract class _DataReceived implements AssemblingState {
   const factory _DataReceived(
-      {final List<RecordCategory>? categories,
-      final List<RecordCategory>? selectedCategories,
+      {final List<FragmentCategory>? categories,
+      final List<FragmentCategory>? selectedCategories,
       required final List<SubjectCategory> subjectCategories,
       required final List<SubjectCategory> selectedSubjectCategories,
-      final List<Record>? records,
-      required final List<Record> subjectRecords,
+      final List<Fragment>? records,
+      required final List<Fragment> subjectFragments,
       final PlayerStatus? playerStatus,
-      final Record? playingRecord,
+      final Fragment? playingFragment,
       final int? secondsPassed}) = _$_DataReceived;
 
-  List<RecordCategory>? get categories;
-  List<RecordCategory>? get selectedCategories;
+  List<FragmentCategory>? get categories;
+  List<FragmentCategory>? get selectedCategories;
   List<SubjectCategory> get subjectCategories;
   List<SubjectCategory> get selectedSubjectCategories;
-  List<Record>? get records;
-  List<Record> get subjectRecords;
+  List<Fragment>? get records;
+  List<Fragment> get subjectFragments;
   PlayerStatus? get playerStatus;
-  Record? get playingRecord;
+  Fragment? get playingFragment;
   int? get secondsPassed;
   @JsonKey(ignore: true)
   _$$_DataReceivedCopyWith<_$_DataReceived> get copyWith =>

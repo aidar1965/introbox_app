@@ -6,8 +6,8 @@ part of 'record_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RecordDto _$RecordDtoFromJson(Map<String, dynamic> json) => RecordDto(
-      id: json['id'] as String,
+FragmentDto _$FragmentDtoFromJson(Map<String, dynamic> json) => FragmentDto(
+      id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String,
       duration: json['duration'] as String,
@@ -16,7 +16,8 @@ RecordDto _$RecordDtoFromJson(Map<String, dynamic> json) => RecordDto(
       date: DateTime.parse(json['date'] as String),
     );
 
-Map<String, dynamic> _$RecordDtoToJson(RecordDto instance) => <String, dynamic>{
+Map<String, dynamic> _$FragmentDtoToJson(FragmentDto instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,

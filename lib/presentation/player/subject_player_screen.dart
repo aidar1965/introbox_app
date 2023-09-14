@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:moki_tutor/presentation/player/player_widget.dart';
 
-import '../../domain/models/record.dart';
+import '../../domain/models/fragment.dart';
 import '../../domain/models/subject.dart';
 import '../screens/home_screen/bloc/home_bloc.dart';
 
@@ -26,18 +26,18 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
   double leftOpacity = 0.0;
   double rightOpacity = 0.0;
 
-  late Record record;
+  late Fragment record;
   late bool isLast;
 
-  late int numberOfRecords;
+  late int numberOfFragments;
   int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    numberOfRecords = widget.subject.records.length;
+    numberOfFragments = widget.subject.records.length;
     record = widget.subject.records.first;
-    isLast = currentIndex == numberOfRecords - 1;
+    isLast = currentIndex == numberOfFragments - 1;
   }
 
   void _showPlayer(PointerEvent details) {
@@ -64,27 +64,27 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
     setState(() => rightOpacity = 0.0);
   }
 
-  void _playNextRecord(Record oldRecord) {
-    if (currentIndex < numberOfRecords - 1) {
+  void _playNextFragment(Fragment oldFragment) {
+    if (currentIndex < numberOfFragments - 1) {
       setState(() {
         currentIndex++;
         record = widget.subject.records.elementAt(currentIndex);
-        isLast = currentIndex == numberOfRecords - 1;
+        isLast = currentIndex == numberOfFragments - 1;
       });
     } else {
       setState(() {
         currentIndex = 0;
         record = widget.subject.records.first;
-        isLast = currentIndex == numberOfRecords - 1;
+        isLast = currentIndex == numberOfFragments - 1;
       });
     }
   }
 
-  void _playPreviousRecord(Record oldRecord) {
+  void _playPreviousFragment(Fragment oldFragment) {
     setState(() {
       currentIndex--;
       record = widget.subject.records.elementAt(currentIndex);
-      isLast = currentIndex == numberOfRecords - 1;
+      isLast = currentIndex == numberOfFragments - 1;
     });
   }
 
@@ -132,7 +132,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                           remote: false,
                           isLast: isLast,
                           onEnd: () {
-                            _playNextRecord(record);
+                            _playNextFragment(record);
                           }),
                     ),
                   ),
@@ -159,7 +159,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                         child: const Icon(Icons.arrow_right,
                             color: Colors.black, size: 48),
                         onPressed: () {
-                          _playNextRecord(record);
+                          _playNextFragment(record);
                         },
                       ),
                     ),
@@ -186,7 +186,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                           size: 48,
                         ),
                         onPressed: () {
-                          _playPreviousRecord(record);
+                          _playPreviousFragment(record);
                         },
                       ),
                     ),

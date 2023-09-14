@@ -125,8 +125,8 @@ class DioClient extends ChangeNotifier {
               'Content-Type': 'multipart/form-data',
             },
       baseUrl: _baseUrl,
-      connectTimeout: 5000,
-      receiveTimeout: largeUpload ? 300000 : 25000,
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: Duration(seconds: largeUpload ? 300 : 25),
     );
     _dio = Dio(_dioOptions)
       // display logs of requests in terminal

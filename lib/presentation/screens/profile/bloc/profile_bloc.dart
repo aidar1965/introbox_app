@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
 import '../../../../data/api/request_exception.dart';
+import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/user.dart';
 
 part 'profile_bloc.freezed.dart';
@@ -14,19 +15,19 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc({
-    required this.userRepository,
-  }) : super(_Initial(userRepository.user)) {
+  ProfileBloc() : super(const _Initial()) {
     on<ProfileEvent>((event, emitter) => event.map(
           started: (event) =>
-              emitter(ProfileState.initial(userRepository.user)),
+              emitter(ProfileState.initial(user: userRepository.user)),
           logout: (event) => _logout(),
           updateUser: (event) => _updateUser(event, emitter),
           uploadImage: (event) => _uploadImage(event, emitter),
         ));
+
+    add(const ProfileEvent.started());
   }
 
-  final IUserRepository userRepository;
+  final IUserRepository userRepository = getIt<IUserRepository>();
 
   void _logout() {
     userRepository.logout();

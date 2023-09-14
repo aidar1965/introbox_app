@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -8,16 +7,11 @@ import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 import 'package:moki_tutor/domain/models/user.dart';
 
 import '../../data/mapper/http_request_mapper.dart';
+import '../locator/locator.dart';
 
 class UserRepository extends ChangeNotifier implements IUserRepository {
-  final ILocalDB db;
-  final IApi api;
-  UserRepository({
-    required this.db,
-    required this.api,
-  }) {
-    init();
-  }
+  final ILocalDB db = getIt<ILocalDB>();
+  final IApi api = getIt<IApi>();
 
   // TODO закрыть user listener
 

@@ -3,29 +3,28 @@ import 'dart:io';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/domain/di/di.dart';
+
 import 'package:intl/intl.dart';
 
-import 'package:moki_tutor/presentation/auto_router/app_router.gr.dart';
-
-import '../../../domain/models/record.dart';
-import '../../../domain/models/record_category.dart';
+import '../../../domain/models/fragment.dart';
+import '../../../domain/models/fragment_category.dart';
+import '../../auto_router/app_router.dart';
 import 'bloc/records_bloc.dart';
 import '../home_screen/bloc/home_bloc.dart';
 import '../widgets/add_category_form.dart';
 
 @RoutePage()
-class RecordsScreen extends StatelessWidget {
-  const RecordsScreen({Key? key}) : super(key: key);
+class FragmentsScreen extends StatelessWidget {
+  const FragmentsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => Di.of(context).buildRecordsBloc(),
-      child: BlocConsumer<RecordsBloc, RecordsState>(
+      create: (context) => FragmentsBloc(),
+      child: BlocConsumer<FragmentsBloc, FragmentsState>(
           listener: (context, state) => state.mapOrNull(
-                addRecord: (state) =>
-                    context.router.push(const RecordingScreenRoute()),
+                addFragment: (state) =>
+                    context.router.push(const RecordingRoute()),
               ),
           buildWhen: (context, state) => state.maybeMap(
               pending: (_) => true,
@@ -33,13 +32,13 @@ class RecordsScreen extends StatelessWidget {
               orElse: () => false),
           builder: (context, state) => state.maybeMap(
               pending: (_) => const PendingView(),
-              dataReceived: (state) => RecordsView(
+              dataReceived: (state) => FragmentsView(
                     records: state.records,
                     categories: state.categories,
                     selectedCategories: state.selectedCategories,
                   ),
               orElse: () =>
-                  throw UnimplementedError('Ошибка на RecordsScreen'))),
+                  throw UnimplementedError('Ошибка на FragmentsScreen'))),
     );
   }
 }
@@ -53,17 +52,17 @@ class PendingView extends StatelessWidget {
   }
 }
 
-class RecordsView extends StatelessWidget {
-  const RecordsView(
+class FragmentsView extends StatelessWidget {
+  const FragmentsView(
       {Key? key,
       required this.records,
       required this.categories,
       required this.selectedCategories})
       : super(key: key);
 
-  final List<Record> records;
-  final List<RecordCategory> categories;
-  final List<RecordCategory> selectedCategories;
+  final List<Fragment> records;
+  final List<FragmentCategory> categories;
+  final List<FragmentCategory> selectedCategories;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +81,7 @@ class RecordsView extends StatelessWidget {
           const VerticalDivider(),
           Expanded(
             child: Center(
-              child: RecordsListView(
+              child: FragmentsListView(
                 records: records,
                 categories: categories,
               ),
@@ -94,8 +93,8 @@ class RecordsView extends StatelessWidget {
         right: 10,
         bottom: 10,
         child: FloatingActionButton(
-            onPressed: () => BlocProvider.of<RecordsBloc>(context)
-                .add(const RecordsEvent.newRecord()),
+            onPressed: () => BlocProvider.of<FragmentsBloc>(context)
+                .add(const FragmentsEvent.newFragment()),
             tooltip: 'Новая запись',
             child: const Icon(Icons.add)),
       ),
@@ -110,8 +109,8 @@ class _CategoryList extends StatelessWidget {
     this.selectedCategories,
   }) : super(key: key);
 
-  final List<RecordCategory>? categories;
-  final List<RecordCategory>? selectedCategories;
+  final List<FragmentCategory>? categories;
+  final List<FragmentCategory>? selectedCategories;
   final ScrollController firstListController = ScrollController();
 
   @override
@@ -127,7 +126,7 @@ class _CategoryList extends StatelessWidget {
                 height: 30,
                 child: GestureDetector(
                   onLongPress: () async {
-                    var bloc = BlocProvider.of<RecordsBloc>(context);
+                    var bloc = BlocProvider.of<FragmentsBloc>(context);
                     Map<String, dynamic>? response =
                         await showDialog<Map<String, dynamic>>(
                             context: context,
@@ -143,11 +142,12 @@ class _CategoryList extends StatelessWidget {
                           var updatedCategory = categories
                               ?.elementAt(index)
                               .copyWith(name: categoryName);
-                          bloc.add(RecordsEvent.editCategory(updatedCategory!));
+                          bloc.add(
+                              FragmentsEvent.editCategory(updatedCategory!));
                         }
                       } else {
                         if (response['action'] == 'delete') {
-                          bloc.add(RecordsEvent.deleteCategory(
+                          bloc.add(FragmentsEvent.deleteCategory(
                               categories!.elementAt(index)));
                         }
                       }
@@ -158,8 +158,8 @@ class _CategoryList extends StatelessWidget {
                     value: selectedCategories!
                         .contains(categories!.elementAt(index)),
                     onChanged: (value) {
-                      BlocProvider.of<RecordsBloc>(context).add(
-                          RecordsEvent.selectCategory(
+                      BlocProvider.of<FragmentsBloc>(context).add(
+                          FragmentsEvent.selectCategory(
                               categories!.elementAt(index)));
                     },
                   ),
@@ -171,13 +171,13 @@ class _CategoryList extends StatelessWidget {
   }
 }
 
-class RecordsListView extends StatelessWidget {
-  const RecordsListView(
+class FragmentsListView extends StatelessWidget {
+  const FragmentsListView(
       {Key? key, required this.records, required this.categories})
       : super(key: key);
 
-  final List<Record> records;
-  final List<RecordCategory> categories;
+  final List<Fragment> records;
+  final List<FragmentCategory> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -187,14 +187,14 @@ class RecordsListView extends StatelessWidget {
             itemCount: records.length,
             itemBuilder: (context, index) {
               var record = records.elementAt(index);
-              return RecordListTile(record: record);
+              return FragmentListTile(record: record);
             }));
   }
 }
 
-class RecordListTile extends StatelessWidget {
-  const RecordListTile({Key? key, required this.record}) : super(key: key);
-  final Record record;
+class FragmentListTile extends StatelessWidget {
+  const FragmentListTile({Key? key, required this.record}) : super(key: key);
+  final Fragment record;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -206,7 +206,7 @@ class RecordListTile extends StatelessWidget {
                   ? Image.file(File(record.images!.keys.first))
                   : const SizedBox())),
       title: GestureDetector(
-          onTap: () => context.router.push(EditRecordScreenRoute(
+          onTap: () => context.router.push(EditFragmentRoute(
                 record: record,
               )),
           child: MouseRegion(
@@ -245,12 +245,12 @@ class RecordListTile extends StatelessWidget {
   }
 }
 
-class RecordCard extends StatelessWidget {
-  const RecordCard({Key? key, required this.record, required this.categories})
+class FragmentCard extends StatelessWidget {
+  const FragmentCard({Key? key, required this.record, required this.categories})
       : super(key: key);
 
-  final Record record;
-  final List<RecordCategory> categories;
+  final Fragment record;
+  final List<FragmentCategory> categories;
 
   @override
   Widget build(BuildContext context) {
@@ -258,7 +258,7 @@ class RecordCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         GestureDetector(
-          onTap: () => context.router.push(EditRecordScreenRoute(
+          onTap: () => context.router.push(EditFragmentRoute(
             record: record,
           )),
           child: record.imagePath != ''

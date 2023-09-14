@@ -769,7 +769,7 @@ class __$$_InitialCopyWithImpl<$Res>
     Object? user = freezed,
   }) {
     return _then(_$_Initial(
-      freezed == user
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
@@ -780,7 +780,7 @@ class __$$_InitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial(this.user);
+  const _$_Initial({this.user});
 
   @override
   final User? user;
@@ -865,7 +865,7 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements ProfileState {
-  const factory _Initial(final User? user) = _$_Initial;
+  const factory _Initial({final User? user}) = _$_Initial;
 
   @override
   User? get user;
