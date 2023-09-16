@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'domain/constants.dart';
-import 'domain/interfaces/i_auth_controller.dart';
 import 'domain/locator/locator.dart';
 import 'presentation/auto_router/app_router.dart';
 import 'presentation/theme/themes.dart';
@@ -24,42 +23,19 @@ Future<void> main() async {
       ],
       path: 'assets/languages',
       fallbackLocale: const Locale('ru', 'RU'),
-      child: Application()));
+      child: const Application()));
 }
 
 // assuing this is the root widget of your App
-class Application extends StatefulWidget {
+class Application extends StatelessWidget {
   const Application({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Application> createState() => _ApplicationState();
-}
-
-class _ApplicationState extends State<Application> {
-  late AppRouter appRouter;
-  final IAuthController authController = getIt<IAuthController>();
-
-  late bool _isAuthenticated;
-
-  @override
-  void initState() {
-    super.initState();
-    _isAuthenticated = authController.isAuthenticated;
-    appRouter = AppRouter(isAuthenticated: _isAuthenticated);
-    authController.addChangeListener(() {
-      setState(() {
-        _isAuthenticated = authController.isAuthenticated;
-      });
-      appRouter = AppRouter(isAuthenticated: _isAuthenticated);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: appRouter.config(),
+      routerConfig: AppRouter().config(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,

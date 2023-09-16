@@ -8,10 +8,10 @@ import '../locator/locator.dart';
 
 class CourseCategoryRepository extends ChangeNotifier
     implements ICourseCategoryRepository {
-  CourseCategoryRepository() {
+  CourseCategoryRepository(this.db) {
     init();
   }
-  final ILocalDB db = getIt<ILocalDB>();
+  final ILocalDB db;
 
   List<CourseCategory>? _courseCategories;
 

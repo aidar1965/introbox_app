@@ -24,23 +24,8 @@ import '../screens/subjects/subjects_screen.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends _$AppRouter implements AutoRouteGuard {
-  AppRouter({
-    required this.isAuthenticated,
-  });
-
-  final bool isAuthenticated;
-
-  @override
-  void onNavigation(NavigationResolver resolver, StackRouter router) {
-    if (isAuthenticated || resolver.route.name == LoginRoute.name) {
-      // we continue navigation
-      resolver.next();
-    } else {
-      // else we navigate to the Login page so we get authenticateed
-      push(const LoginRoute());
-    }
-  }
+class AppRouter extends _$AppRouter {
+  AppRouter();
 
   @override
   List<AutoRoute> get routes => [

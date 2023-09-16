@@ -15,12 +15,28 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    AssemblingRoute.name: (routeData) {
-      final args = routeData.argsAs<AssemblingRouteArgs>(
-          orElse: () => const AssemblingRouteArgs());
+    CoursesEmpty.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: AssemblingScreen(key: args.key),
+        child: CoursesEmptyPage(),
+      );
+    },
+    SubjectsEmpty.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SubjectsEmptyPage(),
+      );
+    },
+    RecordsEmpty.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RecordsEmptyPage(),
+      );
+    },
+    LoginEmpty.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: LoginEmptyPage(),
       );
     },
     CoursePlayerRoute.name: (routeData) {
@@ -34,10 +50,33 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    CoursesEmpty.name: (routeData) {
+    PlayerRoute.name: (routeData) {
+      final args = routeData.argsAs<PlayerRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CoursesEmptyPage(),
+        child: PlayerScreen(
+          key: args.key,
+          record: args.record,
+          remote: args.remote,
+        ),
+      );
+    },
+    SubjectPlayerRoute.name: (routeData) {
+      final args = routeData.argsAs<SubjectPlayerRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SubjectPlayerScreen(
+          key: args.key,
+          subject: args.subject,
+        ),
+      );
+    },
+    AssemblingRoute.name: (routeData) {
+      final args = routeData.argsAs<AssemblingRouteArgs>(
+          orElse: () => const AssemblingRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AssemblingScreen(key: args.key),
       );
     },
     CoursesRoute.name: (routeData) {
@@ -56,30 +95,10 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    EditFragmentRoute.name: (routeData) {
-      final args = routeData.argsAs<EditFragmentRouteArgs>();
+    NewCourseRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: EditFragmentScreen(
-          key: args.key,
-          record: args.record,
-        ),
-      );
-    },
-    EditSubjectRoute.name: (routeData) {
-      final args = routeData.argsAs<EditSubjectRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: EditSubjectScreen(
-          key: args.key,
-          subject: args.subject,
-        ),
-      );
-    },
-    FragmentsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const FragmentsScreen(),
+        child: const NewCourseScreen(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -88,22 +107,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
-    LoginEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: LoginEmptyPage(),
-      );
-    },
     LoginRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginScreen(),
-      );
-    },
-    NewCourseRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const NewCourseScreen(),
       );
     },
     OtpRoute.name: (routeData) {
@@ -113,17 +120,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: OtpScreen(
           key: args.key,
           phone: args.phone,
-        ),
-      );
-    },
-    PlayerRoute.name: (routeData) {
-      final args = routeData.argsAs<PlayerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PlayerScreen(
-          key: args.key,
-          record: args.record,
-          remote: args.remote,
         ),
       );
     },
@@ -139,26 +135,30 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const RecordingScreen(),
       );
     },
-    RecordsEmpty.name: (routeData) {
+    EditFragmentRoute.name: (routeData) {
+      final args = routeData.argsAs<EditFragmentRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: RecordsEmptyPage(),
-      );
-    },
-    SubjectPlayerRoute.name: (routeData) {
-      final args = routeData.argsAs<SubjectPlayerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SubjectPlayerScreen(
+        child: EditFragmentScreen(
           key: args.key,
-          subject: args.subject,
+          record: args.record,
         ),
       );
     },
-    SubjectsEmpty.name: (routeData) {
+    FragmentsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: SubjectsEmptyPage(),
+        child: const FragmentsScreen(),
+      );
+    },
+    EditSubjectRoute.name: (routeData) {
+      final args = routeData.argsAs<EditSubjectRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EditSubjectScreen(
+          key: args.key,
+          subject: args.subject,
+        ),
       );
     },
     SubjectsRoute.name: (routeData) {
@@ -171,32 +171,59 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [AssemblingScreen]
-class AssemblingRoute extends PageRouteInfo<AssemblingRouteArgs> {
-  AssemblingRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          AssemblingRoute.name,
-          args: AssemblingRouteArgs(key: key),
+/// [CoursesEmptyPage]
+class CoursesEmpty extends PageRouteInfo<void> {
+  const CoursesEmpty({List<PageRouteInfo>? children})
+      : super(
+          CoursesEmpty.name,
           initialChildren: children,
         );
 
-  static const String name = 'AssemblingRoute';
+  static const String name = 'CoursesEmpty';
 
-  static const PageInfo<AssemblingRouteArgs> page =
-      PageInfo<AssemblingRouteArgs>(name);
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
-class AssemblingRouteArgs {
-  const AssemblingRouteArgs({this.key});
+/// generated route for
+/// [SubjectsEmptyPage]
+class SubjectsEmpty extends PageRouteInfo<void> {
+  const SubjectsEmpty({List<PageRouteInfo>? children})
+      : super(
+          SubjectsEmpty.name,
+          initialChildren: children,
+        );
 
-  final Key? key;
+  static const String name = 'SubjectsEmpty';
 
-  @override
-  String toString() {
-    return 'AssemblingRouteArgs{key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RecordsEmptyPage]
+class RecordsEmpty extends PageRouteInfo<void> {
+  const RecordsEmpty({List<PageRouteInfo>? children})
+      : super(
+          RecordsEmpty.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RecordsEmpty';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LoginEmptyPage]
+class LoginEmpty extends PageRouteInfo<void> {
+  const LoginEmpty({List<PageRouteInfo>? children})
+      : super(
+          LoginEmpty.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LoginEmpty';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -243,17 +270,112 @@ class CoursePlayerRouteArgs {
 }
 
 /// generated route for
-/// [CoursesEmptyPage]
-class CoursesEmpty extends PageRouteInfo<void> {
-  const CoursesEmpty({List<PageRouteInfo>? children})
-      : super(
-          CoursesEmpty.name,
+/// [PlayerScreen]
+class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
+  PlayerRoute({
+    Key? key,
+    required Fragment record,
+    bool? remote = false,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PlayerRoute.name,
+          args: PlayerRouteArgs(
+            key: key,
+            record: record,
+            remote: remote,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'CoursesEmpty';
+  static const String name = 'PlayerRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PlayerRouteArgs> page = PageInfo<PlayerRouteArgs>(name);
+}
+
+class PlayerRouteArgs {
+  const PlayerRouteArgs({
+    this.key,
+    required this.record,
+    this.remote = false,
+  });
+
+  final Key? key;
+
+  final Fragment record;
+
+  final bool? remote;
+
+  @override
+  String toString() {
+    return 'PlayerRouteArgs{key: $key, record: $record, remote: $remote}';
+  }
+}
+
+/// generated route for
+/// [SubjectPlayerScreen]
+class SubjectPlayerRoute extends PageRouteInfo<SubjectPlayerRouteArgs> {
+  SubjectPlayerRoute({
+    Key? key,
+    required Subject subject,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SubjectPlayerRoute.name,
+          args: SubjectPlayerRouteArgs(
+            key: key,
+            subject: subject,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SubjectPlayerRoute';
+
+  static const PageInfo<SubjectPlayerRouteArgs> page =
+      PageInfo<SubjectPlayerRouteArgs>(name);
+}
+
+class SubjectPlayerRouteArgs {
+  const SubjectPlayerRouteArgs({
+    this.key,
+    required this.subject,
+  });
+
+  final Key? key;
+
+  final Subject subject;
+
+  @override
+  String toString() {
+    return 'SubjectPlayerRouteArgs{key: $key, subject: $subject}';
+  }
+}
+
+/// generated route for
+/// [AssemblingScreen]
+class AssemblingRoute extends PageRouteInfo<AssemblingRouteArgs> {
+  AssemblingRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AssemblingRoute.name,
+          args: AssemblingRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'AssemblingRoute';
+
+  static const PageInfo<AssemblingRouteArgs> page =
+      PageInfo<AssemblingRouteArgs>(name);
+}
+
+class AssemblingRouteArgs {
+  const AssemblingRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AssemblingRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -309,91 +431,15 @@ class EditCourseRouteArgs {
 }
 
 /// generated route for
-/// [EditFragmentScreen]
-class EditFragmentRoute extends PageRouteInfo<EditFragmentRouteArgs> {
-  EditFragmentRoute({
-    Key? key,
-    required Fragment record,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EditFragmentRoute.name,
-          args: EditFragmentRouteArgs(
-            key: key,
-            record: record,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EditFragmentRoute';
-
-  static const PageInfo<EditFragmentRouteArgs> page =
-      PageInfo<EditFragmentRouteArgs>(name);
-}
-
-class EditFragmentRouteArgs {
-  const EditFragmentRouteArgs({
-    this.key,
-    required this.record,
-  });
-
-  final Key? key;
-
-  final Fragment record;
-
-  @override
-  String toString() {
-    return 'EditFragmentRouteArgs{key: $key, record: $record}';
-  }
-}
-
-/// generated route for
-/// [EditSubjectScreen]
-class EditSubjectRoute extends PageRouteInfo<EditSubjectRouteArgs> {
-  EditSubjectRoute({
-    Key? key,
-    required Subject subject,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EditSubjectRoute.name,
-          args: EditSubjectRouteArgs(
-            key: key,
-            subject: subject,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EditSubjectRoute';
-
-  static const PageInfo<EditSubjectRouteArgs> page =
-      PageInfo<EditSubjectRouteArgs>(name);
-}
-
-class EditSubjectRouteArgs {
-  const EditSubjectRouteArgs({
-    this.key,
-    required this.subject,
-  });
-
-  final Key? key;
-
-  final Subject subject;
-
-  @override
-  String toString() {
-    return 'EditSubjectRouteArgs{key: $key, subject: $subject}';
-  }
-}
-
-/// generated route for
-/// [FragmentsScreen]
-class FragmentsRoute extends PageRouteInfo<void> {
-  const FragmentsRoute({List<PageRouteInfo>? children})
+/// [NewCourseScreen]
+class NewCourseRoute extends PageRouteInfo<void> {
+  const NewCourseRoute({List<PageRouteInfo>? children})
       : super(
-          FragmentsRoute.name,
+          NewCourseRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'FragmentsRoute';
+  static const String name = 'NewCourseRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -413,20 +459,6 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginEmptyPage]
-class LoginEmpty extends PageRouteInfo<void> {
-  const LoginEmpty({List<PageRouteInfo>? children})
-      : super(
-          LoginEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [LoginScreen]
 class LoginRoute extends PageRouteInfo<void> {
   const LoginRoute({List<PageRouteInfo>? children})
@@ -436,20 +468,6 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [NewCourseScreen]
-class NewCourseRoute extends PageRouteInfo<void> {
-  const NewCourseRoute({List<PageRouteInfo>? children})
-      : super(
-          NewCourseRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NewCourseRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -492,48 +510,6 @@ class OtpRouteArgs {
 }
 
 /// generated route for
-/// [PlayerScreen]
-class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
-  PlayerRoute({
-    Key? key,
-    required Fragment record,
-    bool? remote = false,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PlayerRoute.name,
-          args: PlayerRouteArgs(
-            key: key,
-            record: record,
-            remote: remote,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PlayerRoute';
-
-  static const PageInfo<PlayerRouteArgs> page = PageInfo<PlayerRouteArgs>(name);
-}
-
-class PlayerRouteArgs {
-  const PlayerRouteArgs({
-    this.key,
-    required this.record,
-    this.remote = false,
-  });
-
-  final Key? key;
-
-  final Fragment record;
-
-  final bool? remote;
-
-  @override
-  String toString() {
-    return 'PlayerRouteArgs{key: $key, record: $record, remote: $remote}';
-  }
-}
-
-/// generated route for
 /// [ProfileScreen]
 class ProfileRoute extends PageRouteInfo<void> {
   const ProfileRoute({List<PageRouteInfo>? children})
@@ -562,43 +538,81 @@ class RecordingRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [RecordsEmptyPage]
-class RecordsEmpty extends PageRouteInfo<void> {
-  const RecordsEmpty({List<PageRouteInfo>? children})
-      : super(
-          RecordsEmpty.name,
+/// [EditFragmentScreen]
+class EditFragmentRoute extends PageRouteInfo<EditFragmentRouteArgs> {
+  EditFragmentRoute({
+    Key? key,
+    required Fragment record,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EditFragmentRoute.name,
+          args: EditFragmentRouteArgs(
+            key: key,
+            record: record,
+          ),
           initialChildren: children,
         );
 
-  static const String name = 'RecordsEmpty';
+  static const String name = 'EditFragmentRoute';
+
+  static const PageInfo<EditFragmentRouteArgs> page =
+      PageInfo<EditFragmentRouteArgs>(name);
+}
+
+class EditFragmentRouteArgs {
+  const EditFragmentRouteArgs({
+    this.key,
+    required this.record,
+  });
+
+  final Key? key;
+
+  final Fragment record;
+
+  @override
+  String toString() {
+    return 'EditFragmentRouteArgs{key: $key, record: $record}';
+  }
+}
+
+/// generated route for
+/// [FragmentsScreen]
+class FragmentsRoute extends PageRouteInfo<void> {
+  const FragmentsRoute({List<PageRouteInfo>? children})
+      : super(
+          FragmentsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FragmentsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
-/// [SubjectPlayerScreen]
-class SubjectPlayerRoute extends PageRouteInfo<SubjectPlayerRouteArgs> {
-  SubjectPlayerRoute({
+/// [EditSubjectScreen]
+class EditSubjectRoute extends PageRouteInfo<EditSubjectRouteArgs> {
+  EditSubjectRoute({
     Key? key,
     required Subject subject,
     List<PageRouteInfo>? children,
   }) : super(
-          SubjectPlayerRoute.name,
-          args: SubjectPlayerRouteArgs(
+          EditSubjectRoute.name,
+          args: EditSubjectRouteArgs(
             key: key,
             subject: subject,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'SubjectPlayerRoute';
+  static const String name = 'EditSubjectRoute';
 
-  static const PageInfo<SubjectPlayerRouteArgs> page =
-      PageInfo<SubjectPlayerRouteArgs>(name);
+  static const PageInfo<EditSubjectRouteArgs> page =
+      PageInfo<EditSubjectRouteArgs>(name);
 }
 
-class SubjectPlayerRouteArgs {
-  const SubjectPlayerRouteArgs({
+class EditSubjectRouteArgs {
+  const EditSubjectRouteArgs({
     this.key,
     required this.subject,
   });
@@ -609,22 +623,8 @@ class SubjectPlayerRouteArgs {
 
   @override
   String toString() {
-    return 'SubjectPlayerRouteArgs{key: $key, subject: $subject}';
+    return 'EditSubjectRouteArgs{key: $key, subject: $subject}';
   }
-}
-
-/// generated route for
-/// [SubjectsEmptyPage]
-class SubjectsEmpty extends PageRouteInfo<void> {
-  const SubjectsEmpty({List<PageRouteInfo>? children})
-      : super(
-          SubjectsEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SubjectsEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

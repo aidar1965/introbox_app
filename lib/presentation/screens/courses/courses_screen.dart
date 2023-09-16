@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:moki_tutor/presentation/auto_router/app_router.dart';
 
 import '../../../domain/models/course.dart';
@@ -205,7 +206,7 @@ class _CoursesView extends StatelessWidget {
 }
 
 class _SelectedCourseView extends StatelessWidget {
-  const _SelectedCourseView({super.key, required this.course});
+  const _SelectedCourseView({required this.course});
 
   final Course course;
 
@@ -251,7 +252,10 @@ class _SelectedCourseView extends StatelessWidget {
 }
 
 class _PublishedCoursesView extends StatelessWidget {
-  const _PublishedCoursesView({super.key, required this.publishedCourses});
+  const _PublishedCoursesView({
+    Key? key,
+    required this.publishedCourses,
+  }) : super(key: key);
 
   final List<Course> publishedCourses;
 

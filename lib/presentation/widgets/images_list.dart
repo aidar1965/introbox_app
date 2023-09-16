@@ -3,7 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class ImagesList extends StatelessWidget {
-  const ImagesList({super.key, this.imagesMap, required this.onDelete});
+  const ImagesList({
+    Key? key,
+    this.imagesMap,
+    required this.onDelete,
+  }) : super(key: key);
 
   final Map<String, int>? imagesMap;
   final Function(MapEntry) onDelete;

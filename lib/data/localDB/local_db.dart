@@ -18,7 +18,9 @@ const String courseCategoryBox = '_courseCategory';
 
 class LocalDB implements ILocalDB {
   @override
-  Future<void> init() async {}
+  Future<LocalDB> init() async {
+    return this;
+  }
 
   @override
   void saveUserLocally(User user) {}

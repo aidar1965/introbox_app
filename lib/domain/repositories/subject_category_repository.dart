@@ -8,9 +8,11 @@ import '../locator/locator.dart';
 
 class SubjectCategoryRepository extends ChangeNotifier
     implements ISubjectCategoryRepository {
-  final ILocalDB db = getIt<ILocalDB>();
+  final ILocalDB db;
 
   List<SubjectCategory> _subjectCategories = [];
+
+  SubjectCategoryRepository(this.db);
 
   @override
   void addChangeListener(Function() listener) => addListener(listener);

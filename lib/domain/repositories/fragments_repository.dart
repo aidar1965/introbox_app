@@ -12,10 +12,10 @@ import '../models/fragment_category.dart';
 
 class FragmentsRepository extends ChangeNotifier
     implements IFragmentsRepository {
-  final ILocalDB db = getIt<ILocalDB>();
+  final ILocalDB db;
   final ICategoryRepository categoryRepository = getIt<ICategoryRepository>();
 
-  FragmentsRepository() {
+  FragmentsRepository(this.db) {
     init();
   }
 

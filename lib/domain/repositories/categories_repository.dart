@@ -8,12 +8,12 @@ import '../locator/locator.dart';
 
 class CategoriesRepository extends ChangeNotifier
     implements ICategoryRepository {
-  CategoriesRepository() {
+  CategoriesRepository(this.db) {
     init();
   }
   List<FragmentCategory>? _categories;
 
-  final ILocalDB db = getIt<ILocalDB>();
+  final ILocalDB db;
 
   @override
   void addCategory(String name) {

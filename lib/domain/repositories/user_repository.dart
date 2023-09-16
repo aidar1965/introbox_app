@@ -10,8 +10,10 @@ import '../../data/mapper/http_request_mapper.dart';
 import '../locator/locator.dart';
 
 class UserRepository extends ChangeNotifier implements IUserRepository {
-  final ILocalDB db = getIt<ILocalDB>();
+  final ILocalDB db;
   final IApi api = getIt<IApi>();
+
+  UserRepository(this.db);
 
   // TODO закрыть user listener
 

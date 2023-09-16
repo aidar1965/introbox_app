@@ -5,16 +5,17 @@ import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
 import 'package:moki_tutor/domain/models/subject.dart';
 
 import '../interfaces/i_local_db.dart';
+import '../locator/locator.dart';
 
 class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
   final ILocalDB db;
-  final ISubjectCategoryRepository subjectCategoryRepository;
-  final IFragmentsRepository recordsRepository;
+  final ISubjectCategoryRepository subjectCategoryRepository =
+      getIt<ISubjectCategoryRepository>();
+  final IFragmentsRepository recordsRepository = getIt<IFragmentsRepository>();
 
   SubjectsRepository(
-      {required this.db,
-      required this.subjectCategoryRepository,
-      required this.recordsRepository}) {
+    this.db,
+  ) {
     init();
     recordsRepository.addChangeListener(() {
       init();

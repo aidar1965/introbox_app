@@ -8,7 +8,7 @@ import '../models/subject_category.dart';
 import '../models/user.dart';
 
 abstract class ILocalDB {
-  Future<void> init();
+  Future<ILocalDB> init();
 
   void addFragment(
       {required String title,

@@ -7,7 +7,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class AddImageWidget extends StatefulWidget {
-  const AddImageWidget({super.key, required this.onAdd});
+  const AddImageWidget({
+    Key? key,
+    required this.onAdd,
+  }) : super(key: key);
 
   final Function(MapEntry<String, int>) onAdd;
 

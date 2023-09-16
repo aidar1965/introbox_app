@@ -16,44 +16,44 @@ import '../controllers/auth_controller.dart';
 import '../interfaces/i_auth_controller.dart';
 import '../interfaces/i_courses_repository.dart';
 import '../interfaces/i_subject_category_repository.dart';
+import '../interfaces/i_subject_repository.dart';
 import '../interfaces/i_user_repository.dart';
 import '../repositories/courses_repository.dart';
 import '../repositories/subject_category_repository.dart';
+import '../repositories/subjects_repository.dart';
 import '../repositories/user_repository.dart';
 
 final getIt = GetIt.instance;
 
 void setup() {
   getIt.registerFactory<IApi>(() => Api());
-  getIt.registerFactoryAsync<ILocalDB>(() async {
-    final db = LocalDB();
-    await db.init().then((value) {
-      getIt.registerSingleton<ICategoryRepository>(CategoriesRepository());
-
-      getIt.registerSingleton<ICourseCategoryRepository>(
-          CourseCategoryRepository());
-
-      getIt.registerSingleton<ISubjectCategoryRepository>(
-          SubjectCategoryRepository());
-
-      getIt.registerSingleton<IFragmentsRepository>(FragmentsRepository());
-
-      getIt.registerSingleton<ICoursesRepository>(CoursesRepository());
-
-      getIt.registerSingleton<IFragmentsRepository>(FragmentsRepository());
-    });
-    return db;
-  });
   getIt.registerFactory<ILocalCache>(() => LocalCache());
-  getIt.registerSingletonAsync<IAuthController>(
-      () async => AuthController().init().then((value) {
-            getIt.registerSingletonAsync<IUserRepository>(
-              () async {
-                final userRepository = UserRepository();
-                await userRepository.init();
-                return userRepository;
-              },
-            );
-            return value;
-          }));
+  getIt.registerSingletonAsync<ILocalDB>(() async =>
+      await LocalDB().init().then((value) {
+        getIt.registerSingleton<ICategoryRepository>(
+            CategoriesRepository(value));
+        getIt.registerSingleton<ICourseCategoryRepository>(
+            CourseCategoryRepository(value));
+
+        getIt.registerSingleton<IFragmentsRepository>(
+            FragmentsRepository(value));
+        getIt.registerSingleton<ISubjectCategoryRepository>(
+            SubjectCategoryRepository(value));
+
+        getIt.registerSingleton<ISubjectsRepository>(SubjectsRepository(value));
+        getIt.registerSingleton<ICoursesRepository>(CoursesRepository(value));
+
+        getIt.registerSingletonAsync<IAuthController>(
+            () async => await AuthController().init().then((v) {
+                  getIt.registerSingletonAsync<IUserRepository>(
+                    () async {
+                      final userRepository = UserRepository(value);
+                      await userRepository.init();
+                      return userRepository;
+                    },
+                  );
+                  return v;
+                }));
+        return value;
+      }));
 }
