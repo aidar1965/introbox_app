@@ -58,9 +58,10 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
         child: BlocConsumer<EditSubjectBloc, EditSubjectState>(
           listener: (context, state) {
             state.mapOrNull(dataReceived: (state) async {
-              if (state.playerStatus == PlayerStatus.play) {
+              if (state.playerStatus == PlayerStatus.play &&
+                  state.playingFragment!.audioPath != null) {
                 await player
-                    .play(DeviceFileSource(state.playingFragment!.audioPath));
+                    .play(DeviceFileSource(state.playingFragment!.audioPath!));
               }
             });
           },
@@ -91,6 +92,8 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                                     const InputDecoration(hintText: 'Описание'),
                               ),
                               const SizedBox(height: 20),
+                              ElevatedButton(
+                                  onPressed: () {}, child: Text('PDF')),
                               Flexible(
                                   child: ListView.builder(
                                       itemCount: state.subjectCategories.length,
@@ -152,14 +155,15 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                                             leading: SizedBox(
                                               height: 50,
                                               width: 50,
-                                              child: record.imagePath != ''
+                                              child: record.imagePath != '' &&
+                                                      record.imagePath != null
                                                   ? Padding(
                                                       padding:
                                                           const EdgeInsets.only(
                                                               top: 8,
                                                               bottom: 8),
                                                       child: Image.file(File(
-                                                          record.imagePath
+                                                          record.imagePath!
                                                               .replaceAll(
                                                                   '\\\\',
                                                                   '\\'))),
@@ -290,21 +294,25 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                                                     child: SizedBox(
                                                       height: 50,
                                                       width: 50,
-                                                      child:
-                                                          record.imagePath != ''
-                                                              ? Padding(
-                                                                  padding: const EdgeInsets
+                                                      child: record.imagePath !=
+                                                                  '' &&
+                                                              record.imagePath !=
+                                                                  null
+                                                          ? Padding(
+                                                              padding:
+                                                                  const EdgeInsets
                                                                           .only(
                                                                       top: 8,
                                                                       bottom:
                                                                           8),
-                                                                  child: Image.file(File(record
-                                                                      .imagePath
+                                                              child: Image.file(
+                                                                  File(record
+                                                                      .imagePath!
                                                                       .replaceAll(
                                                                           '\\\\',
                                                                           '\\'))),
-                                                                )
-                                                              : null,
+                                                            )
+                                                          : null,
                                                     ),
                                                   ),
                                                   const SizedBox(width: 20),
@@ -451,10 +459,11 @@ class _AudioPlayerViewState extends State<_AudioPlayerView> {
                             PlayerStatus.play));
                     BlocProvider.of<EditSubjectBloc>(context)
                         .add(const EditSubjectEvent.startTimer());
-
-                    await widget.player.play(
-                        DeviceFileSource(widget.record.audioPath),
-                        volume: 100);
+                    if (widget.record.audioPath != null) {
+                      await widget.player.play(
+                          DeviceFileSource(widget.record.audioPath!),
+                          volume: 100);
+                    }
                   }
                 },
                 icon: const Icon(

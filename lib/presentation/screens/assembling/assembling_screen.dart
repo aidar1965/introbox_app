@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 
 import '../../../domain/models/fragment.dart';
 import '../../../domain/models/fragment_category.dart';
@@ -17,11 +19,20 @@ import '../../player/player_widget.dart';
 import '../widgets/add_subject_category_form.dart';
 
 @RoutePage()
-class AssemblingScreen extends StatelessWidget {
+class AssemblingScreen extends StatefulWidget {
   AssemblingScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AssemblingScreen> createState() => _AssemblingScreenState();
+}
+
+class _AssemblingScreenState extends State<AssemblingScreen> {
   final player = AudioPlayer();
+
+  File? pdfFile;
+
   final ScrollController secondListController = ScrollController();
+
   final ScrollController thirdListController = ScrollController();
 
   final TextEditingController titleController = TextEditingController();
@@ -42,9 +53,10 @@ class AssemblingScreen extends StatelessWidget {
         child: BlocConsumer<AssemblingBloc, AssemblingState>(
           listener: (context, state) {
             state.mapOrNull(dataReceived: (state) async {
-              if (state.playerStatus == PlayerStatus.play) {
+              if (state.playerStatus == PlayerStatus.play &&
+                  state.playingFragment!.audioPath != null) {
                 await player
-                    .play(DeviceFileSource(state.playingFragment!.audioPath));
+                    .play(DeviceFileSource(state.playingFragment!.audioPath!));
               }
             });
           },
@@ -75,6 +87,39 @@ class AssemblingScreen extends StatelessWidget {
                                     const InputDecoration(hintText: 'Описание'),
                               ),
                               const SizedBox(height: 20),
+                              if (pdfFile != null) ...[
+                                Text(basename(pdfFile!.path)),
+                                const SizedBox(height: 20),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    BlocProvider.of<AssemblingBloc>(context)
+                                        .add(AssemblingEvent.convertPdf(
+                                            pdfFilePath: pdfFile!.path));
+                                  },
+                                  child: Text('Создать тему'),
+                                ),
+                              ],
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                  onPressed: () async {
+                                    FilePickerResult? result =
+                                        await FilePicker.platform.pickFiles(
+                                      allowedExtensions: [
+                                        'pdf',
+                                      ],
+                                    );
+
+                                    if (result != null) {
+                                      final File file =
+                                          File(result.files.single.path!);
+                                      setState(() {
+                                        pdfFile = file;
+                                      });
+                                    } else {
+                                      // User canceled the picker
+                                    }
+                                  },
+                                  child: Text('PDF')),
                               Flexible(
                                   child: ListView.builder(
                                       itemCount: state.subjectCategories.length,
@@ -137,14 +182,15 @@ class AssemblingScreen extends StatelessWidget {
                                             leading: SizedBox(
                                               height: 50,
                                               width: 50,
-                                              child: record.imagePath != ''
+                                              child: record.imagePath != '' &&
+                                                      record.imagePath != null
                                                   ? Padding(
                                                       padding:
                                                           const EdgeInsets.only(
                                                               top: 8,
                                                               bottom: 8),
                                                       child: Image.file(File(
-                                                          record.imagePath
+                                                          record.imagePath!
                                                               .replaceAll(
                                                                   '\\\\',
                                                                   '\\'))),
@@ -258,60 +304,74 @@ class AssemblingScreen extends StatelessWidget {
                               const Divider(
                                 height: 20,
                               ),
-                              state.records!.isNotEmpty
-                                  ? Expanded(
-                                      child: ListView.builder(
-                                          controller: secondListController,
-                                          itemCount: state.records!.length,
-                                          itemBuilder: (context, index) {
-                                            var record =
-                                                state.records!.elementAt(index);
-                                            return CheckboxListTile(
-                                              dense: true,
-                                              title: Row(
-                                                children: [
-                                                  SizedBox(
-                                                    height: 50,
-                                                    width: 50,
-                                                    child: SizedBox(
-                                                      height: 50,
-                                                      width: 50,
-                                                      child:
-                                                          record.imagePath != ''
-                                                              ? Padding(
-                                                                  padding: const EdgeInsets
-                                                                          .only(
-                                                                      top: 8,
-                                                                      bottom:
-                                                                          8),
-                                                                  child: Image.file(File(record
-                                                                      .imagePath
-                                                                      .replaceAll(
-                                                                          '\\\\',
-                                                                          '\\'))),
-                                                                )
-                                                              : null,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 20),
-                                                  Expanded(
-                                                    child: Text(
-                                                        '${record.title} ${DateFormat('dd.MM.yy').format(record.date)}'),
-                                                  ),
-                                                ],
+                              if (state.records?.isNotEmpty ?? false)
+                                Expanded(
+                                  child: ListView.builder(
+                                      controller: secondListController,
+                                      itemCount: state.records!.length,
+                                      itemBuilder: (context, index) {
+                                        var record =
+                                            state.records!.elementAt(index);
+                                        return CheckboxListTile(
+                                          dense: true,
+                                          title: Row(
+                                            children: [
+                                              SizedBox(
+                                                height: 50,
+                                                width: 50,
+                                                child: SizedBox(
+                                                  height: 50,
+                                                  width: 50,
+                                                  child: record.imagePath !=
+                                                              '' &&
+                                                          record.imagePath !=
+                                                              null
+                                                      ? Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 8,
+                                                                  bottom: 8),
+                                                          child: Image.file(
+                                                              File(record
+                                                                  .imagePath!
+                                                                  .replaceAll(
+                                                                      '\\\\',
+                                                                      '\\'))),
+                                                        )
+                                                      : null,
+                                                ),
                                               ),
-                                              value: state.subjectFragments
-                                                  .contains(record),
-                                              onChanged: (value) {
-                                                BlocProvider.of<AssemblingBloc>(
-                                                        context)
-                                                    .add(AssemblingEvent
-                                                        .addFragment(record));
-                                              },
-                                            );
-                                          }),
-                                    )
-                                  : const Center(child: Text('Нет записей'))
+                                              const SizedBox(width: 20),
+                                              Expanded(
+                                                child: Text(
+                                                    '${record.title} ${DateFormat('dd.MM.yy').format(record.date)}'),
+                                              ),
+                                            ],
+                                          ),
+                                          value: state.subjectFragments
+                                              .contains(record),
+                                          onChanged: (value) {
+                                            BlocProvider.of<AssemblingBloc>(
+                                                    context)
+                                                .add(
+                                                    AssemblingEvent.addFragment(
+                                                        record));
+                                          },
+                                        );
+                                      }),
+                                )
+                              else if (state.pdfImages?.isNotEmpty ?? false)
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: state.pdfImages!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Image.memory(
+                                          state.pdfImages!.elementAt(index));
+                                    },
+                                  ),
+                                )
                             ],
                           )),
                     ],
@@ -425,10 +485,11 @@ class _AudioPlayerViewState extends State<_AudioPlayerView> {
                             PlayerStatus.play));
                     BlocProvider.of<AssemblingBloc>(context)
                         .add(const AssemblingEvent.startTimer());
-
-                    await widget.player.play(
-                        DeviceFileSource(widget.record.audioPath),
-                        volume: 100);
+                    if (widget.record.audioPath != null) {
+                      await widget.player.play(
+                          DeviceFileSource(widget.record.audioPath!),
+                          volume: 100);
+                    }
                   }
                 },
                 icon: const Icon(

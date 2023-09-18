@@ -7,14 +7,14 @@ part of 'subject_dto.dart';
 // **************************************************************************
 
 SubjectDto _$SubjectDtoFromJson(Map<String, dynamic> json) => SubjectDto(
-      id: json['id'] as String,
+      id: json['id'] as int,
       title: json['title'] as String,
-      description: json['description'] as String,
-      recordsJson: (json['records'] as List<dynamic>)
-          .map((e) => e as Map<String, dynamic>)
+      description: json['description'] as String?,
+      recordsJson: (json['records'] as List<dynamic>?)
+          ?.map((e) => e as Map<String, dynamic>)
           .toList(),
       date: json['date'] as String,
-      duration: json['duration'] as String,
+      duration: json['duration'] as int?,
     );
 
 Map<String, dynamic> _$SubjectDtoToJson(SubjectDto instance) =>

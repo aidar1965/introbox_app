@@ -261,10 +261,10 @@ class FragmentCard extends StatelessWidget {
           onTap: () => context.router.push(EditFragmentRoute(
             record: record,
           )),
-          child: record.imagePath != ''
+          child: record.imagePath != '' && record.imagePath != null
               ? MouseRegion(
                   cursor: SystemMouseCursors.click,
-                  child: Center(child: Image.file(File(record.imagePath))),
+                  child: Center(child: Image.file(File(record.imagePath!))),
                 )
               : const MouseRegion(
                   cursor: SystemMouseCursors.click,

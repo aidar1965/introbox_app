@@ -7,7 +7,7 @@ class EditFragmentEvent with _$EditFragmentEvent {
       required String title,
       String? description,
       Map<String, int>? images,
-      required String audioPath,
+      required String? audioPath,
       required int recordDuration}) = _SaveFragment;
   const factory EditFragmentEvent.addCategory(String name) = _AddCategory;
   const factory EditFragmentEvent.fetchCategories() = _FetchCategories;

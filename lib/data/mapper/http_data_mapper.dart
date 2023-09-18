@@ -39,11 +39,11 @@ class HttpDataMapper {
         title: dto.title,
         description: dto.description,
         records: dto.recordsJson
-            .map((e) => FragmentDto.fromJson(e))
+            ?.map((e) => FragmentDto.fromJson(e))
             .map(mapFragment)
             .toList(),
         date: DateTime.parse(dto.date),
-        duration: int.parse(dto.duration));
+        duration: dto.duration);
   }
 
   List<Fragment> recordsFromJson(String dtoString) {

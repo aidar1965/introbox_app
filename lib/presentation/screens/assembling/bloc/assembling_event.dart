@@ -23,4 +23,6 @@ class AssemblingEvent with _$AssemblingEvent {
     required String title,
     String? description,
   }) = _SaveSubject;
+  const factory AssemblingEvent.convertPdf({required String pdfFilePath}) =
+      _ConvertFile;
 }

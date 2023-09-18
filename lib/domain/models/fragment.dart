@@ -14,13 +14,13 @@ class Fragment extends Equatable {
 
   final String? description;
 
-  final String imagePath;
+  final String? imagePath;
 
   final int duration;
 
   final String? folder;
 
-  final String audioPath;
+  final String? audioPath;
 
   final List<FragmentCategory>? categories;
 
@@ -34,10 +34,10 @@ class Fragment extends Equatable {
       {required this.id,
       required this.title,
       this.description,
-      this.imagePath = '',
+      this.imagePath,
       required this.duration,
       this.folder,
-      required this.audioPath,
+      this.audioPath,
       this.categories,
       required this.isPublished,
       required this.date,
@@ -76,9 +76,9 @@ class Fragment extends Equatable {
       "id": id,
       "title": title,
       "description": description,
-      "imagePath": basename(imagePath),
+      if (imagePath != null) "imagePath": basename(imagePath!),
       "duration": duration,
-      "audioPath": basename(audioPath),
+      if (audioPath != null) "audioPath": basename(audioPath!),
       "date": date,
       "images": _images()
     };

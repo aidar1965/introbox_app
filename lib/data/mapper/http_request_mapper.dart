@@ -57,7 +57,8 @@ class HttpRequestMapper {
     List<Map<String, dynamic>> imageJsons = [];
 
     for (var subject in course.subjects) {
-      for (var record in subject.records) {
+      for (var record in subject.records!) {
+        //TODO() - проверить!
         if (record.images != null) {
           record.images!.forEach((key, value) {
             Map<String, dynamic> jsonItem = {
@@ -91,8 +92,8 @@ String recordsToJson(List<Fragment> records) {
     recordMap['title'] = record.title;
     recordMap['description'] = record.description;
     recordMap['duration'] = record.duration;
-    recordMap['audio'] = record.audioPath.split('\\').last;
-    recordMap['image'] = record.imagePath.split('\\').last;
+    recordMap['audio'] = record.audioPath?.split('\\').last;
+    recordMap['image'] = record.imagePath?.split('\\').last;
     recordMap['createDate'] = record.date.toString();
     recordMaps.add(recordMap);
   }
@@ -106,7 +107,8 @@ String subjectsToJson(List<Subject> subjects) {
     subjectMap['id'] = subject.id;
     subjectMap['title'] = subject.title;
     subjectMap['description'] = subject.description;
-    subjectMap['records'] = recordsToJson(subject.records);
+    subjectMap['records'] =
+        subject.records != null ? recordsToJson(subject.records!) : null;
     subjectMap['duration'] = subject.duration;
     subjectMap['createDate'] = subject.date.toString();
     subjectMaps.add(subjectMap);

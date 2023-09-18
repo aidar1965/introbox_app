@@ -89,25 +89,27 @@ Future<void> _createZip(Course course) async {
     await File('${Constants.fullTempFolder}${course.id}.zip').delete();
   }
   for (var subject in course.subjects) {
-    for (var record in subject.records) {
-      var file = File(record.audioPath);
-      var bytes = file.readAsBytesSync();
-      var name = basename(file.path);
-      var archiveFile = ArchiveFile(name, bytes.length, bytes);
-      archive.addFile(archiveFile);
-      if (record.images != null) {
-        for (var element in record.images!.keys) {
-          file = File(element);
-          bytes = file.readAsBytesSync();
-          name = basename(file.path);
-          archiveFile = ArchiveFile(name, bytes.length, bytes);
-          archive.addFile(archiveFile);
+    if (subject.records?.isNotEmpty ?? false) {
+      for (var record in subject.records!) {
+        var file = File(record.audioPath!);
+        var bytes = file.readAsBytesSync();
+        var name = basename(file.path);
+        var archiveFile = ArchiveFile(name, bytes.length, bytes);
+        archive.addFile(archiveFile);
+        if (record.images != null) {
+          for (var element in record.images!.keys) {
+            file = File(element);
+            bytes = file.readAsBytesSync();
+            name = basename(file.path);
+            archiveFile = ArchiveFile(name, bytes.length, bytes);
+            archive.addFile(archiveFile);
+          }
         }
       }
+      final encodedArchive = zipEncoder.encode(archive);
+      if (encodedArchive == null) return;
+      await File('${Constants.fullTempFolder}${course.id}.zip')
+          .writeAsBytes(encodedArchive);
     }
-    final encodedArchive = zipEncoder.encode(archive);
-    if (encodedArchive == null) return;
-    await File('${Constants.fullTempFolder}${course.id}.zip')
-        .writeAsBytes(encodedArchive);
   }
 }

@@ -12,5 +12,6 @@ class AssemblingState with _$AssemblingState {
       required List<Fragment> subjectFragments,
       PlayerStatus? playerStatus,
       Fragment? playingFragment,
-      int? secondsPassed}) = _DataReceived;
+      int? secondsPassed,
+      List<Uint8List>? pdfImages}) = _DataReceived;
 }

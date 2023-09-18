@@ -27,7 +27,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   double leftOpacity = 0.0;
   double rightOpacity = 0.0;
 
-  late Fragment record;
+  late Fragment? record;
   late bool isLast;
   late Subject subject;
   late bool isLastSubject;
@@ -43,8 +43,8 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     super.initState();
 
     subject = widget.course.subjects.first;
-    record = subject.records.first;
-    numberOfFragments = subject.records.length;
+    record = subject.records?.first;
+    numberOfFragments = subject.records?.length ?? 0;
     numberOfSubjects = widget.course.subjects.length;
     isLast = currentIndex == numberOfFragments - 1;
     isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
@@ -81,7 +81,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     if (currentIndex < numberOfFragments - 1) {
       setState(() {
         currentIndex++;
-        record = subject.records.elementAt(currentIndex);
+        record = subject.records?.elementAt(currentIndex);
         isLast = currentIndex == numberOfFragments - 1;
       });
     } else {
@@ -94,7 +94,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   void _playPreviousFragment() {
     setState(() {
       currentIndex--;
-      record = subject.records.elementAt(currentIndex);
+      record = subject.records?.elementAt(currentIndex);
       isLast = currentIndex == numberOfFragments - 1;
     });
   }
@@ -103,11 +103,11 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex++;
       subject = widget.course.subjects.elementAt(currentSubjectIndex);
-      numberOfFragments = subject.records.length;
+      numberOfFragments = subject.records?.length ?? 0;
       currentIndex = 0;
       isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
-      record = subject.records.first;
+      record = subject.records?.first;
     });
   }
 
@@ -115,11 +115,11 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex--;
       subject = widget.course.subjects.elementAt(currentSubjectIndex);
-      numberOfFragments = subject.records.length;
+      numberOfFragments = subject.records?.length ?? 0;
       currentIndex = 0;
       isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
-      record = subject.records.first;
+      record = subject.records?.first;
     });
   }
 
@@ -127,11 +127,11 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex = indx;
       subject = theSubject;
-      numberOfFragments = subject.records.length;
+      numberOfFragments = subject.records?.length ?? 0;
       currentIndex = 0;
       isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
-      record = subject.records.first;
+      record = subject.records?.first;
     });
   }
 
@@ -140,7 +140,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     setState(() {
       currentSubjectIndex = theSubjectIndex;
       subject = theSubject;
-      numberOfFragments = subject.records.length;
+      numberOfFragments = subject.records?.length ?? 0;
       currentIndex = theFragmentIndex;
       isLast = currentIndex == numberOfFragments - 1;
       isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
@@ -164,11 +164,12 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                   height: height - 40,
                   width: width - 40,
                   child: Center(
-                      child: record.imagePath != ''
-                          ? remote == false
-                              ? Image.file(File(record.imagePath))
-                              : Image.network(record.imagePath)
-                          : const SizedBox()))
+                      child:
+                          record?.imagePath != '' && record?.imagePath != null
+                              ? remote == false
+                                  ? Image.file(File(record!.imagePath!))
+                                  : Image.network(record!.imagePath!)
+                              : const SizedBox()))
             ],
           )),
       AnimatedOpacity(
@@ -200,34 +201,36 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                         height: 20,
                       ),
                       Text(
-                        record.title,
+                        record?.title ?? '',
                         style: const TextStyle(color: Colors.white),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      record.description != null
+                      record?.description != null
                           ? Text(
-                              record.description!,
+                              record!.description!,
                               style: const TextStyle(color: Colors.white),
                             )
                           : const SizedBox(),
                       SizedBox(
-                        height: record.description != null ? 40 : 0,
+                        height: record?.description != null ? 40 : 0,
                       ),
                       Center(
                         child: SizedBox(
                           width: 320,
                           height: 240,
                           child: Center(
-                            child: PlayerWidget(
-                                record: record,
-                                remote: remote,
-                                subject: subject,
-                                isLast: isLast,
-                                onEnd: () {
-                                  _playNextFragment();
-                                }),
+                            child: record != null
+                                ? PlayerWidget(
+                                    record: record!,
+                                    remote: remote,
+                                    subject: subject,
+                                    isLast: isLast,
+                                    onEnd: () {
+                                      _playNextFragment();
+                                    })
+                                : const SizedBox(),
                           ),
                         ),
                       ),
@@ -379,15 +382,17 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                       subtitle: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: thesubject.records.length,
+                        itemCount: thesubject.records?.length,
                         itemBuilder: (BuildContext context, int ind) {
-                          var therecord = thesubject.records.elementAt(ind);
-                          return GestureDetector(
-                              onTap: () => _playFragment(
-                                  thesubject, index, therecord, ind),
-                              child: MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: Text(therecord.title)));
+                          var therecord = thesubject.records?.elementAt(ind);
+                          if (therecord != null) {
+                            return GestureDetector(
+                                onTap: () => _playFragment(
+                                    thesubject, index, therecord, ind),
+                                child: MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: Text(therecord.title)));
+                          }
                         },
                       ),
                     );

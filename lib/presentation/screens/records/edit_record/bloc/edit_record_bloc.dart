@@ -51,10 +51,11 @@ class EditFragmentBloc extends Bloc<EditFragmentEvent, EditFragmentState> {
 
   late String? title;
   late String? description;
+  String? audioRandomFilename;
 
   void _saveFragment(_SaveFragment event, Emitter emitter) {
     String imageRandomFilename;
-    String audioRandomFilename;
+
     String directory;
     Map<String, int> savedImages = {};
     directory = Constants.fullImageFolder!;
@@ -68,15 +69,16 @@ class EditFragmentBloc extends Bloc<EditFragmentEvent, EditFragmentState> {
         savedImages[imageRandomFilename] = value;
       });
     } else {}
+    if (event.audioPath != null) {
+      File file = File(event.audioPath!);
+      directory = Constants.fullAudioFolder!;
 
-    File file = File(event.audioPath);
-    directory = Constants.fullAudioFolder!;
+      audioRandomFilename = p.extension(event.audioPath!);
+      audioRandomFilename = '${getRandomString(8)}$audioRandomFilename';
+      audioRandomFilename = '$directory$audioRandomFilename';
 
-    audioRandomFilename = p.extension(event.audioPath);
-    audioRandomFilename = '${getRandomString(8)}$audioRandomFilename';
-    audioRandomFilename = '$directory$audioRandomFilename';
-
-    file.copy(audioRandomFilename);
+      file.copy(audioRandomFilename!);
+    }
 
     Fragment updatedFragment = record.copyWith(
       title: event.title,

@@ -26,7 +26,14 @@ abstract class ILocalDB {
     required int id,
   });
 
-  void addSubject(Subject subject);
+  void addSubject({
+    required String title,
+    String? description,
+    List<Fragment>? records,
+    required DateTime date,
+    List<SubjectCategory>? subjectCategories,
+    int? duration,
+  });
 
   void updateSubject(Subject subject);
 

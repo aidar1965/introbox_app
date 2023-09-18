@@ -1,3 +1,5 @@
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+
 import '../../domain/models/course_category.dart';
 import '../../domain/models/fragment.dart';
 import '../../domain/models/subject.dart';
@@ -7,18 +9,14 @@ import '../../domain/interfaces/i_local_db.dart';
 import '../../domain/models/course.dart';
 import '../../domain/models/fragment_category.dart';
 import '../../domain/models/user.dart';
-
-const String recordCategoryBox = 'recordCategories';
-const String recordBox = '_records';
-const String courseBox = '_courses';
-const String userBox = 'user';
-const String subjectBox = '_subjects';
-const String subjectCategoryBox = '_subjectCategory';
-const String courseCategoryBox = '_courseCategory';
+import 'db_helper.dart';
 
 class LocalDB implements ILocalDB {
+  Database? _db;
   @override
   Future<LocalDB> init() async {
+    final dbHelper = DbHelper();
+    _db = await dbHelper.database;
     return this;
   }
 
@@ -178,7 +176,14 @@ class LocalDB implements ILocalDB {
   }
 
   @override
-  void addSubject(Subject subject) {}
+  void addSubject({
+    required String title,
+    String? description,
+    List<Fragment>? records,
+    required DateTime date,
+    List<SubjectCategory>? subjectCategories,
+    int? duration,
+  }) {}
 
   void _deleteCategoryFromFragments(FragmentCategory category) {
     // var recordsMap = recordHivebox!.toMap();

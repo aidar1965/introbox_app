@@ -32,6 +32,7 @@ mixin _$AssemblingEvent {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -49,6 +50,7 @@ mixin _$AssemblingEvent {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,6 +68,7 @@ mixin _$AssemblingEvent {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -85,6 +88,7 @@ mixin _$AssemblingEvent {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -102,6 +106,7 @@ mixin _$AssemblingEvent {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -119,6 +124,7 @@ mixin _$AssemblingEvent {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -194,6 +200,7 @@ class _$_FetchInitialData implements _FetchInitialData {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return fetchInitialData();
   }
@@ -214,6 +221,7 @@ class _$_FetchInitialData implements _FetchInitialData {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return fetchInitialData?.call();
   }
@@ -234,6 +242,7 @@ class _$_FetchInitialData implements _FetchInitialData {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (fetchInitialData != null) {
@@ -259,6 +268,7 @@ class _$_FetchInitialData implements _FetchInitialData {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return fetchInitialData(this);
   }
@@ -279,6 +289,7 @@ class _$_FetchInitialData implements _FetchInitialData {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return fetchInitialData?.call(this);
   }
@@ -299,6 +310,7 @@ class _$_FetchInitialData implements _FetchInitialData {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (fetchInitialData != null) {
@@ -391,6 +403,7 @@ class _$_SelectCategory implements _SelectCategory {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return selectCategory(category);
   }
@@ -411,6 +424,7 @@ class _$_SelectCategory implements _SelectCategory {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return selectCategory?.call(category);
   }
@@ -431,6 +445,7 @@ class _$_SelectCategory implements _SelectCategory {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (selectCategory != null) {
@@ -456,6 +471,7 @@ class _$_SelectCategory implements _SelectCategory {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return selectCategory(this);
   }
@@ -476,6 +492,7 @@ class _$_SelectCategory implements _SelectCategory {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return selectCategory?.call(this);
   }
@@ -496,6 +513,7 @@ class _$_SelectCategory implements _SelectCategory {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (selectCategory != null) {
@@ -595,6 +613,7 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return selectSubjectCategory(subjectCategory);
   }
@@ -615,6 +634,7 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return selectSubjectCategory?.call(subjectCategory);
   }
@@ -635,6 +655,7 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (selectSubjectCategory != null) {
@@ -660,6 +681,7 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return selectSubjectCategory(this);
   }
@@ -680,6 +702,7 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return selectSubjectCategory?.call(this);
   }
@@ -700,6 +723,7 @@ class _$_SelectSubjectCategory implements _SelectSubjectCategory {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (selectSubjectCategory != null) {
@@ -798,6 +822,7 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return addSubjectCategory(name);
   }
@@ -818,6 +843,7 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return addSubjectCategory?.call(name);
   }
@@ -838,6 +864,7 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (addSubjectCategory != null) {
@@ -863,6 +890,7 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return addSubjectCategory(this);
   }
@@ -883,6 +911,7 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return addSubjectCategory?.call(this);
   }
@@ -903,6 +932,7 @@ class _$_AddSubjectCategory implements _AddSubjectCategory {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (addSubjectCategory != null) {
@@ -999,6 +1029,7 @@ class _$_AddFragment implements _AddFragment {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return addFragment(record);
   }
@@ -1019,6 +1050,7 @@ class _$_AddFragment implements _AddFragment {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return addFragment?.call(record);
   }
@@ -1039,6 +1071,7 @@ class _$_AddFragment implements _AddFragment {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (addFragment != null) {
@@ -1064,6 +1097,7 @@ class _$_AddFragment implements _AddFragment {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return addFragment(this);
   }
@@ -1084,6 +1118,7 @@ class _$_AddFragment implements _AddFragment {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return addFragment?.call(this);
   }
@@ -1104,6 +1139,7 @@ class _$_AddFragment implements _AddFragment {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (addFragment != null) {
@@ -1201,6 +1237,7 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return setPlayerStatus(playerStatus);
   }
@@ -1221,6 +1258,7 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return setPlayerStatus?.call(playerStatus);
   }
@@ -1241,6 +1279,7 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (setPlayerStatus != null) {
@@ -1266,6 +1305,7 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return setPlayerStatus(this);
   }
@@ -1286,6 +1326,7 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return setPlayerStatus?.call(this);
   }
@@ -1306,6 +1347,7 @@ class _$_SetPlayerStatus implements _SetPlayerStatus {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (setPlayerStatus != null) {
@@ -1413,6 +1455,7 @@ class _$_OnReorder implements _OnReorder {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return onReorder(oldIndex, newIndex);
   }
@@ -1433,6 +1476,7 @@ class _$_OnReorder implements _OnReorder {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return onReorder?.call(oldIndex, newIndex);
   }
@@ -1453,6 +1497,7 @@ class _$_OnReorder implements _OnReorder {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (onReorder != null) {
@@ -1478,6 +1523,7 @@ class _$_OnReorder implements _OnReorder {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return onReorder(this);
   }
@@ -1498,6 +1544,7 @@ class _$_OnReorder implements _OnReorder {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return onReorder?.call(this);
   }
@@ -1518,6 +1565,7 @@ class _$_OnReorder implements _OnReorder {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (onReorder != null) {
@@ -1616,6 +1664,7 @@ class _$_PlayFragment implements _PlayFragment {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return playFragment(record);
   }
@@ -1636,6 +1685,7 @@ class _$_PlayFragment implements _PlayFragment {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return playFragment?.call(record);
   }
@@ -1656,6 +1706,7 @@ class _$_PlayFragment implements _PlayFragment {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (playFragment != null) {
@@ -1681,6 +1732,7 @@ class _$_PlayFragment implements _PlayFragment {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return playFragment(this);
   }
@@ -1701,6 +1753,7 @@ class _$_PlayFragment implements _PlayFragment {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return playFragment?.call(this);
   }
@@ -1721,6 +1774,7 @@ class _$_PlayFragment implements _PlayFragment {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (playFragment != null) {
@@ -1791,6 +1845,7 @@ class _$_StartTimer implements _StartTimer {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return startTimer();
   }
@@ -1811,6 +1866,7 @@ class _$_StartTimer implements _StartTimer {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return startTimer?.call();
   }
@@ -1831,6 +1887,7 @@ class _$_StartTimer implements _StartTimer {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (startTimer != null) {
@@ -1856,6 +1913,7 @@ class _$_StartTimer implements _StartTimer {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return startTimer(this);
   }
@@ -1876,6 +1934,7 @@ class _$_StartTimer implements _StartTimer {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return startTimer?.call(this);
   }
@@ -1896,6 +1955,7 @@ class _$_StartTimer implements _StartTimer {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (startTimer != null) {
@@ -1961,6 +2021,7 @@ class _$_StopTimer implements _StopTimer {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return stopTimer();
   }
@@ -1981,6 +2042,7 @@ class _$_StopTimer implements _StopTimer {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return stopTimer?.call();
   }
@@ -2001,6 +2063,7 @@ class _$_StopTimer implements _StopTimer {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (stopTimer != null) {
@@ -2026,6 +2089,7 @@ class _$_StopTimer implements _StopTimer {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return stopTimer(this);
   }
@@ -2046,6 +2110,7 @@ class _$_StopTimer implements _StopTimer {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return stopTimer?.call(this);
   }
@@ -2066,6 +2131,7 @@ class _$_StopTimer implements _StopTimer {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (stopTimer != null) {
@@ -2131,6 +2197,7 @@ class _$_ClearTimer implements _ClearTimer {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return clearTimer();
   }
@@ -2151,6 +2218,7 @@ class _$_ClearTimer implements _ClearTimer {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return clearTimer?.call();
   }
@@ -2171,6 +2239,7 @@ class _$_ClearTimer implements _ClearTimer {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (clearTimer != null) {
@@ -2196,6 +2265,7 @@ class _$_ClearTimer implements _ClearTimer {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return clearTimer(this);
   }
@@ -2216,6 +2286,7 @@ class _$_ClearTimer implements _ClearTimer {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return clearTimer?.call(this);
   }
@@ -2236,6 +2307,7 @@ class _$_ClearTimer implements _ClearTimer {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (clearTimer != null) {
@@ -2301,6 +2373,7 @@ class _$_ResendData implements _ResendData {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return resendData();
   }
@@ -2321,6 +2394,7 @@ class _$_ResendData implements _ResendData {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return resendData?.call();
   }
@@ -2341,6 +2415,7 @@ class _$_ResendData implements _ResendData {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (resendData != null) {
@@ -2366,6 +2441,7 @@ class _$_ResendData implements _ResendData {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return resendData(this);
   }
@@ -2386,6 +2462,7 @@ class _$_ResendData implements _ResendData {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return resendData?.call(this);
   }
@@ -2406,6 +2483,7 @@ class _$_ResendData implements _ResendData {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (resendData != null) {
@@ -2506,6 +2584,7 @@ class _$_SaveSubject implements _SaveSubject {
     required TResult Function() clearTimer,
     required TResult Function() resendData,
     required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
   }) {
     return saveSubject(title, description);
   }
@@ -2526,6 +2605,7 @@ class _$_SaveSubject implements _SaveSubject {
     TResult? Function()? clearTimer,
     TResult? Function()? resendData,
     TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
   }) {
     return saveSubject?.call(title, description);
   }
@@ -2546,6 +2626,7 @@ class _$_SaveSubject implements _SaveSubject {
     TResult Function()? clearTimer,
     TResult Function()? resendData,
     TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
     required TResult orElse(),
   }) {
     if (saveSubject != null) {
@@ -2571,6 +2652,7 @@ class _$_SaveSubject implements _SaveSubject {
     required TResult Function(_ClearTimer value) clearTimer,
     required TResult Function(_ResendData value) resendData,
     required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
   }) {
     return saveSubject(this);
   }
@@ -2591,6 +2673,7 @@ class _$_SaveSubject implements _SaveSubject {
     TResult? Function(_ClearTimer value)? clearTimer,
     TResult? Function(_ResendData value)? resendData,
     TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
   }) {
     return saveSubject?.call(this);
   }
@@ -2611,6 +2694,7 @@ class _$_SaveSubject implements _SaveSubject {
     TResult Function(_ClearTimer value)? clearTimer,
     TResult Function(_ResendData value)? resendData,
     TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
     required TResult orElse(),
   }) {
     if (saveSubject != null) {
@@ -2633,6 +2717,215 @@ abstract class _SaveSubject implements AssemblingEvent {
 }
 
 /// @nodoc
+abstract class _$$_ConvertFileCopyWith<$Res> {
+  factory _$$_ConvertFileCopyWith(
+          _$_ConvertFile value, $Res Function(_$_ConvertFile) then) =
+      __$$_ConvertFileCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String pdfFilePath});
+}
+
+/// @nodoc
+class __$$_ConvertFileCopyWithImpl<$Res>
+    extends _$AssemblingEventCopyWithImpl<$Res, _$_ConvertFile>
+    implements _$$_ConvertFileCopyWith<$Res> {
+  __$$_ConvertFileCopyWithImpl(
+      _$_ConvertFile _value, $Res Function(_$_ConvertFile) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pdfFilePath = null,
+  }) {
+    return _then(_$_ConvertFile(
+      pdfFilePath: null == pdfFilePath
+          ? _value.pdfFilePath
+          : pdfFilePath // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ConvertFile implements _ConvertFile {
+  const _$_ConvertFile({required this.pdfFilePath});
+
+  @override
+  final String pdfFilePath;
+
+  @override
+  String toString() {
+    return 'AssemblingEvent.convertPdf(pdfFilePath: $pdfFilePath)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ConvertFile &&
+            (identical(other.pdfFilePath, pdfFilePath) ||
+                other.pdfFilePath == pdfFilePath));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, pdfFilePath);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ConvertFileCopyWith<_$_ConvertFile> get copyWith =>
+      __$$_ConvertFileCopyWithImpl<_$_ConvertFile>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() fetchInitialData,
+    required TResult Function(FragmentCategory category) selectCategory,
+    required TResult Function(SubjectCategory subjectCategory)
+        selectSubjectCategory,
+    required TResult Function(String name) addSubjectCategory,
+    required TResult Function(Fragment record) addFragment,
+    required TResult Function(PlayerStatus playerStatus) setPlayerStatus,
+    required TResult Function(int oldIndex, int newIndex) onReorder,
+    required TResult Function(Fragment record) playFragment,
+    required TResult Function() startTimer,
+    required TResult Function() stopTimer,
+    required TResult Function() clearTimer,
+    required TResult Function() resendData,
+    required TResult Function(String title, String? description) saveSubject,
+    required TResult Function(String pdfFilePath) convertPdf,
+  }) {
+    return convertPdf(pdfFilePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? fetchInitialData,
+    TResult? Function(FragmentCategory category)? selectCategory,
+    TResult? Function(SubjectCategory subjectCategory)? selectSubjectCategory,
+    TResult? Function(String name)? addSubjectCategory,
+    TResult? Function(Fragment record)? addFragment,
+    TResult? Function(PlayerStatus playerStatus)? setPlayerStatus,
+    TResult? Function(int oldIndex, int newIndex)? onReorder,
+    TResult? Function(Fragment record)? playFragment,
+    TResult? Function()? startTimer,
+    TResult? Function()? stopTimer,
+    TResult? Function()? clearTimer,
+    TResult? Function()? resendData,
+    TResult? Function(String title, String? description)? saveSubject,
+    TResult? Function(String pdfFilePath)? convertPdf,
+  }) {
+    return convertPdf?.call(pdfFilePath);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? fetchInitialData,
+    TResult Function(FragmentCategory category)? selectCategory,
+    TResult Function(SubjectCategory subjectCategory)? selectSubjectCategory,
+    TResult Function(String name)? addSubjectCategory,
+    TResult Function(Fragment record)? addFragment,
+    TResult Function(PlayerStatus playerStatus)? setPlayerStatus,
+    TResult Function(int oldIndex, int newIndex)? onReorder,
+    TResult Function(Fragment record)? playFragment,
+    TResult Function()? startTimer,
+    TResult Function()? stopTimer,
+    TResult Function()? clearTimer,
+    TResult Function()? resendData,
+    TResult Function(String title, String? description)? saveSubject,
+    TResult Function(String pdfFilePath)? convertPdf,
+    required TResult orElse(),
+  }) {
+    if (convertPdf != null) {
+      return convertPdf(pdfFilePath);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_FetchInitialData value) fetchInitialData,
+    required TResult Function(_SelectCategory value) selectCategory,
+    required TResult Function(_SelectSubjectCategory value)
+        selectSubjectCategory,
+    required TResult Function(_AddSubjectCategory value) addSubjectCategory,
+    required TResult Function(_AddFragment value) addFragment,
+    required TResult Function(_SetPlayerStatus value) setPlayerStatus,
+    required TResult Function(_OnReorder value) onReorder,
+    required TResult Function(_PlayFragment value) playFragment,
+    required TResult Function(_StartTimer value) startTimer,
+    required TResult Function(_StopTimer value) stopTimer,
+    required TResult Function(_ClearTimer value) clearTimer,
+    required TResult Function(_ResendData value) resendData,
+    required TResult Function(_SaveSubject value) saveSubject,
+    required TResult Function(_ConvertFile value) convertPdf,
+  }) {
+    return convertPdf(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_FetchInitialData value)? fetchInitialData,
+    TResult? Function(_SelectCategory value)? selectCategory,
+    TResult? Function(_SelectSubjectCategory value)? selectSubjectCategory,
+    TResult? Function(_AddSubjectCategory value)? addSubjectCategory,
+    TResult? Function(_AddFragment value)? addFragment,
+    TResult? Function(_SetPlayerStatus value)? setPlayerStatus,
+    TResult? Function(_OnReorder value)? onReorder,
+    TResult? Function(_PlayFragment value)? playFragment,
+    TResult? Function(_StartTimer value)? startTimer,
+    TResult? Function(_StopTimer value)? stopTimer,
+    TResult? Function(_ClearTimer value)? clearTimer,
+    TResult? Function(_ResendData value)? resendData,
+    TResult? Function(_SaveSubject value)? saveSubject,
+    TResult? Function(_ConvertFile value)? convertPdf,
+  }) {
+    return convertPdf?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_FetchInitialData value)? fetchInitialData,
+    TResult Function(_SelectCategory value)? selectCategory,
+    TResult Function(_SelectSubjectCategory value)? selectSubjectCategory,
+    TResult Function(_AddSubjectCategory value)? addSubjectCategory,
+    TResult Function(_AddFragment value)? addFragment,
+    TResult Function(_SetPlayerStatus value)? setPlayerStatus,
+    TResult Function(_OnReorder value)? onReorder,
+    TResult Function(_PlayFragment value)? playFragment,
+    TResult Function(_StartTimer value)? startTimer,
+    TResult Function(_StopTimer value)? stopTimer,
+    TResult Function(_ClearTimer value)? clearTimer,
+    TResult Function(_ResendData value)? resendData,
+    TResult Function(_SaveSubject value)? saveSubject,
+    TResult Function(_ConvertFile value)? convertPdf,
+    required TResult orElse(),
+  }) {
+    if (convertPdf != null) {
+      return convertPdf(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ConvertFile implements AssemblingEvent {
+  const factory _ConvertFile({required final String pdfFilePath}) =
+      _$_ConvertFile;
+
+  String get pdfFilePath;
+  @JsonKey(ignore: true)
+  _$$_ConvertFileCopyWith<_$_ConvertFile> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$AssemblingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -2646,7 +2939,8 @@ mixin _$AssemblingState {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)
         dataReceived,
   }) =>
       throw _privateConstructorUsedError;
@@ -2662,7 +2956,8 @@ mixin _$AssemblingState {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)?
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)?
         dataReceived,
   }) =>
       throw _privateConstructorUsedError;
@@ -2678,7 +2973,8 @@ mixin _$AssemblingState {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)?
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)?
         dataReceived,
     required TResult orElse(),
   }) =>
@@ -2769,7 +3065,8 @@ class _$_Pending implements _Pending {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)
         dataReceived,
   }) {
     return pending();
@@ -2788,7 +3085,8 @@ class _$_Pending implements _Pending {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)?
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)?
         dataReceived,
   }) {
     return pending?.call();
@@ -2807,7 +3105,8 @@ class _$_Pending implements _Pending {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)?
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)?
         dataReceived,
     required TResult orElse(),
   }) {
@@ -2868,7 +3167,8 @@ abstract class _$$_DataReceivedCopyWith<$Res> {
       List<Fragment> subjectFragments,
       PlayerStatus? playerStatus,
       Fragment? playingFragment,
-      int? secondsPassed});
+      int? secondsPassed,
+      List<Uint8List>? pdfImages});
 }
 
 /// @nodoc
@@ -2891,6 +3191,7 @@ class __$$_DataReceivedCopyWithImpl<$Res>
     Object? playerStatus = freezed,
     Object? playingFragment = freezed,
     Object? secondsPassed = freezed,
+    Object? pdfImages = freezed,
   }) {
     return _then(_$_DataReceived(
       categories: freezed == categories
@@ -2929,6 +3230,10 @@ class __$$_DataReceivedCopyWithImpl<$Res>
           ? _value.secondsPassed
           : secondsPassed // ignore: cast_nullable_to_non_nullable
               as int?,
+      pdfImages: freezed == pdfImages
+          ? _value._pdfImages
+          : pdfImages // ignore: cast_nullable_to_non_nullable
+              as List<Uint8List>?,
     ));
   }
 }
@@ -2945,13 +3250,15 @@ class _$_DataReceived implements _DataReceived {
       required final List<Fragment> subjectFragments,
       this.playerStatus,
       this.playingFragment,
-      this.secondsPassed})
+      this.secondsPassed,
+      final List<Uint8List>? pdfImages})
       : _categories = categories,
         _selectedCategories = selectedCategories,
         _subjectCategories = subjectCategories,
         _selectedSubjectCategories = selectedSubjectCategories,
         _records = records,
-        _subjectFragments = subjectFragments;
+        _subjectFragments = subjectFragments,
+        _pdfImages = pdfImages;
 
   final List<FragmentCategory>? _categories;
   @override
@@ -3017,10 +3324,19 @@ class _$_DataReceived implements _DataReceived {
   final Fragment? playingFragment;
   @override
   final int? secondsPassed;
+  final List<Uint8List>? _pdfImages;
+  @override
+  List<Uint8List>? get pdfImages {
+    final value = _pdfImages;
+    if (value == null) return null;
+    if (_pdfImages is EqualUnmodifiableListView) return _pdfImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'AssemblingState.dataReceived(categories: $categories, selectedCategories: $selectedCategories, subjectCategories: $subjectCategories, selectedSubjectCategories: $selectedSubjectCategories, records: $records, subjectFragments: $subjectFragments, playerStatus: $playerStatus, playingFragment: $playingFragment, secondsPassed: $secondsPassed)';
+    return 'AssemblingState.dataReceived(categories: $categories, selectedCategories: $selectedCategories, subjectCategories: $subjectCategories, selectedSubjectCategories: $selectedSubjectCategories, records: $records, subjectFragments: $subjectFragments, playerStatus: $playerStatus, playingFragment: $playingFragment, secondsPassed: $secondsPassed, pdfImages: $pdfImages)';
   }
 
   @override
@@ -3044,7 +3360,9 @@ class _$_DataReceived implements _DataReceived {
             (identical(other.playingFragment, playingFragment) ||
                 other.playingFragment == playingFragment) &&
             (identical(other.secondsPassed, secondsPassed) ||
-                other.secondsPassed == secondsPassed));
+                other.secondsPassed == secondsPassed) &&
+            const DeepCollectionEquality()
+                .equals(other._pdfImages, _pdfImages));
   }
 
   @override
@@ -3058,7 +3376,8 @@ class _$_DataReceived implements _DataReceived {
       const DeepCollectionEquality().hash(_subjectFragments),
       playerStatus,
       playingFragment,
-      secondsPassed);
+      secondsPassed,
+      const DeepCollectionEquality().hash(_pdfImages));
 
   @JsonKey(ignore: true)
   @override
@@ -3079,7 +3398,8 @@ class _$_DataReceived implements _DataReceived {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)
         dataReceived,
   }) {
     return dataReceived(
@@ -3091,7 +3411,8 @@ class _$_DataReceived implements _DataReceived {
         subjectFragments,
         playerStatus,
         playingFragment,
-        secondsPassed);
+        secondsPassed,
+        pdfImages);
   }
 
   @override
@@ -3107,7 +3428,8 @@ class _$_DataReceived implements _DataReceived {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)?
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)?
         dataReceived,
   }) {
     return dataReceived?.call(
@@ -3119,7 +3441,8 @@ class _$_DataReceived implements _DataReceived {
         subjectFragments,
         playerStatus,
         playingFragment,
-        secondsPassed);
+        secondsPassed,
+        pdfImages);
   }
 
   @override
@@ -3135,7 +3458,8 @@ class _$_DataReceived implements _DataReceived {
             List<Fragment> subjectFragments,
             PlayerStatus? playerStatus,
             Fragment? playingFragment,
-            int? secondsPassed)?
+            int? secondsPassed,
+            List<Uint8List>? pdfImages)?
         dataReceived,
     required TResult orElse(),
   }) {
@@ -3149,7 +3473,8 @@ class _$_DataReceived implements _DataReceived {
           subjectFragments,
           playerStatus,
           playingFragment,
-          secondsPassed);
+          secondsPassed,
+          pdfImages);
     }
     return orElse();
   }
@@ -3196,7 +3521,8 @@ abstract class _DataReceived implements AssemblingState {
       required final List<Fragment> subjectFragments,
       final PlayerStatus? playerStatus,
       final Fragment? playingFragment,
-      final int? secondsPassed}) = _$_DataReceived;
+      final int? secondsPassed,
+      final List<Uint8List>? pdfImages}) = _$_DataReceived;
 
   List<FragmentCategory>? get categories;
   List<FragmentCategory>? get selectedCategories;
@@ -3207,6 +3533,7 @@ abstract class _DataReceived implements AssemblingState {
   PlayerStatus? get playerStatus;
   Fragment? get playingFragment;
   int? get secondsPassed;
+  List<Uint8List>? get pdfImages;
   @JsonKey(ignore: true)
   _$$_DataReceivedCopyWith<_$_DataReceived> get copyWith =>
       throw _privateConstructorUsedError;

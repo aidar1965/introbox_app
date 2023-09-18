@@ -6,6 +6,8 @@ import 'package:moki_tutor/domain/models/subject.dart';
 
 import '../interfaces/i_local_db.dart';
 import '../locator/locator.dart';
+import '../models/fragment.dart';
+import '../models/subject_category.dart';
 
 class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
   final ILocalDB db;
@@ -36,8 +38,20 @@ class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
   void addChangeListener(Function() listener) => addListener(listener);
 
   @override
-  void addSubject(Subject subject) {
-    db.addSubject(subject);
+  void addSubject({
+    required String title,
+    String? description,
+    List<Fragment>? records,
+    required DateTime date,
+    List<SubjectCategory>? subjectCategories,
+    int? duration,
+  }) {
+    db.addSubject(
+        title: title,
+        date: date,
+        records: records,
+        subjectCategories: subjectCategories,
+        duration: duration);
     init();
   }
 

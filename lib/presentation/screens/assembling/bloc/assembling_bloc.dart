@@ -1,10 +1,18 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io' as io;
+import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:file/file.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
 import 'package:nanoid/nanoid.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:printing/printing.dart';
 
 import '../../../../domain/interfaces/i_category_repository.dart';
 import '../../../../domain/interfaces/i_fragments_repository.dart';
@@ -12,7 +20,7 @@ import '../../../../domain/interfaces/i_subject_repository.dart';
 import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/fragment.dart';
 import '../../../../domain/models/fragment_category.dart';
-import '../../../../domain/models/subject.dart';
+
 import '../../../../domain/models/subject_category.dart';
 import '../../../player/player_widget.dart';
 
@@ -37,6 +45,7 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
           addSubjectCategory: (event) => _addSubjectCategory(event, emitter),
           selectSubjectCategory: (event) =>
               _selectSubjectCategory(event, emitter),
+          convertPdf: (event) => _convertPdf(event, emitter),
         ));
     categoryRepository.addChangeListener(() {
       categories = categoryRepository.categories;
@@ -318,17 +327,14 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
   }
 
   void _saveSubject(_SaveSubject event, Emitter emitter) {
-    var nanoId = nanoid(12);
-    Subject subject = Subject(
-        title: event.title,
-        description: event.description,
-        id: nanoId,
-        records: subjectFragments,
-        date: DateTime.now(),
-        subjectCategories: selectedSubjectCategories,
-        duration: _subjectDuration());
-    subjectsRepository.addSubject(subject);
-    selectedCategories = [];
+    subjectsRepository.addSubject(
+      title: event.title,
+      description: event.description,
+      records: subjectFragments,
+      subjectCategories: subjectCategories,
+      duration: _subjectDuration(),
+      date: DateTime.now(),
+    );
     categories = [];
     records = [];
     subjectFragments = [];
@@ -355,5 +361,23 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
       duration = duration + subjectFragment.duration;
     }
     return duration;
+  }
+
+  Future<void> _convertPdf(_ConvertFile event, Emitter emitter) async {
+    final List<Uint8List> pdfImageList = [];
+
+    final file = io.File(event.pdfFilePath);
+
+    await for (var page in Printing.raster(file.readAsBytesSync())) {
+      final image = await page.toPng();
+      pdfImageList.add(image);
+    }
+    emitter(AssemblingState.dataReceived(
+        categories: categories,
+        selectedCategories: selectedCategories,
+        subjectFragments: subjectFragments,
+        subjectCategories: subjectCategories,
+        selectedSubjectCategories: selectedSubjectCategories,
+        pdfImages: pdfImageList));
   }
 }

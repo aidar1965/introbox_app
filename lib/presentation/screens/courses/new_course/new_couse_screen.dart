@@ -277,11 +277,11 @@ class _SubjectsView extends StatelessWidget {
                 leading: SizedBox(
                   height: 50,
                   width: 50,
-                  child: subject.records.first.images != null
+                  child: subject.records?.first.images != null
                       ? Padding(
                           padding: const EdgeInsets.only(top: 8, bottom: 8),
                           child: Image.file(File(subject
-                              .records.first.images!.entries.first.key
+                              .records!.first.images!.entries.first.key
                               .replaceAll('\\\\', '\\'))),
                         )
                       : null,

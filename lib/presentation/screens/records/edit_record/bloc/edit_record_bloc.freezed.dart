@@ -23,7 +23,7 @@ mixin _$EditFragmentEvent {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -37,7 +37,7 @@ mixin _$EditFragmentEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -49,7 +49,7 @@ mixin _$EditFragmentEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
@@ -121,7 +121,7 @@ abstract class _$$_SaveFragmentCopyWith<$Res> {
       String title,
       String? description,
       Map<String, int>? images,
-      String audioPath,
+      String? audioPath,
       int recordDuration});
 }
 
@@ -140,7 +140,7 @@ class __$$_SaveFragmentCopyWithImpl<$Res>
     Object? title = null,
     Object? description = freezed,
     Object? images = freezed,
-    Object? audioPath = null,
+    Object? audioPath = freezed,
     Object? recordDuration = null,
   }) {
     return _then(_$_SaveFragment(
@@ -160,10 +160,10 @@ class __$$_SaveFragmentCopyWithImpl<$Res>
           ? _value._images
           : images // ignore: cast_nullable_to_non_nullable
               as Map<String, int>?,
-      audioPath: null == audioPath
+      audioPath: freezed == audioPath
           ? _value.audioPath
           : audioPath // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       recordDuration: null == recordDuration
           ? _value.recordDuration
           : recordDuration // ignore: cast_nullable_to_non_nullable
@@ -201,7 +201,7 @@ class _$_SaveFragment implements _SaveFragment {
   }
 
   @override
-  final String audioPath;
+  final String? audioPath;
   @override
   final int recordDuration;
 
@@ -244,7 +244,7 @@ class _$_SaveFragment implements _SaveFragment {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -262,7 +262,7 @@ class _$_SaveFragment implements _SaveFragment {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -278,7 +278,7 @@ class _$_SaveFragment implements _SaveFragment {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
@@ -344,14 +344,14 @@ abstract class _SaveFragment implements EditFragmentEvent {
       required final String title,
       final String? description,
       final Map<String, int>? images,
-      required final String audioPath,
+      required final String? audioPath,
       required final int recordDuration}) = _$_SaveFragment;
 
   Fragment get record;
   String get title;
   String? get description;
   Map<String, int>? get images;
-  String get audioPath;
+  String? get audioPath;
   int get recordDuration;
   @JsonKey(ignore: true)
   _$$_SaveFragmentCopyWith<_$_SaveFragment> get copyWith =>
@@ -427,7 +427,7 @@ class _$_AddCategory implements _AddCategory {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -444,7 +444,7 @@ class _$_AddCategory implements _AddCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -459,7 +459,7 @@ class _$_AddCategory implements _AddCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
@@ -570,7 +570,7 @@ class _$_FetchCategories implements _FetchCategories {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -587,7 +587,7 @@ class _$_FetchCategories implements _FetchCategories {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -602,7 +602,7 @@ class _$_FetchCategories implements _FetchCategories {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
@@ -743,7 +743,7 @@ class _$_EditCategory implements _EditCategory {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -760,7 +760,7 @@ class _$_EditCategory implements _EditCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -775,7 +775,7 @@ class _$_EditCategory implements _EditCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
@@ -915,7 +915,7 @@ class _$_DeleteCategory implements _DeleteCategory {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -932,7 +932,7 @@ class _$_DeleteCategory implements _DeleteCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -947,7 +947,7 @@ class _$_DeleteCategory implements _DeleteCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,
@@ -1086,7 +1086,7 @@ class _$_SelectCategory implements _SelectCategory {
             String title,
             String? description,
             Map<String, int>? images,
-            String audioPath,
+            String? audioPath,
             int recordDuration)
         saveFragment,
     required TResult Function(String name) addCategory,
@@ -1103,7 +1103,7 @@ class _$_SelectCategory implements _SelectCategory {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult? Function(String name)? addCategory,
     TResult? Function()? fetchCategories,
@@ -1118,7 +1118,7 @@ class _$_SelectCategory implements _SelectCategory {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Fragment record, String title, String? description,
-            Map<String, int>? images, String audioPath, int recordDuration)?
+            Map<String, int>? images, String? audioPath, int recordDuration)?
         saveFragment,
     TResult Function(String name)? addCategory,
     TResult Function()? fetchCategories,

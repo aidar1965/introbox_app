@@ -75,7 +75,7 @@ class EditSubjectBloc extends Bloc<EditSubjectEvent, EditSubjectState> {
   Future<void> _fetchInitialData(
       _FetchInitialData event, Emitter emitter) async {
     categories = categoryRepository.categories;
-    subjectFragments = subject.records;
+    subjectFragments = subject.records ?? [];
     subjectCategories = subjectCategoryRepository.subjectCategories;
     for (var cat in categories) {
       selectedCategories.add(cat);

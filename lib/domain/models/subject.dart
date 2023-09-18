@@ -5,28 +5,32 @@ import 'subject_category.dart';
 
 @immutable
 class Subject extends Equatable {
-  final String id;
+  final int id;
 
   final String title;
 
   final String? description;
 
-  final List<Fragment> records;
+  final List<Fragment>? records;
 
   final DateTime date;
 
   final List<SubjectCategory>? subjectCategories;
 
-  final int duration;
+  final int? duration;
 
-  const Subject(
-      {required this.id,
-      required this.title,
-      required this.description,
-      required this.records,
-      required this.date,
-      this.subjectCategories,
-      required this.duration});
+  final String? pdfUrl;
+
+  const Subject({
+    required this.id,
+    required this.title,
+    required this.description,
+    this.records,
+    required this.date,
+    this.subjectCategories,
+    this.duration,
+    this.pdfUrl,
+  });
 
   Subject copyWith(
       {String? title,
@@ -54,7 +58,7 @@ class Subject extends Equatable {
       "id": id,
       "title": title,
       "description": description,
-      "records": records.map((e) => e.toJson()).toList(),
+      "records": records?.map((e) => e.toJson()).toList(),
       "date": date,
       "duration": duration
     };

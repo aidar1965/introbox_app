@@ -115,26 +115,32 @@ class _PlayerWidgetState extends State<PlayerWidget> {
         playerStatus = PlayerStatus.play;
       });
       _startTimer();
-      if (widget.remote == false) {
-        await player.play(DeviceFileSource(record.audioPath), volume: 100);
+      if (widget.remote == false && record.audioPath != null) {
+        await player.play(DeviceFileSource(record.audioPath!), volume: 100);
       } else {
         //await player.setSourceUrl(record.audioPath);
-        await player.play(UrlSource(record.audioPath), volume: 100);
+        await player.play(UrlSource(record.audioPath!), volume: 100);
       }
     }
   }
 
   void _getDuration(Fragment newFragment) {
-    player.setSourceDeviceFile(newFragment.audioPath);
+    if (newFragment.audioPath != null) {
+      player.setSourceDeviceFile(newFragment.audioPath!);
 
-    setState(() {
-      recordDurationInSeconds = record.duration;
-      Duration d = Duration(seconds: recordDurationInSeconds);
-      recordDuration = '${d.inMinutes}:${d.inSeconds % 60}';
-      if (d.inSeconds % 60 < 10) {
-        recordDuration = '${d.inMinutes}:0${d.inSeconds % 60}';
-      }
-    });
+      setState(() {
+        recordDurationInSeconds = record.duration;
+        Duration d = Duration(seconds: recordDurationInSeconds);
+        recordDuration = '${d.inMinutes}:${d.inSeconds % 60}';
+        if (d.inSeconds % 60 < 10) {
+          recordDuration = '${d.inMinutes}:0${d.inSeconds % 60}';
+        }
+      });
+    } else {
+      setState(() {
+        recordDuration = '00: 00';
+      });
+    }
   }
 
   Future<void> stopPlayer() async {
@@ -144,15 +150,17 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   Future<void> reStartPlayer() async {
     _getDuration(record);
     await player.stop();
-    await player.play(
-        widget.remote == false
-            ? DeviceFileSource(record.audioPath)
-            : UrlSource(record.audioPath),
-        volume: 100);
-    setState(() {
-      secondsPassed = 0;
-      playerStatus = PlayerStatus.play;
-    });
+    if (record.audioPath != null) {
+      await player.play(
+          widget.remote == false
+              ? DeviceFileSource(record.audioPath!)
+              : UrlSource(record.audioPath!),
+          volume: 100);
+      setState(() {
+        secondsPassed = 0;
+        playerStatus = PlayerStatus.play;
+      });
+    }
   }
 
   @override

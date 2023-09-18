@@ -175,7 +175,7 @@ class NewCourseBloc extends Bloc<NewCourseEvent, NewCourseState> {
   int _courseDuration() {
     int duration = 0;
     for (var subject in subjects) {
-      duration = duration + subject.duration;
+      duration = duration + (subject.duration ?? 0);
     }
     return duration;
   }

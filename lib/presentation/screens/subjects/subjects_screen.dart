@@ -135,7 +135,7 @@ class SubjectsView extends StatelessWidget {
           ),
         ),
         const VerticalDivider(),
-        selectedSubject != null
+        selectedSubject != null && selectedSubject?.records != null
             ? SizedBox(
                 width: 300,
                 child: Column(
@@ -144,10 +144,10 @@ class SubjectsView extends StatelessWidget {
                     const Divider(),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: selectedSubject!.records.length,
+                          itemCount: selectedSubject!.records?.length,
                           itemBuilder: (context, index) => FragmentView(
                               record:
-                                  selectedSubject!.records.elementAt(index))),
+                                  selectedSubject!.records!.elementAt(index))),
                     ),
                   ],
                 ),
@@ -182,12 +182,12 @@ class SubjectView extends StatelessWidget {
       mouseCursor: SystemMouseCursors.click,
       tileColor: isChecked ? Colors.grey.shade200 : null,
       dense: true,
-      leading: subject.records.first.images != null
+      leading: subject.records?.first.images != null
           ? SizedBox(
               height: 80,
               width: 80,
               child: Image.file(
-                  File(subject.records.first.images!.entries.first.key)))
+                  File(subject.records!.first.images!.entries.first.key)))
           : SizedBox(),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -26,7 +26,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
   double leftOpacity = 0.0;
   double rightOpacity = 0.0;
 
-  late Fragment record;
+  late Fragment? record;
   late bool isLast;
 
   late int numberOfFragments;
@@ -35,8 +35,8 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    numberOfFragments = widget.subject.records.length;
-    record = widget.subject.records.first;
+    numberOfFragments = widget.subject.records?.length ?? 0;
+    record = widget.subject.records?.first;
     isLast = currentIndex == numberOfFragments - 1;
   }
 
@@ -68,13 +68,13 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
     if (currentIndex < numberOfFragments - 1) {
       setState(() {
         currentIndex++;
-        record = widget.subject.records.elementAt(currentIndex);
+        record = widget.subject.records?.elementAt(currentIndex);
         isLast = currentIndex == numberOfFragments - 1;
       });
     } else {
       setState(() {
         currentIndex = 0;
-        record = widget.subject.records.first;
+        record = widget.subject.records?.first;
         isLast = currentIndex == numberOfFragments - 1;
       });
     }
@@ -83,7 +83,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
   void _playPreviousFragment(Fragment oldFragment) {
     setState(() {
       currentIndex--;
-      record = widget.subject.records.elementAt(currentIndex);
+      record = widget.subject.records?.elementAt(currentIndex);
       isLast = currentIndex == numberOfFragments - 1;
     });
   }
@@ -103,8 +103,8 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                   height: height - 40,
                   width: width - 40,
                   child: Center(
-                      child: record.imagePath != ''
-                          ? Image.file(File(record.imagePath))
+                      child: record?.imagePath != ''
+                          ? Image.file(File(record!.imagePath!))
                           : const SizedBox()))
             ],
           )),
@@ -127,13 +127,15 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                     width: 320,
                     height: 240,
                     child: Center(
-                      child: PlayerWidget(
-                          record: record,
-                          remote: false,
-                          isLast: isLast,
-                          onEnd: () {
-                            _playNextFragment(record);
-                          }),
+                      child: record != null
+                          ? PlayerWidget(
+                              record: record!,
+                              remote: false,
+                              isLast: isLast,
+                              onEnd: () {
+                                _playNextFragment(record!);
+                              })
+                          : const SizedBox(),
                     ),
                   ),
                 ),
@@ -159,7 +161,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                         child: const Icon(Icons.arrow_right,
                             color: Colors.black, size: 48),
                         onPressed: () {
-                          _playNextFragment(record);
+                          _playNextFragment(record!);
                         },
                       ),
                     ),
@@ -186,7 +188,7 @@ class _SubjectPlayerScreenState extends State<SubjectPlayerScreen> {
                           size: 48,
                         ),
                         onPressed: () {
-                          _playPreviousFragment(record);
+                          _playPreviousFragment(record!);
                         },
                       ),
                     ),
