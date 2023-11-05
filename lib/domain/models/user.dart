@@ -2,9 +2,7 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class User {
-  final int id;
-
-  final String phone;
+  final String email;
 
   final String? firstName;
 
@@ -16,8 +14,7 @@ class User {
 
   final String? about;
   const User({
-    required this.id,
-    required this.phone,
+    required this.email,
     this.firstName,
     this.lastName,
     this.secondName,
@@ -26,8 +23,7 @@ class User {
   });
 
   User copyWith({
-    int? id,
-    String? phone,
+    String? email,
     String? firstName,
     String? lastName,
     String? secondName,
@@ -35,8 +31,7 @@ class User {
     String? about,
   }) {
     return User(
-      id: id ?? this.id,
-      phone: phone ?? this.phone,
+      email: email ?? this.email,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       secondName: secondName ?? this.secondName,

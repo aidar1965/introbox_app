@@ -203,7 +203,7 @@ class _EditFragmentViewState extends State<EditFragmentView> {
                                   description: descriptionController.text,
                                   audioPath: _record.audioPath,
                                   images: imagesMap,
-                                  recordDuration: _record.duration));
+                                  recordDuration: _record.duration ?? 0));
                           context.router.pop();
                         },
                         child: const Text('Сохранить')),
@@ -293,7 +293,7 @@ class _AudioImageViewState extends State<_AudioImageView> {
                     onPressed: () async {
                       file = await FilePicker.platform.pickFiles(
                         type: FileType.custom,
-                        allowedExtensions: ['mp3', 'm4a', 'wav'],
+                        allowedExtensions: ['mp3', 'wav'],
                       );
                       if (file != null) {
                         widget.onFileSelect(file!);

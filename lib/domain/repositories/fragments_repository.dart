@@ -29,8 +29,8 @@ class FragmentsRepository extends ChangeNotifier
   }
 
   @override
-  void getFragments() {
-    _records = db.getFragments();
+  Future<void> getFragments() async {
+    _records = await db.getFragments();
     notifyListeners();
   }
 
@@ -44,16 +44,16 @@ class FragmentsRepository extends ChangeNotifier
   void removeChangeListener(Function() listener) => removeListener(listener);
 
   @override
-  void addFragment(
+  Future<int> addFragment(
       {required String title,
       String? description,
       String? imagePath,
-      required int duration,
-      required String audioPath,
+      required int? duration,
+      required String? audioPath,
       List<FragmentCategory>? categories,
       required DateTime date,
-      Map<String, int>? images}) {
-    db.addFragment(
+      Map<String, int>? images}) async {
+    final id = db.addFragment(
         title: title,
         description: description,
         imagePath: imagePath,
@@ -63,12 +63,41 @@ class FragmentsRepository extends ChangeNotifier
         images: jsonEncode(
             images?.keys.map((e) => {basename(e): images[e]}).toList()));
     getFragments();
+    return id;
   }
 
   @override
-  void updateFragment(Fragment record) {
-    db.updateFragment(record: record);
-    _records = db.getFragments();
+  Future<int?> addPdfFragment({
+    required String title,
+    String? description,
+    String? imagePath,
+    int? duration,
+    String? audioPath,
+    required DateTime date,
+  }) async {
+    final id = await db.addPdfFragment(
+      title: title,
+      description: description,
+      imagePath: imagePath,
+      duration: duration,
+      audioPath: audioPath,
+      date: date,
+    );
+    await getFragments();
+    return id;
+  }
+
+  @override
+  Future<int> updateFragment(Fragment record) async {
+    final id = await db.updateFragment(record: record);
+    _records = await db.getFragments();
     notifyListeners();
+    return id;
+  }
+
+  @override
+  Future<void> addFragmentToSubject(
+      {required subjectId, required fragmentId}) async {
+    await db.addFragmentToSubject(subjectId: subjectId, fragmentId: fragmentId);
   }
 }

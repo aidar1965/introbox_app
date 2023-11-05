@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:moki_tutor/domain/interfaces/i_course_category_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
 import 'package:moki_tutor/domain/models/course_category.dart';
-import 'package:nanoid/nanoid.dart';
-
-import '../locator/locator.dart';
 
 class CourseCategoryRepository extends ChangeNotifier
     implements ICourseCategoryRepository {
@@ -16,10 +13,11 @@ class CourseCategoryRepository extends ChangeNotifier
   List<CourseCategory>? _courseCategories;
 
   @override
-  void addCategory(String name) {
-    db.addCourseCategory(name);
-    getCategories();
+  Future<int> addCategory(String name) async {
+    final id = await db.addCourseCategory(name);
+    await getCategories();
     notifyListeners();
+    return id;
   }
 
   @override
@@ -28,22 +26,24 @@ class CourseCategoryRepository extends ChangeNotifier
   List<CourseCategory> get categories => _courseCategories ?? [];
 
   @override
-  void deleteCategory(CourseCategory category) {
-    db.deleteCourseCategory(category);
+  Future<int> deleteCategory(CourseCategory category) async {
+    final id = await db.deleteCourseCategory(category);
     getCategories();
     notifyListeners();
+    return id;
   }
 
   @override
-  void editCategory(CourseCategory category) {
-    db.deleteCourseCategory(category);
+  Future<int> editCategory(CourseCategory category) async {
+    final id = await db.deleteCourseCategory(category);
     getCategories();
     notifyListeners();
+    return id;
   }
 
   @override
-  void init() {
-    getCategories();
+  void init() async {
+    await getCategories();
     notifyListeners();
   }
 
@@ -51,16 +51,16 @@ class CourseCategoryRepository extends ChangeNotifier
   void removeChangeListener(Function() listener) => removeListener(listener);
 
   @override
-  void getCategories() {
-    _courseCategories = db.getCourseCategories();
+  Future<void> getCategories() async {
+    _courseCategories = await db.getCourseCategories();
     if (_courseCategories == null) {
-      db.addCourseCategory('Default category');
-      _courseCategories = db.getCourseCategories();
+      await db.addCourseCategory('Default category');
+      _courseCategories = await db.getCourseCategories();
     } else if (_courseCategories!.isEmpty) {
-      db.addCourseCategory(
+      await db.addCourseCategory(
         'Default category',
       );
-      _courseCategories = db.getCourseCategories();
+      _courseCategories = await db.getCourseCategories();
     }
   }
 }

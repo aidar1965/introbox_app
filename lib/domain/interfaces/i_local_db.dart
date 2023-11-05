@@ -10,23 +10,32 @@ import '../models/user.dart';
 abstract class ILocalDB {
   Future<ILocalDB> init();
 
-  void addFragment(
+  Future<int> addFragment(
       {required String title,
       String? description,
       String? imagePath,
-      required int duration,
-      required String audioPath,
+      required int? duration,
+      required String? audioPath,
       required DateTime date,
       String? images,
       List<FragmentCategory>? selectedCategories});
 
-  void updateFragment({required Fragment record});
+  Future<int?> addPdfFragment({
+    required String title,
+    String? description,
+    String? imagePath,
+    int? duration,
+    String? audioPath,
+    required DateTime date,
+  });
 
-  void deleteFragment({
+  Future<int> updateFragment({required Fragment record});
+
+  Future<int> deleteFragment({
     required int id,
   });
 
-  void addSubject({
+  Future<int> addSubject({
     required String title,
     String? description,
     List<Fragment>? records,
@@ -35,43 +44,53 @@ abstract class ILocalDB {
     int? duration,
   });
 
-  void updateSubject(Subject subject);
+  Future<int?> addPdfSubject({
+    required String title,
+    String? description,
+    required String pdfFile,
+    required DateTime date,
+    int? duration,
+  });
 
-  List<FragmentCategory> getCategories();
+  Future<int> updateSubject(Subject subject);
 
-  List<SubjectCategory> getSubjectCategories();
+  Future<List<FragmentCategory>> getCategories();
 
-  List<CourseCategory> getCourseCategories();
+  Future<List<SubjectCategory>> getSubjectCategories();
 
-  List<Fragment> getFragments();
+  Future<List<CourseCategory>> getCourseCategories();
 
-  void addCategory(String name);
+  Future<List<Fragment>> getFragments();
 
-  void addSubjectCategory(String name);
+  Future<int> addCategory(String name);
 
-  void deleteSubjectCategory(SubjectCategory subjectCategory);
+  Future<int> addSubjectCategory(String name);
 
-  void editCategory({required FragmentCategory category});
+  Future<int> deleteSubjectCategory(SubjectCategory subjectCategory);
 
-  void editSubjectCategory({required SubjectCategory subjectCategory});
+  Future<int> editCategory({required FragmentCategory category});
 
-  void deleteCategory(FragmentCategory category);
+  Future<int> editSubjectCategory({required SubjectCategory subjectCategory});
 
-  void saveCourse(Course course);
+  Future<int> deleteCategory(FragmentCategory category);
 
-  void updateCourse(Course course);
+  Future<int> saveCourse(Course course);
 
-  List<Course> getCourses();
+  Future<int> updateCourse(Course course);
 
-  List<Subject> getSubjects();
+  Future<List<Course>> getCourses();
 
-  void saveUserLocally(User user);
+  Future<List<Subject>> getSubjects();
+
+  Future<int> saveUserLocally(User user);
+
+  Future<void> addFragmentToSubject({required subjectId, required fragmentId});
 
   User? getLocalUser();
 
   void removeLocalUser();
 
-  void addCourseCategory(String name);
-  void editCourseCategory(String name);
-  void deleteCourseCategory(CourseCategory category);
+  Future<int> addCourseCategory(String name);
+  Future<int> editCourseCategory(String name);
+  Future<int> deleteCourseCategory(CourseCategory category);
 }

@@ -25,35 +25,24 @@ import '../repositories/user_repository.dart';
 
 final getIt = GetIt.instance;
 
-void setup() {
-  getIt.registerFactory<IApi>(() => Api());
+void setup() async {
+  getIt.registerSingleton<IApi>(Api());
   getIt.registerFactory<ILocalCache>(() => LocalCache());
-  getIt.registerSingletonAsync<ILocalDB>(() async =>
-      await LocalDB().init().then((value) {
-        getIt.registerSingleton<ICategoryRepository>(
-            CategoriesRepository(value));
-        getIt.registerSingleton<ICourseCategoryRepository>(
-            CourseCategoryRepository(value));
+  getIt.registerSingleton<IUserRepository>(UserRepository());
+  getIt.registerSingleton<IAuthController>(AuthController());
 
-        getIt.registerSingleton<IFragmentsRepository>(
-            FragmentsRepository(value));
-        getIt.registerSingleton<ISubjectCategoryRepository>(
-            SubjectCategoryRepository(value));
+  getIt.registerSingletonAsync<ILocalDB>(
+    () async => await LocalDB().init().then((value) {
+      getIt.registerSingleton<ICategoryRepository>(CategoriesRepository(value));
+      getIt.registerSingleton<ICourseCategoryRepository>(
+          CourseCategoryRepository(value));
+      getIt.registerSingleton<IFragmentsRepository>(FragmentsRepository(value));
+      getIt.registerSingleton<ISubjectCategoryRepository>(
+          SubjectCategoryRepository(value));
+      getIt.registerSingleton<ISubjectsRepository>(SubjectsRepository(value));
+      getIt.registerSingleton<ICoursesRepository>(CoursesRepository(value));
 
-        getIt.registerSingleton<ISubjectsRepository>(SubjectsRepository(value));
-        getIt.registerSingleton<ICoursesRepository>(CoursesRepository(value));
-
-        getIt.registerSingletonAsync<IAuthController>(
-            () async => await AuthController().init().then((v) {
-                  getIt.registerSingletonAsync<IUserRepository>(
-                    () async {
-                      final userRepository = UserRepository(value);
-                      await userRepository.init();
-                      return userRepository;
-                    },
-                  );
-                  return v;
-                }));
-        return value;
-      }));
+      return value;
+    }),
+  );
 }

@@ -2,24 +2,30 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
+
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 import 'package:moki_tutor/domain/models/user.dart';
 
 import '../../data/mapper/http_request_mapper.dart';
+import '../interfaces/i_local_cache.dart';
 import '../locator/locator.dart';
+import '../models/user_with_tokens.dart';
 
 class UserRepository extends ChangeNotifier implements IUserRepository {
-  final ILocalDB db;
   final IApi api = getIt<IApi>();
+  final localCache = getIt<ILocalCache>();
 
-  UserRepository(this.db);
-
-  // TODO закрыть user listener
+  UserRepository() {
+    init();
+  }
 
   @override
   Future<void> init() async {
     _user = await getLocalUser();
+    final tokens = await localCache.getTokenPair();
+    if (tokens != null) {
+      api.setTokens(tokens.accessToken, tokens.refreshToken);
+    }
 
     notifyListeners();
   }
@@ -29,31 +35,37 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
   HttpRequestMapper httpRequestMapper = HttpRequestMapper();
 
   @override
-  // TODO: implement isAuthorized
-  bool get isAuthorized => user != null;
-
-  @override
   User? get user => _user;
 
   @override
-  void logout() {
-    db.removeLocalUser();
+  Future<void> logout() async {
+    await localCache.deleteUser();
+    await localCache.clearTokenPair();
     //  await api.clearToken();
     _user = null;
     notifyListeners();
   }
 
   @override
-  Future<void> register({required User user}) {
-    notifyListeners();
-    // TODO: implement register
-    throw UnimplementedError();
+  Future<void> register({
+    required String email,
+    required String password,
+    required String confirmPassword,
+    required String firstName,
+    required String lastName,
+  }) async {
+    await api.register(
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        firstName: firstName,
+        lastName: lastName);
   }
 
   @override
   Future<void> updateUser({required User user}) async {
-    db.saveUserLocally(user);
     await api.updateUser(user: user);
+    await localCache.setUser(user: user);
     _user = user;
     notifyListeners();
   }
@@ -66,27 +78,32 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
 
   @override
   Future<void> loginWithOtp(
-      {required String otp, required String phone}) async {
-    await api.loginWithOtp(otp: otp, phone: phone);
+      {required String otp, required String email}) async {
+    await api.loginWithOtp(otp: otp, email: email);
   }
 
   @override
-  Future<void> otpRequest({required String phone, required String lang}) async {
-    await api.otpRequest(phone: phone, lang: lang);
-  }
-
-  @override
-  Future<User> getUser() {
-    throw UnimplementedError();
+  Future<void> otpRequest({required String email, required String lang}) async {
+    await api.otpRequest(phone: email, lang: lang);
   }
 
   @override
   Future<User?> getLocalUser() async {
-    return await db.getLocalUser();
+    return await localCache.getUser();
   }
 
   @override
   Future<void> uploadUserImage({required File image}) async {
     await api.uploadUserImage(image: image);
+  }
+
+  @override
+  Future<void> login({required String email, required String password}) async {
+    final userWithTokens = await api.login(email: email, password: password);
+    _user = userWithTokens.user;
+    print(_user);
+    await localCache.saveTokenPair(tokenPair: userWithTokens.tokens);
+    await localCache.setUser(user: _user!);
+    notifyListeners();
   }
 }

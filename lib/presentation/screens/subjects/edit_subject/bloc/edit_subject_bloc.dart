@@ -218,7 +218,7 @@ class EditSubjectBloc extends Bloc<EditSubjectEvent, EditSubjectState> {
       add(const EditSubjectEvent.resendData());
       secondsPassed++;
       // log(secondsPassed.toString());
-      if (secondsPassed > playingFragment!.duration) {
+      if (secondsPassed > (playingFragment!.duration ?? 0)) {
         add(const EditSubjectEvent.clearTimer());
         for (int index = 0; index < subjectFragments.length; index++) {
           if (playingFragment!.id == subjectFragments[index].id) {

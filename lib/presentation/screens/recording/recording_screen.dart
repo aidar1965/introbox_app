@@ -280,7 +280,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                                 onPressed: () async {
                                   file = await FilePicker.platform.pickFiles(
                                     type: FileType.custom,
-                                    allowedExtensions: ['mp3', 'm4a', 'wav'],
+                                    allowedExtensions: ['mp3', 'wav'],
                                   );
                                   if (file != null) {
                                     recordPath = file!.paths.first!;

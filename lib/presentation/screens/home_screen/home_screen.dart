@@ -55,11 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 // list of your tab routes
                 // routes used here must be declaraed as children
                 // routes of /dashboard
-                routes: [
-                  const CoursesRoute(),
-                  const SubjectsRoute(),
-                  const FragmentsRoute(),
-                  state.isAuthorized ? const ProfileRoute() : const LoginRoute()
+                routes: const [
+                  CoursesRoute(),
+                  SubjectsRoute(),
+                  PdfSubjectsRoute(),
+                  FragmentsRoute(),
+                  ProfileRoute()
                 ],
                 builder: (context, child) {
                   // obtain the scoped TabsRouter controller using context
@@ -82,6 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const NavigationRailDestination(
                                     label: Text('Темы'),
                                     icon: Icon(Icons.list)),
+                                const NavigationRailDestination(
+                                    label: Text('Pdf'),
+                                    icon: Icon(Icons.picture_as_pdf)),
                                 const NavigationRailDestination(
                                     label: Text('Записи'),
                                     icon: Icon(Icons.list)),

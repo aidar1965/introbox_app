@@ -3,11 +3,11 @@ import 'package:moki_tutor/domain/models/subject_category.dart';
 abstract class ISubjectCategoryRepository {
   List<SubjectCategory> get subjectCategories;
 
-  void addSubjectCategory({required String name});
-  void updateSubjectCategory({required SubjectCategory subjectCategory});
-  void deleteSubjectCategory({required SubjectCategory subjectCategory});
+  Future<int> addSubjectCategory({required String name});
+  Future<int> updateSubjectCategory({required SubjectCategory subjectCategory});
+  Future<int> deleteSubjectCategory({required SubjectCategory subjectCategory});
 
-  void init();
+  Future<ISubjectCategoryRepository> init();
 
   void addChangeListener(Function() listener);
   void removeChangeListener(Function() listener);

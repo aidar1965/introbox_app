@@ -2,15 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io' as io;
 import 'dart:typed_data';
-import 'dart:ui';
 
-import 'package:file/file.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
 import 'package:nanoid/nanoid.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:printing/printing.dart';
 
@@ -263,7 +259,7 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
       add(const AssemblingEvent.resendData());
       secondsPassed++;
       // log(secondsPassed.toString());
-      if (secondsPassed > playingFragment!.duration) {
+      if (secondsPassed > (playingFragment!.duration ?? 0)) {
         add(const AssemblingEvent.clearTimer());
         for (int index = 0; index < subjectFragments.length; index++) {
           if (playingFragment!.id == subjectFragments[index].id) {
@@ -358,7 +354,7 @@ class AssemblingBloc extends Bloc<AssemblingEvent, AssemblingState> {
   int _subjectDuration() {
     int duration = 0;
     for (var subjectFragment in subjectFragments) {
-      duration = duration + subjectFragment.duration;
+      duration = duration + (subjectFragment.duration ?? 0);
     }
     return duration;
   }

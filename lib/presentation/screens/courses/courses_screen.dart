@@ -294,7 +294,7 @@ class _PublishedCoursesView extends StatelessWidget {
 String _getDuration(List<Fragment> records) {
   int duration = 0;
   for (var record in records) {
-    duration += record.duration;
+    duration += record.duration ?? 0;
   }
   if (duration % 60 > 9) {
     return '${Duration(seconds: duration).inMinutes}:${duration % 60}';

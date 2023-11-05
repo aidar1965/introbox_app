@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
-import '../../../../data/api/request_exception.dart';
+import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/user.dart';
 
@@ -19,7 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<ProfileEvent>((event, emitter) => event.map(
           started: (event) =>
               emitter(ProfileState.initial(user: userRepository.user)),
-          logout: (event) => _logout(),
+          logout: (event) => _logout(emitter),
           updateUser: (event) => _updateUser(event, emitter),
           uploadImage: (event) => _uploadImage(event, emitter),
         ));
@@ -29,8 +29,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
   final IUserRepository userRepository = getIt<IUserRepository>();
 
-  void _logout() {
-    userRepository.logout();
+  Future<void> _logout(Emitter emitter) async {
+    await userRepository.logout();
+    emitter(const ProfileState.logoutSuccess());
   }
 
   Future<void> _updateUser(_UpdateUser event, Emitter emitter) async {

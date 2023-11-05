@@ -1,12 +1,12 @@
 import '../models/course.dart';
 
 abstract class ICoursesRepository {
-  void init();
+  Future<ICoursesRepository> init();
   List<Course> get courses;
-  void getCourses();
-  void addCourse(Course course);
-  void removeCourse(Course course);
-  void editCourse(Course course);
+  Future<void> getCourses();
+  Future<int> addCourse(Course course);
+  Future<int> removeCourse(Course course);
+  Future<int> editCourse(Course course);
   Future<void> publishCourse(Course course);
   Future<List<Course>?>? getPublishedCourses();
 

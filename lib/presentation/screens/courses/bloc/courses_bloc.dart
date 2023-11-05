@@ -39,9 +39,9 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
         add(const CoursesEvent.initialDataRequested());
       },
     );
-    isAuthorized = userRepository.isAuthorized;
-    userRepository
-        .addChangeListener((() => isAuthorized = userRepository.isAuthorized));
+    // isAuthorized = userRepository.isAuthorized;
+    // userRepository
+    //     .addChangeListener((() => isAuthorized = userRepository.isAuthorized));
     add(const CoursesEvent.initialDataRequested());
     log('courses bloc opened');
   }
@@ -73,11 +73,11 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
     for (var course in courses) {
       selectedCourses.add(course);
     }
-    if (userRepository.isAuthorized) {
-      publishedCourses = await coursesRepository.getPublishedCourses() ?? [];
-      // log(publishedCourses.first.subjects.first.records.first.audioPath);
-      // log(publishedCourses.first.subjects.first.records.first.imagePath);
-    }
+    // if (userRepository.isAuthorized) {
+    publishedCourses = await coursesRepository.getPublishedCourses() ?? [];
+    // log(publishedCourses.first.subjects.first.records.first.audioPath);
+    // log(publishedCourses.first.subjects.first.records.first.imagePath);
+    // }
 
     emitter(CoursesState.initialDataReceived(
         courses: selectedCourses,

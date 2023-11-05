@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
 import 'package:moki_tutor/domain/models/subject_category.dart';
-import 'package:nanoid/nanoid.dart';
-
-import '../locator/locator.dart';
 
 class SubjectCategoryRepository extends ChangeNotifier
     implements ISubjectCategoryRepository {
@@ -18,27 +15,31 @@ class SubjectCategoryRepository extends ChangeNotifier
   void addChangeListener(Function() listener) => addListener(listener);
 
   @override
-  void addSubjectCategory({required String name}) {
-    db.addSubjectCategory(name);
-    _subjectCategories = db.getSubjectCategories();
+  Future<int> addSubjectCategory({required String name}) async {
+    final id = await db.addSubjectCategory(name);
+    _subjectCategories = await db.getSubjectCategories();
     notifyListeners();
+    return id;
   }
 
   @override
-  void deleteSubjectCategory({required SubjectCategory subjectCategory}) {
-    db.deleteSubjectCategory(subjectCategory);
-    _subjectCategories = db.getSubjectCategories();
+  Future<int> deleteSubjectCategory(
+      {required SubjectCategory subjectCategory}) async {
+    final id = await db.deleteSubjectCategory(subjectCategory);
+    _subjectCategories = await db.getSubjectCategories();
     notifyListeners();
+    return id;
   }
 
   @override
-  void init() async {
-    _subjectCategories = db.getSubjectCategories();
+  Future<SubjectCategoryRepository> init() async {
+    _subjectCategories = await db.getSubjectCategories();
     if (_subjectCategories.isEmpty) {
-      db.addSubjectCategory('Default subject category');
-      _subjectCategories = db.getSubjectCategories();
+      await db.addSubjectCategory('Default subject category');
+      _subjectCategories = await db.getSubjectCategories();
     }
     notifyListeners();
+    return this;
   }
 
   @override
@@ -50,9 +51,11 @@ class SubjectCategoryRepository extends ChangeNotifier
   List<SubjectCategory> get subjectCategories => _subjectCategories;
 
   @override
-  void updateSubjectCategory({required SubjectCategory subjectCategory}) {
-    db.editSubjectCategory(subjectCategory: subjectCategory);
-    _subjectCategories = db.getSubjectCategories();
+  Future<int> updateSubjectCategory(
+      {required SubjectCategory subjectCategory}) async {
+    final id = await db.editSubjectCategory(subjectCategory: subjectCategory);
+    _subjectCategories = await db.getSubjectCategories();
     notifyListeners();
+    return id;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:moki_tutor/domain/models/token_pair.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,9 @@ class LocalCache implements ILocalCache {
 
   static const userKey = 'user';
 
+  static const String accessTokenKey = 'access_token_key';
+  static const String refreshTokenKey = 'refresh_token_key';
+
   // ---------------------------------------------------------------------------
 
   @override
@@ -20,9 +24,9 @@ class LocalCache implements ILocalCache {
     if (string != null) {
       final jsonObject = jsonDecode(string) as Map<String, dynamic>;
       return User(
-        id: jsonObject['id'] as int,
         firstName: jsonObject['firstName'] as String,
-        phone: jsonObject['phone'] as String,
+        lastName: jsonObject['lastName'] as String,
+        email: jsonObject['email'] as String? ?? '',
       );
     } else {
       return null;
@@ -35,8 +39,9 @@ class LocalCache implements ILocalCache {
     await sharedPreferences.setString(
         userKey,
         jsonEncode({
-          'id': user.id,
           'firstName': user.firstName,
+          'lastName': user.lastName,
+          'email': user.email
         }));
   }
 
@@ -44,5 +49,41 @@ class LocalCache implements ILocalCache {
   Future<void> deleteUser() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove(userKey);
+  }
+
+  @override
+  Future<TokenPair?> getTokenPair() async {
+    final String? accessToken = await secureStorage.read(
+      key: accessTokenKey,
+    );
+    final String? refreshToken = await secureStorage.read(
+      key: refreshTokenKey,
+    );
+    if (accessToken != null && refreshToken != null) {
+      return TokenPair(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+      );
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<void> saveTokenPair({required TokenPair tokenPair}) async {
+    await secureStorage.write(
+      key: accessTokenKey,
+      value: tokenPair.accessToken,
+    );
+    await secureStorage.write(
+      key: refreshTokenKey,
+      value: tokenPair.refreshToken,
+    );
+  }
+
+  @override
+  Future<void> clearTokenPair() async {
+    await secureStorage.delete(key: accessTokenKey);
+    await secureStorage.delete(key: refreshTokenKey);
   }
 }

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 
+import '../models/token_pair.dart';
 import '../models/user.dart';
 
 abstract class IAuthController {
@@ -16,4 +17,8 @@ abstract class IAuthController {
   void addChangeListener(VoidCallback listener);
 
   void removeChangeListener(VoidCallback listener);
+
+  /// принимает событие о том, что токены успешно обновлены
+  /// получает свежие токены
+  Future<void> onAccessTokensUpdated(TokenPair tokenPair);
 }

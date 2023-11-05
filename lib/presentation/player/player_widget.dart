@@ -41,7 +41,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _calculateDuration(widget.record.duration);
+    _calculateDuration(widget.record.duration ?? 0);
     record = widget.record;
     subject = widget.subject;
     _startPlay();
@@ -68,23 +68,28 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       setState(() {
         secondsPassed++;
         _getPassedTime(secondsPassed);
-        progress = secondsPassed / record.duration;
+        if (record.duration != null && record.duration != 0) {
+          progress = secondsPassed / record.duration!;
+        } else {
+          progress = 1;
+        }
         if (widget.onSecondPassed != null) {
           widget.onSecondPassed!(secondsPassed);
         }
       });
+      if (record.duration != null) {
+        if (secondsPassed > record.duration!) {
+          setState(() {
+            playerStatus = PlayerStatus.stop;
+            progress = 0;
+            secondsPassed = 0;
+            widget.onSecondPassed ?? widget.onSecondPassed!(secondsPassed);
+          });
 
-      if (secondsPassed > record.duration) {
-        setState(() {
-          playerStatus = PlayerStatus.stop;
-          progress = 0;
-          secondsPassed = 0;
-          widget.onSecondPassed ?? widget.onSecondPassed!(secondsPassed);
-        });
-
-        timer.cancel();
-        if (widget.onEnd != null) {
-          widget.onEnd!();
+          timer.cancel();
+          if (widget.onEnd != null) {
+            widget.onEnd!();
+          }
         }
       }
     });
@@ -129,7 +134,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
       player.setSourceDeviceFile(newFragment.audioPath!);
 
       setState(() {
-        recordDurationInSeconds = record.duration;
+        recordDurationInSeconds = record.duration ?? 0;
         Duration d = Duration(seconds: recordDurationInSeconds);
         recordDuration = '${d.inMinutes}:${d.inSeconds % 60}';
         if (d.inSeconds % 60 < 10) {
@@ -286,7 +291,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
                     ProgressBar(
                   progress: Duration(seconds: secondsPassed),
                   buffered: const Duration(milliseconds: 2000),
-                  total: Duration(seconds: record.duration),
+                  total: Duration(seconds: record.duration ?? 0),
                   onSeek: (duration) {
                     player.seek(duration);
                     secondsPassed = duration.inSeconds;

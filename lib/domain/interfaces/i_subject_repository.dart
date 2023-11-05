@@ -5,7 +5,7 @@ import '../models/subject_category.dart';
 abstract class ISubjectsRepository {
   List<Subject> get subjects;
 
-  void addSubject({
+  Future<int> addSubject({
     required String title,
     String? description,
     List<Fragment>? records,
@@ -13,8 +13,17 @@ abstract class ISubjectsRepository {
     List<SubjectCategory>? subjectCategories,
     int? duration,
   });
-  void getSubject();
-  void updateSubject(Subject subject);
+
+  Future<int?> addPdfSubject({
+    required String pdfFile,
+    required String title,
+    String? description,
+    required DateTime date,
+    int? duration,
+  });
+
+  Future<void> getSubjects();
+  Future<int> updateSubject(Subject subject);
 
   void addChangeListener(Function() listener);
   void removeChangeListener(Function() listener);

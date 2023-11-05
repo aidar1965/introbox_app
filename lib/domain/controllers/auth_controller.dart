@@ -2,12 +2,19 @@ import 'package:flutter/foundation.dart';
 
 import '../interfaces/i_auth_controller.dart';
 import '../interfaces/i_local_cache.dart';
+import '../interfaces/i_user_repository.dart';
 import '../locator/locator.dart';
+import '../models/token_pair.dart';
 import '../models/user.dart';
 
 class AuthController extends ChangeNotifier implements IAuthController {
   final ILocalCache localCache = getIt<ILocalCache>();
+  final userRepository = getIt<IUserRepository>();
   late bool _isAuthenticated;
+
+  AuthController() {
+    init();
+  }
 
   @override
   void addChangeListener(Function() listener) => addListener(listener);
@@ -17,7 +24,12 @@ class AuthController extends ChangeNotifier implements IAuthController {
 
   @override
   Future<AuthController> init() async {
-    _isAuthenticated = (await localCache.getUser() != null);
+    _isAuthenticated = userRepository.user != null;
+    notifyListeners();
+    userRepository.addChangeListener(() {
+      _isAuthenticated = userRepository.user != null;
+      notifyListeners();
+    });
     return this;
   }
 
@@ -42,5 +54,10 @@ class AuthController extends ChangeNotifier implements IAuthController {
   void setAuthStatus(bool status) {
     _isAuthenticated = status;
     notifyListeners();
+  }
+
+  @override
+  Future<void> onAccessTokensUpdated(TokenPair tokenPair) async {
+    await localCache.saveTokenPair(tokenPair: tokenPair);
   }
 }

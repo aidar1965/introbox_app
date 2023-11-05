@@ -673,42 +673,43 @@ abstract class _UploadImage implements ProfileEvent {
 
 /// @nodoc
 mixin _$ProfileState {
-  User? get user => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(User? user) initial,
+    required TResult Function() logoutSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(User? user)? initial,
+    TResult? Function()? logoutSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(User? user)? initial,
+    TResult Function()? logoutSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_StateLogoutSuccess value) logoutSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_StateLogoutSuccess value)? logoutSuccess,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ProfileStateCopyWith<ProfileState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -717,8 +718,6 @@ abstract class $ProfileStateCopyWith<$Res> {
   factory $ProfileStateCopyWith(
           ProfileState value, $Res Function(ProfileState) then) =
       _$ProfileStateCopyWithImpl<$Res, ProfileState>;
-  @useResult
-  $Res call({User? user});
 }
 
 /// @nodoc
@@ -730,28 +729,13 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? user = freezed,
-  }) {
-    return _then(_value.copyWith(
-      user: freezed == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as User?,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res>
-    implements $ProfileStateCopyWith<$Res> {
+abstract class _$$_InitialCopyWith<$Res> {
   factory _$$_InitialCopyWith(
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({User? user});
 }
@@ -811,6 +795,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(User? user) initial,
+    required TResult Function() logoutSuccess,
   }) {
     return initial(user);
   }
@@ -819,6 +804,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(User? user)? initial,
+    TResult? Function()? logoutSuccess,
   }) {
     return initial?.call(user);
   }
@@ -827,6 +813,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(User? user)? initial,
+    TResult Function()? logoutSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -839,6 +826,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
+    required TResult Function(_StateLogoutSuccess value) logoutSuccess,
   }) {
     return initial(this);
   }
@@ -847,6 +835,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
+    TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
   }) {
     return initial?.call(this);
   }
@@ -855,6 +844,7 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
+    TResult Function(_StateLogoutSuccess value)? logoutSuccess,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -867,10 +857,110 @@ class _$_Initial implements _Initial {
 abstract class _Initial implements ProfileState {
   const factory _Initial({final User? user}) = _$_Initial;
 
-  @override
   User? get user;
-  @override
   @JsonKey(ignore: true)
   _$$_InitialCopyWith<_$_Initial> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateLogoutSuccessCopyWith<$Res> {
+  factory _$$_StateLogoutSuccessCopyWith(_$_StateLogoutSuccess value,
+          $Res Function(_$_StateLogoutSuccess) then) =
+      __$$_StateLogoutSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StateLogoutSuccessCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res, _$_StateLogoutSuccess>
+    implements _$$_StateLogoutSuccessCopyWith<$Res> {
+  __$$_StateLogoutSuccessCopyWithImpl(
+      _$_StateLogoutSuccess _value, $Res Function(_$_StateLogoutSuccess) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StateLogoutSuccess implements _StateLogoutSuccess {
+  const _$_StateLogoutSuccess();
+
+  @override
+  String toString() {
+    return 'ProfileState.logoutSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StateLogoutSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(User? user) initial,
+    required TResult Function() logoutSuccess,
+  }) {
+    return logoutSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(User? user)? initial,
+    TResult? Function()? logoutSuccess,
+  }) {
+    return logoutSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(User? user)? initial,
+    TResult Function()? logoutSuccess,
+    required TResult orElse(),
+  }) {
+    if (logoutSuccess != null) {
+      return logoutSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+  }) {
+    return logoutSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+  }) {
+    return logoutSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    required TResult orElse(),
+  }) {
+    if (logoutSuccess != null) {
+      return logoutSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateLogoutSuccess implements ProfileState {
+  const factory _StateLogoutSuccess() = _$_StateLogoutSuccess;
 }

@@ -2,9 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:moki_tutor/domain/interfaces/i_category_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
 import 'package:moki_tutor/domain/models/fragment_category.dart';
-import 'package:nanoid/nanoid.dart';
-
-import '../locator/locator.dart';
 
 class CategoriesRepository extends ChangeNotifier
     implements ICategoryRepository {
@@ -16,9 +13,10 @@ class CategoriesRepository extends ChangeNotifier
   final ILocalDB db;
 
   @override
-  void addCategory(String name) {
-    db.addCategory(name);
+  Future<int> addCategory(String name) async {
+    final id = await db.addCategory(name);
     getCategories();
+    return id;
   }
 
   @override
@@ -31,36 +29,36 @@ class CategoriesRepository extends ChangeNotifier
   void removeChangeListener(Function() listener) => removeListener(listener);
 
   @override
-  void init() {
-    getCategories();
+  void init() async {
+    await getCategories();
     notifyListeners();
   }
 
-  void getCategories() {
-    _categories = db.getCategories();
+  Future<void> getCategories() async {
+    _categories = await db.getCategories();
     if (_categories == null) {
-      var nanoId = nanoid(12);
-      db.addCategory('Default category');
-      _categories = db.getCategories();
+      await db.addCategory('Default category');
+      _categories = await db.getCategories();
     } else if (_categories!.isEmpty) {
-      var nanoId = nanoid(12);
       db.addCategory(
         'Default category',
       );
-      _categories = db.getCategories();
+      _categories = await db.getCategories();
     }
     notifyListeners();
   }
 
   @override
-  void editCategory(FragmentCategory category) {
-    db.editCategory(category: category);
+  Future<int> editCategory(FragmentCategory category) async {
+    final id = await db.editCategory(category: category);
     getCategories();
+    return id;
   }
 
   @override
-  void deleteCategory(FragmentCategory category) {
-    db.deleteCategory(category);
+  Future<int> deleteCategory(FragmentCategory category) async {
+    final id = await db.deleteCategory(category);
     getCategories();
+    return id;
   }
 }

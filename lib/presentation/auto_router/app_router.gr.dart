@@ -27,6 +27,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: SubjectsEmptyPage(),
       );
     },
+    PdfSubjectsEmpty.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfSubjectsEmptyPage(),
+      );
+    },
     RecordsEmpty.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -37,6 +43,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: LoginEmptyPage(),
+      );
+    },
+    CreatePdfSubjectsEmpty.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CreatePdfSubjectsEmptyPage(),
       );
     },
     CoursePlayerRoute.name: (routeData) {
@@ -72,11 +84,9 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AssemblingRoute.name: (routeData) {
-      final args = routeData.argsAs<AssemblingRouteArgs>(
-          orElse: () => const AssemblingRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: AssemblingScreen(key: args.key),
+        child: const AssemblingScreen(),
       );
     },
     CoursesRoute.name: (routeData) {
@@ -113,14 +123,32 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
-    OtpRoute.name: (routeData) {
-      final args = routeData.argsAs<OtpRouteArgs>();
+    AudioRecordingRoute.name: (routeData) {
+      final args = routeData.argsAs<AudioRecordingRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: OtpScreen(
+        child: AudioRecordingScreen(
           key: args.key,
-          phone: args.phone,
+          imageData: args.imageData,
         ),
+      );
+    },
+    PdfCreateSubjectRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PdfCreateSubjectScreen(),
+      );
+    },
+    PdfEditSubjectRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PdfEditSubjectScreen(),
+      );
+    },
+    PdfSubjectsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PdfSubjectsScreen(),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -149,6 +177,24 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const FragmentsScreen(),
+      );
+    },
+    ConfirmationRoute.name: (routeData) {
+      final args = routeData.argsAs<ConfirmationRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ConfirmationScreen(
+          key: args.key,
+          email: args.email,
+        ),
+      );
+    },
+    RegisterRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterRouteArgs>(
+          orElse: () => const RegisterRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RegisterScreen(key: args.key),
       );
     },
     EditSubjectRoute.name: (routeData) {
@@ -199,6 +245,20 @@ class SubjectsEmpty extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PdfSubjectsEmptyPage]
+class PdfSubjectsEmpty extends PageRouteInfo<void> {
+  const PdfSubjectsEmpty({List<PageRouteInfo>? children})
+      : super(
+          PdfSubjectsEmpty.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfSubjectsEmpty';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [RecordsEmptyPage]
 class RecordsEmpty extends PageRouteInfo<void> {
   const RecordsEmpty({List<PageRouteInfo>? children})
@@ -222,6 +282,20 @@ class LoginEmpty extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginEmpty';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreatePdfSubjectsEmptyPage]
+class CreatePdfSubjectsEmpty extends PageRouteInfo<void> {
+  const CreatePdfSubjectsEmpty({List<PageRouteInfo>? children})
+      : super(
+          CreatePdfSubjectsEmpty.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreatePdfSubjectsEmpty';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -351,31 +425,16 @@ class SubjectPlayerRouteArgs {
 
 /// generated route for
 /// [AssemblingScreen]
-class AssemblingRoute extends PageRouteInfo<AssemblingRouteArgs> {
-  AssemblingRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class AssemblingRoute extends PageRouteInfo<void> {
+  const AssemblingRoute({List<PageRouteInfo>? children})
+      : super(
           AssemblingRoute.name,
-          args: AssemblingRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'AssemblingRoute';
 
-  static const PageInfo<AssemblingRouteArgs> page =
-      PageInfo<AssemblingRouteArgs>(name);
-}
-
-class AssemblingRouteArgs {
-  const AssemblingRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'AssemblingRouteArgs{key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -473,40 +532,83 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [OtpScreen]
-class OtpRoute extends PageRouteInfo<OtpRouteArgs> {
-  OtpRoute({
+/// [AudioRecordingScreen]
+class AudioRecordingRoute extends PageRouteInfo<AudioRecordingRouteArgs> {
+  AudioRecordingRoute({
     Key? key,
-    required String phone,
+    required Uint8List imageData,
     List<PageRouteInfo>? children,
   }) : super(
-          OtpRoute.name,
-          args: OtpRouteArgs(
+          AudioRecordingRoute.name,
+          args: AudioRecordingRouteArgs(
             key: key,
-            phone: phone,
+            imageData: imageData,
           ),
           initialChildren: children,
         );
 
-  static const String name = 'OtpRoute';
+  static const String name = 'AudioRecordingRoute';
 
-  static const PageInfo<OtpRouteArgs> page = PageInfo<OtpRouteArgs>(name);
+  static const PageInfo<AudioRecordingRouteArgs> page =
+      PageInfo<AudioRecordingRouteArgs>(name);
 }
 
-class OtpRouteArgs {
-  const OtpRouteArgs({
+class AudioRecordingRouteArgs {
+  const AudioRecordingRouteArgs({
     this.key,
-    required this.phone,
+    required this.imageData,
   });
 
   final Key? key;
 
-  final String phone;
+  final Uint8List imageData;
 
   @override
   String toString() {
-    return 'OtpRouteArgs{key: $key, phone: $phone}';
+    return 'AudioRecordingRouteArgs{key: $key, imageData: $imageData}';
   }
+}
+
+/// generated route for
+/// [PdfCreateSubjectScreen]
+class PdfCreateSubjectRoute extends PageRouteInfo<void> {
+  const PdfCreateSubjectRoute({List<PageRouteInfo>? children})
+      : super(
+          PdfCreateSubjectRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfCreateSubjectRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PdfEditSubjectScreen]
+class PdfEditSubjectRoute extends PageRouteInfo<void> {
+  const PdfEditSubjectRoute({List<PageRouteInfo>? children})
+      : super(
+          PdfEditSubjectRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfEditSubjectRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PdfSubjectsScreen]
+class PdfSubjectsRoute extends PageRouteInfo<void> {
+  const PdfSubjectsRoute({List<PageRouteInfo>? children})
+      : super(
+          PdfSubjectsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfSubjectsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -587,6 +689,73 @@ class FragmentsRoute extends PageRouteInfo<void> {
   static const String name = 'FragmentsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ConfirmationScreen]
+class ConfirmationRoute extends PageRouteInfo<ConfirmationRouteArgs> {
+  ConfirmationRoute({
+    Key? key,
+    required String email,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ConfirmationRoute.name,
+          args: ConfirmationRouteArgs(
+            key: key,
+            email: email,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ConfirmationRoute';
+
+  static const PageInfo<ConfirmationRouteArgs> page =
+      PageInfo<ConfirmationRouteArgs>(name);
+}
+
+class ConfirmationRouteArgs {
+  const ConfirmationRouteArgs({
+    this.key,
+    required this.email,
+  });
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'ConfirmationRouteArgs{key: $key, email: $email}';
+  }
+}
+
+/// generated route for
+/// [RegisterScreen]
+class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RegisterRoute.name,
+          args: RegisterRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'RegisterRoute';
+
+  static const PageInfo<RegisterRouteArgs> page =
+      PageInfo<RegisterRouteArgs>(name);
+}
+
+class RegisterRouteArgs {
+  const RegisterRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RegisterRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

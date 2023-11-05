@@ -28,34 +28,36 @@ class CoursesRepository extends ChangeNotifier implements ICoursesRepository {
   List<Course>? _courses;
 
   @override
-  void init() {
-    _courses = db.getCourses();
+  Future<CoursesRepository> init() async {
+    _courses = await db.getCourses();
     notifyListeners();
+    return this;
   }
 
   @override
-  void addCourse(Course course) {
-    db.saveCourse(course);
+  Future<int> addCourse(Course course) async {
+    final id = await db.saveCourse(course);
     getCourses();
+    return id;
   }
 
   @override
   List<Course> get courses => _courses ?? [];
 
   @override
-  void editCourse(Course course) {
+  Future<int> editCourse(Course course) async {
     // TODO: implement editCourse
     throw UnimplementedError();
   }
 
   @override
-  void removeCourse(Course course) {
+  Future<int> removeCourse(Course course) async {
     throw UnimplementedError();
   }
 
   @override
-  void getCourses() {
-    _courses = db.getCourses();
+  Future<void> getCourses() async {
+    _courses = await db.getCourses();
     notifyListeners();
   }
 

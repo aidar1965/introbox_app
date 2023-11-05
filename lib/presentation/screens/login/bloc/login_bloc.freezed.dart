@@ -16,42 +16,37 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginEvent {
-  String get phone => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone) phoneConfirmed,
-    required TResult Function(String phone, String otp) loginWithOtp,
+    required TResult Function(String email, String password) login,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone)? phoneConfirmed,
-    TResult? Function(String phone, String otp)? loginWithOtp,
+    TResult? Function(String email, String password)? login,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone)? phoneConfirmed,
-    TResult Function(String phone, String otp)? loginWithOtp,
+    TResult Function(String email, String password)? login,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PhoneConfirmed value) phoneConfirmed,
-    required TResult Function(_LoginWithOtp value) loginWithOtp,
+    required TResult Function(_EventLogin value) login,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PhoneConfirmed value)? phoneConfirmed,
-    TResult? Function(_LoginWithOtp value)? loginWithOtp,
+    TResult? Function(_EventLogin value)? login,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PhoneConfirmed value)? phoneConfirmed,
-    TResult Function(_LoginWithOtp value)? loginWithOtp,
+    TResult Function(_EventLogin value)? login,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -67,7 +62,7 @@ abstract class $LoginEventCopyWith<$Res> {
           LoginEvent value, $Res Function(LoginEvent) then) =
       _$LoginEventCopyWithImpl<$Res, LoginEvent>;
   @useResult
-  $Res call({String phone});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
@@ -83,45 +78,55 @@ class _$LoginEventCopyWithImpl<$Res, $Val extends LoginEvent>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
+    Object? email = null,
+    Object? password = null,
   }) {
     return _then(_value.copyWith(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_PhoneConfirmedCopyWith<$Res>
+abstract class _$$_EventLoginCopyWith<$Res>
     implements $LoginEventCopyWith<$Res> {
-  factory _$$_PhoneConfirmedCopyWith(
-          _$_PhoneConfirmed value, $Res Function(_$_PhoneConfirmed) then) =
-      __$$_PhoneConfirmedCopyWithImpl<$Res>;
+  factory _$$_EventLoginCopyWith(
+          _$_EventLogin value, $Res Function(_$_EventLogin) then) =
+      __$$_EventLoginCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String phone});
+  $Res call({String email, String password});
 }
 
 /// @nodoc
-class __$$_PhoneConfirmedCopyWithImpl<$Res>
-    extends _$LoginEventCopyWithImpl<$Res, _$_PhoneConfirmed>
-    implements _$$_PhoneConfirmedCopyWith<$Res> {
-  __$$_PhoneConfirmedCopyWithImpl(
-      _$_PhoneConfirmed _value, $Res Function(_$_PhoneConfirmed) _then)
+class __$$_EventLoginCopyWithImpl<$Res>
+    extends _$LoginEventCopyWithImpl<$Res, _$_EventLogin>
+    implements _$$_EventLoginCopyWith<$Res> {
+  __$$_EventLoginCopyWithImpl(
+      _$_EventLogin _value, $Res Function(_$_EventLogin) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
+    Object? email = null,
+    Object? password = null,
   }) {
-    return _then(_$_PhoneConfirmed(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
+    return _then(_$_EventLogin(
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -129,61 +134,62 @@ class __$$_PhoneConfirmedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PhoneConfirmed implements _PhoneConfirmed {
-  const _$_PhoneConfirmed({required this.phone});
+class _$_EventLogin implements _EventLogin {
+  const _$_EventLogin({required this.email, required this.password});
 
   @override
-  final String phone;
+  final String email;
+  @override
+  final String password;
 
   @override
   String toString() {
-    return 'LoginEvent.phoneConfirmed(phone: $phone)';
+    return 'LoginEvent.login(email: $email, password: $password)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PhoneConfirmed &&
-            (identical(other.phone, phone) || other.phone == phone));
+            other is _$_EventLogin &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.password, password) ||
+                other.password == password));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phone);
+  int get hashCode => Object.hash(runtimeType, email, password);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PhoneConfirmedCopyWith<_$_PhoneConfirmed> get copyWith =>
-      __$$_PhoneConfirmedCopyWithImpl<_$_PhoneConfirmed>(this, _$identity);
+  _$$_EventLoginCopyWith<_$_EventLogin> get copyWith =>
+      __$$_EventLoginCopyWithImpl<_$_EventLogin>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String phone) phoneConfirmed,
-    required TResult Function(String phone, String otp) loginWithOtp,
+    required TResult Function(String email, String password) login,
   }) {
-    return phoneConfirmed(phone);
+    return login(email, password);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone)? phoneConfirmed,
-    TResult? Function(String phone, String otp)? loginWithOtp,
+    TResult? Function(String email, String password)? login,
   }) {
-    return phoneConfirmed?.call(phone);
+    return login?.call(email, password);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone)? phoneConfirmed,
-    TResult Function(String phone, String otp)? loginWithOtp,
+    TResult Function(String email, String password)? login,
     required TResult orElse(),
   }) {
-    if (phoneConfirmed != null) {
-      return phoneConfirmed(phone);
+    if (login != null) {
+      return login(email, password);
     }
     return orElse();
   }
@@ -191,192 +197,44 @@ class _$_PhoneConfirmed implements _PhoneConfirmed {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PhoneConfirmed value) phoneConfirmed,
-    required TResult Function(_LoginWithOtp value) loginWithOtp,
+    required TResult Function(_EventLogin value) login,
   }) {
-    return phoneConfirmed(this);
+    return login(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PhoneConfirmed value)? phoneConfirmed,
-    TResult? Function(_LoginWithOtp value)? loginWithOtp,
+    TResult? Function(_EventLogin value)? login,
   }) {
-    return phoneConfirmed?.call(this);
+    return login?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PhoneConfirmed value)? phoneConfirmed,
-    TResult Function(_LoginWithOtp value)? loginWithOtp,
+    TResult Function(_EventLogin value)? login,
     required TResult orElse(),
   }) {
-    if (phoneConfirmed != null) {
-      return phoneConfirmed(this);
+    if (login != null) {
+      return login(this);
     }
     return orElse();
   }
 }
 
-abstract class _PhoneConfirmed implements LoginEvent {
-  const factory _PhoneConfirmed({required final String phone}) =
-      _$_PhoneConfirmed;
+abstract class _EventLogin implements LoginEvent {
+  const factory _EventLogin(
+      {required final String email,
+      required final String password}) = _$_EventLogin;
 
   @override
-  String get phone;
+  String get email;
   @override
-  @JsonKey(ignore: true)
-  _$$_PhoneConfirmedCopyWith<_$_PhoneConfirmed> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_LoginWithOtpCopyWith<$Res>
-    implements $LoginEventCopyWith<$Res> {
-  factory _$$_LoginWithOtpCopyWith(
-          _$_LoginWithOtp value, $Res Function(_$_LoginWithOtp) then) =
-      __$$_LoginWithOtpCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({String phone, String otp});
-}
-
-/// @nodoc
-class __$$_LoginWithOtpCopyWithImpl<$Res>
-    extends _$LoginEventCopyWithImpl<$Res, _$_LoginWithOtp>
-    implements _$$_LoginWithOtpCopyWith<$Res> {
-  __$$_LoginWithOtpCopyWithImpl(
-      _$_LoginWithOtp _value, $Res Function(_$_LoginWithOtp) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? phone = null,
-    Object? otp = null,
-  }) {
-    return _then(_$_LoginWithOtp(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      otp: null == otp
-          ? _value.otp
-          : otp // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_LoginWithOtp implements _LoginWithOtp {
-  const _$_LoginWithOtp({required this.phone, required this.otp});
-
-  @override
-  final String phone;
-  @override
-  final String otp;
-
-  @override
-  String toString() {
-    return 'LoginEvent.loginWithOtp(phone: $phone, otp: $otp)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_LoginWithOtp &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.otp, otp) || other.otp == otp));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, phone, otp);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_LoginWithOtpCopyWith<_$_LoginWithOtp> get copyWith =>
-      __$$_LoginWithOtpCopyWithImpl<_$_LoginWithOtp>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String phone) phoneConfirmed,
-    required TResult Function(String phone, String otp) loginWithOtp,
-  }) {
-    return loginWithOtp(phone, otp);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String phone)? phoneConfirmed,
-    TResult? Function(String phone, String otp)? loginWithOtp,
-  }) {
-    return loginWithOtp?.call(phone, otp);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String phone)? phoneConfirmed,
-    TResult Function(String phone, String otp)? loginWithOtp,
-    required TResult orElse(),
-  }) {
-    if (loginWithOtp != null) {
-      return loginWithOtp(phone, otp);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_PhoneConfirmed value) phoneConfirmed,
-    required TResult Function(_LoginWithOtp value) loginWithOtp,
-  }) {
-    return loginWithOtp(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PhoneConfirmed value)? phoneConfirmed,
-    TResult? Function(_LoginWithOtp value)? loginWithOtp,
-  }) {
-    return loginWithOtp?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PhoneConfirmed value)? phoneConfirmed,
-    TResult Function(_LoginWithOtp value)? loginWithOtp,
-    required TResult orElse(),
-  }) {
-    if (loginWithOtp != null) {
-      return loginWithOtp(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _LoginWithOtp implements LoginEvent {
-  const factory _LoginWithOtp(
-      {required final String phone,
-      required final String otp}) = _$_LoginWithOtp;
-
-  @override
-  String get phone;
-  String get otp;
+  String get password;
   @override
   @JsonKey(ignore: true)
-  _$$_LoginWithOtpCopyWith<_$_LoginWithOtp> get copyWith =>
+  _$$_EventLoginCopyWith<_$_EventLogin> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -384,45 +242,45 @@ abstract class _LoginWithOtp implements LoginEvent {
 mixin _$LoginState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() pending,
-    required TResult Function(String phone) otpRoute,
+    required TResult Function(bool isPending) screenState,
+    required TResult Function() loginSuccess,
+    required TResult Function(String? errorText) loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? pending,
-    TResult? Function(String phone)? otpRoute,
+    TResult? Function(bool isPending)? screenState,
+    TResult? Function()? loginSuccess,
+    TResult? Function(String? errorText)? loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? pending,
-    TResult Function(String phone)? otpRoute,
+    TResult Function(bool isPending)? screenState,
+    TResult Function()? loginSuccess,
+    TResult Function(String? errorText)? loginError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Pending value) pending,
-    required TResult Function(_OtpRoute value) otpRoute,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoginSuccess value) loginSuccess,
+    required TResult Function(_StateLoginError value) loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Pending value)? pending,
-    TResult? Function(_OtpRoute value)? otpRoute,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoginSuccess value)? loginSuccess,
+    TResult? Function(_StateLoginError value)? loginError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Pending value)? pending,
-    TResult Function(_OtpRoute value)? otpRoute,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoginSuccess value)? loginSuccess,
+    TResult Function(_StateLoginError value)? loginError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -447,310 +305,97 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$LoginStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_Initial implements _Initial {
-  const _$_Initial();
-
-  @override
-  String toString() {
-    return 'LoginState.initial()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() pending,
-    required TResult Function(String phone) otpRoute,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? pending,
-    TResult? Function(String phone)? otpRoute,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? pending,
-    TResult Function(String phone)? otpRoute,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Pending value) pending,
-    required TResult Function(_OtpRoute value) otpRoute,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Pending value)? pending,
-    TResult? Function(_OtpRoute value)? otpRoute,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Pending value)? pending,
-    TResult Function(_OtpRoute value)? otpRoute,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Initial implements LoginState {
-  const factory _Initial() = _$_Initial;
-}
-
-/// @nodoc
-abstract class _$$_PendingCopyWith<$Res> {
-  factory _$$_PendingCopyWith(
-          _$_Pending value, $Res Function(_$_Pending) then) =
-      __$$_PendingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_PendingCopyWithImpl<$Res>
-    extends _$LoginStateCopyWithImpl<$Res, _$_Pending>
-    implements _$$_PendingCopyWith<$Res> {
-  __$$_PendingCopyWithImpl(_$_Pending _value, $Res Function(_$_Pending) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_Pending implements _Pending {
-  const _$_Pending();
-
-  @override
-  String toString() {
-    return 'LoginState.pending()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Pending);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() pending,
-    required TResult Function(String phone) otpRoute,
-  }) {
-    return pending();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? pending,
-    TResult? Function(String phone)? otpRoute,
-  }) {
-    return pending?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? pending,
-    TResult Function(String phone)? otpRoute,
-    required TResult orElse(),
-  }) {
-    if (pending != null) {
-      return pending();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Pending value) pending,
-    required TResult Function(_OtpRoute value) otpRoute,
-  }) {
-    return pending(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Pending value)? pending,
-    TResult? Function(_OtpRoute value)? otpRoute,
-  }) {
-    return pending?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Pending value)? pending,
-    TResult Function(_OtpRoute value)? otpRoute,
-    required TResult orElse(),
-  }) {
-    if (pending != null) {
-      return pending(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Pending implements LoginState {
-  const factory _Pending() = _$_Pending;
-}
-
-/// @nodoc
-abstract class _$$_OtpRouteCopyWith<$Res> {
-  factory _$$_OtpRouteCopyWith(
-          _$_OtpRoute value, $Res Function(_$_OtpRoute) then) =
-      __$$_OtpRouteCopyWithImpl<$Res>;
+abstract class _$$_ScreenStateCopyWith<$Res> {
+  factory _$$_ScreenStateCopyWith(
+          _$_ScreenState value, $Res Function(_$_ScreenState) then) =
+      __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({String phone});
+  $Res call({bool isPending});
 }
 
 /// @nodoc
-class __$$_OtpRouteCopyWithImpl<$Res>
-    extends _$LoginStateCopyWithImpl<$Res, _$_OtpRoute>
-    implements _$$_OtpRouteCopyWith<$Res> {
-  __$$_OtpRouteCopyWithImpl(
-      _$_OtpRoute _value, $Res Function(_$_OtpRoute) _then)
+class __$$_ScreenStateCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_ScreenState>
+    implements _$$_ScreenStateCopyWith<$Res> {
+  __$$_ScreenStateCopyWithImpl(
+      _$_ScreenState _value, $Res Function(_$_ScreenState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? phone = null,
+    Object? isPending = null,
   }) {
-    return _then(_$_OtpRoute(
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$_ScreenState(
+      isPending: null == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_OtpRoute implements _OtpRoute {
-  const _$_OtpRoute({required this.phone});
+class _$_ScreenState implements _ScreenState {
+  const _$_ScreenState({required this.isPending});
 
   @override
-  final String phone;
+  final bool isPending;
 
   @override
   String toString() {
-    return 'LoginState.otpRoute(phone: $phone)';
+    return 'LoginState.screenState(isPending: $isPending)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_OtpRoute &&
-            (identical(other.phone, phone) || other.phone == phone));
+            other is _$_ScreenState &&
+            (identical(other.isPending, isPending) ||
+                other.isPending == isPending));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, phone);
+  int get hashCode => Object.hash(runtimeType, isPending);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OtpRouteCopyWith<_$_OtpRoute> get copyWith =>
-      __$$_OtpRouteCopyWithImpl<_$_OtpRoute>(this, _$identity);
+  _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
+      __$$_ScreenStateCopyWithImpl<_$_ScreenState>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() pending,
-    required TResult Function(String phone) otpRoute,
+    required TResult Function(bool isPending) screenState,
+    required TResult Function() loginSuccess,
+    required TResult Function(String? errorText) loginError,
   }) {
-    return otpRoute(phone);
+    return screenState(isPending);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? pending,
-    TResult? Function(String phone)? otpRoute,
+    TResult? Function(bool isPending)? screenState,
+    TResult? Function()? loginSuccess,
+    TResult? Function(String? errorText)? loginError,
   }) {
-    return otpRoute?.call(phone);
+    return screenState?.call(isPending);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? pending,
-    TResult Function(String phone)? otpRoute,
+    TResult Function(bool isPending)? screenState,
+    TResult Function()? loginSuccess,
+    TResult Function(String? errorText)? loginError,
     required TResult orElse(),
   }) {
-    if (otpRoute != null) {
-      return otpRoute(phone);
+    if (screenState != null) {
+      return screenState(isPending);
     }
     return orElse();
   }
@@ -758,43 +403,292 @@ class _$_OtpRoute implements _OtpRoute {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Pending value) pending,
-    required TResult Function(_OtpRoute value) otpRoute,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoginSuccess value) loginSuccess,
+    required TResult Function(_StateLoginError value) loginError,
   }) {
-    return otpRoute(this);
+    return screenState(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Pending value)? pending,
-    TResult? Function(_OtpRoute value)? otpRoute,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoginSuccess value)? loginSuccess,
+    TResult? Function(_StateLoginError value)? loginError,
   }) {
-    return otpRoute?.call(this);
+    return screenState?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Pending value)? pending,
-    TResult Function(_OtpRoute value)? otpRoute,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoginSuccess value)? loginSuccess,
+    TResult Function(_StateLoginError value)? loginError,
     required TResult orElse(),
   }) {
-    if (otpRoute != null) {
-      return otpRoute(this);
+    if (screenState != null) {
+      return screenState(this);
     }
     return orElse();
   }
 }
 
-abstract class _OtpRoute implements LoginState {
-  const factory _OtpRoute({required final String phone}) = _$_OtpRoute;
+abstract class _ScreenState implements LoginState {
+  const factory _ScreenState({required final bool isPending}) = _$_ScreenState;
 
-  String get phone;
+  bool get isPending;
   @JsonKey(ignore: true)
-  _$$_OtpRouteCopyWith<_$_OtpRoute> get copyWith =>
+  _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateLoginSuccessCopyWith<$Res> {
+  factory _$$_StateLoginSuccessCopyWith(_$_StateLoginSuccess value,
+          $Res Function(_$_StateLoginSuccess) then) =
+      __$$_StateLoginSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StateLoginSuccessCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_StateLoginSuccess>
+    implements _$$_StateLoginSuccessCopyWith<$Res> {
+  __$$_StateLoginSuccessCopyWithImpl(
+      _$_StateLoginSuccess _value, $Res Function(_$_StateLoginSuccess) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StateLoginSuccess implements _StateLoginSuccess {
+  const _$_StateLoginSuccess();
+
+  @override
+  String toString() {
+    return 'LoginState.loginSuccess()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StateLoginSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(bool isPending) screenState,
+    required TResult Function() loginSuccess,
+    required TResult Function(String? errorText) loginError,
+  }) {
+    return loginSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(bool isPending)? screenState,
+    TResult? Function()? loginSuccess,
+    TResult? Function(String? errorText)? loginError,
+  }) {
+    return loginSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(bool isPending)? screenState,
+    TResult Function()? loginSuccess,
+    TResult Function(String? errorText)? loginError,
+    required TResult orElse(),
+  }) {
+    if (loginSuccess != null) {
+      return loginSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoginSuccess value) loginSuccess,
+    required TResult Function(_StateLoginError value) loginError,
+  }) {
+    return loginSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoginSuccess value)? loginSuccess,
+    TResult? Function(_StateLoginError value)? loginError,
+  }) {
+    return loginSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoginSuccess value)? loginSuccess,
+    TResult Function(_StateLoginError value)? loginError,
+    required TResult orElse(),
+  }) {
+    if (loginSuccess != null) {
+      return loginSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateLoginSuccess implements LoginState {
+  const factory _StateLoginSuccess() = _$_StateLoginSuccess;
+}
+
+/// @nodoc
+abstract class _$$_StateLoginErrorCopyWith<$Res> {
+  factory _$$_StateLoginErrorCopyWith(
+          _$_StateLoginError value, $Res Function(_$_StateLoginError) then) =
+      __$$_StateLoginErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? errorText});
+}
+
+/// @nodoc
+class __$$_StateLoginErrorCopyWithImpl<$Res>
+    extends _$LoginStateCopyWithImpl<$Res, _$_StateLoginError>
+    implements _$$_StateLoginErrorCopyWith<$Res> {
+  __$$_StateLoginErrorCopyWithImpl(
+      _$_StateLoginError _value, $Res Function(_$_StateLoginError) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorText = freezed,
+  }) {
+    return _then(_$_StateLoginError(
+      errorText: freezed == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StateLoginError implements _StateLoginError {
+  const _$_StateLoginError({this.errorText});
+
+  @override
+  final String? errorText;
+
+  @override
+  String toString() {
+    return 'LoginState.loginError(errorText: $errorText)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateLoginError &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, errorText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateLoginErrorCopyWith<_$_StateLoginError> get copyWith =>
+      __$$_StateLoginErrorCopyWithImpl<_$_StateLoginError>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(bool isPending) screenState,
+    required TResult Function() loginSuccess,
+    required TResult Function(String? errorText) loginError,
+  }) {
+    return loginError(errorText);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(bool isPending)? screenState,
+    TResult? Function()? loginSuccess,
+    TResult? Function(String? errorText)? loginError,
+  }) {
+    return loginError?.call(errorText);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(bool isPending)? screenState,
+    TResult Function()? loginSuccess,
+    TResult Function(String? errorText)? loginError,
+    required TResult orElse(),
+  }) {
+    if (loginError != null) {
+      return loginError(errorText);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoginSuccess value) loginSuccess,
+    required TResult Function(_StateLoginError value) loginError,
+  }) {
+    return loginError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoginSuccess value)? loginSuccess,
+    TResult? Function(_StateLoginError value)? loginError,
+  }) {
+    return loginError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoginSuccess value)? loginSuccess,
+    TResult Function(_StateLoginError value)? loginError,
+    required TResult orElse(),
+  }) {
+    if (loginError != null) {
+      return loginError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateLoginError implements LoginState {
+  const factory _StateLoginError({final String? errorText}) =
+      _$_StateLoginError;
+
+  String? get errorText;
+  @JsonKey(ignore: true)
+  _$$_StateLoginErrorCopyWith<_$_StateLoginError> get copyWith =>
       throw _privateConstructorUsedError;
 }

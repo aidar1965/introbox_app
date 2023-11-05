@@ -20,7 +20,7 @@ import '../widgets/add_subject_category_form.dart';
 
 @RoutePage()
 class AssemblingScreen extends StatefulWidget {
-  AssemblingScreen({Key? key}) : super(key: key);
+  const AssemblingScreen({Key? key}) : super(key: key);
 
   @override
   State<AssemblingScreen> createState() => _AssemblingScreenState();
@@ -211,15 +211,17 @@ class _AssemblingScreenState extends State<AssemblingScreen> {
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
-                                                    record.duration % 60 > 9
+                                                    (record.duration ?? 0) %
+                                                                60 >
+                                                            9
                                                         ? Expanded(
                                                             child: Text(
-                                                              '${index + 1}. ${record.title}  ${Duration(seconds: record.duration).inMinutes}:${record.duration % 60}',
+                                                              '${index + 1}. ${record.title}  ${Duration(seconds: record.duration ?? 0).inMinutes}:${record.duration ?? 0 % 60}',
                                                             ),
                                                           )
                                                         : Expanded(
                                                             child: Text(
-                                                              '${index + 1}. ${record.title}  ${Duration(seconds: record.duration).inMinutes}:0${record.duration % 60}',
+                                                              '${index + 1}. ${record.title}  ${Duration(seconds: record.duration ?? 0).inMinutes}:0${record.duration ?? 0 % 60}',
                                                             ),
                                                           ),
                                                     Padding(
@@ -455,7 +457,7 @@ class _AudioPlayerViewState extends State<_AudioPlayerView> {
 
   @override
   Widget build(BuildContext context) {
-    Duration d = Duration(seconds: widget.record.duration);
+    Duration d = Duration(seconds: widget.record.duration ?? 0);
     recordDuration = '${d.inMinutes}:${d.inSeconds % 60}';
     if (d.inSeconds % 60 < 10) {
       recordDuration = '${d.inMinutes}:0${d.inSeconds % 60}';
@@ -463,9 +465,8 @@ class _AudioPlayerViewState extends State<_AudioPlayerView> {
     if (widget.playerStatus == PlayerStatus.stop) {
       widget.player.stop();
     }
-    if (widget.secondsPassed != null) {
-      progress = widget.secondsPassed! / widget.record.duration;
-    } else {
+    if (widget.secondsPassed != null && widget.record.duration != null) {
+      progress = widget.secondsPassed! / widget.record.duration!;
       progress = 0;
     }
     return Padding(

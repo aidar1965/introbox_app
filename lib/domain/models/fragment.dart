@@ -16,7 +16,7 @@ class Fragment extends Equatable {
 
   final String? imagePath;
 
-  final int duration;
+  final int? duration;
 
   final String? folder;
 

@@ -2,19 +2,31 @@ import '../models/fragment.dart';
 import '../models/fragment_category.dart';
 
 abstract class IFragmentsRepository {
-  void getFragments();
-  void addFragment(
+  Future<void> getFragments();
+  Future<int> addFragment(
       {required String title,
       String? description,
       String? imagePath,
-      required int duration,
+      required int? duration,
       List<FragmentCategory>? categories,
-      required String audioPath,
+      required String? audioPath,
       required DateTime date,
       Map<String, int>? images});
-  void updateFragment(Fragment record);
+
+  Future<int?> addPdfFragment({
+    required String title,
+    String? description,
+    String? imagePath,
+    int? duration,
+    String? audioPath,
+    required DateTime date,
+  });
+
+  Future<int> updateFragment(Fragment record);
 
   List<Fragment> get records;
+
+  Future<void> addFragmentToSubject({required subjectId, required fragmentId});
 
   // ---------------------------------------------------------------------------
   void addChangeListener(Function() listener);
