@@ -19,32 +19,38 @@ mixin _$PdfSubjectEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataChanged,
+    required TResult Function(int id) deleteSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataChanged,
+    TResult? Function(int id)? deleteSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataChanged,
+    TResult Function(int id)? deleteSubject,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EventDataChanged value) dataChanged,
+    required TResult Function(_EventDeleteSubject value) deleteSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EventDataChanged value)? dataChanged,
+    TResult? Function(_EventDeleteSubject value)? deleteSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EventDataChanged value)? dataChanged,
+    TResult Function(_EventDeleteSubject value)? deleteSubject,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -107,6 +113,7 @@ class _$_EventDataChanged implements _EventDataChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() dataChanged,
+    required TResult Function(int id) deleteSubject,
   }) {
     return dataChanged();
   }
@@ -115,6 +122,7 @@ class _$_EventDataChanged implements _EventDataChanged {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? dataChanged,
+    TResult? Function(int id)? deleteSubject,
   }) {
     return dataChanged?.call();
   }
@@ -123,6 +131,7 @@ class _$_EventDataChanged implements _EventDataChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? dataChanged,
+    TResult Function(int id)? deleteSubject,
     required TResult orElse(),
   }) {
     if (dataChanged != null) {
@@ -135,6 +144,7 @@ class _$_EventDataChanged implements _EventDataChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_EventDataChanged value) dataChanged,
+    required TResult Function(_EventDeleteSubject value) deleteSubject,
   }) {
     return dataChanged(this);
   }
@@ -143,6 +153,7 @@ class _$_EventDataChanged implements _EventDataChanged {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EventDataChanged value)? dataChanged,
+    TResult? Function(_EventDeleteSubject value)? deleteSubject,
   }) {
     return dataChanged?.call(this);
   }
@@ -151,6 +162,7 @@ class _$_EventDataChanged implements _EventDataChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EventDataChanged value)? dataChanged,
+    TResult Function(_EventDeleteSubject value)? deleteSubject,
     required TResult orElse(),
   }) {
     if (dataChanged != null) {
@@ -162,6 +174,140 @@ class _$_EventDataChanged implements _EventDataChanged {
 
 abstract class _EventDataChanged implements PdfSubjectEvent {
   const factory _EventDataChanged() = _$_EventDataChanged;
+}
+
+/// @nodoc
+abstract class _$$_EventDeleteSubjectCopyWith<$Res> {
+  factory _$$_EventDeleteSubjectCopyWith(_$_EventDeleteSubject value,
+          $Res Function(_$_EventDeleteSubject) then) =
+      __$$_EventDeleteSubjectCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int id});
+}
+
+/// @nodoc
+class __$$_EventDeleteSubjectCopyWithImpl<$Res>
+    extends _$PdfSubjectEventCopyWithImpl<$Res, _$_EventDeleteSubject>
+    implements _$$_EventDeleteSubjectCopyWith<$Res> {
+  __$$_EventDeleteSubjectCopyWithImpl(
+      _$_EventDeleteSubject _value, $Res Function(_$_EventDeleteSubject) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$_EventDeleteSubject(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventDeleteSubject implements _EventDeleteSubject {
+  const _$_EventDeleteSubject(this.id);
+
+  @override
+  final int id;
+
+  @override
+  String toString() {
+    return 'PdfSubjectEvent.deleteSubject(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventDeleteSubject &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventDeleteSubjectCopyWith<_$_EventDeleteSubject> get copyWith =>
+      __$$_EventDeleteSubjectCopyWithImpl<_$_EventDeleteSubject>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() dataChanged,
+    required TResult Function(int id) deleteSubject,
+  }) {
+    return deleteSubject(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? dataChanged,
+    TResult? Function(int id)? deleteSubject,
+  }) {
+    return deleteSubject?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? dataChanged,
+    TResult Function(int id)? deleteSubject,
+    required TResult orElse(),
+  }) {
+    if (deleteSubject != null) {
+      return deleteSubject(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventDataChanged value) dataChanged,
+    required TResult Function(_EventDeleteSubject value) deleteSubject,
+  }) {
+    return deleteSubject(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventDataChanged value)? dataChanged,
+    TResult? Function(_EventDeleteSubject value)? deleteSubject,
+  }) {
+    return deleteSubject?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventDataChanged value)? dataChanged,
+    TResult Function(_EventDeleteSubject value)? deleteSubject,
+    required TResult orElse(),
+  }) {
+    if (deleteSubject != null) {
+      return deleteSubject(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventDeleteSubject implements PdfSubjectEvent {
+  const factory _EventDeleteSubject(final int id) = _$_EventDeleteSubject;
+
+  int get id;
+  @JsonKey(ignore: true)
+  _$$_EventDeleteSubjectCopyWith<_$_EventDeleteSubject> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

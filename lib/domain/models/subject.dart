@@ -21,6 +21,8 @@ class Subject extends Equatable {
 
   final String? pdfUrl;
 
+  final int countUncompleted;
+
   const Subject({
     required this.id,
     required this.title,
@@ -30,23 +32,28 @@ class Subject extends Equatable {
     this.subjectCategories,
     this.duration,
     this.pdfUrl,
+    required this.countUncompleted,
   });
 
-  Subject copyWith(
-      {String? title,
-      String? description,
-      List<Fragment>? records,
-      DateTime? date,
-      List<SubjectCategory>? subjectCategories,
-      int? duration}) {
+  Subject copyWith({
+    String? title,
+    String? description,
+    List<Fragment>? records,
+    DateTime? date,
+    List<SubjectCategory>? subjectCategories,
+    int? duration,
+    int? countUncompleted,
+  }) {
     return Subject(
-        id: id,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        records: records ?? this.records,
-        date: date ?? this.date,
-        subjectCategories: subjectCategories ?? this.subjectCategories,
-        duration: duration ?? this.duration);
+      id: id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      records: records ?? this.records,
+      date: date ?? this.date,
+      subjectCategories: subjectCategories ?? this.subjectCategories,
+      duration: duration ?? this.duration,
+      countUncompleted: countUncompleted ?? this.countUncompleted,
+    );
   }
 
   @override

@@ -6,6 +6,9 @@ import 'package:dio/dio.dart';
 import 'package:moki_tutor/domain/models/token_pair.dart';
 
 import '../../../domain/interfaces/i_auth_controller.dart';
+import '../models/requests/register_request.dart';
+import '../models/requests/request_confirmation.dart';
+import '../models/requests/request_login.dart';
 import 'i_api_request.dart';
 import 'request_exception.dart';
 
@@ -32,11 +35,6 @@ class DioClient {
   static const String englishLocaleSettings = 'en-US,en;q=0.9,ru-RU';
   static const String russianLocaleSettings = 'ru-RU,ru;q=0.9,en-US';
 
-  // dev
-  // static const String _baseUrl =
-  //     'https://cyber-club-admin-dev.tools-4.webtronics.ru';
-
-  // listener for authenticate events
   IAuthController? authenticateController;
 
   String? _refreshToken;
@@ -48,6 +46,8 @@ class DioClient {
   // использование данных о языке в заголовке запроса
   late bool _useLocaleSettings;
   String? _localeSettings;
+  Object? requestData;
+  Map<String, dynamic>? contentTypeHeader;
 
   // ---------------------------------------------------------------------------
   // инициализация HTTP-клиента с заданными настройками
@@ -72,12 +72,15 @@ class DioClient {
     _dioOptions = BaseOptions(
       baseUrl: _baseUrl,
       connectTimeout: const Duration(milliseconds: 25000),
-      receiveTimeout: const Duration(milliseconds: 25000),
+      receiveTimeout: const Duration(seconds: 120),
+      sendTimeout: const Duration(seconds: 120),
       headers: headers,
     );
     _dio = Dio(_dioOptions);
 
     _dio?.interceptors.add(authErrorInterceptor());
+
+    //  _dio?.interceptors.add(LogInterceptor(responseBody: true));
   }
 
   // ---------------------------------------------------------------------------
@@ -92,6 +95,7 @@ class DioClient {
     _dio = Dio(_dioOptions);
 
     _dio?.interceptors.add(authErrorInterceptor());
+    _dio?.interceptors.add(LogInterceptor(requestBody: true));
   }
 
   // ---------------------------------------------------------------------------
@@ -154,17 +158,41 @@ class DioClient {
             // если токен был получен - пробуем повторить запрос
             // на котором поучили 401
             if (receivedAccessToken?.isNotEmpty ?? false) {
+              if (contentTypeHeader != null) {
+                _dioOptions.headers.addAll(contentTypeHeader!);
+              }
               try {
                 // only for VERIFY request - change token in DATA
                 final originalRequestData = dioError.requestOptions.data;
+                FormData? newFormData;
+                if (requestData.runtimeType == FormData) {
+                  contentTypeHeader = {'Content-Type': 'multipart/form-data'};
+                  Map<String, dynamic> newMap = {};
+                  newMap.addEntries((requestData as FormData).fields);
+                  for (final f in (requestData as FormData).files) {
+                    final me = {
+                      f.key: MultipartFile.fromFileSync(f.value.filename!,
+                          filename: f.value.filename!)
+                    };
+                    newMap.addAll(me);
+                  }
+                  newMap.addEntries((requestData as FormData).files);
 
-                final Response<String> response =
-                    await _dio!.request<String>(dioError.requestOptions.path,
-                        data: originalRequestData,
-                        options: Options(
-                          method: dioError.requestOptions.method,
-                          headers: _dioOptions.headers,
-                        ));
+                  newFormData = FormData.fromMap(newMap);
+                } else {
+                  contentTypeHeader = null;
+                }
+
+                final response = await _dio!.request(
+                    dioError.requestOptions.path,
+                    queryParameters: dioError.requestOptions.queryParameters,
+                    data: requestData.runtimeType == FormData
+                        ? newFormData
+                        : requestData,
+                    options: Options(
+                      method: dioError.requestOptions.method,
+                      headers: _dioOptions.headers,
+                    ));
                 handler.resolve(response);
                 return;
               } on DioException catch (e) {
@@ -173,6 +201,8 @@ class DioClient {
                   authenticateController?.onAuthenticationFailed();
                   handler.next(dioError);
                   return;
+                } else {
+                  print(e.toString());
                 }
               } on Object {
                 rethrow;
@@ -208,6 +238,22 @@ class DioClient {
       if (response.statusCode == 200 && (response.data?.isNotEmpty ?? false)) {
         final Map<String, Object?> data =
             jsonDecode(response.data!) as Map<String, Object?>;
+        // если токены получены - сохраняем в клиент и передаем слушателям
+        String? receivedAccessToken;
+        String? receivedRefreshToken;
+        if (data.containsKey('access') && data.containsKey('refresh')) {
+          receivedAccessToken = '${data['access']}';
+          receivedRefreshToken = '${data['refresh']}';
+
+          _dioOptions.headers['authorization'] =
+              _getTokenWithBearer(receivedAccessToken);
+
+          _refreshToken = receivedRefreshToken;
+          await authenticateController?.onAccessTokensUpdated(TokenPair(
+              accessToken: receivedAccessToken,
+              refreshToken: receivedRefreshToken));
+        }
+
         return data;
       }
     } on Object {
@@ -263,15 +309,35 @@ class DioClient {
     if (_dio == null) throw UnimplementedError('Dio is not initialized');
 
     final String url = '$_baseUrl${request.endPoint}';
+    requestData = request.body;
+
+    if (request is RequestRegister ||
+        request is RequestLogin ||
+        request is RequestConfirmation ||
+        request.endPoint == '$_baseUrl/refresh_tokens/') {
+    } else {
+      if (request.formData != null) {
+        await _requestNewToken();
+        _dioOptions.headers['Content-Type'] = 'multipart/form-data';
+      } else {
+        _dioOptions.headers['Content-Type'] = 'application/json';
+      }
+    }
+
     try {
-      Response<String> response;
+      Response<Object> response;
 
       switch (request.methodType) {
         case AvailableApiMethods.get:
-          response = await _dio!.get<String>(url);
+          response =
+              await _dio!.get(url, queryParameters: request.queryParameters);
           break;
         case AvailableApiMethods.post:
-          response = await _dio!.post<String>(url, data: request.body);
+          final data = await request.formData ?? request.body;
+          response = await _dio!.post<String>(
+            url,
+            data: data,
+          );
           break;
         case AvailableApiMethods.put:
           response = await _dio!.put<String>(url, data: request.body);

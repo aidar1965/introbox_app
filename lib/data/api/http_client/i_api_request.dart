@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 enum AvailableApiMethods { get, post, put, delete, patch }
 
 // описание запроса к API
@@ -23,6 +25,8 @@ abstract class IApiRequest {
 
   // геттер для оверрайта тела запроса
   Object? get body => null;
+
+  Future<FormData>? get formData => null;
 
   Map<String, dynamic>? get queryParameters => null;
 }

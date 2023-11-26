@@ -87,7 +87,6 @@ class NewCourseBloc extends Bloc<NewCourseEvent, NewCourseState> {
   }
 
   void _addCourseCategory(_AddCourseCategory event, Emitter emitter) {
-    var nanoId = nanoid(12);
     emitter(const NewCourseState.pending());
     courseCategoryRepository.addCategory(
       event.name,

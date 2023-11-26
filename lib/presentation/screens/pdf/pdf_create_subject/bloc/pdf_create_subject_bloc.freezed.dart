@@ -19,24 +19,24 @@ mixin _$PdfCreateSubjectEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)
+    required TResult Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)
         savePdfSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)?
+    TResult? Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)?
+    TResult Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
     required TResult orElse(),
   }) =>
@@ -147,8 +147,8 @@ class _$_EventConvertFile implements _EventConvertFile {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)
+    required TResult Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)
         savePdfSubject,
   }) {
     return convertPdf(pdfFilePath);
@@ -158,8 +158,8 @@ class _$_EventConvertFile implements _EventConvertFile {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)?
+    TResult? Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
   }) {
     return convertPdf?.call(pdfFilePath);
@@ -169,8 +169,8 @@ class _$_EventConvertFile implements _EventConvertFile {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)?
+    TResult Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
     required TResult orElse(),
   }) {
@@ -231,8 +231,8 @@ abstract class _$$_EventSavePdfSubjectCopyWith<$Res> {
   $Res call(
       {String title,
       String pdfFile,
-      String? description,
-      List<PdfFragment> pdfFragmentList});
+      String description,
+      List<PdfFragmentSample> pdfFragmentList});
 }
 
 /// @nodoc
@@ -248,7 +248,7 @@ class __$$_EventSavePdfSubjectCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? pdfFile = null,
-    Object? description = freezed,
+    Object? description = null,
     Object? pdfFragmentList = null,
   }) {
     return _then(_$_EventSavePdfSubject(
@@ -260,14 +260,14 @@ class __$$_EventSavePdfSubjectCopyWithImpl<$Res>
           ? _value.pdfFile
           : pdfFile // ignore: cast_nullable_to_non_nullable
               as String,
-      description: freezed == description
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       pdfFragmentList: null == pdfFragmentList
           ? _value._pdfFragmentList
           : pdfFragmentList // ignore: cast_nullable_to_non_nullable
-              as List<PdfFragment>,
+              as List<PdfFragmentSample>,
     ));
   }
 }
@@ -278,8 +278,8 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   const _$_EventSavePdfSubject(
       {required this.title,
       required this.pdfFile,
-      this.description,
-      required final List<PdfFragment> pdfFragmentList})
+      required this.description,
+      required final List<PdfFragmentSample> pdfFragmentList})
       : _pdfFragmentList = pdfFragmentList;
 
   @override
@@ -287,10 +287,10 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   @override
   final String pdfFile;
   @override
-  final String? description;
-  final List<PdfFragment> _pdfFragmentList;
+  final String description;
+  final List<PdfFragmentSample> _pdfFragmentList;
   @override
-  List<PdfFragment> get pdfFragmentList {
+  List<PdfFragmentSample> get pdfFragmentList {
     if (_pdfFragmentList is EqualUnmodifiableListView) return _pdfFragmentList;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_pdfFragmentList);
@@ -329,8 +329,8 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)
+    required TResult Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)
         savePdfSubject,
   }) {
     return savePdfSubject(title, pdfFile, description, pdfFragmentList);
@@ -340,8 +340,8 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)?
+    TResult? Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
   }) {
     return savePdfSubject?.call(title, pdfFile, description, pdfFragmentList);
@@ -351,8 +351,8 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String? description,
-            List<PdfFragment> pdfFragmentList)?
+    TResult Function(String title, String pdfFile, String description,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
     required TResult orElse(),
   }) {
@@ -398,14 +398,14 @@ abstract class _EventSavePdfSubject implements PdfCreateSubjectEvent {
   const factory _EventSavePdfSubject(
           {required final String title,
           required final String pdfFile,
-          final String? description,
-          required final List<PdfFragment> pdfFragmentList}) =
+          required final String description,
+          required final List<PdfFragmentSample> pdfFragmentList}) =
       _$_EventSavePdfSubject;
 
   String get title;
   String get pdfFile;
-  String? get description;
-  List<PdfFragment> get pdfFragmentList;
+  String get description;
+  List<PdfFragmentSample> get pdfFragmentList;
   @JsonKey(ignore: true)
   _$$_EventSavePdfSubjectCopyWith<_$_EventSavePdfSubject> get copyWith =>
       throw _privateConstructorUsedError;
@@ -415,7 +415,7 @@ abstract class _EventSavePdfSubject implements PdfCreateSubjectEvent {
 mixin _$PdfCreateSubjectState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragment>? pdfFragmentList,
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)
         screenState,
     required TResult Function() saveSuccess,
@@ -424,7 +424,7 @@ mixin _$PdfCreateSubjectState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragment>? pdfFragmentList,
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult? Function()? saveSuccess,
@@ -433,7 +433,7 @@ mixin _$PdfCreateSubjectState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragment>? pdfFragmentList,
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult Function()? saveSuccess,
@@ -491,7 +491,7 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<PdfFragment>? pdfFragmentList,
+      {List<PdfFragmentSample>? pdfFragmentList,
       Iterable<String>? audioPathList,
       bool isPending});
 }
@@ -515,7 +515,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
       pdfFragmentList: freezed == pdfFragmentList
           ? _value._pdfFragmentList
           : pdfFragmentList // ignore: cast_nullable_to_non_nullable
-              as List<PdfFragment>?,
+              as List<PdfFragmentSample>?,
       audioPathList: freezed == audioPathList
           ? _value.audioPathList
           : audioPathList // ignore: cast_nullable_to_non_nullable
@@ -532,14 +532,14 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 
 class _$_ScreenState implements _ScreenState {
   const _$_ScreenState(
-      {final List<PdfFragment>? pdfFragmentList,
+      {final List<PdfFragmentSample>? pdfFragmentList,
       this.audioPathList,
       this.isPending = false})
       : _pdfFragmentList = pdfFragmentList;
 
-  final List<PdfFragment>? _pdfFragmentList;
+  final List<PdfFragmentSample>? _pdfFragmentList;
   @override
-  List<PdfFragment>? get pdfFragmentList {
+  List<PdfFragmentSample>? get pdfFragmentList {
     final value = _pdfFragmentList;
     if (value == null) return null;
     if (_pdfFragmentList is EqualUnmodifiableListView) return _pdfFragmentList;
@@ -587,7 +587,7 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragment>? pdfFragmentList,
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)
         screenState,
     required TResult Function() saveSuccess,
@@ -599,7 +599,7 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragment>? pdfFragmentList,
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult? Function()? saveSuccess,
@@ -611,7 +611,7 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragment>? pdfFragmentList,
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult Function()? saveSuccess,
@@ -661,11 +661,11 @@ class _$_ScreenState implements _ScreenState {
 
 abstract class _ScreenState implements PdfCreateSubjectState {
   const factory _ScreenState(
-      {final List<PdfFragment>? pdfFragmentList,
+      {final List<PdfFragmentSample>? pdfFragmentList,
       final Iterable<String>? audioPathList,
       final bool isPending}) = _$_ScreenState;
 
-  List<PdfFragment>? get pdfFragmentList;
+  List<PdfFragmentSample>? get pdfFragmentList;
   Iterable<String>? get audioPathList;
   bool get isPending;
   @JsonKey(ignore: true)
@@ -711,7 +711,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragment>? pdfFragmentList,
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)
         screenState,
     required TResult Function() saveSuccess,
@@ -723,7 +723,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragment>? pdfFragmentList,
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult? Function()? saveSuccess,
@@ -735,7 +735,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragment>? pdfFragmentList,
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult Function()? saveSuccess,
@@ -825,7 +825,7 @@ class _$_StateSaveError implements _StateSaveError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragment>? pdfFragmentList,
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)
         screenState,
     required TResult Function() saveSuccess,
@@ -837,7 +837,7 @@ class _$_StateSaveError implements _StateSaveError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragment>? pdfFragmentList,
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult? Function()? saveSuccess,
@@ -849,7 +849,7 @@ class _$_StateSaveError implements _StateSaveError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragment>? pdfFragmentList,
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList,
             Iterable<String>? audioPathList, bool isPending)?
         screenState,
     TResult Function()? saveSuccess,

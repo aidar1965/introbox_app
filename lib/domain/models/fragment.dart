@@ -24,8 +24,6 @@ class Fragment extends Equatable {
 
   final List<FragmentCategory>? categories;
 
-  final bool isPublished;
-
   final DateTime date;
 
   final Map<String, int>? images;
@@ -39,7 +37,6 @@ class Fragment extends Equatable {
       this.folder,
       this.audioPath,
       this.categories,
-      required this.isPublished,
       required this.date,
       this.images});
 
@@ -61,7 +58,6 @@ class Fragment extends Equatable {
         duration: duration ?? this.duration,
         folder: folder ?? this.folder,
         audioPath: audioPath ?? this.audioPath,
-        isPublished: isPublished ?? this.isPublished,
         categories: categories ?? this.categories,
         date: date,
         images: images ?? this.images);

@@ -68,10 +68,12 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
                 ),
                 AutoRoute(
                     path: 'audioRecording', page: AudioRecordingRoute.page),
-                AutoRoute(
-                  path: 'editPdfSubject',
-                  page: PdfEditSubjectRoute.page,
-                ),
+                CustomRoute(
+                    path: 'editPdfSubject',
+                    page: PdfEditSubjectRoute.page,
+                    transitionsBuilder: TransitionsBuilders.slideLeft,
+                    durationInMilliseconds: 400),
+                // AutoRoute(path: 'edit_subject', page: EditSubjectRoute.page)
               ]),
           AutoRoute(path: 'records', page: RecordsEmpty.page, children: [
             AutoRoute(path: '', page: FragmentsRoute.page, initial: true),

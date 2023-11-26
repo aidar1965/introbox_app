@@ -76,7 +76,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
     return BlocProvider(
       create: (context) => _bloc!,
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: Text('Запись аудио')),
         body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(

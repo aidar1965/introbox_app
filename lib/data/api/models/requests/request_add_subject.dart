@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
-import 'package:path/path.dart';
 
 import '../../http_client/i_api_request.dart';
 
@@ -16,9 +17,8 @@ class RequestAddSubject extends IApiRequest {
   }) : super(methodType: AvailableApiMethods.post, url: '/add_subject/');
 
   @override
-  Object? get body => FormData.fromMap({
-        'file':
-            MultipartFile.fromFileSync(pdfFile, filename: basename(pdfFile)),
+  Future<FormData>? get formData async => FormData.fromMap({
+        'file': await MultipartFile.fromFile(pdfFile, filename: pdfFile),
         'title': title,
         'duration': duration,
       });

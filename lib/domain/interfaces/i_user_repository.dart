@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import '../models/user.dart';
-import '../models/user_with_tokens.dart';
 
 abstract class IUserRepository {
   User? get user;

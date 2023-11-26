@@ -4,10 +4,12 @@ import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart'
 import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
 import 'package:moki_tutor/domain/models/subject.dart';
 
+import '../../data/api/models/requests/fragment_request_data.dart';
 import '../interfaces/i_api.dart';
 import '../interfaces/i_local_db.dart';
 import '../locator/locator.dart';
 import '../models/fragment.dart';
+import '../models/responses/paginated_sibjects.dart';
 import '../models/subject_category.dart';
 
 class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
@@ -33,6 +35,7 @@ class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
   final IFragmentsRepository recordsRepository = getIt<IFragmentsRepository>();
 
   List<Subject> _subjects = [];
+  late PaginatedSubjects _paginatedSubjects;
 
   @override
   List<Subject> get subjects => _subjects;
@@ -44,7 +47,10 @@ class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
 
   @override
   Future<void> getSubjects() async {
-    _subjects = await db.getSubjects();
+    //   _subjects = await db.getSubjects();
+    _paginatedSubjects = await api.getSubjects();
+    _subjects = _paginatedSubjects.subjects.toList();
+    notifyListeners();
   }
 
   @override
@@ -84,9 +90,13 @@ class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
       {required String pdfFile,
       required String title,
       String? description,
-      required DateTime date,
+      required List<FragmentRequestData> fragments,
       int? duration}) async {
-    await api.addSubject(pdfFile: pdfFile, title: title, date: date);
+    await api.addPdfSubject(
+        pdfFile: pdfFile,
+        title: title,
+        description: description,
+        fragments: fragments);
     // final id = await db.addPdfSubject(
     //     title: title,
     //     pdfFile: pdfFile,
@@ -95,5 +105,11 @@ class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
     //     duration: duration);
     // return id;
     return 1; // TODO
+  }
+
+  @override
+  Future<void> deleteSubject(int id) async {
+    await api.deleteSubject(id: id);
+    await getSubjects();
   }
 }

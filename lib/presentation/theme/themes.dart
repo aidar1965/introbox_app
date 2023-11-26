@@ -42,7 +42,6 @@ class AppTheme {
       unselectedWidgetColor: Palette.hint,
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: Palette.primarySwatch,
-        primaryColorDark: Palette.primarySwatch.shade600,
         accentColor: Palette.accent,
         cardColor: Palette.background,
         backgroundColor: Palette.background,

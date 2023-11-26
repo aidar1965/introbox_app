@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:intl/intl.dart';
+import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'package:printing/printing.dart';
 
+import '../../../../../data/api/models/requests/fragment_request_data.dart';
 import '../../../../../domain/interfaces/i_fragments_repository.dart';
 import '../../../../../domain/interfaces/i_subject_repository.dart';
 import '../../../../../domain/locator/locator.dart';
@@ -35,12 +38,9 @@ class PdfCreateSubjectBloc
 
     final file = File(event.pdfFilePath);
 
-    final Directory appDocumentsDirectory =
-        await getApplicationDocumentsDirectory();
-
     await for (var page in Printing.raster(file.readAsBytesSync(), dpi: 300)) {
       final image = await page.toPng();
-      // final filePath = '${appDocumentsDirectory.path}/1.png';
+
       // final savedFile = await File(filePath).writeAsBytes(image);
 
       // print(savedFile.path);
@@ -50,18 +50,39 @@ class PdfCreateSubjectBloc
 
     emitter(PdfCreateSubjectState.screenState(
         pdfFragmentList:
-            pdfImageList.map((e) => PdfFragment(image: e)).toList()));
+            pdfImageList.map((e) => PdfFragmentSample(image: e)).toList()));
   }
 
   Future<void> _savePdfSubject(_EventSavePdfSubject event,
       Emitter<PdfCreateSubjectState> emitter) async {
+    final List<FragmentRequestData> fragments = [];
+    int index = 0;
+    Directory tempDir = await getTemporaryDirectory();
+    for (final f in event.pdfFragmentList) {
+      final filePath = '${tempDir.path}/temp.png';
+
+      final tempFile = await File(filePath).writeAsBytes(f.image);
+      final size = ImageSizeGetter.getSize(FileInput(tempFile));
+      print(size.height > size.width ? 'Portrait' : 'Landscape');
+      fragments.add(
+        FragmentRequestData(
+            title: f.title ?? '',
+            description: f.description ?? '',
+            image: (
+              file: f.image,
+              fileName: 'image$index.png',
+              isLandscape: size.width > size.height
+            ),
+            audioPath: f.audioPath,
+            duration: f.duration),
+      );
+      index++;
+    }
     final subjectId = await subjectRepository.addPdfSubject(
         pdfFile: event.pdfFile,
-        title: event.title.isNotEmpty
-            ? event.title
-            : DateFormat('dd.MM.yyyy : HH:mm').format(DateTime.now()),
+        title: event.title,
         description: event.description,
-        date: DateTime.now());
+        fragments: fragments);
     await subjectRepository.getSubjects();
 
     for (final pdfFragment in event.pdfFragmentList) {
@@ -81,17 +102,18 @@ class PdfCreateSubjectBloc
       );
       await fragmentsRepository.addFragmentToSubject(
           subjectId: subjectId, fragmentId: fragmentId);
+      emitter(const PdfCreateSubjectState.saveSuccess());
     }
   }
 }
 
-class PdfFragment {
+class PdfFragmentSample {
   final String? title;
   final String? description;
   final Uint8List image;
   final String? audioPath;
   final int? duration;
-  PdfFragment(
+  PdfFragmentSample(
       {required this.image,
       this.audioPath,
       this.title,

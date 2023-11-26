@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 
 import 'package:record/record.dart';
 
-class AudioRecorder extends StatefulWidget {
-  final void Function(String path) onStop;
+import '../common/common_duration_widget.dart';
 
+class AudioRecorder extends StatefulWidget {
   const AudioRecorder({Key? key, required this.onStop}) : super(key: key);
+
+  final void Function(({String path, int duration})) onStop;
 
   @override
   State<AudioRecorder> createState() => _AudioRecorderState();
@@ -60,13 +62,14 @@ class _AudioRecorderState extends State<AudioRecorder> {
   }
 
   Future<void> _stop() async {
+    final duration = _recordDuration;
     _timer?.cancel();
     _recordDuration = 0;
 
     final path = await _audioRecorder.stop();
 
     if (path != null) {
-      widget.onStop(path);
+      widget.onStop((path: path, duration: duration));
     }
   }
 
@@ -92,7 +95,10 @@ class _AudioRecorderState extends State<AudioRecorder> {
             const SizedBox(width: 20),
             _buildPauseResumeControl(),
             const SizedBox(width: 20),
-            _buildText(),
+            if (_recordState != RecordState.stop)
+              CommonDurationWidget(
+                seconds: _recordDuration,
+              ),
           ],
         ),
         // if (_amplitude != null) ...[
@@ -171,29 +177,12 @@ class _AudioRecorderState extends State<AudioRecorder> {
 
   Widget _buildText() {
     if (_recordState != RecordState.stop) {
-      return _buildTimer();
+      return CommonDurationWidget(
+        seconds: _recordDuration,
+      );
     }
 
     return const Text("Начать запись");
-  }
-
-  Widget _buildTimer() {
-    final String minutes = _formatNumber(_recordDuration ~/ 60);
-    final String seconds = _formatNumber(_recordDuration % 60);
-
-    return Text(
-      '$minutes : $seconds',
-      style: const TextStyle(color: Colors.red),
-    );
-  }
-
-  String _formatNumber(int number) {
-    String numberStr = number.toString();
-    if (number < 10) {
-      numberStr = '0$numberStr';
-    }
-
-    return numberStr;
   }
 
   void _startTimer() {

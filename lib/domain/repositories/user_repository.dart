@@ -9,7 +9,6 @@ import 'package:moki_tutor/domain/models/user.dart';
 import '../../data/mapper/http_request_mapper.dart';
 import '../interfaces/i_local_cache.dart';
 import '../locator/locator.dart';
-import '../models/user_with_tokens.dart';
 
 class UserRepository extends ChangeNotifier implements IUserRepository {
   final IApi api = getIt<IApi>();

@@ -1,20 +1,21 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
+import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
 import 'package:path/path.dart';
 
-import 'package:audioplayers/audioplayers.dart' as ap;
+import 'package:moki_tutor/presentation/auto_router/app_router.dart';
+import 'package:moki_tutor/presentation/common/common_functions.dart';
 
-import '../../../widgets/name_and_description.dart';
+import '../../../common/common_elevated_button.dart';
 import '../../../widgets/audio_player.dart';
+import '../../../widgets/name_and_description.dart';
 import 'bloc/pdf_create_subject_bloc.dart';
 
 @RoutePage()
@@ -32,11 +33,11 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
   List<TextEditingController> recordDescriptionControllerList = [];
   List<int?> audioDurationList = [];
 
+  final TextEditingController titleController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController titleController = TextEditingController();
-    final TextEditingController descriptionController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
           title: const Text(
@@ -45,9 +46,12 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
       body: BlocProvider<PdfCreateSubjectBloc>(
           create: (context) => PdfCreateSubjectBloc(),
           child: BlocConsumer<PdfCreateSubjectBloc, PdfCreateSubjectState>(
-              listener: (context, state) {
-                // TODO: implement listener
-              },
+              listener: (context, state) => state.mapOrNull(saveSuccess: (_) {
+                    CommonFunctions.showMessage(
+                        context, 'Saved', Reason.neutral);
+                    context.router.pop();
+                    return null;
+                  }),
               buildWhen: (previous, current) => current.map(
                   screenState: (c) => true,
                   saveSuccess: (c) => false,
@@ -77,21 +81,22 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                                 descriptionController: descriptionController,
                               ),
                               const SizedBox(height: 20),
-                              ElevatedButton(
+                              CommonElevatedButton(
                                 onPressed: () => _onSelectFile(context),
-                                child: Text('PDF'),
+                                text: 'Выберите PDF файл',
                               ),
                               const SizedBox(height: 20),
                               if (pdfFile != null) ...[
                                 Text(basename(pdfFile!.path)),
                                 const SizedBox(height: 20),
-                                ElevatedButton(
+                                CommonElevatedButton(
                                   onPressed: () {
-                                    final pdfFragmentList = <PdfFragment>[];
+                                    final pdfFragmentList =
+                                        <PdfFragmentSample>[];
                                     for (int i = 0;
                                         i < state.pdfFragmentList!.length;
                                         i++) {
-                                      pdfFragmentList.add(PdfFragment(
+                                      pdfFragmentList.add(PdfFragmentSample(
                                         image: state.pdfFragmentList!
                                             .elementAt(i)
                                             .image,
@@ -117,7 +122,7 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                                                 pdfFragmentList:
                                                     pdfFragmentList));
                                   },
-                                  child: Text('Создать тему'),
+                                  text: 'Создать тему',
                                 ),
                               ],
                             ],
@@ -177,7 +182,7 @@ class _FragmentListView extends StatelessWidget {
     required this.onPathChanged,
   }) : super(key: key);
 
-  final List<PdfFragment> pdfFragmentList;
+  final List<PdfFragmentSample> pdfFragmentList;
 
   final List<TextEditingController> titleControllerList;
   final List<TextEditingController> descriptionControllerList;
@@ -223,6 +228,7 @@ class FragmentListItem extends StatefulWidget {
 class _FragmentListItemState extends State<FragmentListItem> {
   late bool showPlayer;
   String? audioPath;
+  int? duration;
   @override
   void initState() {
     super.initState();
@@ -253,6 +259,7 @@ class _FragmentListItemState extends State<FragmentListItem> {
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: AudioPlayerWidget(
+                          duration: duration!,
                           source: audioPath!,
                           onDelete: () {
                             setState(() => showPlayer = false);
@@ -260,13 +267,14 @@ class _FragmentListItemState extends State<FragmentListItem> {
                           },
                         ),
                       )
-                    : ElevatedButton(
+                    : CommonElevatedButton(
                         onPressed: () async {
                           final result = await _showRecorder(context,
                               imageData: widget.imageData);
                           if (result != null) {
                             setState(() {
-                              audioPath = result;
+                              audioPath = result.path;
+                              duration = result.duration;
                             });
                             showPlayer = true;
 
@@ -276,9 +284,9 @@ class _FragmentListItemState extends State<FragmentListItem> {
                             widget.onPathChanged(audioPath, durationInSeconds);
                           }
                         },
-                        child: Text('Записать аудио')),
+                        text: 'Записать аудио'),
                 const SizedBox(height: 32),
-                ElevatedButton(
+                CommonElevatedButton(
                     onPressed: () async {
                       final result = await FilePicker.platform.pickFiles(
                         type: FileType.custom,
@@ -294,7 +302,7 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         widget.onPathChanged(audioPath, durationInSeconds);
                       }
                     },
-                    child: Text('Прикрепить аудио')),
+                    text: 'Прикрепить аудио'),
               ],
             )),
         const SizedBox(width: 32),
@@ -302,11 +310,11 @@ class _FragmentListItemState extends State<FragmentListItem> {
     );
   }
 
-  Future<String?> _showRecorder(BuildContext context,
+  Future<({String? path, int? duration})?> _showRecorder(BuildContext context,
       {required Uint8List imageData}) async {
     final result =
         await context.router.push(AudioRecordingRoute(imageData: imageData));
-    return result as String?;
+    return result as ({String path, int duration});
   }
 
   Future<int> getDuration(String path) async {

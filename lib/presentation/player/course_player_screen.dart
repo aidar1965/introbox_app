@@ -37,6 +37,8 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   int currentIndex = 0;
   int currentSubjectIndex = 0;
   bool remote = false;
+  late double height;
+  late double width;
 
   @override
   void initState() {
@@ -149,10 +151,14 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+  void didChangeDependencies() {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    super.didChangeDependencies();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Stack(children: [
       Container(
           height: height,
@@ -393,6 +399,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                                     cursor: SystemMouseCursors.click,
                                     child: Text(therecord.title)));
                           }
+                          return null;
                         },
                       ),
                     );

@@ -5,19 +5,23 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../common/common_duration_widget.dart';
+
 class AudioPlayerWidget extends StatefulWidget {
-  /// Path from where to play recorded audio
-  final String source;
-
-  /// Callback when audio file should be removed
-  /// Setting this to null hides the delete button
-  final VoidCallback onDelete;
-
   const AudioPlayerWidget({
     Key? key,
     required this.source,
     required this.onDelete,
+    required this.duration,
   }) : super(key: key);
+
+  /// Path from where to play recorded audio
+  final String source;
+  final int duration;
+
+  /// Callback when audio file should be removed
+  /// Setting this to null hides the delete button
+  final VoidCallback onDelete;
 
   @override
   AudioPlayerWidgetState createState() => AudioPlayerWidgetState();
@@ -29,10 +33,10 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   final _audioPlayer = ap.AudioPlayer()..setReleaseMode(ReleaseMode.stop);
   late StreamSubscription<void> _playerStateChangedSubscription;
-  late StreamSubscription<Duration?> _durationChangedSubscription;
+
   late StreamSubscription<Duration> _positionChangedSubscription;
   Duration? _position;
-  Duration? _duration;
+  //Duration? _duration;
 
   @override
   void initState() {
@@ -46,11 +50,6 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         _position = position;
       }),
     );
-    _durationChangedSubscription = _audioPlayer.onDurationChanged.listen(
-      (duration) => setState(() {
-        _duration = duration;
-      }),
-    );
 
     super.initState();
   }
@@ -59,7 +58,7 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   void dispose() {
     _playerStateChangedSubscription.cancel();
     _positionChangedSubscription.cancel();
-    _durationChangedSubscription.cancel();
+
     _audioPlayer.dispose();
     super.dispose();
   }
@@ -90,7 +89,7 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
                 ),
               ],
             ),
-            Text('${_duration ?? 0.0}'),
+            CommonDurationWidget(seconds: widget.duration),
           ],
         );
       },
@@ -130,12 +129,13 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   Widget _buildSlider(double widgetWidth) {
     bool canSetValue = false;
-    final duration = _duration;
+
     final position = _position;
 
-    if (duration != null && position != null) {
+    if (position != null) {
       canSetValue = position.inMilliseconds > 0;
-      canSetValue &= position.inMilliseconds < duration.inMilliseconds;
+      canSetValue &= position.inMilliseconds <
+          Duration(seconds: widget.duration).inMilliseconds;
     }
 
     double width = widgetWidth - _controlSize - _deleteBtnSize;
@@ -147,13 +147,13 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
         activeColor: Theme.of(context).primaryColor,
         inactiveColor: Theme.of(context).colorScheme.secondary,
         onChanged: (v) {
-          if (duration != null) {
-            final position = v * duration.inMilliseconds;
-            _audioPlayer.seek(Duration(milliseconds: position.round()));
-          }
+          final position =
+              v * Duration(seconds: widget.duration).inMilliseconds;
+          _audioPlayer.seek(Duration(milliseconds: position.round()));
         },
-        value: canSetValue && duration != null && position != null
-            ? position.inMilliseconds / duration.inMilliseconds
+        value: canSetValue && position != null
+            ? position.inMilliseconds /
+                Duration(seconds: widget.duration).inMilliseconds
             : 0.0,
       ),
     );

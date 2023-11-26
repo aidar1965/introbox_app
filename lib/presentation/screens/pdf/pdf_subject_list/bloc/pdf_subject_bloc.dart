@@ -11,9 +11,12 @@ part 'pdf_subject_bloc.freezed.dart';
 
 class PdfSubjectBloc extends Bloc<PdfSubjectEvent, PdfSubjectState> {
   PdfSubjectBloc() : super(const _StatePending()) {
-    on<PdfSubjectEvent>((event, emitter) =>
-        event.map(dataChanged: (_) => _dataChanged(emitter)));
-    add(const PdfSubjectEvent.dataChanged());
+    on<PdfSubjectEvent>((event, emitter) => event.map(
+        dataChanged: (_) => _dataChanged(emitter),
+        deleteSubject: (event) => onDeleteSubject(event, emitter)));
+    add(
+      const PdfSubjectEvent.dataChanged(),
+    );
     subjectsRepository.addChangeListener(onSubjectsChanged);
   }
 
@@ -34,5 +37,14 @@ class PdfSubjectBloc extends Bloc<PdfSubjectEvent, PdfSubjectState> {
   Future<void> close() {
     subjectsRepository.removeChangeListener(onSubjectsChanged);
     return super.close();
+  }
+
+  Future<void> onDeleteSubject(
+      _EventDeleteSubject event, Emitter<PdfSubjectState> emitter) async {
+    try {
+      await subjectsRepository.deleteSubject(event.id);
+    } catch (e) {
+      print(e);
+    }
   }
 }

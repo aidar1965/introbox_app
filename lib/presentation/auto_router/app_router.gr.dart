@@ -124,12 +124,14 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     AudioRecordingRoute.name: (routeData) {
-      final args = routeData.argsAs<AudioRecordingRouteArgs>();
+      final args = routeData.argsAs<AudioRecordingRouteArgs>(
+          orElse: () => const AudioRecordingRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: AudioRecordingScreen(
           key: args.key,
           imageData: args.imageData,
+          imagePath: args.imagePath,
         ),
       );
     },
@@ -140,9 +142,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     PdfEditSubjectRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfEditSubjectRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PdfEditSubjectScreen(),
+        child: PdfEditSubjectScreen(
+          key: args.key,
+          subject: args.subject,
+        ),
       );
     },
     PdfSubjectsRoute.name: (routeData) {
@@ -536,13 +542,15 @@ class LoginRoute extends PageRouteInfo<void> {
 class AudioRecordingRoute extends PageRouteInfo<AudioRecordingRouteArgs> {
   AudioRecordingRoute({
     Key? key,
-    required Uint8List imageData,
+    Uint8List? imageData,
+    String? imagePath,
     List<PageRouteInfo>? children,
   }) : super(
           AudioRecordingRoute.name,
           args: AudioRecordingRouteArgs(
             key: key,
             imageData: imageData,
+            imagePath: imagePath,
           ),
           initialChildren: children,
         );
@@ -556,16 +564,19 @@ class AudioRecordingRoute extends PageRouteInfo<AudioRecordingRouteArgs> {
 class AudioRecordingRouteArgs {
   const AudioRecordingRouteArgs({
     this.key,
-    required this.imageData,
+    this.imageData,
+    this.imagePath,
   });
 
   final Key? key;
 
-  final Uint8List imageData;
+  final Uint8List? imageData;
+
+  final String? imagePath;
 
   @override
   String toString() {
-    return 'AudioRecordingRouteArgs{key: $key, imageData: $imageData}';
+    return 'AudioRecordingRouteArgs{key: $key, imageData: $imageData, imagePath: $imagePath}';
   }
 }
 
@@ -585,16 +596,40 @@ class PdfCreateSubjectRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [PdfEditSubjectScreen]
-class PdfEditSubjectRoute extends PageRouteInfo<void> {
-  const PdfEditSubjectRoute({List<PageRouteInfo>? children})
-      : super(
+class PdfEditSubjectRoute extends PageRouteInfo<PdfEditSubjectRouteArgs> {
+  PdfEditSubjectRoute({
+    Key? key,
+    required Subject subject,
+    List<PageRouteInfo>? children,
+  }) : super(
           PdfEditSubjectRoute.name,
+          args: PdfEditSubjectRouteArgs(
+            key: key,
+            subject: subject,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'PdfEditSubjectRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PdfEditSubjectRouteArgs> page =
+      PageInfo<PdfEditSubjectRouteArgs>(name);
+}
+
+class PdfEditSubjectRouteArgs {
+  const PdfEditSubjectRouteArgs({
+    this.key,
+    required this.subject,
+  });
+
+  final Key? key;
+
+  final Subject subject;
+
+  @override
+  String toString() {
+    return 'PdfEditSubjectRouteArgs{key: $key, subject: $subject}';
+  }
 }
 
 /// generated route for

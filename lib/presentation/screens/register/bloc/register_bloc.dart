@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -47,7 +46,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emitter(const RegisterState.requestSuccess());
     } on RequestException catch (e) {
       if (e.httpStatusCode == HttpStatus.badRequest) {
-        final errorText = e.response?['message'] as String ?? 'Ошибка';
+        final errorText = e.response?['message'] as String? ?? 'Ошибка';
         emitter(RegisterState.requestError(errorText: errorText));
       } else {
         emitter(const RegisterState.requestError());
