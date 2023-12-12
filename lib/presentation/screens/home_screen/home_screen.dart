@@ -56,10 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 // routes used here must be declaraed as children
                 // routes of /dashboard
                 routes: const [
-                  CoursesRoute(),
-                  SubjectsRoute(),
+                  PdfCoursesRoute(),
+                  //    SubjectsRoute(),
                   PdfSubjectsRoute(),
-                  FragmentsRoute(),
+                  //    FragmentsRoute(),
                   ProfileRoute()
                 ],
                 builder: (context, child) {
@@ -80,15 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const NavigationRailDestination(
                                     label: Text('Курсы'),
                                     icon: Icon(Icons.list)),
+                                // const NavigationRailDestination(
+                                //     label: Text('Темы'),
+                                //     icon: Icon(Icons.list)),
                                 const NavigationRailDestination(
                                     label: Text('Темы'),
-                                    icon: Icon(Icons.list)),
-                                const NavigationRailDestination(
-                                    label: Text('Pdf'),
                                     icon: Icon(Icons.picture_as_pdf)),
-                                const NavigationRailDestination(
-                                    label: Text('Записи'),
-                                    icon: Icon(Icons.list)),
+                                // const NavigationRailDestination(
+                                //     label: Text('Записи'),
+                                //     icon: Icon(Icons.list)),
                                 // const NavigationRailDestination(
                                 //     label: Text('Новая тема'),
                                 //     icon: Icon(Icons.add)),

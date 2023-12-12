@@ -9,14 +9,14 @@ import '../interfaces/i_api.dart';
 import '../interfaces/i_local_db.dart';
 import '../locator/locator.dart';
 import '../models/fragment.dart';
-import '../models/responses/paginated_sibjects.dart';
+import '../models/responses/paginated_subjects.dart';
 import '../models/subject_category.dart';
 
 class SubjectsRepository extends ChangeNotifier implements ISubjectsRepository {
   SubjectsRepository(
     this.db,
   ) {
-    init();
+    // init();
   }
 
   // {

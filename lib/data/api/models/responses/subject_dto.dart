@@ -7,7 +7,8 @@ class SubjectDto {
   SubjectDto({
     required this.id,
     required this.title,
-    required this.description,
+    this.description,
+    this.firstImage,
     required this.createdAt,
     required this.duration,
     required this.countUncompleted,
@@ -20,7 +21,10 @@ class SubjectDto {
   final String title;
 
   @JsonKey(name: 'description')
-  final String description;
+  final String? description;
+
+  @JsonKey(name: 'first_image')
+  final String? firstImage;
 
   @JsonKey(name: 'created_at')
   final String createdAt;

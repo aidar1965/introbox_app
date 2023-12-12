@@ -6,7 +6,6 @@ import 'package:moki_tutor/domain/interfaces/i_api.dart';
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 import 'package:moki_tutor/domain/models/user.dart';
 
-import '../../data/mapper/http_request_mapper.dart';
 import '../interfaces/i_local_cache.dart';
 import '../locator/locator.dart';
 
@@ -30,8 +29,6 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
   }
 
   User? _user;
-
-  HttpRequestMapper httpRequestMapper = HttpRequestMapper();
 
   @override
   User? get user => _user;

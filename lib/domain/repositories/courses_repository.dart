@@ -1,15 +1,9 @@
-import 'dart:io';
-
-import 'package:archive/archive.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:moki_tutor/data/mapper/http_request_mapper.dart';
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
 import 'package:moki_tutor/domain/interfaces/i_courses_repository.dart';
 import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
 import 'package:moki_tutor/domain/models/course.dart';
-import 'package:path/path.dart';
 
-import '../constants.dart';
 import '../interfaces/i_local_db.dart';
 import '../locator/locator.dart';
 
@@ -18,7 +12,6 @@ class CoursesRepository extends ChangeNotifier implements ICoursesRepository {
   final IApi api = getIt<IApi>();
   final ISubjectsRepository subjectsRepository = getIt<ISubjectsRepository>();
 
-  final httpRequestMapper = HttpRequestMapper();
   CoursesRepository(this.db) {
     init();
     subjectsRepository.addChangeListener(() {
@@ -69,7 +62,6 @@ class CoursesRepository extends ChangeNotifier implements ICoursesRepository {
 
   @override
   Future<void> publishCourse(Course course) async {
-    await _createZip(course);
     //  await api.publishCourse(
     //      bodyMap: httpRequestMapper.publishCourseBodyData(course: course));
   }
@@ -81,37 +73,37 @@ class CoursesRepository extends ChangeNotifier implements ICoursesRepository {
   }
 }
 
-Future<void> _createZip(Course course) async {
-  final archive = Archive();
-  final zipEncoder = ZipEncoder();
+// Future<void> _createZip(Course course) async {
+//   final archive = Archive();
+//   final zipEncoder = ZipEncoder();
 
-  bool fileExists =
-      await File('${Constants.fullTempFolder}${course.id}.zip').exists();
-  if (fileExists) {
-    await File('${Constants.fullTempFolder}${course.id}.zip').delete();
-  }
-  for (var subject in course.subjects) {
-    if (subject.records?.isNotEmpty ?? false) {
-      for (var record in subject.records!) {
-        var file = File(record.audioPath!);
-        var bytes = file.readAsBytesSync();
-        var name = basename(file.path);
-        var archiveFile = ArchiveFile(name, bytes.length, bytes);
-        archive.addFile(archiveFile);
-        if (record.images != null) {
-          for (var element in record.images!.keys) {
-            file = File(element);
-            bytes = file.readAsBytesSync();
-            name = basename(file.path);
-            archiveFile = ArchiveFile(name, bytes.length, bytes);
-            archive.addFile(archiveFile);
-          }
-        }
-      }
-      final encodedArchive = zipEncoder.encode(archive);
-      if (encodedArchive == null) return;
-      await File('${Constants.fullTempFolder}${course.id}.zip')
-          .writeAsBytes(encodedArchive);
-    }
-  }
-}
+//   bool fileExists =
+//       await File('${Constants.fullTempFolder}${course.id}.zip').exists();
+//   if (fileExists) {
+//     await File('${Constants.fullTempFolder}${course.id}.zip').delete();
+//   }
+//   for (var subject in course.subjects) {
+//     if (subject.records?.isNotEmpty ?? false) {
+//       for (var record in subject.records!) {
+//         var file = File(record.audioPath!);
+//         var bytes = file.readAsBytesSync();
+//         var name = basename(file.path);
+//         var archiveFile = ArchiveFile(name, bytes.length, bytes);
+//         archive.addFile(archiveFile);
+//         if (record.images != null) {
+//           for (var element in record.images!.keys) {
+//             file = File(element);
+//             bytes = file.readAsBytesSync();
+//             name = basename(file.path);
+//             archiveFile = ArchiveFile(name, bytes.length, bytes);
+//             archive.addFile(archiveFile);
+//           }
+//         }
+//       }
+//       final encodedArchive = zipEncoder.encode(archive);
+//       if (encodedArchive == null) return;
+//       await File('${Constants.fullTempFolder}${course.id}.zip')
+//           .writeAsBytes(encodedArchive);
+//     }
+   
+

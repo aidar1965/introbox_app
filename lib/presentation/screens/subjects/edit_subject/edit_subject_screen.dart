@@ -143,88 +143,96 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                               state.subjectFragments.isNotEmpty
                                   ? Flexible(
                                       flex: 3,
-                                      child: ReorderableListView.builder(
-                                        itemCount:
-                                            state.subjectFragments.length,
-                                        itemBuilder: (context, index) {
-                                          var record = state.subjectFragments
-                                              .elementAt(index);
+                                      child: Theme(
+                                        data: Theme.of(context).copyWith(
+                                          canvasColor: Colors.transparent,
+                                          shadowColor: Colors.transparent,
+                                        ),
+                                        child: ReorderableListView.builder(
+                                          itemCount:
+                                              state.subjectFragments.length,
+                                          itemBuilder: (context, index) {
+                                            var record = state.subjectFragments
+                                                .elementAt(index);
 
-                                          return ListTile(
-                                            key: ValueKey(record.id),
-                                            leading: SizedBox(
-                                              height: 50,
-                                              width: 50,
-                                              child: record.imagePath != '' &&
-                                                      record.imagePath != null
-                                                  ? Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8,
-                                                              bottom: 8),
-                                                      child: Image.file(File(
-                                                          record.imagePath!
-                                                              .replaceAll(
-                                                                  '\\\\',
-                                                                  '\\'))),
-                                                    )
-                                                  : null,
-                                            ),
-                                            title: GestureDetector(
-                                              onTap: () =>
-                                                  BlocProvider.of<HomeBloc>(
-                                                          context)
-                                                      .add(HomeEvent.openPlayer(
-                                                          record: record)),
-                                              child: MouseRegion(
-                                                cursor:
-                                                    SystemMouseCursors.click,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    (record.duration ?? 0) %
-                                                                60 >
-                                                            9
-                                                        ? Expanded(
-                                                            child: Text(
-                                                              '${index + 1}. ${record.title}  ${Duration(seconds: record.duration ?? 0).inMinutes}:${record.duration ?? 0 % 60}',
+                                            return ListTile(
+                                              key: ValueKey(record.id),
+                                              leading: SizedBox(
+                                                height: 50,
+                                                width: 50,
+                                                child: record.imagePath != '' &&
+                                                        record.imagePath != null
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                top: 8,
+                                                                bottom: 8),
+                                                        child: Image.file(File(
+                                                            record.imagePath!
+                                                                .replaceAll(
+                                                                    '\\\\',
+                                                                    '\\'))),
+                                                      )
+                                                    : null,
+                                              ),
+                                              title: GestureDetector(
+                                                onTap: () => BlocProvider.of<
+                                                        HomeBloc>(context)
+                                                    .add(HomeEvent.openPlayer(
+                                                        record: record)),
+                                                child: MouseRegion(
+                                                  cursor:
+                                                      SystemMouseCursors.click,
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      (record.duration ?? 0) %
+                                                                  60 >
+                                                              9
+                                                          ? Expanded(
+                                                              child: Text(
+                                                                '${index + 1}. ${record.title}  ${Duration(seconds: record.duration ?? 0).inMinutes}:${record.duration ?? 0 % 60}',
+                                                              ),
+                                                            )
+                                                          : Expanded(
+                                                              child: Text(
+                                                                '${index + 1}. ${record.title}  ${Duration(seconds: record.duration ?? 0).inMinutes}:0${record.duration ?? 0 % 60}',
+                                                              ),
                                                             ),
-                                                          )
-                                                        : Expanded(
-                                                            child: Text(
-                                                              '${index + 1}. ${record.title}  ${Duration(seconds: record.duration ?? 0).inMinutes}:0${record.duration ?? 0 % 60}',
-                                                            ),
-                                                          ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 20),
-                                                      child: IconButton(
-                                                          onPressed: () => BlocProvider
-                                                                  .of<EditSubjectBloc>(
-                                                                      context)
-                                                              .add(EditSubjectEvent
-                                                                  .addFragment(
-                                                                      record)),
-                                                          icon: const Icon(
-                                                            Icons.remove_circle,
-                                                            color: Colors.red,
-                                                          )),
-                                                    ),
-                                                  ],
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                right: 20),
+                                                        child: IconButton(
+                                                            onPressed: () => BlocProvider
+                                                                    .of<EditSubjectBloc>(
+                                                                        context)
+                                                                .add(EditSubjectEvent
+                                                                    .addFragment(
+                                                                        record)),
+                                                            icon: const Icon(
+                                                              Icons
+                                                                  .remove_circle,
+                                                              color: Colors.red,
+                                                            )),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          );
-                                        },
-                                        onReorder: (oldIndex, newIndex) {
-                                          BlocProvider.of<EditSubjectBloc>(
-                                                  context)
-                                              .add(EditSubjectEvent.onReorder(
-                                                  oldIndex, newIndex));
-                                        },
+                                            );
+                                          },
+                                          onReorder: (oldIndex, newIndex) {
+                                            BlocProvider.of<EditSubjectBloc>(
+                                                    context)
+                                                .add(EditSubjectEvent.onReorder(
+                                                    oldIndex, newIndex));
+                                          },
+                                        ),
                                       ),
                                     )
                                   : const Expanded(child: SizedBox()),
@@ -303,7 +311,7 @@ class _EditSubjectScreenState extends State<EditSubjectScreen> {
                                                           ? Padding(
                                                               padding:
                                                                   const EdgeInsets
-                                                                          .only(
+                                                                      .only(
                                                                       top: 8,
                                                                       bottom:
                                                                           8),

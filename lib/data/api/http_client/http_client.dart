@@ -163,7 +163,7 @@ class DioClient {
               }
               try {
                 // only for VERIFY request - change token in DATA
-                final originalRequestData = dioError.requestOptions.data;
+                // final originalRequestData = dioError.requestOptions.data;
                 FormData? newFormData;
                 if (requestData.runtimeType == FormData) {
                   contentTypeHeader = {'Content-Type': 'multipart/form-data'};
@@ -340,7 +340,8 @@ class DioClient {
           );
           break;
         case AvailableApiMethods.put:
-          response = await _dio!.put<String>(url, data: request.body);
+          final data = await request.formData ?? request.body;
+          response = await _dio!.put<String>(url, data: data);
           break;
         case AvailableApiMethods.delete:
           response = await _dio!.delete<String>(url, data: request.body);

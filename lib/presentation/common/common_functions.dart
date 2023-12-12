@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
 import '../values/values.dart';
 
@@ -24,12 +25,12 @@ class CommonFunctions {
     String mess = message;
     switch (reason) {
       case Reason.error:
-        backgroundColor = Colors.red;
-        textColor = Colors.white;
+        backgroundColor = DynamicTheme.paletteOf(context).negative;
+        textColor = DynamicTheme.paletteOf(context).alwaysWhite;
         break;
       case Reason.neutral:
-        backgroundColor = Colors.grey;
-        textColor = Colors.black87;
+        backgroundColor = DynamicTheme.paletteOf(context).accent;
+        textColor = DynamicTheme.paletteOf(context).alwaysWhite;
     }
 
     if (mess.startsWith('.')) {
@@ -145,7 +146,7 @@ class CommonFunctions {
     return showDialog<Object?>(
         context: context,
         builder: (context) {
-          final Widget button = ElevatedButton(
+          final Widget button = TextButton(
               child: Text(negativeButtonText ?? ''),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -157,10 +158,13 @@ class CommonFunctions {
             surfaceTintColor: Colors.transparent,
             actionsPadding: Theme.of(context).dialogTheme.actionsPadding,
             title: (title?.isNotEmpty ?? false)
-                ? Text(
-                    title!,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).dialogTheme.titleTextStyle,
+                ? Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Text(
+                      title!,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).dialogTheme.titleTextStyle,
+                    ),
                   )
                 : null,
             content: Padding(
@@ -179,7 +183,7 @@ class CommonFunctions {
                       button,
                     ]
                   : [],
-              ElevatedButton(
+              TextButton(
                   child: Text(positiveButtonText),
                   onPressed: () {
                     Navigator.of(context).pop();

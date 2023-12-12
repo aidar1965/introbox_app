@@ -12,6 +12,7 @@ class PdfFragmentDto {
     required this.isLandscape,
     this.audioPath,
     this.duration,
+    required this.displayOrder,
   });
 
   @JsonKey(name: 'id')
@@ -34,6 +35,9 @@ class PdfFragmentDto {
 
   @JsonKey(name: 'audio_path')
   final String? audioPath;
+
+  @JsonKey(name: 'display_order')
+  final int displayOrder;
 
   static PdfFragmentDto fromJson(Object json) =>
       _$PdfFragmentDtoFromJson(json as Map<String, dynamic>);

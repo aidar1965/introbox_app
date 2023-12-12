@@ -44,10 +44,9 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   void initState() {
     super.initState();
 
-    subject = widget.course.subjects.first;
     record = subject.records?.first;
     numberOfFragments = subject.records?.length ?? 0;
-    numberOfSubjects = widget.course.subjects.length;
+
     isLast = currentIndex == numberOfFragments - 1;
     isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
     if (widget.remote != null) {
@@ -104,7 +103,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
   void _playNextSubject() {
     setState(() {
       currentSubjectIndex++;
-      subject = widget.course.subjects.elementAt(currentSubjectIndex);
+      //
       numberOfFragments = subject.records?.length ?? 0;
       currentIndex = 0;
       isLast = currentIndex == numberOfFragments - 1;
@@ -113,17 +112,17 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     });
   }
 
-  void _playPreviousSubject() {
-    setState(() {
-      currentSubjectIndex--;
-      subject = widget.course.subjects.elementAt(currentSubjectIndex);
-      numberOfFragments = subject.records?.length ?? 0;
-      currentIndex = 0;
-      isLast = currentIndex == numberOfFragments - 1;
-      isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
-      record = subject.records?.first;
-    });
-  }
+  // void _playPreviousSubject() {
+  //   setState(() {
+  //     currentSubjectIndex--;
+  //     subject = widget.course.subjects.elementAt(currentSubjectIndex);
+  //     numberOfFragments = subject.records?.length ?? 0;
+  //     currentIndex = 0;
+  //     isLast = currentIndex == numberOfFragments - 1;
+  //     isLastSubject = currentSubjectIndex == numberOfSubjects - 1;
+  //     record = subject.records?.first;
+  //   });
+  // }
 
   void _playSubject(Subject theSubject, int indx) {
     setState(() {
@@ -314,7 +313,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
                               size: 48,
                             ),
                             onPressed: () {
-                              _playPreviousSubject();
+                              //  _playPreviousSubject();
                             },
                           )
                         : const SizedBox(),
@@ -359,7 +358,8 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
           bottom: 10,
           child: FloatingActionButton(
             backgroundColor: Colors.black54,
-            onPressed: () => _showAllSubjects(context, widget.course),
+            onPressed: () => // _showAllSubjects(context, widget.course),
+                {},
             tooltip: 'Курс',
             child: const Icon(
               Icons.info,
@@ -368,42 +368,42 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
     ]);
   }
 
-  void _showAllSubjects(BuildContext context, Course course) {
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Expanded(
-              child: ListView.builder(
-                  itemCount: course.subjects.length,
-                  itemBuilder: ((context, index) {
-                    var thesubject = course.subjects.elementAt(index);
-                    var description =
-                        thesubject.description ?? 'Описание отутствует';
-                    return ListTile(
-                      title: GestureDetector(
-                          onTap: () => _playSubject(thesubject, index),
-                          child: MouseRegion(
-                              cursor: SystemMouseCursors.click,
-                              child: Text('${subject.title}: $description'))),
-                      subtitle: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: thesubject.records?.length,
-                        itemBuilder: (BuildContext context, int ind) {
-                          var therecord = thesubject.records?.elementAt(ind);
-                          if (therecord != null) {
-                            return GestureDetector(
-                                onTap: () => _playFragment(
-                                    thesubject, index, therecord, ind),
-                                child: MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: Text(therecord.title)));
-                          }
-                          return null;
-                        },
-                      ),
-                    );
-                  })));
-        });
-  }
+  // void _showAllSubjects(BuildContext context, Course course) {
+  //   showModalBottomSheet(
+  //       context: context,
+  //       builder: (context) {
+  //         return Expanded(
+  //             child: ListView.builder(
+  //                 itemCount: course.subjects.length,
+  //                 itemBuilder: ((context, index) {
+  //                   var thesubject = course.subjects.elementAt(index);
+  //                   var description =
+  //                       thesubject.description ?? 'Описание отутствует';
+  //                   return ListTile(
+  //                     title: GestureDetector(
+  //                         onTap: () => _playSubject(thesubject, index),
+  //                         child: MouseRegion(
+  //                             cursor: SystemMouseCursors.click,
+  //                             child: Text('${subject.title}: $description'))),
+  //                     subtitle: ListView.builder(
+  //                       shrinkWrap: true,
+  //                       physics: const NeverScrollableScrollPhysics(),
+  //                       itemCount: thesubject.records?.length,
+  //                       itemBuilder: (BuildContext context, int ind) {
+  //                         var therecord = thesubject.records?.elementAt(ind);
+  //                         if (therecord != null) {
+  //                           return GestureDetector(
+  //                               onTap: () => _playFragment(
+  //                                   thesubject, index, therecord, ind),
+  //                               child: MouseRegion(
+  //                                   cursor: SystemMouseCursors.click,
+  //                                   child: Text(therecord.title)));
+  //                         }
+  //                         return null;
+  //                       },
+  //                     ),
+  //                   );
+  //                 })));
+  //       });
+  // }
 }

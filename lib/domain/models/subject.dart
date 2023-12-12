@@ -11,6 +11,8 @@ class Subject extends Equatable {
 
   final String? description;
 
+  final String? firstImage;
+
   final List<Fragment>? records;
 
   final DateTime date;
@@ -26,7 +28,8 @@ class Subject extends Equatable {
   const Subject({
     required this.id,
     required this.title,
-    required this.description,
+    this.description,
+    this.firstImage,
     this.records,
     required this.date,
     this.subjectCategories,

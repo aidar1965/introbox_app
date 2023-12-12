@@ -9,39 +9,49 @@ class RequestUpdateFragment extends IApiRequest {
   final String? title;
   final String? description;
   final String? imagePath;
+  final bool? isLandscape;
   final String? audioPath;
   final int? duration;
+  final int? subjectDurationDifference;
 
   RequestUpdateFragment({
     required this.id,
     this.title,
     this.description,
     this.imagePath,
+    this.isLandscape,
     this.audioPath,
     this.duration,
+    this.subjectDurationDifference,
   }) : super(methodType: AvailableApiMethods.put, url: '/fragment/update/');
 
   @override
   Future<FormData>? get formData async {
-    late MultipartFile? audio;
-    late MultipartFile? image;
+    MultipartFile? audio;
+    MultipartFile? image;
+
+    final formDataMap = {
+      'id': id,
+      'title': title,
+      'description': description,
+      'subject_duration_difference': subjectDurationDifference,
+    };
     if (audioPath != null) {
-      audio = await MultipartFile.fromFile(audioPath!);
+      audio = await MultipartFile.fromFile(audioPath!, headers: {
+        'filename': [audioPath!]
+      });
+      formDataMap['audio'] = audio;
+      formDataMap['duration'] = duration;
     }
 
     if (imagePath != null) {
       image = await MultipartFile.fromFile(
         imagePath!,
       );
+      formDataMap['image'] = image;
+      formDataMap['is_landscape'] = isLandscape;
     }
 
-    return FormData.fromMap({
-      'id': id,
-      'title': title,
-      'description': description,
-      'image': image,
-      'audio': audio,
-      'duration': duration
-    });
+    return FormData.fromMap(formDataMap);
   }
 }

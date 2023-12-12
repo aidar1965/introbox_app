@@ -19,9 +19,7 @@ class CoursesScreen extends StatelessWidget {
     return BlocProvider<CoursesBloc>(
       create: (context) => CoursesBloc(),
       child: BlocConsumer<CoursesBloc, CoursesState>(
-        listener: (context, state) => state.whenOrNull(
-          newCourse: () => context.router.push(const NewCourseRoute()),
-        ),
+        listener: (context, state) => state.whenOrNull(),
         buildWhen: (_, state) => state.maybeMap(
           pending: (_) => true,
           initialDataReceived: (_) => true,
@@ -129,7 +127,7 @@ class _CategoriesView extends StatelessWidget {
                   onChanged: (value) => BlocProvider.of<CoursesBloc>(context)
                       .add(CoursesEvent.selectCategory(category)),
                   title: Text(
-                    category.name,
+                    'category.name',
                   ));
             },
           ),
@@ -229,22 +227,22 @@ class _SelectedCourseView extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: course.subjects.length,
-              itemBuilder: (BuildContext context, int index) {
-                var subject = course.subjects.elementAt(index);
-                return ListTile(
-                  dense: true,
-                  title: Text(subject.title),
-                  trailing: IconButton(
-                      onPressed: () => BlocProvider.of<HomeBloc>(context)
-                          .add(HomeEvent.openSubjectPlayer(subject: subject)),
-                      icon: const Icon(Icons.play_arrow)),
-                );
-              },
-            ),
-          ),
+          // Expanded(
+          //   child: ListView.builder(
+          //     itemCount: course.subjects.length,
+          //     itemBuilder: (BuildContext context, int index) {
+          //       var subject = course.subjects.elementAt(index);
+          //       return ListTile(
+          //         dense: true,
+          //         title: Text(subject.title),
+          //         trailing: IconButton(
+          //             onPressed: () => BlocProvider.of<HomeBloc>(context)
+          //                 .add(HomeEvent.openSubjectPlayer(subject: subject)),
+          //             icon: const Icon(Icons.play_arrow)),
+          //       );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );

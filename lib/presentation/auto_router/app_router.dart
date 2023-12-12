@@ -7,6 +7,7 @@ import '../../domain/interfaces/i_auth_controller.dart';
 import '../../domain/locator/locator.dart';
 import '../../domain/models/course.dart';
 import '../../domain/models/fragment.dart';
+import '../../domain/models/pdf_fragment.dart';
 import '../../domain/models/subject.dart';
 import '../player/course_player_screen.dart';
 import '../player/player_screen.dart';
@@ -14,13 +15,22 @@ import '../player/subject_player_screen.dart';
 import '../screens/assembling/assembling_screen.dart';
 import '../screens/courses/courses_screen.dart';
 import '../screens/courses/edit_course/edit_course_screen.dart';
-import '../screens/courses/new_course/new_couse_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/login/login_screen.dart';
-import '../screens/pdf/audio_recording/audio_recording_screen.dart';
-import '../screens/pdf/pdf_create_subject/pdf_create_subject_screen.dart';
-import '../screens/pdf/pdf_edit_subject/pdf_edit_subject_screen.dart';
-import '../screens/pdf/pdf_subject_list/pdf_subjects_screen.dart';
+
+import '../screens/pdf_courses/pdf_add_course/pdf_add_course_screen.dart';
+import '../screens/pdf_courses/pdf_course_details/pdf_course_details_screen.dart';
+import '../screens/pdf_courses/pdf_courses_screen.dart';
+import '../screens/pdf_courses/pdf_edit_course/pdf_edit_course_screen.dart';
+import '../screens/pdf_subject/audio_recording/audio_recording_screen.dart';
+import '../screens/pdf_subject/fragments_reorder/fragmets_reorder_screen.dart';
+import '../screens/pdf_subject/image_create_subject/image_add_fragment/image_add_fragment_screen.dart';
+import '../screens/pdf_subject/image_create_subject/image_create_subject_screen.dart';
+import '../screens/pdf_subject/pdf_add_fragment/pdf_add_fragment_screen.dart';
+import '../screens/pdf_subject/pdf_create_subject/pdf_create_subject_screen.dart';
+import '../screens/pdf_subject/pdf_edit_subject/pdf_edit_subject_screen.dart';
+import '../screens/pdf_subject/pdf_subject_list/pdf_subjects_screen.dart';
+import '../screens/pdf_subject/pdf_subject_player/pdf_subject_player_screen.dart';
 import '../screens/profile/profile_screen.dart';
 import '../screens/recording/recording_screen.dart';
 import '../screens/records/edit_record/edit_fragment_screen.dart';
@@ -48,9 +58,10 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
   List<AutoRoute> get routes => [
         AutoRoute(path: '/', page: HomeRoute.page, children: [
           AutoRoute(path: 'courses', page: CoursesEmpty.page, children: [
-            AutoRoute(path: '', page: CoursesRoute.page, initial: true),
-            AutoRoute(path: 'new_course', page: NewCourseRoute.page),
-            AutoRoute(path: 'edit_course', page: EditCourseRoute.page),
+            AutoRoute(path: '', page: PdfCoursesRoute.page, initial: true),
+            AutoRoute(path: 'new_course', page: PdfAddCourseRoute.page),
+            AutoRoute(path: 'edit_course', page: PdfEditCourseRoute.page),
+            AutoRoute(path: 'course_details', page: PdfCourseDetailsRoute.page),
           ]),
           AutoRoute(path: 'subjects', page: SubjectsEmpty.page, children: [
             AutoRoute(path: '', page: SubjectsRoute.page, initial: true),
@@ -67,12 +78,31 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
                   page: PdfCreateSubjectRoute.page,
                 ),
                 AutoRoute(
+                  path: 'createImageSubject',
+                  page: ImageCreateSubjectRoute.page,
+                ),
+                AutoRoute(
+                  path: 'addImageFragment',
+                  page: ImageAddFragmentRoute.page,
+                ),
+                AutoRoute(
                     path: 'audioRecording', page: AudioRecordingRoute.page),
                 CustomRoute(
                     path: 'editPdfSubject',
                     page: PdfEditSubjectRoute.page,
                     transitionsBuilder: TransitionsBuilders.slideLeft,
                     durationInMilliseconds: 400),
+                CustomRoute(
+                    path: 'pdfAddFragment',
+                    page: PdfAddFragmentRoute.page,
+                    transitionsBuilder: TransitionsBuilders.slideLeft,
+                    durationInMilliseconds: 400),
+                CustomRoute(
+                    path: 'reorderFragments',
+                    page: FragmentsReorderRoute.page,
+                    transitionsBuilder: TransitionsBuilders.slideLeft,
+                    durationInMilliseconds: 400),
+
                 // AutoRoute(path: 'edit_subject', page: EditSubjectRoute.page)
               ]),
           AutoRoute(path: 'records', page: RecordsEmpty.page, children: [
@@ -94,6 +124,11 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         CustomRoute(
             path: '/confirmation',
             page: ConfirmationRoute.page,
+            transitionsBuilder: TransitionsBuilders.slideLeft,
+            durationInMilliseconds: 400),
+        CustomRoute(
+            path: '/pdfSubjectPlayer',
+            page: PdfSubjectPlayerRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
       ];

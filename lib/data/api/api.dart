@@ -1,31 +1,46 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
+import 'dart:ui';
 
 import 'package:dio/dio.dart';
+import 'package:moki_tutor/data/api/models/requests/request_publish_course.dart';
 import 'package:moki_tutor/data/api/models/responses/subject_dto.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
+import 'package:moki_tutor/domain/models/responses/paginated_courses.dart';
 
 import 'package:moki_tutor/domain/models/user.dart';
 import 'package:moki_tutor/domain/models/course.dart';
+import 'package:moki_tutor/presentation/screens/pdf_subject/image_create_subject/image_fragment.dart';
 
 import '../../domain/models/fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
-import '../../domain/models/responses/paginated_sibjects.dart';
+import '../../domain/models/responses/paginated_subjects.dart';
 import '../../domain/models/user_with_tokens.dart';
 import 'http_client/http_client.dart';
 import 'mapper/mapper.dart';
 import 'models/requests/fragment_request_data.dart';
 import 'models/requests/register_request.dart';
+import 'models/requests/request_add_course.dart';
+import 'models/requests/request_add_fragment.dart';
+import 'models/requests/request_add_image_subject.dart';
 import 'models/requests/request_add_pdf_subject.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_confirmation.dart';
+import 'models/requests/request_delete_course.dart';
+import 'models/requests/request_delete_fragment.dart';
 import 'models/requests/request_delete_subject.dart';
+import 'models/requests/request_edit_subject.dart';
 import 'models/requests/request_get_subject_fragments.dart';
 import 'models/requests/request_get_subjects.dart';
+import 'models/requests/request_get_tutor_course.dart';
+import 'models/requests/request_get_tutor_courses.dart';
 import 'models/requests/request_login.dart';
+import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_update_fragment.dart';
+import 'models/requests/request_update_subject.dart';
+import 'models/responses/course_dto.dart';
 import 'models/responses/pdf_fragment_dto.dart';
 
 import 'models/responses/user_with_tokens_dto.dart';
@@ -69,7 +84,9 @@ class Api implements IApi {
       {required String phone, required String lang}) async {}
 
   @override
-  Future<void> publishCourse({required Course course}) async {}
+  Future<void> publishCourse({required int id}) async {
+    await httpClient.request(RequestPublishCourse(id: id));
+  }
 
   @override
   Future<void> publishFragment({required Fragment record}) async {}
@@ -138,10 +155,9 @@ class Api implements IApi {
       {int limit = 50, int offset = 0}) async {
     final result = await httpClient
         .request(RequestGetSubjects(limit: limit, offset: offset));
-    print(result!.headers['X-Last-Row-Number']!.first);
-    print(result.headers['X-Total-Count']!.first);
+
     return PaginatedSubjects(
-      offset: int.parse(result.headers['X-Last-Row-Number']!.first),
+      offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
       count: int.parse(result.headers['X-Total-Count']!.first),
       subjects: (result.data as List).map(
         (e) => mapper.mapSubject(SubjectDto.fromJson(e)),
@@ -163,20 +179,127 @@ class Api implements IApi {
   }
 
   @override
-  Future<void> updateFragment({
-    required int id,
-    String? title,
-    String? description,
-    String? imagePath,
-    String? audioPath,
-    int? duration,
-  }) async {
+  Future<void> updateFragment(
+      {required int id,
+      String? title,
+      String? description,
+      String? imagePath,
+      String? audioPath,
+      int? duration,
+      int? subjectDurationDifference,
+      bool? isLandscape}) async {
     await httpClient.request(RequestUpdateFragment(
-        id: id,
+      id: id,
+      title: title,
+      description: description,
+      imagePath: imagePath,
+      audioPath: audioPath,
+      duration: duration,
+      subjectDurationDifference: subjectDurationDifference,
+      isLandscape: isLandscape,
+    ));
+  }
+
+  @override
+  Future<void> updateSubject(
+      {required int id, String? title, String? description}) async {
+    await httpClient.request(
+        RequestUpdateSubject(id: id, title: title, description: description));
+  }
+
+  @override
+  Future<void> deleteFragment({required int id}) async {
+    await httpClient.request(RequestDeleteFragment(id: id));
+  }
+
+  @override
+  Future<void> addFragment(
+      {required int subjectId,
+      required int displayOrder,
+      required String title,
+      required String description,
+      required String imagePath,
+      required bool isLandscape,
+      String? audioPath,
+      int? duration}) async {
+    await httpClient.request(RequestAddFragment(
+        subjectId: subjectId,
+        displayOrder: displayOrder,
         title: title,
         description: description,
         imagePath: imagePath,
+        isLandscape: isLandscape,
         audioPath: audioPath,
         duration: duration));
+  }
+
+  @override
+  Future<void> reorderFragments(
+      {required int subjectId, required List<int> fragmentsIds}) async {
+    await httpClient.request(
+        RequestReorderFragments(id: subjectId, fragmentsIds: fragmentsIds));
+  }
+
+  @override
+  Future<PaginatedCourses> getCourses({int limit = 50, int offset = 0}) async {
+    final result = await httpClient
+        .request(RequestGetTutorCourses(limit: limit, offset: offset));
+    return PaginatedCourses(
+      offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
+      count: int.parse(result.headers['X-Total-Count']!.first),
+      courses: (result.data as List).map(
+        (e) => mapper.mapCourse(CourseDto.fromJson(e)),
+      ),
+    );
+  }
+
+  @override
+  Future<void> addCourse(
+      {required String title,
+      required String description,
+      required List<int> subjectsIds,
+      required Locale locale}) async {
+    await httpClient.request(RequestAddCourse(
+        title: title,
+        description: description,
+        subjectsIds: subjectsIds,
+        locale: locale));
+  }
+
+  @override
+  Future<Course> getCourse({required int id}) async {
+    final result = await httpClient.request(RequestGetCourse(id: id));
+    return mapper
+        .mapCourse(CourseDto.fromJson(jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> updateCourse(
+      {required int id,
+      required String title,
+      required String description,
+      required List<int> subjectsIds,
+      required Locale locale}) async {
+    await httpClient.request(RequestEditCourse(
+        id: id,
+        title: title,
+        description: description,
+        subjectsIds: subjectsIds,
+        locale: locale));
+  }
+
+  @override
+  Future<void> deleteCourse({required int id}) async {
+    await httpClient.request(RequestDeleteCourse(id: id));
+  }
+
+  @override
+  Future<void> addImageSubject(
+      {required String title,
+      String? description,
+      required List<ImageFragment> fragments,
+      int? duration}) async {
+    await httpClient.request(RequestAddImageSubject(
+        title: title, description: description, fragments: fragments));
   }
 }

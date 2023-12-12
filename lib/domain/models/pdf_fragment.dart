@@ -17,6 +17,8 @@ class PdfFragment extends Equatable {
 
   final String? audioPath;
 
+  final int displayOrder;
+
   const PdfFragment({
     required this.id,
     required this.title,
@@ -25,6 +27,7 @@ class PdfFragment extends Equatable {
     this.duration,
     this.audioPath,
     required this.isLandscape,
+    required this.displayOrder,
   });
 
   PdfFragment copyWith({
@@ -34,16 +37,17 @@ class PdfFragment extends Equatable {
     bool? isLandscape,
     int? duration,
     String? audioPath,
+    int? displayOrder,
   }) {
     return PdfFragment(
-      id: id,
-      title: title ?? this.title,
-      description: description ?? this.description,
-      imagePath: imagePath ?? this.imagePath,
-      isLandscape: isLandscape ?? this.isLandscape,
-      duration: duration ?? this.duration,
-      audioPath: audioPath ?? this.audioPath,
-    );
+        id: id,
+        title: title ?? this.title,
+        description: description ?? this.description,
+        imagePath: imagePath ?? this.imagePath,
+        isLandscape: isLandscape ?? this.isLandscape,
+        duration: duration ?? this.duration,
+        audioPath: audioPath ?? this.audioPath,
+        displayOrder: displayOrder ?? this.displayOrder);
   }
 
   @override

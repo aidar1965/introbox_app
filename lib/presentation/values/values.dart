@@ -6,4 +6,6 @@ class Values {
   static double dialogRadius = 16;
   static double buttonHeight = 54;
   static double pendingSize = 16;
+  static const double bottomSheetRadius = 26;
+  static const double buttonRadius = 5;
 }

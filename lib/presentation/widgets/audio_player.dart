@@ -55,6 +55,13 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
 
   @override
+  void didUpdateWidget(AudioPlayerWidget oldWidget) {
+    stop();
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void dispose() {
     _playerStateChangedSubscription.cancel();
     _positionChangedSubscription.cancel();

@@ -105,12 +105,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    NewCourseRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const NewCourseScreen(),
-      );
-    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -123,6 +117,40 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
+    PdfAddCourseRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfAddCourseRouteArgs>(
+          orElse: () => const PdfAddCourseRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfAddCourseScreen(key: args.key),
+      );
+    },
+    PdfCoursesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PdfCoursesScreen(),
+      );
+    },
+    PdfCourseDetailsRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfCourseDetailsRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfCourseDetailsScreen(
+          key: args.key,
+          course: args.course,
+        ),
+      );
+    },
+    PdfEditCourseRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfEditCourseRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfEditCourseScreen(
+          key: args.key,
+          course: args.course,
+        ),
+      );
+    },
     AudioRecordingRoute.name: (routeData) {
       final args = routeData.argsAs<AudioRecordingRouteArgs>(
           orElse: () => const AudioRecordingRouteArgs());
@@ -132,6 +160,27 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           imageData: args.imageData,
           imagePath: args.imagePath,
+        ),
+      );
+    },
+    FragmentsReorderRoute.name: (routeData) {
+      final args = routeData.argsAs<FragmentsReorderRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: FragmentsReorderScreen(
+          key: args.key,
+          fragments: args.fragments,
+        ),
+      );
+    },
+    PdfAddFragmentRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfAddFragmentRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfAddFragmentScreen(
+          key: args.key,
+          displayOder: args.displayOder,
+          subjectId: args.subjectId,
         ),
       );
     },
@@ -155,6 +204,16 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const PdfSubjectsScreen(),
+      );
+    },
+    PdfSubjectPlayerRoute.name: (routeData) {
+      final args = routeData.argsAs<PdfSubjectPlayerRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PdfSubjectPlayerScreen(
+          key: args.key,
+          subject: args.subject,
+        ),
       );
     },
     ProfileRoute.name: (routeData) {
@@ -217,6 +276,22 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SubjectsScreen(),
+      );
+    },
+    ImageCreateSubjectRoute.name: (routeData) {
+      final args = routeData.argsAs<ImageCreateSubjectRouteArgs>(
+          orElse: () => const ImageCreateSubjectRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ImageCreateSubjectScreen(key: args.key),
+      );
+    },
+    ImageAddFragmentRoute.name: (routeData) {
+      final args = routeData.argsAs<ImageAddFragmentRouteArgs>(
+          orElse: () => const ImageAddFragmentRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ImageAddFragmentScreen(key: args.key),
       );
     },
   };
@@ -496,20 +571,6 @@ class EditCourseRouteArgs {
 }
 
 /// generated route for
-/// [NewCourseScreen]
-class NewCourseRoute extends PageRouteInfo<void> {
-  const NewCourseRoute({List<PageRouteInfo>? children})
-      : super(
-          NewCourseRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NewCourseRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [HomeScreen]
 class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute({List<PageRouteInfo>? children})
@@ -535,6 +596,125 @@ class LoginRoute extends PageRouteInfo<void> {
   static const String name = 'LoginRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PdfAddCourseScreen]
+class PdfAddCourseRoute extends PageRouteInfo<PdfAddCourseRouteArgs> {
+  PdfAddCourseRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfAddCourseRoute.name,
+          args: PdfAddCourseRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfAddCourseRoute';
+
+  static const PageInfo<PdfAddCourseRouteArgs> page =
+      PageInfo<PdfAddCourseRouteArgs>(name);
+}
+
+class PdfAddCourseRouteArgs {
+  const PdfAddCourseRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'PdfAddCourseRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [PdfCoursesScreen]
+class PdfCoursesRoute extends PageRouteInfo<void> {
+  const PdfCoursesRoute({List<PageRouteInfo>? children})
+      : super(
+          PdfCoursesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfCoursesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PdfCourseDetailsScreen]
+class PdfCourseDetailsRoute extends PageRouteInfo<PdfCourseDetailsRouteArgs> {
+  PdfCourseDetailsRoute({
+    Key? key,
+    required Course course,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfCourseDetailsRoute.name,
+          args: PdfCourseDetailsRouteArgs(
+            key: key,
+            course: course,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfCourseDetailsRoute';
+
+  static const PageInfo<PdfCourseDetailsRouteArgs> page =
+      PageInfo<PdfCourseDetailsRouteArgs>(name);
+}
+
+class PdfCourseDetailsRouteArgs {
+  const PdfCourseDetailsRouteArgs({
+    this.key,
+    required this.course,
+  });
+
+  final Key? key;
+
+  final Course course;
+
+  @override
+  String toString() {
+    return 'PdfCourseDetailsRouteArgs{key: $key, course: $course}';
+  }
+}
+
+/// generated route for
+/// [PdfEditCourseScreen]
+class PdfEditCourseRoute extends PageRouteInfo<PdfEditCourseRouteArgs> {
+  PdfEditCourseRoute({
+    Key? key,
+    required Course course,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfEditCourseRoute.name,
+          args: PdfEditCourseRouteArgs(
+            key: key,
+            course: course,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfEditCourseRoute';
+
+  static const PageInfo<PdfEditCourseRouteArgs> page =
+      PageInfo<PdfEditCourseRouteArgs>(name);
+}
+
+class PdfEditCourseRouteArgs {
+  const PdfEditCourseRouteArgs({
+    this.key,
+    required this.course,
+  });
+
+  final Key? key;
+
+  final Course course;
+
+  @override
+  String toString() {
+    return 'PdfEditCourseRouteArgs{key: $key, course: $course}';
+  }
 }
 
 /// generated route for
@@ -577,6 +757,87 @@ class AudioRecordingRouteArgs {
   @override
   String toString() {
     return 'AudioRecordingRouteArgs{key: $key, imageData: $imageData, imagePath: $imagePath}';
+  }
+}
+
+/// generated route for
+/// [FragmentsReorderScreen]
+class FragmentsReorderRoute extends PageRouteInfo<FragmentsReorderRouteArgs> {
+  FragmentsReorderRoute({
+    Key? key,
+    required List<PdfFragment> fragments,
+    List<PageRouteInfo>? children,
+  }) : super(
+          FragmentsReorderRoute.name,
+          args: FragmentsReorderRouteArgs(
+            key: key,
+            fragments: fragments,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'FragmentsReorderRoute';
+
+  static const PageInfo<FragmentsReorderRouteArgs> page =
+      PageInfo<FragmentsReorderRouteArgs>(name);
+}
+
+class FragmentsReorderRouteArgs {
+  const FragmentsReorderRouteArgs({
+    this.key,
+    required this.fragments,
+  });
+
+  final Key? key;
+
+  final List<PdfFragment> fragments;
+
+  @override
+  String toString() {
+    return 'FragmentsReorderRouteArgs{key: $key, fragments: $fragments}';
+  }
+}
+
+/// generated route for
+/// [PdfAddFragmentScreen]
+class PdfAddFragmentRoute extends PageRouteInfo<PdfAddFragmentRouteArgs> {
+  PdfAddFragmentRoute({
+    Key? key,
+    required int displayOder,
+    required int subjectId,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfAddFragmentRoute.name,
+          args: PdfAddFragmentRouteArgs(
+            key: key,
+            displayOder: displayOder,
+            subjectId: subjectId,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfAddFragmentRoute';
+
+  static const PageInfo<PdfAddFragmentRouteArgs> page =
+      PageInfo<PdfAddFragmentRouteArgs>(name);
+}
+
+class PdfAddFragmentRouteArgs {
+  const PdfAddFragmentRouteArgs({
+    this.key,
+    required this.displayOder,
+    required this.subjectId,
+  });
+
+  final Key? key;
+
+  final int displayOder;
+
+  final int subjectId;
+
+  @override
+  String toString() {
+    return 'PdfAddFragmentRouteArgs{key: $key, displayOder: $displayOder, subjectId: $subjectId}';
   }
 }
 
@@ -644,6 +905,44 @@ class PdfSubjectsRoute extends PageRouteInfo<void> {
   static const String name = 'PdfSubjectsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PdfSubjectPlayerScreen]
+class PdfSubjectPlayerRoute extends PageRouteInfo<PdfSubjectPlayerRouteArgs> {
+  PdfSubjectPlayerRoute({
+    Key? key,
+    required Subject subject,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PdfSubjectPlayerRoute.name,
+          args: PdfSubjectPlayerRouteArgs(
+            key: key,
+            subject: subject,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PdfSubjectPlayerRoute';
+
+  static const PageInfo<PdfSubjectPlayerRouteArgs> page =
+      PageInfo<PdfSubjectPlayerRouteArgs>(name);
+}
+
+class PdfSubjectPlayerRouteArgs {
+  const PdfSubjectPlayerRouteArgs({
+    this.key,
+    required this.subject,
+  });
+
+  final Key? key;
+
+  final Subject subject;
+
+  @override
+  String toString() {
+    return 'PdfSubjectPlayerRouteArgs{key: $key, subject: $subject}';
+  }
 }
 
 /// generated route for
@@ -843,4 +1142,63 @@ class SubjectsRoute extends PageRouteInfo<void> {
   static const String name = 'SubjectsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ImageCreateSubjectScreen]
+class ImageCreateSubjectRoute
+    extends PageRouteInfo<ImageCreateSubjectRouteArgs> {
+  ImageCreateSubjectRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ImageCreateSubjectRoute.name,
+          args: ImageCreateSubjectRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ImageCreateSubjectRoute';
+
+  static const PageInfo<ImageCreateSubjectRouteArgs> page =
+      PageInfo<ImageCreateSubjectRouteArgs>(name);
+}
+
+class ImageCreateSubjectRouteArgs {
+  const ImageCreateSubjectRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ImageCreateSubjectRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [ImageAddFragmentScreen]
+class ImageAddFragmentRoute extends PageRouteInfo<ImageAddFragmentRouteArgs> {
+  ImageAddFragmentRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ImageAddFragmentRoute.name,
+          args: ImageAddFragmentRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ImageAddFragmentRoute';
+
+  static const PageInfo<ImageAddFragmentRouteArgs> page =
+      PageInfo<ImageAddFragmentRouteArgs>(name);
+}
+
+class ImageAddFragmentRouteArgs {
+  const ImageAddFragmentRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ImageAddFragmentRouteArgs{key: $key}';
+  }
 }

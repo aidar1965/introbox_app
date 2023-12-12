@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:moki_tutor/presentation/common/common_functions.dart';
 
 import '../../../domain/models/fragment.dart';
 import '../../../domain/models/subject.dart';
@@ -158,8 +159,16 @@ class SubjectsView extends StatelessWidget {
         right: 10,
         bottom: 10,
         child: FloatingActionButton(
-          onPressed: () => BlocProvider.of<SubjectsBloc>(context)
-              .add(const SubjectsEvent.newSubject()),
+          onPressed: () async {
+            await CommonFunctions.showStyledDialog(
+                context: context,
+                message: 'Выберите способ создания темы',
+                positiveButtonText: 'Из PDF файла',
+                negativeButtonText: 'Из изображений',
+                onPositiveTap: () => BlocProvider.of<SubjectsBloc>(context)
+                    .add(const SubjectsEvent.newSubject()),
+                onNegativeTap: () {});
+          },
           tooltip: 'Новая тема',
           child: const Icon(Icons.add),
         ),

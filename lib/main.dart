@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:moki_tutor/domain/interfaces/i_auth_controller.dart';
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
+import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
 import 'domain/constants.dart';
 import 'domain/locator/locator.dart';
 import 'presentation/auto_router/app_router.dart';
-import 'presentation/theme/themes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +27,7 @@ Future<void> main() async {
       ],
       path: 'assets/languages',
       fallbackLocale: const Locale('ru', 'RU'),
-      child: const Application()));
+      child: const DynamicTheme(child: Application())));
 }
 
 // assuing this is the root widget of your App
@@ -46,7 +45,7 @@ class Application extends StatelessWidget {
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: 'Moki Tutor',
-      theme: AppTheme.getTheme(),
+      theme: DynamicTheme.themeOf(context),
     );
   }
 }
