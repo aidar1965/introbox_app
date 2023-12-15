@@ -1,12 +1,11 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:moki_tutor/domain/interfaces/i_api.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
-import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/user.dart';
 
@@ -15,19 +14,19 @@ part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(const _Initial()) {
+  ProfileBloc() : super(const _StatePending()) {
     on<ProfileEvent>((event, emitter) => event.map(
-          started: (event) =>
-              emitter(ProfileState.initial(user: userRepository.user)),
+          dataRequested: (event) => _dataRequested(emitter),
           logout: (event) => _logout(emitter),
           updateUser: (event) => _updateUser(event, emitter),
-          uploadImage: (event) => _uploadImage(event, emitter),
         ));
 
-    add(const ProfileEvent.started());
+    add(const ProfileEvent.dataRequested());
   }
 
   final IUserRepository userRepository = getIt<IUserRepository>();
+
+  final api = getIt<IApi>();
 
   Future<void> _logout(Emitter emitter) async {
     await userRepository.logout();
@@ -35,27 +34,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   Future<void> _updateUser(_UpdateUser event, Emitter emitter) async {
-    User user = userRepository.user!.copyWith(
-        firstName: event.firstname,
-        secondName: event.secondname,
-        lastName: event.lastname,
-        about: event.about);
     try {
-      await userRepository.updateUser(user: user);
-    } on RequestException catch (requestException) {
-      log(requestException.httpStatusCode.toString());
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
-  Future<void> _uploadImage(_UploadImage event, Emitter emitter) async {
-    try {
-      await userRepository.uploadUserImage(image: event.image);
-    } on RequestException catch (requestException) {
-      log(requestException.httpStatusCode.toString());
-    } catch (e) {
-      log(e.toString());
+      await userRepository.updateUser(
+          firstName: event.firstname,
+          lastName: event.lastname,
+          secondName: event.lastname,
+          about: event.about,
+          image: event.image);
+    } on Object {
+      emitter(const ProfileState.requestError());
+      rethrow;
     }
   }
 
@@ -63,5 +51,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Future<void> close() {
     log('-------------- bloc closed ----------------------------');
     return super.close();
+  }
+
+  Future<void> _dataRequested(Emitter<ProfileState> emitter) async {
+    try {
+      final user = await api.getUser();
+      emitter(ProfileState.screenState(user: user));
+      userRepository.setUser(user);
+    } on Object {
+      emitter(const ProfileState.loadingError());
+      rethrow;
+    }
   }
 }

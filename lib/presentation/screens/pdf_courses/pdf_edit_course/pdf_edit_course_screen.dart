@@ -30,8 +30,8 @@ class PdfEditCourseScreen extends StatelessWidget {
               requestError: (state) => CommonFunctions.showMessage(
                   context, state.errorText ?? 'Произошла ошибка', Reason.error),
               saveSuccess: (_) {
-                CommonFunctions.showMessage(
-                    context, 'Курс успешно отредактирован', Reason.neutral);
+                CommonFunctions.showMessage(context,
+                    'Публикация успешно отредактирован', Reason.neutral);
                 context.router.pop(true);
                 return null;
               }),
@@ -43,16 +43,18 @@ class PdfEditCourseScreen extends StatelessWidget {
               orElse: () =>
                   throw UnsupportedError('State not supporting build'),
               screenState: (state) => Scaffold(
-                  appBar: AppBar(title: Text('Редактирование курса'), actions: [
-                    IconButton(
-                        onPressed: () {
-                          BlocProvider.of<PdfEditCourseBloc>(context).add(
-                              PdfEditCourseEvent.onSaveCourseClicked(
-                                  title: titleController.text,
-                                  description: descriptionController.text));
-                        },
-                        icon: const Icon(Icons.save))
-                  ]),
+                  appBar: AppBar(
+                      title: Text('Редактирование публикации'),
+                      actions: [
+                        IconButton(
+                            onPressed: () {
+                              BlocProvider.of<PdfEditCourseBloc>(context).add(
+                                  PdfEditCourseEvent.onSaveCourseClicked(
+                                      title: titleController.text,
+                                      description: descriptionController.text));
+                            },
+                            icon: const Icon(Icons.save))
+                      ]),
                   body: Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Row(

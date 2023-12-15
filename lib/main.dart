@@ -39,6 +39,7 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      restorationScopeId: "Test", // <-- Add this line
       routerConfig: AppRouter().config(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

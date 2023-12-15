@@ -15,7 +15,7 @@ class CommonLoadingErrorWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Не ужалось загрузить данные. Проверьте Интернет соединение и попробуйте еще раз',
+              'Не удалось загрузить данные. Проверьте Интернет соединение и попробуйте еще раз',
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),

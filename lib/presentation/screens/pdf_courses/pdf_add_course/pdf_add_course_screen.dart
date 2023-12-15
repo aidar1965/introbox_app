@@ -34,14 +34,14 @@ class PdfAddCourseScreen extends StatelessWidget {
             pending: (_) => Scaffold(
                 appBar: AppBar(
                   title: const Text(
-                    'Создание курса',
+                    'Создание публикации',
                   ),
                 ),
                 body: _PendingView()),
             loadingError: (_) => Scaffold(
                 appBar: AppBar(
                   title: const Text(
-                    'Создание курса',
+                    'Создание публикации',
                   ),
                 ),
                 body: _LoadingErrorView()),
@@ -49,7 +49,7 @@ class PdfAddCourseScreen extends StatelessWidget {
               return Scaffold(
                   appBar: AppBar(
                     title: const Text(
-                      'Создание курса',
+                      'Создание публикации',
                     ),
                     actions: [
                       SizedBox(

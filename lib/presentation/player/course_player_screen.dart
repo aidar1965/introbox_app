@@ -360,7 +360,7 @@ class _CoursePlayerScreenState extends State<CoursePlayerScreen> {
             backgroundColor: Colors.black54,
             onPressed: () => // _showAllSubjects(context, widget.course),
                 {},
-            tooltip: 'Курс',
+            tooltip: 'Публикация',
             child: const Icon(
               Icons.info,
             ),

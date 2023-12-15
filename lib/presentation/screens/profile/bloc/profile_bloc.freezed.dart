@@ -18,57 +18,51 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProfileEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about)
+            String? secondname, String? about, String? image)
         updateUser,
-    required TResult Function(File image) uploadImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult? Function(File image)? uploadImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult Function(File image)? uploadImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(_EventDataRequested value) dataRequested,
     required TResult Function(_Logout value) logout,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UploadImage value) uploadImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(_EventDataRequested value)? dataRequested,
     TResult? Function(_Logout value)? logout,
     TResult? Function(_UpdateUser value)? updateUser,
-    TResult? Function(_UploadImage value)? uploadImage,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(_EventDataRequested value)? dataRequested,
     TResult Function(_Logout value)? logout,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UploadImage value)? uploadImage,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -93,34 +87,35 @@ class _$ProfileEventCopyWithImpl<$Res, $Val extends ProfileEvent>
 }
 
 /// @nodoc
-abstract class _$$_StartedCopyWith<$Res> {
-  factory _$$_StartedCopyWith(
-          _$_Started value, $Res Function(_$_Started) then) =
-      __$$_StartedCopyWithImpl<$Res>;
+abstract class _$$_EventDataRequestedCopyWith<$Res> {
+  factory _$$_EventDataRequestedCopyWith(_$_EventDataRequested value,
+          $Res Function(_$_EventDataRequested) then) =
+      __$$_EventDataRequestedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_StartedCopyWithImpl<$Res>
-    extends _$ProfileEventCopyWithImpl<$Res, _$_Started>
-    implements _$$_StartedCopyWith<$Res> {
-  __$$_StartedCopyWithImpl(_$_Started _value, $Res Function(_$_Started) _then)
+class __$$_EventDataRequestedCopyWithImpl<$Res>
+    extends _$ProfileEventCopyWithImpl<$Res, _$_EventDataRequested>
+    implements _$$_EventDataRequestedCopyWith<$Res> {
+  __$$_EventDataRequestedCopyWithImpl(
+      _$_EventDataRequested _value, $Res Function(_$_EventDataRequested) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Started implements _Started {
-  const _$_Started();
+class _$_EventDataRequested implements _EventDataRequested {
+  const _$_EventDataRequested();
 
   @override
   String toString() {
-    return 'ProfileEvent.started()';
+    return 'ProfileEvent.dataRequested()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Started);
+        (other.runtimeType == runtimeType && other is _$_EventDataRequested);
   }
 
   @override
@@ -129,42 +124,39 @@ class _$_Started implements _Started {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about)
+            String? secondname, String? about, String? image)
         updateUser,
-    required TResult Function(File image) uploadImage,
   }) {
-    return started();
+    return dataRequested();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult? Function(File image)? uploadImage,
   }) {
-    return started?.call();
+    return dataRequested?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult Function(File image)? uploadImage,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started();
+    if (dataRequested != null) {
+      return dataRequested();
     }
     return orElse();
   }
@@ -172,43 +164,40 @@ class _$_Started implements _Started {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(_EventDataRequested value) dataRequested,
     required TResult Function(_Logout value) logout,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UploadImage value) uploadImage,
   }) {
-    return started(this);
+    return dataRequested(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(_EventDataRequested value)? dataRequested,
     TResult? Function(_Logout value)? logout,
     TResult? Function(_UpdateUser value)? updateUser,
-    TResult? Function(_UploadImage value)? uploadImage,
   }) {
-    return started?.call(this);
+    return dataRequested?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(_EventDataRequested value)? dataRequested,
     TResult Function(_Logout value)? logout,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UploadImage value)? uploadImage,
     required TResult orElse(),
   }) {
-    if (started != null) {
-      return started(this);
+    if (dataRequested != null) {
+      return dataRequested(this);
     }
     return orElse();
   }
 }
 
-abstract class _Started implements ProfileEvent {
-  const factory _Started() = _$_Started;
+abstract class _EventDataRequested implements ProfileEvent {
+  const factory _EventDataRequested() = _$_EventDataRequested;
 }
 
 /// @nodoc
@@ -247,12 +236,11 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about)
+            String? secondname, String? about, String? image)
         updateUser,
-    required TResult Function(File image) uploadImage,
   }) {
     return logout();
   }
@@ -260,12 +248,11 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult? Function(File image)? uploadImage,
   }) {
     return logout?.call();
   }
@@ -273,12 +260,11 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult Function(File image)? uploadImage,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -290,10 +276,9 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(_EventDataRequested value) dataRequested,
     required TResult Function(_Logout value) logout,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UploadImage value) uploadImage,
   }) {
     return logout(this);
   }
@@ -301,10 +286,9 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(_EventDataRequested value)? dataRequested,
     TResult? Function(_Logout value)? logout,
     TResult? Function(_UpdateUser value)? updateUser,
-    TResult? Function(_UploadImage value)? uploadImage,
   }) {
     return logout?.call(this);
   }
@@ -312,10 +296,9 @@ class _$_Logout implements _Logout {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(_EventDataRequested value)? dataRequested,
     TResult Function(_Logout value)? logout,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UploadImage value)? uploadImage,
     required TResult orElse(),
   }) {
     if (logout != null) {
@@ -336,7 +319,11 @@ abstract class _$$_UpdateUserCopyWith<$Res> {
       __$$_UpdateUserCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {String firstname, String lastname, String? secondname, String? about});
+      {String firstname,
+      String lastname,
+      String? secondname,
+      String? about,
+      String? image});
 }
 
 /// @nodoc
@@ -354,6 +341,7 @@ class __$$_UpdateUserCopyWithImpl<$Res>
     Object? lastname = null,
     Object? secondname = freezed,
     Object? about = freezed,
+    Object? image = freezed,
   }) {
     return _then(_$_UpdateUser(
       firstname: null == firstname
@@ -372,6 +360,10 @@ class __$$_UpdateUserCopyWithImpl<$Res>
           ? _value.about
           : about // ignore: cast_nullable_to_non_nullable
               as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -383,7 +375,8 @@ class _$_UpdateUser implements _UpdateUser {
       {required this.firstname,
       required this.lastname,
       this.secondname,
-      this.about});
+      this.about,
+      this.image});
 
   @override
   final String firstname;
@@ -393,10 +386,12 @@ class _$_UpdateUser implements _UpdateUser {
   final String? secondname;
   @override
   final String? about;
+  @override
+  final String? image;
 
   @override
   String toString() {
-    return 'ProfileEvent.updateUser(firstname: $firstname, lastname: $lastname, secondname: $secondname, about: $about)';
+    return 'ProfileEvent.updateUser(firstname: $firstname, lastname: $lastname, secondname: $secondname, about: $about, image: $image)';
   }
 
   @override
@@ -410,12 +405,13 @@ class _$_UpdateUser implements _UpdateUser {
                 other.lastname == lastname) &&
             (identical(other.secondname, secondname) ||
                 other.secondname == secondname) &&
-            (identical(other.about, about) || other.about == about));
+            (identical(other.about, about) || other.about == about) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, firstname, lastname, secondname, about);
+      Object.hash(runtimeType, firstname, lastname, secondname, about, image);
 
   @JsonKey(ignore: true)
   @override
@@ -426,42 +422,39 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() started,
+    required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about)
+            String? secondname, String? about, String? image)
         updateUser,
-    required TResult Function(File image) uploadImage,
   }) {
-    return updateUser(firstname, lastname, secondname, about);
+    return updateUser(firstname, lastname, secondname, about, image);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
+    TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult? Function(File image)? uploadImage,
   }) {
-    return updateUser?.call(firstname, lastname, secondname, about);
+    return updateUser?.call(firstname, lastname, secondname, about, image);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
+    TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about)?
+            String? about, String? image)?
         updateUser,
-    TResult Function(File image)? uploadImage,
     required TResult orElse(),
   }) {
     if (updateUser != null) {
-      return updateUser(firstname, lastname, secondname, about);
+      return updateUser(firstname, lastname, secondname, about, image);
     }
     return orElse();
   }
@@ -469,10 +462,9 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
+    required TResult Function(_EventDataRequested value) dataRequested,
     required TResult Function(_Logout value) logout,
     required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UploadImage value) uploadImage,
   }) {
     return updateUser(this);
   }
@@ -480,10 +472,9 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
+    TResult? Function(_EventDataRequested value)? dataRequested,
     TResult? Function(_Logout value)? logout,
     TResult? Function(_UpdateUser value)? updateUser,
-    TResult? Function(_UploadImage value)? uploadImage,
   }) {
     return updateUser?.call(this);
   }
@@ -491,10 +482,9 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
+    TResult Function(_EventDataRequested value)? dataRequested,
     TResult Function(_Logout value)? logout,
     TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UploadImage value)? uploadImage,
     required TResult orElse(),
   }) {
     if (updateUser != null) {
@@ -509,165 +499,16 @@ abstract class _UpdateUser implements ProfileEvent {
       {required final String firstname,
       required final String lastname,
       final String? secondname,
-      final String? about}) = _$_UpdateUser;
+      final String? about,
+      final String? image}) = _$_UpdateUser;
 
   String get firstname;
   String get lastname;
   String? get secondname;
   String? get about;
+  String? get image;
   @JsonKey(ignore: true)
   _$$_UpdateUserCopyWith<_$_UpdateUser> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_UploadImageCopyWith<$Res> {
-  factory _$$_UploadImageCopyWith(
-          _$_UploadImage value, $Res Function(_$_UploadImage) then) =
-      __$$_UploadImageCopyWithImpl<$Res>;
-  @useResult
-  $Res call({File image});
-}
-
-/// @nodoc
-class __$$_UploadImageCopyWithImpl<$Res>
-    extends _$ProfileEventCopyWithImpl<$Res, _$_UploadImage>
-    implements _$$_UploadImageCopyWith<$Res> {
-  __$$_UploadImageCopyWithImpl(
-      _$_UploadImage _value, $Res Function(_$_UploadImage) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? image = null,
-  }) {
-    return _then(_$_UploadImage(
-      image: null == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as File,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_UploadImage implements _UploadImage {
-  const _$_UploadImage({required this.image});
-
-  @override
-  final File image;
-
-  @override
-  String toString() {
-    return 'ProfileEvent.uploadImage(image: $image)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_UploadImage &&
-            (identical(other.image, image) || other.image == image));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, image);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_UploadImageCopyWith<_$_UploadImage> get copyWith =>
-      __$$_UploadImageCopyWithImpl<_$_UploadImage>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() started,
-    required TResult Function() logout,
-    required TResult Function(String firstname, String lastname,
-            String? secondname, String? about)
-        updateUser,
-    required TResult Function(File image) uploadImage,
-  }) {
-    return uploadImage(image);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? started,
-    TResult? Function()? logout,
-    TResult? Function(String firstname, String lastname, String? secondname,
-            String? about)?
-        updateUser,
-    TResult? Function(File image)? uploadImage,
-  }) {
-    return uploadImage?.call(image);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? started,
-    TResult Function()? logout,
-    TResult Function(String firstname, String lastname, String? secondname,
-            String? about)?
-        updateUser,
-    TResult Function(File image)? uploadImage,
-    required TResult orElse(),
-  }) {
-    if (uploadImage != null) {
-      return uploadImage(image);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Started value) started,
-    required TResult Function(_Logout value) logout,
-    required TResult Function(_UpdateUser value) updateUser,
-    required TResult Function(_UploadImage value) uploadImage,
-  }) {
-    return uploadImage(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Started value)? started,
-    TResult? Function(_Logout value)? logout,
-    TResult? Function(_UpdateUser value)? updateUser,
-    TResult? Function(_UploadImage value)? uploadImage,
-  }) {
-    return uploadImage?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Started value)? started,
-    TResult Function(_Logout value)? logout,
-    TResult Function(_UpdateUser value)? updateUser,
-    TResult Function(_UploadImage value)? uploadImage,
-    required TResult orElse(),
-  }) {
-    if (uploadImage != null) {
-      return uploadImage(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _UploadImage implements ProfileEvent {
-  const factory _UploadImage({required final File image}) = _$_UploadImage;
-
-  File get image;
-  @JsonKey(ignore: true)
-  _$$_UploadImageCopyWith<_$_UploadImage> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -675,39 +516,57 @@ abstract class _UploadImage implements ProfileEvent {
 mixin _$ProfileState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) initial,
+    required TResult Function() pending,
+    required TResult Function(User user) screenState,
+    required TResult Function() loadingError,
     required TResult Function() logoutSuccess,
+    required TResult Function(String? errorText) requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? initial,
+    TResult? Function()? pending,
+    TResult? Function(User user)? screenState,
+    TResult? Function()? loadingError,
     TResult? Function()? logoutSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? initial,
+    TResult Function()? pending,
+    TResult Function(User user)? screenState,
+    TResult Function()? loadingError,
     TResult Function()? logoutSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoadingError value) loadingError,
     required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoadingError value)? loadingError,
     TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoadingError value)? loadingError,
     TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -732,53 +591,174 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
-  @useResult
-  $Res call({User? user});
+abstract class _$$_StatePendingCopyWith<$Res> {
+  factory _$$_StatePendingCopyWith(
+          _$_StatePending value, $Res Function(_$_StatePending) then) =
+      __$$_StatePendingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$ProfileStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$_StatePendingCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res, _$_StatePending>
+    implements _$$_StatePendingCopyWith<$Res> {
+  __$$_StatePendingCopyWithImpl(
+      _$_StatePending _value, $Res Function(_$_StatePending) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StatePending implements _StatePending {
+  const _$_StatePending();
+
+  @override
+  String toString() {
+    return 'ProfileState.pending()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StatePending);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(User user) screenState,
+    required TResult Function() loadingError,
+    required TResult Function() logoutSuccess,
+    required TResult Function(String? errorText) requestError,
+  }) {
+    return pending();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(User user)? screenState,
+    TResult? Function()? loadingError,
+    TResult? Function()? logoutSuccess,
+    TResult? Function(String? errorText)? requestError,
+  }) {
+    return pending?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(User user)? screenState,
+    TResult Function()? loadingError,
+    TResult Function()? logoutSuccess,
+    TResult Function(String? errorText)? requestError,
+    required TResult orElse(),
+  }) {
+    if (pending != null) {
+      return pending();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoadingError value) loadingError,
+    required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+    required TResult Function(_StateRequestError value) requestError,
+  }) {
+    return pending(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoadingError value)? loadingError,
+    TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
+  }) {
+    return pending?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoadingError value)? loadingError,
+    TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult Function(_StateRequestError value)? requestError,
+    required TResult orElse(),
+  }) {
+    if (pending != null) {
+      return pending(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StatePending implements ProfileState {
+  const factory _StatePending() = _$_StatePending;
+}
+
+/// @nodoc
+abstract class _$$_ScreenStateCopyWith<$Res> {
+  factory _$$_ScreenStateCopyWith(
+          _$_ScreenState value, $Res Function(_$_ScreenState) then) =
+      __$$_ScreenStateCopyWithImpl<$Res>;
+  @useResult
+  $Res call({User user});
+}
+
+/// @nodoc
+class __$$_ScreenStateCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res, _$_ScreenState>
+    implements _$$_ScreenStateCopyWith<$Res> {
+  __$$_ScreenStateCopyWithImpl(
+      _$_ScreenState _value, $Res Function(_$_ScreenState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
-    return _then(_$_Initial(
-      user: freezed == user
+    return _then(_$_ScreenState(
+      user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User?,
+              as User,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial({this.user});
+class _$_ScreenState implements _ScreenState {
+  const _$_ScreenState({required this.user});
 
   @override
-  final User? user;
+  final User user;
 
   @override
   String toString() {
-    return 'ProfileState.initial(user: $user)';
+    return 'ProfileState.screenState(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Initial &&
+            other is _$_ScreenState &&
             (identical(other.user, user) || other.user == user));
   }
 
@@ -788,36 +768,45 @@ class _$_Initial implements _Initial {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
-      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
+  _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
+      __$$_ScreenStateCopyWithImpl<_$_ScreenState>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) initial,
+    required TResult Function() pending,
+    required TResult Function(User user) screenState,
+    required TResult Function() loadingError,
     required TResult Function() logoutSuccess,
+    required TResult Function(String? errorText) requestError,
   }) {
-    return initial(user);
+    return screenState(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? initial,
+    TResult? Function()? pending,
+    TResult? Function(User user)? screenState,
+    TResult? Function()? loadingError,
     TResult? Function()? logoutSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) {
-    return initial?.call(user);
+    return screenState?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? initial,
+    TResult Function()? pending,
+    TResult Function(User user)? screenState,
+    TResult Function()? loadingError,
     TResult Function()? logoutSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(user);
+    if (screenState != null) {
+      return screenState(user);
     }
     return orElse();
   }
@@ -825,42 +814,171 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoadingError value) loadingError,
     required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
-    return initial(this);
+    return screenState(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoadingError value)? loadingError,
     TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
-    return initial?.call(this);
+    return screenState?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoadingError value)? loadingError,
     TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
-    if (initial != null) {
-      return initial(this);
+    if (screenState != null) {
+      return screenState(this);
     }
     return orElse();
   }
 }
 
-abstract class _Initial implements ProfileState {
-  const factory _Initial({final User? user}) = _$_Initial;
+abstract class _ScreenState implements ProfileState {
+  const factory _ScreenState({required final User user}) = _$_ScreenState;
 
-  User? get user;
+  User get user;
   @JsonKey(ignore: true)
-  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+  _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateLoadingErrorCopyWith<$Res> {
+  factory _$$_StateLoadingErrorCopyWith(_$_StateLoadingError value,
+          $Res Function(_$_StateLoadingError) then) =
+      __$$_StateLoadingErrorCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StateLoadingErrorCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res, _$_StateLoadingError>
+    implements _$$_StateLoadingErrorCopyWith<$Res> {
+  __$$_StateLoadingErrorCopyWithImpl(
+      _$_StateLoadingError _value, $Res Function(_$_StateLoadingError) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StateLoadingError implements _StateLoadingError {
+  const _$_StateLoadingError();
+
+  @override
+  String toString() {
+    return 'ProfileState.loadingError()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StateLoadingError);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(User user) screenState,
+    required TResult Function() loadingError,
+    required TResult Function() logoutSuccess,
+    required TResult Function(String? errorText) requestError,
+  }) {
+    return loadingError();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(User user)? screenState,
+    TResult? Function()? loadingError,
+    TResult? Function()? logoutSuccess,
+    TResult? Function(String? errorText)? requestError,
+  }) {
+    return loadingError?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(User user)? screenState,
+    TResult Function()? loadingError,
+    TResult Function()? logoutSuccess,
+    TResult Function(String? errorText)? requestError,
+    required TResult orElse(),
+  }) {
+    if (loadingError != null) {
+      return loadingError();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoadingError value) loadingError,
+    required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+    required TResult Function(_StateRequestError value) requestError,
+  }) {
+    return loadingError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoadingError value)? loadingError,
+    TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
+  }) {
+    return loadingError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoadingError value)? loadingError,
+    TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult Function(_StateRequestError value)? requestError,
+    required TResult orElse(),
+  }) {
+    if (loadingError != null) {
+      return loadingError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateLoadingError implements ProfileState {
+  const factory _StateLoadingError() = _$_StateLoadingError;
 }
 
 /// @nodoc
@@ -901,8 +1019,11 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(User? user) initial,
+    required TResult Function() pending,
+    required TResult Function(User user) screenState,
+    required TResult Function() loadingError,
     required TResult Function() logoutSuccess,
+    required TResult Function(String? errorText) requestError,
   }) {
     return logoutSuccess();
   }
@@ -910,8 +1031,11 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(User? user)? initial,
+    TResult? Function()? pending,
+    TResult? Function(User user)? screenState,
+    TResult? Function()? loadingError,
     TResult? Function()? logoutSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) {
     return logoutSuccess?.call();
   }
@@ -919,8 +1043,11 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(User? user)? initial,
+    TResult Function()? pending,
+    TResult Function(User user)? screenState,
+    TResult Function()? loadingError,
     TResult Function()? logoutSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (logoutSuccess != null) {
@@ -932,8 +1059,11 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoadingError value) loadingError,
     required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return logoutSuccess(this);
   }
@@ -941,8 +1071,11 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoadingError value)? loadingError,
     TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return logoutSuccess?.call(this);
   }
@@ -950,8 +1083,11 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoadingError value)? loadingError,
     TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (logoutSuccess != null) {
@@ -963,4 +1099,158 @@ class _$_StateLogoutSuccess implements _StateLogoutSuccess {
 
 abstract class _StateLogoutSuccess implements ProfileState {
   const factory _StateLogoutSuccess() = _$_StateLogoutSuccess;
+}
+
+/// @nodoc
+abstract class _$$_StateRequestErrorCopyWith<$Res> {
+  factory _$$_StateRequestErrorCopyWith(_$_StateRequestError value,
+          $Res Function(_$_StateRequestError) then) =
+      __$$_StateRequestErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? errorText});
+}
+
+/// @nodoc
+class __$$_StateRequestErrorCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res, _$_StateRequestError>
+    implements _$$_StateRequestErrorCopyWith<$Res> {
+  __$$_StateRequestErrorCopyWithImpl(
+      _$_StateRequestError _value, $Res Function(_$_StateRequestError) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorText = freezed,
+  }) {
+    return _then(_$_StateRequestError(
+      errorText: freezed == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StateRequestError implements _StateRequestError {
+  const _$_StateRequestError({this.errorText});
+
+  @override
+  final String? errorText;
+
+  @override
+  String toString() {
+    return 'ProfileState.requestError(errorText: $errorText)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateRequestError &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, errorText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
+      __$$_StateRequestErrorCopyWithImpl<_$_StateRequestError>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(User user) screenState,
+    required TResult Function() loadingError,
+    required TResult Function() logoutSuccess,
+    required TResult Function(String? errorText) requestError,
+  }) {
+    return requestError(errorText);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(User user)? screenState,
+    TResult? Function()? loadingError,
+    TResult? Function()? logoutSuccess,
+    TResult? Function(String? errorText)? requestError,
+  }) {
+    return requestError?.call(errorText);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(User user)? screenState,
+    TResult Function()? loadingError,
+    TResult Function()? logoutSuccess,
+    TResult Function(String? errorText)? requestError,
+    required TResult orElse(),
+  }) {
+    if (requestError != null) {
+      return requestError(errorText);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateLoadingError value) loadingError,
+    required TResult Function(_StateLogoutSuccess value) logoutSuccess,
+    required TResult Function(_StateRequestError value) requestError,
+  }) {
+    return requestError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateLoadingError value)? loadingError,
+    TResult? Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
+  }) {
+    return requestError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateLoadingError value)? loadingError,
+    TResult Function(_StateLogoutSuccess value)? logoutSuccess,
+    TResult Function(_StateRequestError value)? requestError,
+    required TResult orElse(),
+  }) {
+    if (requestError != null) {
+      return requestError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateRequestError implements ProfileState {
+  const factory _StateRequestError({final String? errorText}) =
+      _$_StateRequestError;
+
+  String? get errorText;
+  @JsonKey(ignore: true)
+  _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
+      throw _privateConstructorUsedError;
 }

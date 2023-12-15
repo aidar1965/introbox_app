@@ -74,7 +74,7 @@ class PdfAddCourseBloc extends Bloc<PdfAddCourseEvent, PdfAddCourseState> {
     }
     if (_screenState.selectedSubjects.isEmpty) {
       emitter(const PdfAddCourseState.requestError(
-          errorText: 'Вы не выбрали темы для курса'));
+          errorText: 'Вы не выбрали темы публикации'));
       return;
     }
     try {

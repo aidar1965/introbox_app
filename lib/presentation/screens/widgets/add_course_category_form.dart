@@ -84,7 +84,7 @@ class AddCourseCategoryForm extends StatelessWidget {
             child: ListBody(
               children: const <Widget>[
                 Text(
-                    'При удалении категории курсы, относящиеся к этой категории не удаляются.'),
+                    'При удалении категории публикации, относящиеся к этой категории не удаляются.'),
                 Text('Продолжить?'),
               ],
             ),

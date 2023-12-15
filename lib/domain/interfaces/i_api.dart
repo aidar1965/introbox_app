@@ -5,9 +5,11 @@ import 'dart:ui';
 import '../../data/api/models/requests/fragment_request_data.dart';
 import '../../presentation/screens/pdf_subject/image_create_subject/image_fragment.dart';
 import '../models/course.dart';
+import '../models/fragment_category.dart';
 import '../models/pdf_fragment.dart';
 import '../models/responses/paginated_courses.dart';
 import '../models/responses/paginated_subjects.dart';
+import '../models/subject_category.dart';
 import '../models/user.dart';
 import '../models/fragment.dart';
 import '../models/user_with_tokens.dart';
@@ -25,7 +27,13 @@ abstract class IApi {
 
   Future<User?>? loginWithOtp({required String otp, required String email});
 
-  Future<void> updateUser({required User user});
+  Future<void> updateUser({
+    required String firstName,
+    required String lastName,
+    String? secondName,
+    String? about,
+    String? image,
+  });
 
   Future<void> uploadUserImage({required File image});
 
@@ -120,4 +128,16 @@ abstract class IApi {
   Future<void> deleteCourse({
     required int id,
   });
+
+  Future<User> getUser();
+
+  Future<List<SubjectCategory>> getSubjectCategories();
+  Future<void> updateSubjectCategory({required int id, required String name});
+  Future<void> addSubjectCategory({required String name});
+  Future<void> deleteSubjectCategory({required int id});
+
+  Future<List<FragmentCategory>> getFragmentCategories();
+  Future<void> updateFragmentCategory({required int id, required String name});
+  Future<void> addFragmentCategory({required String name});
+  Future<void> deleteFragmentCategory({required int id});
 }

@@ -474,22 +474,18 @@ class AddFragmentButtons extends StatelessWidget {
       width: 70,
       child: Column(
         children: [
-          DecoratedBox(
-            decoration:
-                const BoxDecoration(color: Palette.buttonLightBackground),
-            child: IconButton(
-              onPressed: () async {
-                final result = await context.router.push(PdfAddFragmentRoute(
-                    displayOder: index + 1, subjectId: subjectId));
-                if (result != null && result == true) {
-                  if (context.mounted) {
-                    BlocProvider.of<PdfEditSubjectBloc>(context)
-                        .add(const PdfEditSubjectEvent.initialDataRequested());
-                  }
+          IconButton(
+            onPressed: () async {
+              final result = await context.router.push(PdfAddFragmentRoute(
+                  displayOder: index + 1, subjectId: subjectId));
+              if (result != null && result == true) {
+                if (context.mounted) {
+                  BlocProvider.of<PdfEditSubjectBloc>(context)
+                      .add(const PdfEditSubjectEvent.initialDataRequested());
                 }
-              },
-              icon: const Icon(Icons.add),
-            ),
+              }
+            },
+            icon: const Icon(Icons.add),
           ),
         ],
       ),

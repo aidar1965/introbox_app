@@ -4,31 +4,69 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
+import 'package:moki_tutor/presentation/common/common_functions.dart';
 import '../../auto_router/app_router.dart';
+import '../../common/common_loading_error_widget.dart';
+import '../../theme/dynamic_theme.dart';
 import 'bloc/profile_bloc.dart';
 
-import '../../../domain/models/user.dart';
-
 @RoutePage()
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => ProfileBloc(),
+        child: BlocConsumer<ProfileBloc, ProfileState>(
+          listener: (context, state) => state.mapOrNull(
+              logoutSuccess: (_) => context.router.push(const LoginRoute()),
+              requestError: (state) => CommonFunctions.showMessage(
+                  context, 'Не удалось обновить данные', Reason.error)),
+          buildWhen: (previous, current) => current.maybeMap(
+            orElse: () => false,
+            screenState: (_) => true,
+            pending: (_) => true,
+            loadingError: (_) => true,
+          ),
+          builder: (context, state) => state.maybeMap(
+            orElse: () => throw UnsupportedError(''),
+            pending: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+            loadingError: (_) => CommonLoadingErrorWidget(
+              onPressed: () => BlocProvider.of<ProfileBloc>(context)
+                  .add(const ProfileEvent.dataRequested()),
+            ),
+            screenState: (state) {
+              return _ScreenView(
+                firstName: state.user.firstName ?? '',
+                lastName: state.user.lastName ?? '',
+                secondName: state.user.secondName,
+                about: state.user.about,
+                imagePath: state.user.imageUrl,
+              );
+            },
+          ),
+        ));
+  }
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  FilePickerResult? file;
-  String? imagePath;
-  Image? image;
-  File? pickedFile;
-  ProfileBloc? _bloc;
+class _ScreenView extends StatefulWidget {
+  _ScreenView(
+      {super.key,
+      required this.firstName,
+      this.secondName,
+      required this.lastName,
+      this.about,
+      this.imagePath});
 
-  @override
-  void didChangeDependencies() {
-    _bloc = ProfileBloc();
-    super.didChangeDependencies();
-  }
+  final String firstName;
+  final String? secondName;
+  final String lastName;
+  final String? about;
+  final String? imagePath;
 
   final firstnameController = TextEditingController();
   final secondnameController = TextEditingController();
@@ -36,129 +74,193 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final aboutController = TextEditingController();
 
   @override
+  State<_ScreenView> createState() => __ScreenViewState();
+}
+
+class __ScreenViewState extends State<_ScreenView> {
+  FilePickerResult? file;
+  String? imagePath;
+  Image? image;
+  File? pickedFile;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.firstnameController.text = widget.firstName;
+    widget.secondnameController.text = widget.secondName ?? '';
+    widget.lastnameController.text = widget.lastName;
+    widget.aboutController.text = widget.about ?? '';
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => _bloc!,
-        child: BlocConsumer<ProfileBloc, ProfileState>(
-          listener: (context, state) => state.mapOrNull(
-              logoutSuccess: (_) => context.router.push(const LoginRoute())),
-          buildWhen: (previous, current) =>
-              current.maybeMap(orElse: () => false, initial: (_) => true),
-          builder: (context, state) => state.maybeMap(
-            orElse: () => throw UnsupportedError(''),
-            initial: (state) {
-              if (state.user != null) {
-                User user = state.user!;
-                firstnameController.text = user.firstName ?? '';
-                secondnameController.text = user.secondName ?? '';
-                lastnameController.text = user.lastName ?? '';
-                aboutController.text = user.about ?? '';
-              }
-              return Stack(children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        GestureDetector(
-                            onTap: () async {
-                              var file = await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: ['jpg', 'jpeg', 'svg'],
-                              );
-                              if (file != null) {
-                                imagePath = file.paths.first!;
-                                setState(() {
-                                  pickedFile = File(file.paths.first!);
-                                  image = Image.file(File(file.paths.first!));
-                                });
-                                _bloc!.add(ProfileEvent.uploadImage(
-                                    image: pickedFile!));
-                              }
-                            },
-                            child: Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(50))),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: image ??
-                                      (state.user?.imageUrl != null
-                                          ? Image.network(state.user!.imageUrl!)
-                                          : const Icon(
-                                              Icons.person_rounded,
-                                              size: 100,
-                                              color: Colors.grey,
-                                            ))),
-                            )),
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            controller: lastnameController,
-                            decoration:
-                                const InputDecoration(hintText: 'Фамилия'),
+    return Stack(children: [
+      SingleChildScrollView(
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            GestureDetector(
+                onTap: () async {
+                  var file = await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: ['jpg', 'jpeg', 'svg'],
+                  );
+                  if (file != null) {
+                    imagePath = file.paths.first!;
+                    setState(() {
+                      pickedFile = File(file.paths.first!);
+                      image = Image.file(File(file.paths.first!));
+                    });
+                  }
+                },
+                child: Padding(
+                    padding: EdgeInsets.only(top: 64),
+                    child: Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
                           ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            controller: firstnameController,
-                            decoration: const InputDecoration(hintText: 'Имя'),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            controller: secondnameController,
-                            decoration:
-                                const InputDecoration(hintText: 'Отчество'),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 300,
-                          child: TextField(
-                            controller: aboutController,
-                            maxLines: null,
-                            decoration:
-                                const InputDecoration(hintText: 'Обо мне'),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              BlocProvider.of<ProfileBloc>(context).add(
-                                  ProfileEvent.updateUser(
-                                      firstname: firstnameController.text,
-                                      secondname: secondnameController.text,
-                                      lastname: lastnameController.text,
-                                      about: aboutController.text));
-                            },
-                            child: const Text('Сохранить'))
-                      ],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(50))),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: image ??
+                              (widget.imagePath != null
+                                  ? Image.network(widget.imagePath!)
+                                  : const Icon(
+                                      Icons.person_rounded,
+                                      size: 100,
+                                      color: Colors.grey,
+                                    ))),
+                    ))),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                  controller: widget.lastnameController,
+                  decoration: InputDecoration(
+                    labelText: 'Фамилия',
+                    labelStyle:
+                        TextStyle(color: DynamicTheme.paletteOf(context).text2),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: DynamicTheme.paletteOf(context).accent),
+                      //<-- SEE HERE
                     ),
-                  ],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2,
+                          color: DynamicTheme.paletteOf(context).accent),
+                      //<-- SEE HERE
+                    ),
+                  )),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: widget.firstnameController,
+                decoration: InputDecoration(
+                  labelText: 'Имя',
+                  labelStyle:
+                      TextStyle(color: DynamicTheme.paletteOf(context).text2),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 1,
+                        color: DynamicTheme.paletteOf(context).accent),
+                    //<-- SEE HERE
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: DynamicTheme.paletteOf(context).accent),
+                    //<-- SEE HERE
+                  ),
                 ),
-                Positioned(
-                    right: 20,
-                    top: 20,
-                    child: ElevatedButton(
-                        onPressed: () => BlocProvider.of<ProfileBloc>(context)
-                            .add(const ProfileEvent.logout()),
-                        child: const Text('Выйти')))
-              ]);
-            },
-          ),
-        ));
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: widget.secondnameController,
+                decoration: InputDecoration(
+                  labelText: 'Отчество',
+                  labelStyle:
+                      TextStyle(color: DynamicTheme.paletteOf(context).text2),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 1,
+                        color: DynamicTheme.paletteOf(context).accent),
+                    //<-- SEE HERE
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: DynamicTheme.paletteOf(context).accent),
+                    //<-- SEE HERE
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: widget.aboutController,
+                minLines: 4,
+                maxLines: null,
+                decoration: InputDecoration(
+                  labelText: 'Обо мне',
+                  labelStyle:
+                      TextStyle(color: DynamicTheme.paletteOf(context).text2),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 1,
+                        color: DynamicTheme.paletteOf(context).accent),
+                    //<-- SEE HERE
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        width: 2,
+                        color: DynamicTheme.paletteOf(context).accent),
+                    //<-- SEE HERE
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+                width: 300,
+                child: CommonElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<ProfileBloc>(context).add(
+                          ProfileEvent.updateUser(
+                              firstname: widget.firstnameController.text,
+                              secondname: widget.secondnameController.text,
+                              lastname: widget.lastnameController.text,
+                              about: widget.aboutController.text,
+                              image: imagePath));
+                    },
+                    text: 'Сохранить'))
+          ],
+        )
+      ])),
+      Positioned(
+          right: 20,
+          top: 20,
+          child: IconButton(
+              onPressed: () => BlocProvider.of<ProfileBloc>(context)
+                  .add(const ProfileEvent.logout()),
+              icon: const Icon(Icons.logout)))
+    ]);
   }
 }

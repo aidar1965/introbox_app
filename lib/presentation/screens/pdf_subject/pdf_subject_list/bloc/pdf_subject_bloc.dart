@@ -66,6 +66,7 @@ class PdfSubjectBloc extends Bloc<PdfSubjectEvent, PdfSubjectState> {
   void reloadData() {
     offset = 0;
     total = null;
+    _screenState = _screenState.copyWith(subjects: []);
     add(const PdfSubjectEvent.initialDataRequested());
   }
 

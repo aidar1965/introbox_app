@@ -27,6 +27,9 @@ class LocalCache implements ILocalCache {
         firstName: jsonObject['firstName'] as String,
         lastName: jsonObject['lastName'] as String,
         email: jsonObject['email'] as String? ?? '',
+        secondName: jsonObject['secondName'] as String?,
+        about: jsonObject['about'] as String?,
+        imageUrl: jsonObject['imageUrl'] as String?,
       );
     } else {
       return null;
@@ -41,7 +44,10 @@ class LocalCache implements ILocalCache {
         jsonEncode({
           'firstName': user.firstName,
           'lastName': user.lastName,
-          'email': user.email
+          'email': user.email,
+          'secondName': user.secondName,
+          'about': user.about,
+          'imageUrl': user.imageUrl
         }));
   }
 

@@ -45,10 +45,11 @@ class RequestUpdateFragment extends IApiRequest {
     }
 
     if (imagePath != null) {
-      image = await MultipartFile.fromFile(
-        imagePath!,
-      );
+      image = await MultipartFile.fromFile(imagePath!, headers: {
+        'filename': [imagePath!]
+      });
       formDataMap['image'] = image;
+
       formDataMap['is_landscape'] = isLandscape;
     }
 

@@ -4,11 +4,17 @@ import 'dart:core';
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
+import 'package:moki_tutor/data/api/models/requests/request_add_fragment_category.dart';
+import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categories.dart';
 import 'package:moki_tutor/data/api/models/requests/request_publish_course.dart';
+import 'package:moki_tutor/data/api/models/requests/request_update_fragment_category.dart';
+import 'package:moki_tutor/data/api/models/responses/fragment_category_dto.dart';
 import 'package:moki_tutor/data/api/models/responses/subject_dto.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
+import 'package:moki_tutor/domain/models/fragment_category.dart';
 import 'package:moki_tutor/domain/models/responses/paginated_courses.dart';
+import 'package:moki_tutor/domain/models/subject_category.dart';
 
 import 'package:moki_tutor/domain/models/user.dart';
 import 'package:moki_tutor/domain/models/course.dart';
@@ -27,22 +33,31 @@ import 'models/requests/request_add_fragment.dart';
 import 'models/requests/request_add_image_subject.dart';
 import 'models/requests/request_add_pdf_subject.dart';
 import 'models/requests/request_add_subject.dart';
+import 'models/requests/request_add_subject_category.dart';
 import 'models/requests/request_confirmation.dart';
 import 'models/requests/request_delete_course.dart';
 import 'models/requests/request_delete_fragment.dart';
+import 'models/requests/request_delete_fragment_category.dart';
 import 'models/requests/request_delete_subject.dart';
+import 'models/requests/request_delete_subject_categories.dart';
 import 'models/requests/request_edit_subject.dart';
+import 'models/requests/request_get_subject_categories.dart';
 import 'models/requests/request_get_subject_fragments.dart';
 import 'models/requests/request_get_subjects.dart';
 import 'models/requests/request_get_tutor_course.dart';
 import 'models/requests/request_get_tutor_courses.dart';
+import 'models/requests/request_get_user.dart';
 import 'models/requests/request_login.dart';
 import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_update_fragment.dart';
 import 'models/requests/request_update_subject.dart';
+import 'models/requests/request_update_subject_category.dart';
+import 'models/requests/request_update_user.dart';
 import 'models/responses/course_dto.dart';
 import 'models/responses/pdf_fragment_dto.dart';
 
+import 'models/responses/subject_category_dto.dart';
+import 'models/responses/user_dto.dart';
 import 'models/responses/user_with_tokens_dto.dart';
 
 typedef _Response = Response<Object?>?;
@@ -92,7 +107,20 @@ class Api implements IApi {
   Future<void> publishFragment({required Fragment record}) async {}
 
   @override
-  Future<void> updateUser({required User user}) async {}
+  Future<void> updateUser({
+    required String firstName,
+    required String lastName,
+    String? secondName,
+    String? about,
+    String? image,
+  }) async {
+    await httpClient.request(RequestUpdateUser(
+        firstName: firstName,
+        secondName: secondName,
+        lastName: lastName,
+        about: about,
+        imagePath: image));
+  }
 
   @override
   Future<void> uploadUserImage({required File image}) async {}
@@ -301,5 +329,59 @@ class Api implements IApi {
       int? duration}) async {
     await httpClient.request(RequestAddImageSubject(
         title: title, description: description, fragments: fragments));
+  }
+
+  @override
+  Future<User> getUser() async {
+    final result = await httpClient.request(RequestGetUser());
+    return mapper.mapUser(UserDto.fromJson(jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> addFragmentCategory({required String name}) async {
+    await httpClient.request(RequestAddFragmentCategory(name: name));
+  }
+
+  @override
+  Future<void> addSubjectCategory({required String name}) async {
+    await httpClient.request(RequestAddSubjectCategory(name: name));
+  }
+
+  @override
+  Future<void> deleteFragmentCategory({required int id}) async {
+    await httpClient.request(RequestDeleteFragmentCategory(id: id));
+  }
+
+  @override
+  Future<void> deleteSubjectCategory({required int id}) async {
+    await httpClient.request(RequestDeleteSubjectCategory(id: id));
+  }
+
+  @override
+  Future<List<FragmentCategory>> getFragmentCategories() async {
+    final result = await httpClient.request(RequestGetFragmentCategories());
+    return (result!.data as List)
+        .map((e) => mapper.mapFragmentCategory(FragmentCategoryDto.fromJson(e)))
+        .toList();
+  }
+
+  @override
+  Future<List<SubjectCategory>> getSubjectCategories() async {
+    final result = await httpClient.request(RequestGetSubjectCategories());
+    return (result!.data as List)
+        .map((e) => mapper.mapSubjectCategory(SubjectCategoryDto.fromJson(e)))
+        .toList();
+  }
+
+  @override
+  Future<void> updateFragmentCategory(
+      {required int id, required String name}) async {
+    await httpClient.request(RequestUpdateFragmentCategory(name: name, id: id));
+  }
+
+  @override
+  Future<void> updateSubjectCategory(
+      {required int id, required String name}) async {
+    await httpClient.request(RequestUpdateSubjectCategory(name: name, id: id));
   }
 }

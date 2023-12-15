@@ -59,11 +59,22 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
   }
 
   @override
-  Future<void> updateUser({required User user}) async {
-    await api.updateUser(user: user);
-    await localCache.setUser(user: user);
-    _user = user;
-    notifyListeners();
+  Future<void> updateUser({
+    required String firstName,
+    required String lastName,
+    String? secondName,
+    String? about,
+    String? image,
+  }) async {
+    await api.updateUser(
+        firstName: firstName,
+        secondName: secondName,
+        about: about,
+        lastName: lastName,
+        image: image);
+    // TODO await localCache.setUser(user: user);
+    // _user = user;
+    // notifyListeners();
   }
 
   @override
@@ -99,6 +110,13 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
     _user = userWithTokens.user;
     print(_user);
     await localCache.saveTokenPair(tokenPair: userWithTokens.tokens);
+    await localCache.setUser(user: _user!);
+    notifyListeners();
+  }
+
+  @override
+  Future<void> setUser(User user) async {
+    _user = user;
     await localCache.setUser(user: _user!);
     notifyListeners();
   }

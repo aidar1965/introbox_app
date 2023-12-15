@@ -19,7 +19,7 @@ class PdfCoursesScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'Список курсов',
+            'Список публикаций',
           ),
           actions: [
             IconButton(
@@ -75,7 +75,7 @@ class _ScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (courses.isEmpty) {
       return const Center(
-        child: Text('Список курсов пуст'),
+        child: Text('Список публикаций пуст'),
       );
     } else {
       return ListView.builder(
@@ -99,13 +99,16 @@ class _CourseView extends StatelessWidget {
       title: Row(
         children: [
           Expanded(
-              child: Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-              child: Text(course.title),
-              onPressed: () {
-                context.router.push(PdfCourseDetailsRoute(course: course));
-              },
+              child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                child: Text(course.title),
+                onTap: () {
+                  context.router.push(PdfCourseDetailsRoute(course: course));
+                },
+              ),
             ),
           )),
           const SizedBox(
@@ -142,7 +145,7 @@ class _CourseView extends StatelessWidget {
                 await CommonFunctions.showStyledDialog(
                     context: context,
                     message:
-                        'Вы действительно хотите удалить курс ${course.title}?',
+                        'Вы действительно хотите удалить публикацию ${course.title}?',
                     positiveButtonText: 'Удалить',
                     negativeButtonText: 'Отмена',
                     onPositiveTap: () {

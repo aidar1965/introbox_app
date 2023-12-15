@@ -2,21 +2,30 @@ import 'dart:ui';
 
 import '../../../domain/models/course.dart';
 import '../../../domain/models/course_category.dart';
+import '../../../domain/models/fragment_category.dart';
 import '../../../domain/models/pdf_fragment.dart';
 import '../../../domain/models/subject.dart';
+import '../../../domain/models/subject_category.dart';
 import '../../../domain/models/token_pair.dart';
 import '../../../domain/models/user.dart';
 import '../../../domain/models/user_with_tokens.dart';
 import '../models/responses/course_category_dto.dart';
 import '../models/responses/course_dto.dart';
+import '../models/responses/fragment_category_dto.dart';
 import '../models/responses/pdf_fragment_dto.dart';
+import '../models/responses/subject_category_dto.dart';
 import '../models/responses/subject_dto.dart';
 import '../models/responses/user_dto.dart';
 import '../models/responses/user_with_tokens_dto.dart';
 
 class ApiDataMapper {
-  User mapUser(UserDto dto) =>
-      User(firstName: dto.firstName, lastName: dto.lastName, email: dto.email);
+  User mapUser(UserDto dto) => User(
+      firstName: dto.firstName,
+      lastName: dto.lastName,
+      email: dto.email,
+      secondName: dto.secondName,
+      about: dto.about,
+      imageUrl: dto.photo);
 
   UserWithTokens mapUserWithTokens(UserWithTokensDto dto) {
     return UserWithTokens(
@@ -71,5 +80,13 @@ class ApiDataMapper {
 
   CourseCategory mapCourseCategory(CourseCategoryDto dto) {
     return CourseCategory(name: dto.name, id: dto.id);
+  }
+
+  FragmentCategory mapFragmentCategory(FragmentCategoryDto dto) {
+    return FragmentCategory(name: dto.name, id: dto.id);
+  }
+
+  SubjectCategory mapSubjectCategory(SubjectCategoryDto dto) {
+    return SubjectCategory(name: dto.name, id: dto.id);
   }
 }

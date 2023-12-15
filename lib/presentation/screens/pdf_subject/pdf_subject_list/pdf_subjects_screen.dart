@@ -78,7 +78,7 @@ class PdfSubjectsScreen extends StatelessWidget {
                   ),
                   TextButton.icon(
                     icon: Icon(Icons.image),
-                    label: Text('Добавить из изображения'),
+                    label: Text('Добавить из изображений'),
                     style: TextButton.styleFrom(
                         iconColor: DynamicTheme.paletteOf(context).alwaysWhite,
                         foregroundColor:

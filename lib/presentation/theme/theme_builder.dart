@@ -49,7 +49,19 @@ class ThemeBuilder {
 
         scaffoldBackgroundColor: palette.background1,
         navigationRailTheme: NavigationRailThemeData(
-            unselectedLabelTextStyle: TextStyle(color: palette.text1)),
+            unselectedIconTheme: IconThemeData(color: palette.text1),
+            unselectedLabelTextStyle: TextStyle(
+              color: palette.text1,
+            ),
+            selectedIconTheme: IconThemeData(color: palette.accent),
+            selectedLabelTextStyle: TextStyle(
+                color: palette.accent,
+                fontWeight: FontWeight.w600,
+                fontSize: 18)),
+
+        listTileTheme: ListTileThemeData(
+            subtitleTextStyle: TextStyle(color: palette.text2)),
+
         iconTheme: IconThemeData(color: palette.text1),
 
         appBarTheme: AppBarTheme(
@@ -273,6 +285,17 @@ class ThemeBuilder {
         useMaterial3: Platform.isAndroid,
 
         scaffoldBackgroundColor: palette.background1,
+        navigationRailTheme: NavigationRailThemeData(
+            unselectedIconTheme: IconThemeData(color: palette.text1),
+            unselectedLabelTextStyle: TextStyle(color: palette.text1),
+            selectedIconTheme: IconThemeData(color: palette.alwaysWhite),
+            selectedLabelTextStyle: TextStyle(
+                color: palette.alwaysWhite,
+                fontWeight: FontWeight.w600,
+                fontSize: 18)),
+
+        listTileTheme: ListTileThemeData(
+            subtitleTextStyle: TextStyle(color: palette.text2)),
 
         appBarTheme: AppBarTheme(
             color: palette.accent,
@@ -378,10 +401,14 @@ class ThemeBuilder {
 
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-            overlayColor: MaterialStatePropertyAll<Color>(
-                palette.accent.withOpacity(0.06)),
-          ),
+              overlayColor: MaterialStatePropertyAll<Color>(
+                  palette.accent.withOpacity(0.06)),
+              foregroundColor:
+                  MaterialStatePropertyAll<Color>(palette.alwaysWhite)),
         ),
+
+        iconButtonTheme: IconButtonThemeData(
+            style: IconButton.styleFrom(backgroundColor: Colors.transparent)),
 
         cardTheme: CardTheme(
             color: palette.background2,

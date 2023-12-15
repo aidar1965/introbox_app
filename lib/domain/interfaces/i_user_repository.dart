@@ -21,7 +21,13 @@ abstract class IUserRepository {
 
   Future<void> loginWithOtp({required String otp, required String email});
 
-  Future<void> updateUser({required User user});
+  Future<void> updateUser({
+    required String firstName,
+    required String lastName,
+    String? secondName,
+    String? about,
+    String? image,
+  });
 
   Future<void> uploadUserImage({required File image});
 
@@ -31,4 +37,6 @@ abstract class IUserRepository {
 
   void addChangeListener(Function() listener);
   void removeChangeListener(Function() listener);
+
+  Future<void> setUser(User user);
 }

@@ -173,6 +173,22 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    ImageAddFragmentRoute.name: (routeData) {
+      final args = routeData.argsAs<ImageAddFragmentRouteArgs>(
+          orElse: () => const ImageAddFragmentRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ImageAddFragmentScreen(key: args.key),
+      );
+    },
+    ImageCreateSubjectRoute.name: (routeData) {
+      final args = routeData.argsAs<ImageCreateSubjectRouteArgs>(
+          orElse: () => const ImageCreateSubjectRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ImageCreateSubjectScreen(key: args.key),
+      );
+    },
     PdfAddFragmentRoute.name: (routeData) {
       final args = routeData.argsAs<PdfAddFragmentRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -276,22 +292,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SubjectsScreen(),
-      );
-    },
-    ImageCreateSubjectRoute.name: (routeData) {
-      final args = routeData.argsAs<ImageCreateSubjectRouteArgs>(
-          orElse: () => const ImageCreateSubjectRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ImageCreateSubjectScreen(key: args.key),
-      );
-    },
-    ImageAddFragmentRoute.name: (routeData) {
-      final args = routeData.argsAs<ImageAddFragmentRouteArgs>(
-          orElse: () => const ImageAddFragmentRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ImageAddFragmentScreen(key: args.key),
       );
     },
   };
@@ -799,6 +799,65 @@ class FragmentsReorderRouteArgs {
 }
 
 /// generated route for
+/// [ImageAddFragmentScreen]
+class ImageAddFragmentRoute extends PageRouteInfo<ImageAddFragmentRouteArgs> {
+  ImageAddFragmentRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ImageAddFragmentRoute.name,
+          args: ImageAddFragmentRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ImageAddFragmentRoute';
+
+  static const PageInfo<ImageAddFragmentRouteArgs> page =
+      PageInfo<ImageAddFragmentRouteArgs>(name);
+}
+
+class ImageAddFragmentRouteArgs {
+  const ImageAddFragmentRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ImageAddFragmentRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [ImageCreateSubjectScreen]
+class ImageCreateSubjectRoute
+    extends PageRouteInfo<ImageCreateSubjectRouteArgs> {
+  ImageCreateSubjectRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ImageCreateSubjectRoute.name,
+          args: ImageCreateSubjectRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ImageCreateSubjectRoute';
+
+  static const PageInfo<ImageCreateSubjectRouteArgs> page =
+      PageInfo<ImageCreateSubjectRouteArgs>(name);
+}
+
+class ImageCreateSubjectRouteArgs {
+  const ImageCreateSubjectRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ImageCreateSubjectRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
 /// [PdfAddFragmentScreen]
 class PdfAddFragmentRoute extends PageRouteInfo<PdfAddFragmentRouteArgs> {
   PdfAddFragmentRoute({
@@ -1142,63 +1201,4 @@ class SubjectsRoute extends PageRouteInfo<void> {
   static const String name = 'SubjectsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ImageCreateSubjectScreen]
-class ImageCreateSubjectRoute
-    extends PageRouteInfo<ImageCreateSubjectRouteArgs> {
-  ImageCreateSubjectRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ImageCreateSubjectRoute.name,
-          args: ImageCreateSubjectRouteArgs(key: key),
-          initialChildren: children,
-        );
-
-  static const String name = 'ImageCreateSubjectRoute';
-
-  static const PageInfo<ImageCreateSubjectRouteArgs> page =
-      PageInfo<ImageCreateSubjectRouteArgs>(name);
-}
-
-class ImageCreateSubjectRouteArgs {
-  const ImageCreateSubjectRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'ImageCreateSubjectRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [ImageAddFragmentScreen]
-class ImageAddFragmentRoute extends PageRouteInfo<ImageAddFragmentRouteArgs> {
-  ImageAddFragmentRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ImageAddFragmentRoute.name,
-          args: ImageAddFragmentRouteArgs(key: key),
-          initialChildren: children,
-        );
-
-  static const String name = 'ImageAddFragmentRoute';
-
-  static const PageInfo<ImageAddFragmentRouteArgs> page =
-      PageInfo<ImageAddFragmentRouteArgs>(name);
-}
-
-class ImageAddFragmentRouteArgs {
-  const ImageAddFragmentRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'ImageAddFragmentRouteArgs{key: $key}';
-  }
 }

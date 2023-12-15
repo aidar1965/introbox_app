@@ -91,7 +91,7 @@ class CoursesView extends StatelessWidget {
         child: FloatingActionButton(
             onPressed: () => BlocProvider.of<CoursesBloc>(context)
                 .add(const CoursesEvent.newCourse()),
-            tooltip: 'Новый курс',
+            tooltip: 'Новая публикация',
             child: const Icon(Icons.add)),
       ),
     ]);
@@ -153,7 +153,7 @@ class _CoursesView extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            const Text('Курсы'),
+            const Text('Публикации'),
             const Divider(),
             Expanded(
               child: ListView.builder(
@@ -217,7 +217,7 @@ class _SelectedCourseView extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const Text('Детали курса'),
+          const Text('Детали публикации'),
           const Divider(),
           Text(course.title),
           const SizedBox(
@@ -265,7 +265,7 @@ class _PublishedCoursesView extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const Text('Опубликованные курсы'),
+          const Text('Опубликованные'),
           const Divider(),
           Expanded(
             child: ListView.builder(

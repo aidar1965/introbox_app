@@ -13,7 +13,7 @@ class EditCourseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Редактирование курса'),
+        title: const Text('Редактирование публикации'),
       ),
     );
   }

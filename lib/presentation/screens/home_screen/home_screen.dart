@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               minExtendedWidth: 160,
                               destinations: [
                                 const NavigationRailDestination(
-                                    label: Text('Курсы'),
+                                    label: Text('Публикации'),
                                     icon: Icon(Icons.list)),
                                 // const NavigationRailDestination(
                                 //     label: Text('Темы'),
@@ -114,22 +114,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-                    // bottomNavigationBar: BottomNavigationBar(
-                    //   currentIndex: tabsRouter.activeIndex,
-                    //   onTap: (index) {
-                    //     // here we switch between tabs
-                    //     tabsRouter.setActiveIndex(index);
-                    //   },
-                    //   items: const [
-                    //     BottomNavigationBarItem(
-                    //         label: 'Courses', icon: Icon(Icons.list)),
-                    //     BottomNavigationBarItem(
-                    //         label: 'Asembling', icon: Icon(Icons.add)),
-                    //     BottomNavigationBarItem(
-                    //         label: 'Profile', icon: Icon(Icons.verified_user_rounded)),
-                    //   ],
-                    // )
-
                     state.isPlayerScreenOpened
                         ? PlayerScreen(
                             record: state.record!,

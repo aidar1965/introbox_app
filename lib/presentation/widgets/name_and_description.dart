@@ -23,6 +23,7 @@ class NameAndDescriptionWidget extends StatelessWidget {
         TextFormField(
           initialValue: initialName,
           controller: titleController,
+          maxLines: null,
           decoration: InputDecoration(
             labelText: 'Название',
             labelStyle: TextStyle(color: DynamicTheme.paletteOf(context).text2),

@@ -149,7 +149,7 @@
 //         const SizedBox(
 //           height: 20,
 //         ),
-//         const Text('Курс'),
+//         const Text('Публикация'),
 //         const Divider(),
 //         TextFormField(
 //           maxLines: null,
