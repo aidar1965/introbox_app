@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 
@@ -9,7 +10,7 @@ class RequestAddFragment extends IApiRequest {
   final int displayOrder;
   final String title;
   final String description;
-  final String imagePath;
+  final File imageFile;
   final bool isLandscape;
   final String? audioPath;
   final int? duration;
@@ -19,7 +20,7 @@ class RequestAddFragment extends IApiRequest {
     required this.displayOrder,
     required this.title,
     required this.description,
-    required this.imagePath,
+    required this.imageFile,
     required this.isLandscape,
     this.audioPath,
     this.duration,
@@ -46,7 +47,7 @@ class RequestAddFragment extends IApiRequest {
     }
 
     image = await MultipartFile.fromFile(
-      imagePath,
+      imageFile.path,
     );
     formDataMap['image'] = image;
 

@@ -8,11 +8,12 @@ import '../../domain/locator/locator.dart';
 import '../../domain/models/course.dart';
 import '../../domain/models/fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
+import '../../domain/models/presentation.dart';
 import '../../domain/models/subject.dart';
 import '../player/course_player_screen.dart';
 import '../player/player_screen.dart';
 import '../player/subject_player_screen.dart';
-import '../screens/assembling/assembling_screen.dart';
+
 import '../screens/courses/courses_screen.dart';
 import '../screens/courses/edit_course/edit_course_screen.dart';
 import '../screens/home_screen/home_screen.dart';
@@ -29,16 +30,18 @@ import '../screens/pdf_subject/image_create_subject/image_create_subject_screen.
 import '../screens/pdf_subject/pdf_add_fragment/pdf_add_fragment_screen.dart';
 import '../screens/pdf_subject/pdf_create_subject/pdf_create_subject_screen.dart';
 import '../screens/pdf_subject/pdf_edit_subject/pdf_edit_subject_screen.dart';
-import '../screens/pdf_subject/pdf_subject_list/pdf_subjects_screen.dart';
 import '../screens/pdf_subject/pdf_subject_player/pdf_subject_player_screen.dart';
+
+import '../screens/presentations/edit_presentation/edit_presentation_screen.dart';
+import '../screens/presentations/image_create_presentation/image_create_presentation_screen.dart';
+import '../screens/presentations/pdf_create_presentation/pdf_create_presentation_screen.dart';
+import '../screens/presentations/presentation_add_fragment/presentation_add_fragment_screen.dart';
+import '../screens/presentations/prsentation_player/presentation_player_screen.dart';
+import '../screens/presentations/prsentations_screen.dart';
 import '../screens/profile/profile_screen.dart';
-import '../screens/recording/recording_screen.dart';
-import '../screens/records/edit_record/edit_fragment_screen.dart';
-import '../screens/records/fragments_screen.dart';
+
 import '../screens/register/confirmation/confirmation_screen.dart';
 import '../screens/register/register_screen.dart';
-import '../screens/subjects/edit_subject/edit_subject_screen.dart';
-import '../screens/subjects/subjects_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -63,23 +66,24 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
             AutoRoute(path: 'edit_course', page: PdfEditCourseRoute.page),
             AutoRoute(path: 'course_details', page: PdfCourseDetailsRoute.page),
           ]),
-          AutoRoute(path: 'subjects', page: SubjectsEmpty.page, children: [
-            AutoRoute(path: '', page: SubjectsRoute.page, initial: true),
-            AutoRoute(path: 'assembling', page: AssemblingRoute.page),
-            AutoRoute(path: 'edit_subject', page: EditSubjectRoute.page),
-          ]),
+          // AutoRoute(path: 'subjects', page: SubjectsEmpty.page, children: [
+          //   AutoRoute(path: '', page: SubjectsRoute.page, initial: true),
+          //   AutoRoute(path: 'assembling', page: AssemblingRoute.page),
+          //   AutoRoute(path: 'edit_subject', page: EditSubjectRoute.page),
+          // ]),
           AutoRoute(
-              path: 'pdfSubjects',
-              page: PdfSubjectsEmpty.page,
+              path: 'presentationsEmpty',
+              page: PresentationsEmpty.page,
               children: [
-                AutoRoute(path: '', page: PdfSubjectsRoute.page, initial: true),
                 AutoRoute(
-                  path: 'createPdfSubject',
-                  page: PdfCreateSubjectRoute.page,
+                    path: '', page: PresentationsRoute.page, initial: true),
+                AutoRoute(
+                  path: 'createPdfPresentation',
+                  page: PdfCreatePresentationRoute.page,
                 ),
                 AutoRoute(
-                  path: 'createImageSubject',
-                  page: ImageCreateSubjectRoute.page,
+                  path: 'createImagePresentation',
+                  page: ImageCreatePresentationRoute.page,
                 ),
                 AutoRoute(
                   path: 'addImageFragment',
@@ -88,13 +92,13 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
                 AutoRoute(
                     path: 'audioRecording', page: AudioRecordingRoute.page),
                 CustomRoute(
-                    path: 'editPdfSubject',
-                    page: PdfEditSubjectRoute.page,
+                    path: 'editPdfPresentation',
+                    page: EditPresentationRoute.page,
                     transitionsBuilder: TransitionsBuilders.slideLeft,
                     durationInMilliseconds: 400),
                 CustomRoute(
-                    path: 'pdfAddFragment',
-                    page: PdfAddFragmentRoute.page,
+                    path: 'presentationAddFragment',
+                    page: PresentationAddFragmentRoute.page,
                     transitionsBuilder: TransitionsBuilders.slideLeft,
                     durationInMilliseconds: 400),
                 CustomRoute(
@@ -105,11 +109,11 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
 
                 // AutoRoute(path: 'edit_subject', page: EditSubjectRoute.page)
               ]),
-          AutoRoute(path: 'records', page: RecordsEmpty.page, children: [
-            AutoRoute(path: '', page: FragmentsRoute.page, initial: true),
-            AutoRoute(path: 'record', page: RecordingRoute.page),
-            AutoRoute(path: 'edit_record', page: EditFragmentRoute.page),
-          ]),
+          // AutoRoute(path: 'records', page: RecordsEmpty.page, children: [
+          //   AutoRoute(path: '', page: FragmentsRoute.page, initial: true),
+          //   AutoRoute(path: 'record', page: RecordingRoute.page),
+          //   AutoRoute(path: 'edit_record', page: EditFragmentRoute.page),
+          // ]),
           AutoRoute(
             path: 'profile',
             page: ProfileRoute.page,
@@ -129,6 +133,11 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         CustomRoute(
             path: '/pdfSubjectPlayer',
             page: PdfSubjectPlayerRoute.page,
+            transitionsBuilder: TransitionsBuilders.slideLeft,
+            durationInMilliseconds: 400),
+        CustomRoute(
+            path: '/presentationPlayer',
+            page: PresentationPlayerRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
       ];
@@ -154,8 +163,8 @@ class CoursesEmptyPage extends AutoRouter {}
 @RoutePage(name: 'SubjectsEmpty')
 class SubjectsEmptyPage extends AutoRouter {}
 
-@RoutePage(name: 'PdfSubjectsEmpty')
-class PdfSubjectsEmptyPage extends AutoRouter {}
+@RoutePage(name: 'PresentationsEmpty')
+class PresentationsEmptyPage extends AutoRouter {}
 
 @RoutePage(name: 'RecordsEmpty')
 class RecordsEmptyPage extends AutoRouter {}

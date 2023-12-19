@@ -2,8 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moki_tutor/presentation/auto_router/app_router.dart';
+import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
 
+import '../../common/common_elevated_button.dart';
 import '../../common/common_functions.dart';
+import '../../common/common_text_field.dart';
 import 'bloc/register_bloc.dart';
 
 @RoutePage()
@@ -37,34 +40,33 @@ class RegisterScreen extends StatelessWidget {
                       screenState: (state) => Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TextField(
-                            controller: firstNameController,
-                            decoration: const InputDecoration(hintText: 'Имя'),
-                          ),
-                          TextField(
-                            controller: lastNameController,
-                            decoration:
-                                const InputDecoration(hintText: 'Фамилия'),
-                          ),
-                          TextField(
-                            controller: emailController,
-                            decoration:
-                                const InputDecoration(hintText: 'Email'),
-                          ),
-                          TextField(
-                            controller: passwordController,
-                            decoration:
-                                const InputDecoration(hintText: 'Пароль'),
-                          ),
-                          TextField(
-                            controller: confirmPasswordController,
-                            decoration: const InputDecoration(
-                                hintText: 'Повторите пароль'),
-                          ),
+                          Text('Регистрация',
+                              style: context.style18w600$title2),
+                          const SizedBox(height: 18),
+                          CommonTextField(
+                              controller: firstNameController,
+                              labelText: 'Имя'),
+                          const SizedBox(height: 12),
+                          CommonTextField(
+                              controller: lastNameController,
+                              labelText: 'Фамилия'),
+                          const SizedBox(height: 12),
+                          CommonTextField(
+                              controller: emailController, labelText: 'Email'),
+                          const SizedBox(height: 12),
+                          CommonTextField(
+                              controller: passwordController,
+                              obscureText: true,
+                              labelText: 'Пароль'),
+                          const SizedBox(height: 12),
+                          CommonTextField(
+                              controller: confirmPasswordController,
+                              obscureText: true,
+                              labelText: 'Повторите пароль'),
                           const SizedBox(
                             height: 30,
                           ),
-                          ElevatedButton(
+                          CommonElevatedButton(
                               onPressed: () {
                                 BlocProvider.of<RegisterBloc>(context).add(
                                     RegisterEvent.register(
@@ -75,7 +77,7 @@ class RegisterScreen extends StatelessWidget {
                                         firstName: firstNameController.text,
                                         lastName: lastNameController.text));
                               },
-                              child: const Text('Зарегистрироваться')),
+                              text: 'Зарегистрироваться'),
                           const SizedBox(
                             height: 30,
                           ),

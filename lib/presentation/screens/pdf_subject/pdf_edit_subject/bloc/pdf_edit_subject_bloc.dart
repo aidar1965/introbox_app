@@ -12,7 +12,7 @@ import 'package:moki_tutor/domain/locator/locator.dart';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
-import '../../../../../domain/interfaces/i_subject_repository.dart';
+
 import '../../../../../domain/models/pdf_fragment.dart';
 import '../../../../../domain/models/subject.dart';
 import 'package:path/path.dart' as p;
@@ -45,7 +45,6 @@ class PdfEditSubjectBloc
   }
   final Subject subject;
   final api = getIt<IApi>();
-  final subjectsRepository = getIt<ISubjectsRepository>();
 
   late _ScreenState _screenState;
   late List<PdfFragment> fragments;
@@ -205,8 +204,10 @@ class PdfEditSubjectBloc
     try {
       await api.updateSubject(
           id: subject.id, title: event.title, description: event.description);
-      subjectsRepository.getSubjects();
-      _screenState = _screenState.copyWith(subjectUpdatePending: false);
+
+      _screenState = _screenState.copyWith(
+        subjectUpdatePending: false,
+      );
       emitter(_screenState);
     } catch (e) {}
   }

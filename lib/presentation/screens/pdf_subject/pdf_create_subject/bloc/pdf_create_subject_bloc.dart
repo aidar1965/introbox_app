@@ -3,17 +3,14 @@ import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image_size_getter/file_input.dart';
-import 'package:image_size_getter/image_size_getter.dart';
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:printing/printing.dart';
 
 import '../../../../../data/api/models/requests/fragment_request_data.dart';
-import '../../../../../domain/interfaces/i_fragments_repository.dart';
-import '../../../../../domain/interfaces/i_subject_repository.dart';
+
 import '../../../../../domain/locator/locator.dart';
+import '../../../../../domain/models/pdf_fragment_sample.dart';
 
 part 'pdf_create_subject_bloc.freezed.dart';
 part 'pdf_create_subject_event.dart';
@@ -27,8 +24,6 @@ class PdfCreateSubjectBloc
         savePdfSubject: (event) => _savePdfSubject(event, emitter)));
   }
 
-  final subjectRepository = getIt<ISubjectsRepository>();
-  final fragmentsRepository = getIt<IFragmentsRepository>();
   final api = getIt<IApi>();
 
   Future<void> _convertPdf(
@@ -59,13 +54,7 @@ class PdfCreateSubjectBloc
       Emitter<PdfCreateSubjectState> emitter) async {
     final List<FragmentRequestData> fragments = [];
     int index = 0;
-    Directory tempDir = await getTemporaryDirectory();
     for (final f in event.pdfFragmentList) {
-      final filePath = '${tempDir.path}/temp.png';
-
-      final tempFile = await File(filePath).writeAsBytes(f.image);
-      final size = ImageSizeGetter.getSize(FileInput(tempFile));
-
       fragments.add(
         FragmentRequestData(
             title: f.title ?? '',
@@ -73,7 +62,9 @@ class PdfCreateSubjectBloc
             image: (
               file: f.image,
               fileName: 'image$index.png',
-              isLandscape: size.width > size.height
+              isLandscape: true,
+
+              ///TODO: Убрать
             ),
             audioPath: f.audioPath,
             duration: f.duration),
@@ -88,18 +79,4 @@ class PdfCreateSubjectBloc
 
     emitter(const PdfCreateSubjectState.saveSuccess());
   }
-}
-
-class PdfFragmentSample {
-  final String? title;
-  final String? description;
-  final Uint8List image;
-  final String? audioPath;
-  final int? duration;
-  PdfFragmentSample(
-      {required this.image,
-      this.audioPath,
-      this.title,
-      this.description,
-      this.duration});
 }

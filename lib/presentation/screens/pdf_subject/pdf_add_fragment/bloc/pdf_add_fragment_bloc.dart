@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image_size_getter/file_input.dart';
-import 'package:image_size_getter/image_size_getter.dart';
+
 import 'package:moki_tutor/data/api/http_client/request_exception.dart';
 import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 
 import '../../../../../domain/interfaces/i_api.dart';
@@ -47,11 +45,9 @@ class PdfAddFragmentBloc
 
   Future<void> onImageAdded(
       _EventImageAdded event, Emitter<PdfAddFragmentState> emitter) async {
-    late File tempFile;
-    late Size size;
+    Uint8List? image;
     if (p.extension(event.imagePath) == '.pdf') {
       final file = File(event.imagePath);
-      late final Uint8List image;
 
       List<Uint8List> images = [];
 
@@ -60,17 +56,10 @@ class PdfAddFragmentBloc
         images.add(await page.toPng());
       }
       image = images.first;
-      Directory tempDir = await getTemporaryDirectory();
-
-      final filePath = '${tempDir.path}/temp.png';
-
-      tempFile = await File(filePath).writeAsBytes(image);
-    } else {
-      tempFile = File(event.imagePath);
     }
-    size = ImageSizeGetter.getSize(FileInput(tempFile));
-    isLandscape = size.width > size.height;
-    _screenState = _screenState.copyWith(imagePath: tempFile.path);
+
+    _screenState = _screenState.copyWith(
+        image: image != null ? File.fromRawPath(image) : File(event.imagePath));
     emitter(_screenState);
   }
 
@@ -84,7 +73,7 @@ class PdfAddFragmentBloc
           displayOrder: displayOrder,
           title: event.title,
           description: event.description,
-          imagePath: _screenState.imagePath!,
+          image: _screenState.image!,
           isLandscape: isLandscape,
           audioPath: _screenState.audioPath,
           duration: _screenState.duration);

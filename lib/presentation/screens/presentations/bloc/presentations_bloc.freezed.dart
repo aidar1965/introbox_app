@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'pdf_subject_bloc.dart';
+part of 'presentations_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,10 +15,10 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$PdfSubjectEvent {
+mixin _$PresentationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deleteSubject,
+    required TResult Function(int id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
@@ -26,7 +26,7 @@ mixin _$PdfSubjectEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deleteSubject,
+    TResult? Function(int id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
@@ -34,7 +34,7 @@ mixin _$PdfSubjectEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deleteSubject,
+    TResult Function(int id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
@@ -43,7 +43,8 @@ mixin _$PdfSubjectEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_EventDeleteSubject value) deleteSubject,
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
@@ -52,7 +53,7 @@ mixin _$PdfSubjectEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_EventDeleteSubject value)? deleteSubject,
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
@@ -60,7 +61,7 @@ mixin _$PdfSubjectEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_EventDeleteSubject value)? deleteSubject,
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
@@ -70,16 +71,16 @@ mixin _$PdfSubjectEvent {
 }
 
 /// @nodoc
-abstract class $PdfSubjectEventCopyWith<$Res> {
-  factory $PdfSubjectEventCopyWith(
-          PdfSubjectEvent value, $Res Function(PdfSubjectEvent) then) =
-      _$PdfSubjectEventCopyWithImpl<$Res, PdfSubjectEvent>;
+abstract class $PresentationEventCopyWith<$Res> {
+  factory $PresentationEventCopyWith(
+          PresentationEvent value, $Res Function(PresentationEvent) then) =
+      _$PresentationEventCopyWithImpl<$Res, PresentationEvent>;
 }
 
 /// @nodoc
-class _$PdfSubjectEventCopyWithImpl<$Res, $Val extends PdfSubjectEvent>
-    implements $PdfSubjectEventCopyWith<$Res> {
-  _$PdfSubjectEventCopyWithImpl(this._value, this._then);
+class _$PresentationEventCopyWithImpl<$Res, $Val extends PresentationEvent>
+    implements $PresentationEventCopyWith<$Res> {
+  _$PresentationEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -88,20 +89,20 @@ class _$PdfSubjectEventCopyWithImpl<$Res, $Val extends PdfSubjectEvent>
 }
 
 /// @nodoc
-abstract class _$$_EventDeleteSubjectCopyWith<$Res> {
-  factory _$$_EventDeleteSubjectCopyWith(_$_EventDeleteSubject value,
-          $Res Function(_$_EventDeleteSubject) then) =
-      __$$_EventDeleteSubjectCopyWithImpl<$Res>;
+abstract class _$$_EventDeletePresentationCopyWith<$Res> {
+  factory _$$_EventDeletePresentationCopyWith(_$_EventDeletePresentation value,
+          $Res Function(_$_EventDeletePresentation) then) =
+      __$$_EventDeletePresentationCopyWithImpl<$Res>;
   @useResult
   $Res call({int id});
 }
 
 /// @nodoc
-class __$$_EventDeleteSubjectCopyWithImpl<$Res>
-    extends _$PdfSubjectEventCopyWithImpl<$Res, _$_EventDeleteSubject>
-    implements _$$_EventDeleteSubjectCopyWith<$Res> {
-  __$$_EventDeleteSubjectCopyWithImpl(
-      _$_EventDeleteSubject _value, $Res Function(_$_EventDeleteSubject) _then)
+class __$$_EventDeletePresentationCopyWithImpl<$Res>
+    extends _$PresentationEventCopyWithImpl<$Res, _$_EventDeletePresentation>
+    implements _$$_EventDeletePresentationCopyWith<$Res> {
+  __$$_EventDeletePresentationCopyWithImpl(_$_EventDeletePresentation _value,
+      $Res Function(_$_EventDeletePresentation) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -109,7 +110,7 @@ class __$$_EventDeleteSubjectCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
   }) {
-    return _then(_$_EventDeleteSubject(
+    return _then(_$_EventDeletePresentation(
       null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -120,22 +121,22 @@ class __$$_EventDeleteSubjectCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventDeleteSubject implements _EventDeleteSubject {
-  const _$_EventDeleteSubject(this.id);
+class _$_EventDeletePresentation implements _EventDeletePresentation {
+  const _$_EventDeletePresentation(this.id);
 
   @override
   final int id;
 
   @override
   String toString() {
-    return 'PdfSubjectEvent.deleteSubject(id: $id)';
+    return 'PresentationEvent.deletePresentation(id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventDeleteSubject &&
+            other is _$_EventDeletePresentation &&
             (identical(other.id, id) || other.id == id));
   }
 
@@ -145,43 +146,44 @@ class _$_EventDeleteSubject implements _EventDeleteSubject {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EventDeleteSubjectCopyWith<_$_EventDeleteSubject> get copyWith =>
-      __$$_EventDeleteSubjectCopyWithImpl<_$_EventDeleteSubject>(
-          this, _$identity);
+  _$$_EventDeletePresentationCopyWith<_$_EventDeletePresentation>
+      get copyWith =>
+          __$$_EventDeletePresentationCopyWithImpl<_$_EventDeletePresentation>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deleteSubject,
+    required TResult Function(int id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
   }) {
-    return deleteSubject(id);
+    return deletePresentation(id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deleteSubject,
+    TResult? Function(int id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
   }) {
-    return deleteSubject?.call(id);
+    return deletePresentation?.call(id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deleteSubject,
+    TResult Function(int id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
     required TResult orElse(),
   }) {
-    if (deleteSubject != null) {
-      return deleteSubject(id);
+    if (deletePresentation != null) {
+      return deletePresentation(id);
     }
     return orElse();
   }
@@ -189,49 +191,51 @@ class _$_EventDeleteSubject implements _EventDeleteSubject {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_EventDeleteSubject value) deleteSubject,
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
     required TResult Function(_EventLoadMore value) loadMore,
   }) {
-    return deleteSubject(this);
+    return deletePresentation(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_EventDeleteSubject value)? deleteSubject,
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
   }) {
-    return deleteSubject?.call(this);
+    return deletePresentation?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_EventDeleteSubject value)? deleteSubject,
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
     required TResult orElse(),
   }) {
-    if (deleteSubject != null) {
-      return deleteSubject(this);
+    if (deletePresentation != null) {
+      return deletePresentation(this);
     }
     return orElse();
   }
 }
 
-abstract class _EventDeleteSubject implements PdfSubjectEvent {
-  const factory _EventDeleteSubject(final int id) = _$_EventDeleteSubject;
+abstract class _EventDeletePresentation implements PresentationEvent {
+  const factory _EventDeletePresentation(final int id) =
+      _$_EventDeletePresentation;
 
   int get id;
   @JsonKey(ignore: true)
-  _$$_EventDeleteSubjectCopyWith<_$_EventDeleteSubject> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_EventDeletePresentationCopyWith<_$_EventDeletePresentation>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -244,7 +248,7 @@ abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
-    extends _$PdfSubjectEventCopyWithImpl<$Res, _$_EventInitialDataRequested>
+    extends _$PresentationEventCopyWithImpl<$Res, _$_EventInitialDataRequested>
     implements _$$_EventInitialDataRequestedCopyWith<$Res> {
   __$$_EventInitialDataRequestedCopyWithImpl(
       _$_EventInitialDataRequested _value,
@@ -259,7 +263,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
 
   @override
   String toString() {
-    return 'PdfSubjectEvent.initialDataRequested()';
+    return 'PresentationEvent.initialDataRequested()';
   }
 
   @override
@@ -275,7 +279,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deleteSubject,
+    required TResult Function(int id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
@@ -286,7 +290,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deleteSubject,
+    TResult? Function(int id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
@@ -297,7 +301,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deleteSubject,
+    TResult Function(int id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
@@ -312,7 +316,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_EventDeleteSubject value) deleteSubject,
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
@@ -324,7 +329,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_EventDeleteSubject value)? deleteSubject,
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
@@ -335,7 +340,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_EventDeleteSubject value)? deleteSubject,
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
@@ -348,7 +353,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   }
 }
 
-abstract class _EventInitialDataRequested implements PdfSubjectEvent {
+abstract class _EventInitialDataRequested implements PresentationEvent {
   const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
 }
 
@@ -361,7 +366,7 @@ abstract class _$$_EventReloadDataCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventReloadDataCopyWithImpl<$Res>
-    extends _$PdfSubjectEventCopyWithImpl<$Res, _$_EventReloadData>
+    extends _$PresentationEventCopyWithImpl<$Res, _$_EventReloadData>
     implements _$$_EventReloadDataCopyWith<$Res> {
   __$$_EventReloadDataCopyWithImpl(
       _$_EventReloadData _value, $Res Function(_$_EventReloadData) _then)
@@ -375,7 +380,7 @@ class _$_EventReloadData implements _EventReloadData {
 
   @override
   String toString() {
-    return 'PdfSubjectEvent.reloadData()';
+    return 'PresentationEvent.reloadData()';
   }
 
   @override
@@ -390,7 +395,7 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deleteSubject,
+    required TResult Function(int id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
@@ -401,7 +406,7 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deleteSubject,
+    TResult? Function(int id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
@@ -412,7 +417,7 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deleteSubject,
+    TResult Function(int id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
@@ -427,7 +432,8 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_EventDeleteSubject value) deleteSubject,
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
@@ -439,7 +445,7 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_EventDeleteSubject value)? deleteSubject,
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
@@ -450,7 +456,7 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_EventDeleteSubject value)? deleteSubject,
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
@@ -463,7 +469,7 @@ class _$_EventReloadData implements _EventReloadData {
   }
 }
 
-abstract class _EventReloadData implements PdfSubjectEvent {
+abstract class _EventReloadData implements PresentationEvent {
   const factory _EventReloadData() = _$_EventReloadData;
 }
 
@@ -476,7 +482,7 @@ abstract class _$$_EventLoadMoreCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventLoadMoreCopyWithImpl<$Res>
-    extends _$PdfSubjectEventCopyWithImpl<$Res, _$_EventLoadMore>
+    extends _$PresentationEventCopyWithImpl<$Res, _$_EventLoadMore>
     implements _$$_EventLoadMoreCopyWith<$Res> {
   __$$_EventLoadMoreCopyWithImpl(
       _$_EventLoadMore _value, $Res Function(_$_EventLoadMore) _then)
@@ -490,7 +496,7 @@ class _$_EventLoadMore implements _EventLoadMore {
 
   @override
   String toString() {
-    return 'PdfSubjectEvent.loadMore()';
+    return 'PresentationEvent.loadMore()';
   }
 
   @override
@@ -505,7 +511,7 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deleteSubject,
+    required TResult Function(int id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
@@ -516,7 +522,7 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deleteSubject,
+    TResult? Function(int id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
@@ -527,7 +533,7 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deleteSubject,
+    TResult Function(int id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
@@ -542,7 +548,8 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_EventDeleteSubject value) deleteSubject,
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
@@ -554,7 +561,7 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_EventDeleteSubject value)? deleteSubject,
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
@@ -565,7 +572,7 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_EventDeleteSubject value)? deleteSubject,
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
@@ -578,16 +585,16 @@ class _$_EventLoadMore implements _EventLoadMore {
   }
 }
 
-abstract class _EventLoadMore implements PdfSubjectEvent {
+abstract class _EventLoadMore implements PresentationEvent {
   const factory _EventLoadMore() = _$_EventLoadMore;
 }
 
 /// @nodoc
-mixin _$PdfSubjectState {
+mixin _$PresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<Subject> subjects) screenState,
+    required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() loadingError,
   }) =>
@@ -595,7 +602,7 @@ mixin _$PdfSubjectState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Subject> subjects)? screenState,
+    TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? loadingError,
   }) =>
@@ -603,7 +610,7 @@ mixin _$PdfSubjectState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Subject> subjects)? screenState,
+    TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? loadingError,
     required TResult orElse(),
@@ -637,16 +644,16 @@ mixin _$PdfSubjectState {
 }
 
 /// @nodoc
-abstract class $PdfSubjectStateCopyWith<$Res> {
-  factory $PdfSubjectStateCopyWith(
-          PdfSubjectState value, $Res Function(PdfSubjectState) then) =
-      _$PdfSubjectStateCopyWithImpl<$Res, PdfSubjectState>;
+abstract class $PresentationStateCopyWith<$Res> {
+  factory $PresentationStateCopyWith(
+          PresentationState value, $Res Function(PresentationState) then) =
+      _$PresentationStateCopyWithImpl<$Res, PresentationState>;
 }
 
 /// @nodoc
-class _$PdfSubjectStateCopyWithImpl<$Res, $Val extends PdfSubjectState>
-    implements $PdfSubjectStateCopyWith<$Res> {
-  _$PdfSubjectStateCopyWithImpl(this._value, this._then);
+class _$PresentationStateCopyWithImpl<$Res, $Val extends PresentationState>
+    implements $PresentationStateCopyWith<$Res> {
+  _$PresentationStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -663,7 +670,7 @@ abstract class _$$_StatePendingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_StatePendingCopyWithImpl<$Res>
-    extends _$PdfSubjectStateCopyWithImpl<$Res, _$_StatePending>
+    extends _$PresentationStateCopyWithImpl<$Res, _$_StatePending>
     implements _$$_StatePendingCopyWith<$Res> {
   __$$_StatePendingCopyWithImpl(
       _$_StatePending _value, $Res Function(_$_StatePending) _then)
@@ -677,7 +684,7 @@ class _$_StatePending implements _StatePending {
 
   @override
   String toString() {
-    return 'PdfSubjectState.pending()';
+    return 'PresentationState.pending()';
   }
 
   @override
@@ -693,7 +700,7 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<Subject> subjects) screenState,
+    required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() loadingError,
   }) {
@@ -704,7 +711,7 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Subject> subjects)? screenState,
+    TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? loadingError,
   }) {
@@ -715,7 +722,7 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Subject> subjects)? screenState,
+    TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? loadingError,
     required TResult orElse(),
@@ -764,7 +771,7 @@ class _$_StatePending implements _StatePending {
   }
 }
 
-abstract class _StatePending implements PdfSubjectState {
+abstract class _StatePending implements PresentationState {
   const factory _StatePending() = _$_StatePending;
 }
 
@@ -774,12 +781,12 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
           _$_ScreenState value, $Res Function(_$_ScreenState) then) =
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Subject> subjects});
+  $Res call({List<Presentation> presentations});
 }
 
 /// @nodoc
 class __$$_ScreenStateCopyWithImpl<$Res>
-    extends _$PdfSubjectStateCopyWithImpl<$Res, _$_ScreenState>
+    extends _$PresentationStateCopyWithImpl<$Res, _$_ScreenState>
     implements _$$_ScreenStateCopyWith<$Res> {
   __$$_ScreenStateCopyWithImpl(
       _$_ScreenState _value, $Res Function(_$_ScreenState) _then)
@@ -788,13 +795,13 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? subjects = null,
+    Object? presentations = null,
   }) {
     return _then(_$_ScreenState(
-      subjects: null == subjects
-          ? _value._subjects
-          : subjects // ignore: cast_nullable_to_non_nullable
-              as List<Subject>,
+      presentations: null == presentations
+          ? _value._presentations
+          : presentations // ignore: cast_nullable_to_non_nullable
+              as List<Presentation>,
     ));
   }
 }
@@ -802,20 +809,20 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ScreenState implements _ScreenState {
-  const _$_ScreenState({required final List<Subject> subjects})
-      : _subjects = subjects;
+  const _$_ScreenState({required final List<Presentation> presentations})
+      : _presentations = presentations;
 
-  final List<Subject> _subjects;
+  final List<Presentation> _presentations;
   @override
-  List<Subject> get subjects {
-    if (_subjects is EqualUnmodifiableListView) return _subjects;
+  List<Presentation> get presentations {
+    if (_presentations is EqualUnmodifiableListView) return _presentations;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_subjects);
+    return EqualUnmodifiableListView(_presentations);
   }
 
   @override
   String toString() {
-    return 'PdfSubjectState.screenState(subjects: $subjects)';
+    return 'PresentationState.screenState(presentations: $presentations)';
   }
 
   @override
@@ -823,12 +830,13 @@ class _$_ScreenState implements _ScreenState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ScreenState &&
-            const DeepCollectionEquality().equals(other._subjects, _subjects));
+            const DeepCollectionEquality()
+                .equals(other._presentations, _presentations));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_subjects));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_presentations));
 
   @JsonKey(ignore: true)
   @override
@@ -840,35 +848,35 @@ class _$_ScreenState implements _ScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<Subject> subjects) screenState,
+    required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() loadingError,
   }) {
-    return screenState(subjects);
+    return screenState(presentations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Subject> subjects)? screenState,
+    TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? loadingError,
   }) {
-    return screenState?.call(subjects);
+    return screenState?.call(presentations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Subject> subjects)? screenState,
+    TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? loadingError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(subjects);
+      return screenState(presentations);
     }
     return orElse();
   }
@@ -911,11 +919,11 @@ class _$_ScreenState implements _ScreenState {
   }
 }
 
-abstract class _ScreenState implements PdfSubjectState {
-  const factory _ScreenState({required final List<Subject> subjects}) =
-      _$_ScreenState;
+abstract class _ScreenState implements PresentationState {
+  const factory _ScreenState(
+      {required final List<Presentation> presentations}) = _$_ScreenState;
 
-  List<Subject> get subjects;
+  List<Presentation> get presentations;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -932,7 +940,7 @@ abstract class _$$_StateRequestErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_StateRequestErrorCopyWithImpl<$Res>
-    extends _$PdfSubjectStateCopyWithImpl<$Res, _$_StateRequestError>
+    extends _$PresentationStateCopyWithImpl<$Res, _$_StateRequestError>
     implements _$$_StateRequestErrorCopyWith<$Res> {
   __$$_StateRequestErrorCopyWithImpl(
       _$_StateRequestError _value, $Res Function(_$_StateRequestError) _then)
@@ -962,7 +970,7 @@ class _$_StateRequestError implements _StateRequestError {
 
   @override
   String toString() {
-    return 'PdfSubjectState.requestError(errorText: $errorText)';
+    return 'PresentationState.requestError(errorText: $errorText)';
   }
 
   @override
@@ -988,7 +996,7 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<Subject> subjects) screenState,
+    required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() loadingError,
   }) {
@@ -999,7 +1007,7 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Subject> subjects)? screenState,
+    TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? loadingError,
   }) {
@@ -1010,7 +1018,7 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Subject> subjects)? screenState,
+    TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? loadingError,
     required TResult orElse(),
@@ -1059,7 +1067,7 @@ class _$_StateRequestError implements _StateRequestError {
   }
 }
 
-abstract class _StateRequestError implements PdfSubjectState {
+abstract class _StateRequestError implements PresentationState {
   const factory _StateRequestError({final String? errorText}) =
       _$_StateRequestError;
 
@@ -1078,7 +1086,7 @@ abstract class _$$_StateLoadingErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_StateLoadingErrorCopyWithImpl<$Res>
-    extends _$PdfSubjectStateCopyWithImpl<$Res, _$_StateLoadingError>
+    extends _$PresentationStateCopyWithImpl<$Res, _$_StateLoadingError>
     implements _$$_StateLoadingErrorCopyWith<$Res> {
   __$$_StateLoadingErrorCopyWithImpl(
       _$_StateLoadingError _value, $Res Function(_$_StateLoadingError) _then)
@@ -1092,7 +1100,7 @@ class _$_StateLoadingError implements _StateLoadingError {
 
   @override
   String toString() {
-    return 'PdfSubjectState.loadingError()';
+    return 'PresentationState.loadingError()';
   }
 
   @override
@@ -1108,7 +1116,7 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(List<Subject> subjects) screenState,
+    required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() loadingError,
   }) {
@@ -1119,7 +1127,7 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Subject> subjects)? screenState,
+    TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? loadingError,
   }) {
@@ -1130,7 +1138,7 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Subject> subjects)? screenState,
+    TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? loadingError,
     required TResult orElse(),
@@ -1179,6 +1187,6 @@ class _$_StateLoadingError implements _StateLoadingError {
   }
 }
 
-abstract class _StateLoadingError implements PdfSubjectState {
+abstract class _StateLoadingError implements PresentationState {
   const factory _StateLoadingError() = _$_StateLoadingError;
 }

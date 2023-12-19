@@ -35,10 +35,19 @@ class ProfileScreen extends StatelessWidget {
             pending: (_) => const Center(
               child: CircularProgressIndicator(),
             ),
-            loadingError: (_) => CommonLoadingErrorWidget(
-              onPressed: () => BlocProvider.of<ProfileBloc>(context)
-                  .add(const ProfileEvent.dataRequested()),
-            ),
+            loadingError: (_) => Stack(children: [
+              CommonLoadingErrorWidget(
+                onPressed: () => BlocProvider.of<ProfileBloc>(context)
+                    .add(const ProfileEvent.dataRequested()),
+              ),
+              Positioned(
+                  right: 20,
+                  top: 20,
+                  child: IconButton(
+                      onPressed: () => BlocProvider.of<ProfileBloc>(context)
+                          .add(const ProfileEvent.logout()),
+                      icon: const Icon(Icons.logout)))
+            ]),
             screenState: (state) {
               return _ScreenView(
                 firstName: state.user.firstName ?? '',

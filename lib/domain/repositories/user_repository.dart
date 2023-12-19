@@ -108,9 +108,11 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
   Future<void> login({required String email, required String password}) async {
     final userWithTokens = await api.login(email: email, password: password);
     _user = userWithTokens.user;
-    print(_user);
+
     await localCache.saveTokenPair(tokenPair: userWithTokens.tokens);
     await localCache.setUser(user: _user!);
+    api.setTokens(
+        userWithTokens.tokens.accessToken, userWithTokens.tokens.refreshToken);
     notifyListeners();
   }
 

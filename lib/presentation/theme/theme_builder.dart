@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
 import '../values/dynamic_palette.dart';
 import 'theme_type.dart';
@@ -38,6 +39,7 @@ class ThemeBuilder {
 
   // ---------------------------------------------------------------------------
   static ThemeData _getLightTheme(DynamicPalette palette) => ThemeData(
+        useMaterial3: true,
         primarySwatch: palette.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         popupMenuTheme: PopupMenuThemeData(
@@ -45,7 +47,6 @@ class ThemeBuilder {
         ),
 
         primaryColor: palette.accent,
-        useMaterial3: Platform.isAndroid,
 
         scaffoldBackgroundColor: palette.background1,
         navigationRailTheme: NavigationRailThemeData(
@@ -57,7 +58,7 @@ class ThemeBuilder {
             selectedLabelTextStyle: TextStyle(
                 color: palette.accent,
                 fontWeight: FontWeight.w600,
-                fontSize: 18)),
+                fontSize: 16)),
 
         listTileTheme: ListTileThemeData(
             subtitleTextStyle: TextStyle(color: palette.text2)),
@@ -127,9 +128,12 @@ class ThemeBuilder {
 
         //
         //
+
         checkboxTheme: CheckboxThemeData(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
+          shape: RoundedRectangleBorder(
+              side: BorderSide(color: palette.accent),
+              borderRadius: BorderRadius.circular(4)),
+        ),
         //
         //
         dialogTheme: DialogTheme(
@@ -275,6 +279,7 @@ class ThemeBuilder {
 
   // ---------------------------------------------------------------------------
   static ThemeData _getDarkTheme(DynamicPalette palette) => ThemeData(
+        useMaterial3: true,
         primarySwatch: palette.primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         popupMenuTheme: PopupMenuThemeData(
@@ -282,7 +287,6 @@ class ThemeBuilder {
         ),
 
         primaryColor: palette.accent,
-        useMaterial3: Platform.isAndroid,
 
         scaffoldBackgroundColor: palette.background1,
         navigationRailTheme: NavigationRailThemeData(
@@ -292,7 +296,7 @@ class ThemeBuilder {
             selectedLabelTextStyle: TextStyle(
                 color: palette.alwaysWhite,
                 fontWeight: FontWeight.w600,
-                fontSize: 18)),
+                fontSize: 16)),
 
         listTileTheme: ListTileThemeData(
             subtitleTextStyle: TextStyle(color: palette.text2)),
@@ -361,6 +365,7 @@ class ThemeBuilder {
         //
         //
         checkboxTheme: CheckboxThemeData(
+            side: BorderSide(color: palette.alwaysWhite),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))),
         //

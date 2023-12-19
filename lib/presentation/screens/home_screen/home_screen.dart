@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 routes: const [
                   PdfCoursesRoute(),
                   //    SubjectsRoute(),
-                  PdfSubjectsRoute(),
+                  PresentationsRoute(),
                   //    FragmentsRoute(),
                   ProfileRoute()
                 ],
@@ -78,13 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               minExtendedWidth: 160,
                               destinations: [
                                 const NavigationRailDestination(
-                                    label: Text('Публикации'),
+                                    label: Text('Курсы'),
                                     icon: Icon(Icons.list)),
                                 // const NavigationRailDestination(
                                 //     label: Text('Темы'),
                                 //     icon: Icon(Icons.list)),
                                 const NavigationRailDestination(
-                                    label: Text('Темы'),
+                                    label: Text('Презентации'),
                                     icon: Icon(Icons.picture_as_pdf)),
                                 // const NavigationRailDestination(
                                 //     label: Text('Записи'),

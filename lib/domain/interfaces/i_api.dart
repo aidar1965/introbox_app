@@ -8,6 +8,7 @@ import '../models/course.dart';
 import '../models/fragment_category.dart';
 import '../models/pdf_fragment.dart';
 import '../models/responses/paginated_courses.dart';
+import '../models/responses/paginated_presentations.dart';
 import '../models/responses/paginated_subjects.dart';
 import '../models/subject_category.dart';
 import '../models/user.dart';
@@ -53,6 +54,14 @@ abstract class IApi {
       required List<FragmentRequestData> fragments,
       int? duration});
 
+  Future<void> addPresentation(
+      {required String pdfFile,
+      required String title,
+      required bool isAudio,
+      String? description,
+      required List<FragmentRequestData> fragments,
+      int? duration});
+
   Future<void> addImageSubject(
       {required String title,
       String? description,
@@ -94,7 +103,7 @@ abstract class IApi {
     required int displayOrder,
     required String title,
     required String description,
-    required String imagePath,
+    required File image,
     required bool isLandscape,
     String? audioPath,
     int? duration,
@@ -140,4 +149,27 @@ abstract class IApi {
   Future<void> updateFragmentCategory({required int id, required String name});
   Future<void> addFragmentCategory({required String name});
   Future<void> deleteFragmentCategory({required int id});
+
+  Future<PaginatedPresentations> getPresentations(
+      {int? offset, int? limit, int? categoryId});
+
+  deletePresentation({required int id}) {}
+
+  Future<List<PdfFragment>> getPresentationFragments({required int id});
+
+  updatePresentation(
+      {required int id, required String title, required String description}) {}
+
+  reorderPresentationFragments(
+      {required int presentation, required List<int> fragmentsIds}) {}
+
+  addPresentationFragment(
+      {required int presentationId,
+      required int displayOrder,
+      required String title,
+      required String description,
+      required File image,
+      required bool isLandscape,
+      String? audioPath,
+      int? duration}) {}
 }

@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
-import 'domain/constants.dart';
+//import 'domain/constants.dart';
 import 'domain/locator/locator.dart';
 import 'presentation/auto_router/app_router.dart';
 
@@ -12,12 +12,12 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   // Must add this line.
 
-  await Constants.init();
+  // await Constants.init();
 
   setup();
 
   await getIt.allReady();
-  print(getIt<IUserRepository>().user?.lastName ?? 'No user or uninitialized');
+  print(getIt<IUserRepository>().user?.lastName ?? 'No user was uninitialized');
 
   runApp(EasyLocalization(
       supportedLocales: const [

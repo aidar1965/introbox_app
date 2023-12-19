@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moki_tutor/presentation/common/common_functions.dart';
+import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
 import '../../auto_router/app_router.dart';
+import '../../common/common_elevated_button.dart';
+import '../../common/common_text_field.dart';
 import 'bloc/login_bloc.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -18,7 +21,7 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) => state.mapOrNull(
             loginError: (state) => _onLoginError(context, state.errorText),
-            loginSuccess: (_) => context.router.push(const CoursesRoute())),
+            loginSuccess: (_) => context.router.push(PdfAddCourseRoute())),
         builder: (context, state) {
           return Scaffold(
             body: Center(
@@ -29,25 +32,31 @@ class LoginScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextField(
-                        controller: emailController,
-                        decoration: const InputDecoration(hintText: 'Email'),
+                      Text('Вход', style: context.style18w600$title2),
+                      const SizedBox(
+                        height: 24,
                       ),
-                      TextField(
+                      CommonTextField(
+                          controller: emailController, labelText: 'Email'),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      CommonTextField(
                         controller: passwordController,
-                        decoration: const InputDecoration(hintText: 'Пароль'),
+                        labelText: 'Пароль',
+                        obscureText: true,
                       ),
                       const SizedBox(
                         height: 30,
                       ),
-                      ElevatedButton(
+                      CommonElevatedButton(
                           onPressed: () {
                             BlocProvider.of<LoginBloc>(context).add(
                                 LoginEvent.login(
                                     email: emailController.text,
                                     password: passwordController.text));
                           },
-                          child: const Text('Войти')),
+                          text: 'Войти'),
                       const SizedBox(
                         height: 30,
                       ),

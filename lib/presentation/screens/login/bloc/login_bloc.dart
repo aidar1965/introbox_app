@@ -23,11 +23,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await userRepository.login(email: event.email, password: event.password);
       emitter(const LoginState.loginSuccess());
-    } on RequestException catch (e) {
-      emitter(LoginState.loginError(
-          errorText: e.response!['message'] as String? ?? 'Ошибка'));
     } on Object {
       emitter(const LoginState.loginError(errorText: 'Ошибка'));
+      rethrow;
     }
   }
 }

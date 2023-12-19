@@ -4,6 +4,7 @@ import '../../../domain/models/course.dart';
 import '../../../domain/models/course_category.dart';
 import '../../../domain/models/fragment_category.dart';
 import '../../../domain/models/pdf_fragment.dart';
+import '../../../domain/models/presentation.dart';
 import '../../../domain/models/subject.dart';
 import '../../../domain/models/subject_category.dart';
 import '../../../domain/models/token_pair.dart';
@@ -13,6 +14,7 @@ import '../models/responses/course_category_dto.dart';
 import '../models/responses/course_dto.dart';
 import '../models/responses/fragment_category_dto.dart';
 import '../models/responses/pdf_fragment_dto.dart';
+import '../models/responses/presentation_dto.dart';
 import '../models/responses/subject_category_dto.dart';
 import '../models/responses/subject_dto.dart';
 import '../models/responses/user_dto.dart';
@@ -88,5 +90,21 @@ class ApiDataMapper {
 
   SubjectCategory mapSubjectCategory(SubjectCategoryDto dto) {
     return SubjectCategory(name: dto.name, id: dto.id);
+  }
+
+  Presentation mapPresentation(PresentationDto dto) {
+    return Presentation(
+        id: dto.id,
+        title: dto.title,
+        description: dto.description,
+        firstImage: dto.firstImage,
+        isAudio: dto.isAudio,
+        isPublic: dto.isPublic,
+        includePdf: dto.includePdf,
+        freeMode: dto.freeMode,
+        createdAt: DateTime.parse(dto.createdAt),
+        pdfFile: dto.pdfFile,
+        links: dto.links,
+        isPublished: dto.isPublished);
   }
 }

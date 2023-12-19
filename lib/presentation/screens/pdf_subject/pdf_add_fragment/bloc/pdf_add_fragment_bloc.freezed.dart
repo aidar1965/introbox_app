@@ -721,8 +721,8 @@ abstract class _EventDeleteAudio implements PdfAddFragmentEvent {
 mixin _$PdfAddFragmentState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? imagePath, String? audioPath,
-            int? duration, bool isSavePending)
+    required TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
@@ -730,8 +730,8 @@ mixin _$PdfAddFragmentState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult? Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
@@ -739,8 +739,8 @@ mixin _$PdfAddFragmentState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
@@ -751,21 +751,21 @@ mixin _$PdfAddFragmentState {
   TResult map<TResult extends Object?>({
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestSuccess value) requestSuccess,
-    required TResult Function(_StateRequesError value) requestError,
+    required TResult Function(_StateRequestError value) requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestSuccess value)? requestSuccess,
-    TResult? Function(_StateRequesError value)? requestError,
+    TResult? Function(_StateRequestError value)? requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestSuccess value)? requestSuccess,
-    TResult Function(_StateRequesError value)? requestError,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -796,10 +796,7 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {String? imagePath,
-      String? audioPath,
-      int? duration,
-      bool isSavePending});
+      {File? image, String? audioPath, int? duration, bool isSavePending});
 }
 
 /// @nodoc
@@ -813,16 +810,16 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? imagePath = freezed,
+    Object? image = freezed,
     Object? audioPath = freezed,
     Object? duration = freezed,
     Object? isSavePending = null,
   }) {
     return _then(_$_ScreenState(
-      imagePath: freezed == imagePath
-          ? _value.imagePath
-          : imagePath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as File?,
       audioPath: freezed == audioPath
           ? _value.audioPath
           : audioPath // ignore: cast_nullable_to_non_nullable
@@ -843,13 +840,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 
 class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   const _$_ScreenState(
-      {this.imagePath,
-      this.audioPath,
-      this.duration,
-      this.isSavePending = false});
+      {this.image, this.audioPath, this.duration, this.isSavePending = false});
 
   @override
-  final String? imagePath;
+  final File? image;
   @override
   final String? audioPath;
   @override
@@ -860,7 +854,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PdfAddFragmentState.screenState(imagePath: $imagePath, audioPath: $audioPath, duration: $duration, isSavePending: $isSavePending)';
+    return 'PdfAddFragmentState.screenState(image: $image, audioPath: $audioPath, duration: $duration, isSavePending: $isSavePending)';
   }
 
   @override
@@ -868,7 +862,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PdfAddFragmentState.screenState'))
-      ..add(DiagnosticsProperty('imagePath', imagePath))
+      ..add(DiagnosticsProperty('image', image))
       ..add(DiagnosticsProperty('audioPath', audioPath))
       ..add(DiagnosticsProperty('duration', duration))
       ..add(DiagnosticsProperty('isSavePending', isSavePending));
@@ -879,8 +873,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ScreenState &&
-            (identical(other.imagePath, imagePath) ||
-                other.imagePath == imagePath) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.audioPath, audioPath) ||
                 other.audioPath == audioPath) &&
             (identical(other.duration, duration) ||
@@ -891,7 +884,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, imagePath, audioPath, duration, isSavePending);
+      Object.hash(runtimeType, image, audioPath, duration, isSavePending);
 
   @JsonKey(ignore: true)
   @override
@@ -902,39 +895,39 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? imagePath, String? audioPath,
-            int? duration, bool isSavePending)
+    required TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
   }) {
-    return screenState(imagePath, audioPath, duration, isSavePending);
+    return screenState(image, audioPath, duration, isSavePending);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult? Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
   }) {
-    return screenState?.call(imagePath, audioPath, duration, isSavePending);
+    return screenState?.call(image, audioPath, duration, isSavePending);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(imagePath, audioPath, duration, isSavePending);
+      return screenState(image, audioPath, duration, isSavePending);
     }
     return orElse();
   }
@@ -944,7 +937,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   TResult map<TResult extends Object?>({
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestSuccess value) requestSuccess,
-    required TResult Function(_StateRequesError value) requestError,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return screenState(this);
   }
@@ -954,7 +947,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestSuccess value)? requestSuccess,
-    TResult? Function(_StateRequesError value)? requestError,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return screenState?.call(this);
   }
@@ -964,7 +957,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestSuccess value)? requestSuccess,
-    TResult Function(_StateRequesError value)? requestError,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
@@ -976,12 +969,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 
 abstract class _ScreenState implements PdfAddFragmentState {
   const factory _ScreenState(
-      {final String? imagePath,
+      {final File? image,
       final String? audioPath,
       final int? duration,
       final bool isSavePending}) = _$_ScreenState;
 
-  String? get imagePath;
+  File? get image;
   String? get audioPath;
   int? get duration;
   bool get isSavePending;
@@ -1037,8 +1030,8 @@ class _$_StateRequestSuccess
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? imagePath, String? audioPath,
-            int? duration, bool isSavePending)
+    required TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
@@ -1049,8 +1042,8 @@ class _$_StateRequestSuccess
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult? Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
@@ -1061,8 +1054,8 @@ class _$_StateRequestSuccess
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
@@ -1079,7 +1072,7 @@ class _$_StateRequestSuccess
   TResult map<TResult extends Object?>({
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestSuccess value) requestSuccess,
-    required TResult Function(_StateRequesError value) requestError,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return requestSuccess(this);
   }
@@ -1089,7 +1082,7 @@ class _$_StateRequestSuccess
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestSuccess value)? requestSuccess,
-    TResult? Function(_StateRequesError value)? requestError,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return requestSuccess?.call(this);
   }
@@ -1099,7 +1092,7 @@ class _$_StateRequestSuccess
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestSuccess value)? requestSuccess,
-    TResult Function(_StateRequesError value)? requestError,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (requestSuccess != null) {
@@ -1114,20 +1107,20 @@ abstract class _StateRequestSuccess implements PdfAddFragmentState {
 }
 
 /// @nodoc
-abstract class _$$_StateRequesErrorCopyWith<$Res> {
-  factory _$$_StateRequesErrorCopyWith(
-          _$_StateRequesError value, $Res Function(_$_StateRequesError) then) =
-      __$$_StateRequesErrorCopyWithImpl<$Res>;
+abstract class _$$_StateRequestErrorCopyWith<$Res> {
+  factory _$$_StateRequestErrorCopyWith(_$_StateRequestError value,
+          $Res Function(_$_StateRequestError) then) =
+      __$$_StateRequestErrorCopyWithImpl<$Res>;
   @useResult
   $Res call({String? errorText});
 }
 
 /// @nodoc
-class __$$_StateRequesErrorCopyWithImpl<$Res>
-    extends _$PdfAddFragmentStateCopyWithImpl<$Res, _$_StateRequesError>
-    implements _$$_StateRequesErrorCopyWith<$Res> {
-  __$$_StateRequesErrorCopyWithImpl(
-      _$_StateRequesError _value, $Res Function(_$_StateRequesError) _then)
+class __$$_StateRequestErrorCopyWithImpl<$Res>
+    extends _$PdfAddFragmentStateCopyWithImpl<$Res, _$_StateRequestError>
+    implements _$$_StateRequestErrorCopyWith<$Res> {
+  __$$_StateRequestErrorCopyWithImpl(
+      _$_StateRequestError _value, $Res Function(_$_StateRequestError) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1135,7 +1128,7 @@ class __$$_StateRequesErrorCopyWithImpl<$Res>
   $Res call({
     Object? errorText = freezed,
   }) {
-    return _then(_$_StateRequesError(
+    return _then(_$_StateRequestError(
       errorText: freezed == errorText
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
@@ -1146,10 +1139,10 @@ class __$$_StateRequesErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateRequesError
+class _$_StateRequestError
     with DiagnosticableTreeMixin
-    implements _StateRequesError {
-  const _$_StateRequesError({this.errorText});
+    implements _StateRequestError {
+  const _$_StateRequestError({this.errorText});
 
   @override
   final String? errorText;
@@ -1171,7 +1164,7 @@ class _$_StateRequesError
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateRequesError &&
+            other is _$_StateRequestError &&
             (identical(other.errorText, errorText) ||
                 other.errorText == errorText));
   }
@@ -1182,14 +1175,15 @@ class _$_StateRequesError
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StateRequesErrorCopyWith<_$_StateRequesError> get copyWith =>
-      __$$_StateRequesErrorCopyWithImpl<_$_StateRequesError>(this, _$identity);
+  _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
+      __$$_StateRequestErrorCopyWithImpl<_$_StateRequestError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? imagePath, String? audioPath,
-            int? duration, bool isSavePending)
+    required TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
@@ -1200,8 +1194,8 @@ class _$_StateRequesError
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult? Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
@@ -1212,8 +1206,8 @@ class _$_StateRequesError
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? imagePath, String? audioPath, int? duration,
-            bool isSavePending)?
+    TResult Function(
+            File? image, String? audioPath, int? duration, bool isSavePending)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
@@ -1230,7 +1224,7 @@ class _$_StateRequesError
   TResult map<TResult extends Object?>({
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestSuccess value) requestSuccess,
-    required TResult Function(_StateRequesError value) requestError,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return requestError(this);
   }
@@ -1240,7 +1234,7 @@ class _$_StateRequesError
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestSuccess value)? requestSuccess,
-    TResult? Function(_StateRequesError value)? requestError,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return requestError?.call(this);
   }
@@ -1250,7 +1244,7 @@ class _$_StateRequesError
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestSuccess value)? requestSuccess,
-    TResult Function(_StateRequesError value)? requestError,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (requestError != null) {
@@ -1260,12 +1254,12 @@ class _$_StateRequesError
   }
 }
 
-abstract class _StateRequesError implements PdfAddFragmentState {
-  const factory _StateRequesError({final String? errorText}) =
-      _$_StateRequesError;
+abstract class _StateRequestError implements PdfAddFragmentState {
+  const factory _StateRequestError({final String? errorText}) =
+      _$_StateRequestError;
 
   String? get errorText;
   @JsonKey(ignore: true)
-  _$$_StateRequesErrorCopyWith<_$_StateRequesError> get copyWith =>
+  _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
       throw _privateConstructorUsedError;
 }

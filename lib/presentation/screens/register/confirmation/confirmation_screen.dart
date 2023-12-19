@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
+import '../../../common/common_text_field.dart';
 import 'bloc/confirmation_bloc.dart';
 
 @RoutePage()
@@ -24,8 +25,12 @@ class ConfirmationScreen extends StatelessWidget {
               create: (context) => ConfirmationBloc(),
               child: BlocConsumer<ConfirmationBloc, ConfirmationState>(
                   listener: (context, state) => state.mapOrNull(
-                      confirmationSuccess: (state) =>
-                          context.router.popAndPush(const LoginRoute()),
+                      confirmationSuccess: (state) {
+                        CommonFunctions.showMessage(context,
+                            'Вы успешно зарегистрировались', Reason.neutral);
+                        context.router.popAndPush(const LoginRoute());
+                        return null;
+                      },
                       confirmationError: (state) =>
                           CommonFunctions.showStyledDialog(
                               context: context,
@@ -45,11 +50,12 @@ class ConfirmationScreen extends StatelessWidget {
                           Column(mainAxisSize: MainAxisSize.min, children: [
                             Text(
                                 'Введите код, полученный для ротвержения регистрации на Вашу почту $email'),
-                            TextField(
-                              controller: confirmationCodeController,
-                              decoration: const InputDecoration(
-                                  hintText: 'Код потверждения'),
+                            const SizedBox(
+                              height: 30,
                             ),
+                            CommonTextField(
+                                controller: confirmationCodeController,
+                                labelText: 'Код потверждения'),
                             const SizedBox(
                               height: 30,
                             ),

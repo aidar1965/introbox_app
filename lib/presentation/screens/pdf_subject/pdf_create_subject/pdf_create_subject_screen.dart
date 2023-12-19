@@ -13,6 +13,7 @@ import 'package:path/path.dart';
 import 'package:moki_tutor/presentation/auto_router/app_router.dart';
 import 'package:moki_tutor/presentation/common/common_functions.dart';
 
+import '../../../../domain/models/pdf_fragment_sample.dart';
 import '../../../common/common_elevated_button.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';

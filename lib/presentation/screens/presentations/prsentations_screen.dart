@@ -6,26 +6,27 @@ import 'package:intl/intl.dart';
 import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
 import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
-import '../../../../domain/models/subject.dart';
-import '../../../auto_router/app_router.dart';
-import '../../../common/common_functions.dart';
-import 'bloc/pdf_subject_bloc.dart';
+import '../../../../domain/models/presentation.dart';
+
+import '../../auto_router/app_router.dart';
+import '../../common/common_functions.dart';
+import 'bloc/presentations_bloc.dart';
 
 @RoutePage()
-class PdfSubjectsScreen extends StatelessWidget {
-  const PdfSubjectsScreen({Key? key}) : super(key: key);
+class PresentationsScreen extends StatelessWidget {
+  const PresentationsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PdfSubjectBloc(),
-      child: BlocConsumer<PdfSubjectBloc, PdfSubjectState>(
+      create: (context) => PresentationBloc(),
+      child: BlocConsumer<PresentationBloc, PresentationState>(
         listener: (context, state) {
           // TODO: implement listener
         },
         builder: (context, state) => state.maybeMap(
           orElse: () =>
-              throw UnsupportedError('SubjectsScreen unsupported state'),
+              throw UnsupportedError('PresentationsScreen unsupported state'),
           pending: (_) => Scaffold(
               appBar: AppBar(
                   title: const Text(
@@ -37,7 +38,7 @@ class PdfSubjectsScreen extends StatelessWidget {
           screenState: (state) => Scaffold(
               appBar: AppBar(
                 title: const Text(
-                  'Список тем',
+                  'Список презентаций',
                 ),
                 actions: [
                   TextButton.icon(
@@ -51,8 +52,8 @@ class PdfSubjectsScreen extends StatelessWidget {
                             color:
                                 DynamicTheme.paletteOf(context).alwaysWhite)),
                     onPressed: () {
-                      BlocProvider.of<PdfSubjectBloc>(context)
-                          .add(const PdfSubjectEvent.reloadData());
+                      BlocProvider.of<PresentationBloc>(context)
+                          .add(const PresentationEvent.reloadData());
                     },
                   ),
                   TextButton.icon(
@@ -67,11 +68,11 @@ class PdfSubjectsScreen extends StatelessWidget {
                                 DynamicTheme.paletteOf(context).alwaysWhite)),
                     onPressed: () async {
                       final result = await context.router
-                          .push(const PdfCreateSubjectRoute());
+                          .push(const PdfCreatePresentationRoute());
                       if (context.mounted) {
                         if (result != null) {
-                          BlocProvider.of<PdfSubjectBloc>(context)
-                              .add(const PdfSubjectEvent.reloadData());
+                          BlocProvider.of<PresentationBloc>(context)
+                              .add(const PresentationEvent.reloadData());
                         }
                       }
                     },
@@ -87,19 +88,19 @@ class PdfSubjectsScreen extends StatelessWidget {
                             color:
                                 DynamicTheme.paletteOf(context).alwaysWhite)),
                     onPressed: () async {
-                      final result =
-                          await context.router.push(ImageCreateSubjectRoute());
+                      final result = await context.router
+                          .push(ImageCreatePresentationRoute());
                       if (context.mounted) {
                         if (result != null) {
-                          BlocProvider.of<PdfSubjectBloc>(context)
-                              .add(const PdfSubjectEvent.reloadData());
+                          BlocProvider.of<PresentationBloc>(context)
+                              .add(const PresentationEvent.reloadData());
                         }
                       }
                     },
                   )
                 ],
               ),
-              body: _SubjectList(subjects: state.subjects)),
+              body: _PresentationList(presentations: state.presentations)),
           loadingError: (_) => Scaffold(
               appBar: AppBar(
                 title: const Text(
@@ -115,12 +116,13 @@ class PdfSubjectsScreen extends StatelessWidget {
                         negativeButtonText: 'Из изображений',
                         onPositiveTap: () {
                           if (context.mounted) {
-                            context.router.push(const PdfCreateSubjectRoute());
+                            context.router
+                                .push(const PdfCreatePresentationRoute());
                           }
                         },
                         onNegativeTap: () {
                           if (context.mounted) {
-                            context.router.push(ImageCreateSubjectRoute());
+                            context.router.push(ImageCreatePresentationRoute());
                           }
                         });
                   },
@@ -132,35 +134,41 @@ class PdfSubjectsScreen extends StatelessWidget {
   }
 }
 
-class _SubjectList extends StatelessWidget {
-  const _SubjectList({super.key, required this.subjects});
+class _PresentationList extends StatelessWidget {
+  const _PresentationList({super.key, required this.presentations});
 
-  final List<Subject> subjects;
+  final List<Presentation> presentations;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: subjects.length,
-      padding: const EdgeInsets.all(24),
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 12,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return SubjectItem(
-          subject: subjects.elementAt(index),
-          onDeleteConfirm: () => BlocProvider.of<PdfSubjectBloc>(context)
-              .add(PdfSubjectEvent.deleteSubject(subjects.elementAt(index).id)),
-        );
-      },
-    );
+    return presentations.isNotEmpty
+        ? ListView.separated(
+            itemCount: presentations.length,
+            padding: const EdgeInsets.all(24),
+            separatorBuilder: (context, index) => const SizedBox(
+              height: 12,
+            ),
+            itemBuilder: (BuildContext context, int index) {
+              return PresentationItem(
+                presentation: presentations.elementAt(index),
+                onDeleteConfirm: () =>
+                    BlocProvider.of<PresentationBloc>(context).add(
+                        PresentationEvent.deletePresentation(
+                            presentations.elementAt(index).id)),
+              );
+            },
+          )
+        : Center(
+            child: Text('Список презентаций пуст'),
+          );
   }
 }
 
-class SubjectItem extends StatelessWidget {
-  const SubjectItem(
-      {super.key, required this.subject, required this.onDeleteConfirm});
+class PresentationItem extends StatelessWidget {
+  const PresentationItem(
+      {super.key, required this.presentation, required this.onDeleteConfirm});
 
-  final Subject subject;
+  final Presentation presentation;
   final Function() onDeleteConfirm;
 
   @override
@@ -168,27 +176,22 @@ class SubjectItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        if (subject.firstImage != null)
-          SizedBox(
-              height: 100,
-              width: 100,
-              child: CachedNetworkImage(imageUrl: subject.firstImage!)),
-        Expanded(child: Text(subject.title)),
+        SizedBox(
+            height: 100,
+            width: 100,
+            child: CachedNetworkImage(imageUrl: presentation.firstImage)),
+        Expanded(child: Text(presentation.title)),
         const SizedBox(
           width: 24,
         ),
-        Expanded(child: Text(subject.description ?? '')),
-        Text(DateFormat('dd.MM.yyy kk:mm').format(subject.date)),
-        const SizedBox(
-          width: 24,
-        ),
-        Text('${subject.duration}'),
+        Expanded(child: Text(presentation.description ?? '')),
+        Text(DateFormat('dd.MM.yyy kk:mm').format(presentation.createdAt)),
         const SizedBox(
           width: 24,
         ),
         IconButton(
-          onPressed: () =>
-              context.router.push(PdfSubjectPlayerRoute(subject: subject)),
+          onPressed: () => context.router
+              .push(PresentationPlayerRoute(presentation: presentation)),
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         const SizedBox(
@@ -197,7 +200,7 @@ class SubjectItem extends StatelessWidget {
         IconButton(
           onPressed: () async {
             final result = await context.router
-                .push(PdfEditSubjectRoute(subject: subject));
+                .push(EditPresentationRoute(presentation: presentation));
             if (context.mounted) {
               if (result == true) {}
             }
@@ -208,8 +211,8 @@ class SubjectItem extends StatelessWidget {
           width: 24,
         ),
         IconButton(
-          onPressed: () =>
-              _showDeleteConfirmDialog(context, subject.id, onDeleteConfirm),
+          onPressed: () => _showDeleteConfirmDialog(
+              context, presentation.id, onDeleteConfirm),
           icon: const Icon(Icons.delete),
         ),
       ],
@@ -254,7 +257,7 @@ class _LoadingError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonLoadingErrorWidget(
-        onPressed: () => BlocProvider.of<PdfSubjectBloc>(context)
-            .add(const PdfSubjectEvent.initialDataRequested()));
+        onPressed: () => BlocProvider.of<PresentationBloc>(context)
+            .add(const PresentationEvent.initialDataRequested()));
   }
 }

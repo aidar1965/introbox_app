@@ -48,7 +48,7 @@ class PdfAddFragmentScreen extends StatelessWidget {
                         titleController: titleController,
                         descriptionController: descriptionController,
                         duration: state.duration,
-                        imagePath: state.imagePath,
+                        image: state.image,
                         audioPath: state.audioPath,
                       ),
                     ))));
@@ -68,14 +68,14 @@ class _ScreenView extends StatelessWidget {
   _ScreenView(
       {super.key,
       required this.isSavePending,
-      this.imagePath,
+      this.image,
       this.audioPath,
       required this.titleController,
       required this.descriptionController,
       this.duration});
 
   final bool isSavePending;
-  final String? imagePath;
+  final File? image;
   final String? audioPath;
   final int? duration;
 
@@ -86,8 +86,7 @@ class _ScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       Expanded(
-        child:
-            imagePath != null ? Image.file(File(imagePath!)) : const SizedBox(),
+        child: image != null ? Image.file(image!) : const SizedBox(),
       ),
       const SizedBox(
         width: 24,
@@ -113,7 +112,7 @@ class _ScreenView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 12.0),
                 child: CommonElevatedButton(
-                    text: imagePath == null
+                    text: image == null
                         ? 'Добавить изображение'
                         : 'Изменить изображение',
                     onPressed: () async {
@@ -142,7 +141,7 @@ class _ScreenView extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              if (imagePath != null) ...[
+              if (image != null) ...[
                 if (audioPath == null)
                   const Padding(
                     padding: EdgeInsets.only(
@@ -169,7 +168,7 @@ class _ScreenView extends StatelessWidget {
                       text: 'Записать аудио',
                       onPressed: () async {
                         final result =
-                            await _showRecorder(context, imagePath: imagePath!);
+                            await _showRecorder(context, image: image!);
                         if (result != null && context.mounted) {
                           BlocProvider.of<PdfAddFragmentBloc>(context).add(
                               PdfAddFragmentEvent.audioAdded(
@@ -227,9 +226,9 @@ class _ScreenView extends StatelessWidget {
   }
 
   Future<({String path, int duration})?> _showRecorder(BuildContext context,
-      {required String imagePath}) async {
+      {required File image}) async {
     final result =
-        await context.router.push(AudioRecordingRoute(imagePath: imagePath));
+        await context.router.push(AudioRecordingRoute(imagePath: image.path));
     return result as ({String path, int duration})?;
   }
 

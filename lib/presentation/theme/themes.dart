@@ -23,7 +23,6 @@ class AppTheme {
       // This is the background color of major parts of the app like toolbars,
       // tab bars, appbar, and many more.
       primaryColor: Palette.accent,
-      useMaterial3: Platform.isAndroid,
 
       // This is the brightness of the primary color. It is used to determine
       // the color of text and icons placed on the top of the primary color.

@@ -9,6 +9,7 @@ import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categor
 import 'package:moki_tutor/data/api/models/requests/request_publish_course.dart';
 import 'package:moki_tutor/data/api/models/requests/request_update_fragment_category.dart';
 import 'package:moki_tutor/data/api/models/responses/fragment_category_dto.dart';
+import 'package:moki_tutor/data/api/models/responses/presentation_dto.dart';
 import 'package:moki_tutor/data/api/models/responses/subject_dto.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
@@ -22,6 +23,7 @@ import 'package:moki_tutor/presentation/screens/pdf_subject/image_create_subject
 
 import '../../domain/models/fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
+import '../../domain/models/responses/paginated_presentations.dart';
 import '../../domain/models/responses/paginated_subjects.dart';
 import '../../domain/models/user_with_tokens.dart';
 import 'http_client/http_client.dart';
@@ -32,6 +34,7 @@ import 'models/requests/request_add_course.dart';
 import 'models/requests/request_add_fragment.dart';
 import 'models/requests/request_add_image_subject.dart';
 import 'models/requests/request_add_pdf_subject.dart';
+import 'models/requests/request_add_presentation.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
 import 'models/requests/request_confirmation.dart';
@@ -41,6 +44,8 @@ import 'models/requests/request_delete_fragment_category.dart';
 import 'models/requests/request_delete_subject.dart';
 import 'models/requests/request_delete_subject_categories.dart';
 import 'models/requests/request_edit_subject.dart';
+import 'models/requests/request_get_presentation_fragments.dart';
+import 'models/requests/request_get_presentations.dart';
 import 'models/requests/request_get_subject_categories.dart';
 import 'models/requests/request_get_subject_fragments.dart';
 import 'models/requests/request_get_subjects.dart';
@@ -246,7 +251,7 @@ class Api implements IApi {
       required int displayOrder,
       required String title,
       required String description,
-      required String imagePath,
+      required File image,
       required bool isLandscape,
       String? audioPath,
       int? duration}) async {
@@ -255,7 +260,7 @@ class Api implements IApi {
         displayOrder: displayOrder,
         title: title,
         description: description,
-        imagePath: imagePath,
+        imageFile: image,
         isLandscape: isLandscape,
         audioPath: audioPath,
         duration: duration));
@@ -383,5 +388,79 @@ class Api implements IApi {
   Future<void> updateSubjectCategory(
       {required int id, required String name}) async {
     await httpClient.request(RequestUpdateSubjectCategory(name: name, id: id));
+  }
+
+  @override
+  Future<PaginatedPresentations> getPresentations(
+      {int? offset, int? limit, int? categoryId}) async {
+    final result = await httpClient.request(RequestGetPresentations(
+        limit: limit, offset: offset, categoryId: categoryId));
+    return PaginatedPresentations(
+      offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
+      count: int.parse(result.headers['X-Total-Count']!.first),
+      presentations: (result.data as List).map(
+        (e) => mapper.mapPresentation(PresentationDto.fromJson(e)),
+      ),
+    );
+  }
+
+  @override
+  addPresentationFragment(
+      {required int presentationId,
+      required int displayOrder,
+      required String title,
+      required String description,
+      required File image,
+      required bool isLandscape,
+      String? audioPath,
+      int? duration}) {
+    // TODO: implement addPresentationFragment
+    throw UnimplementedError();
+  }
+
+  @override
+  deletePresentation({required int id}) {
+    // TODO: implement deletePresentation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<PdfFragment>> getPresentationFragments({required int id}) async {
+    final result =
+        await httpClient.request(RequestGetPresentationFragments(id: id));
+    return (jsonDecode(result!.data as String) as List)
+        .map((e) => mapper.mapPdfFragment(PdfFragmentDto.fromJson(e)))
+        .toList();
+  }
+
+  @override
+  reorderPresentationFragments(
+      {required int presentation, required List<int> fragmentsIds}) {
+    // TODO: implement reorderPresentationFragments
+    throw UnimplementedError();
+  }
+
+  @override
+  updatePresentation(
+      {required int id, required String title, required String description}) {
+    // TODO: implement updatePresentation
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> addPresentation(
+      {required String pdfFile,
+      required String title,
+      required bool isAudio,
+      String? description,
+      required List<FragmentRequestData> fragments,
+      int? duration}) async {
+    await httpClient.request(RequestAddPresentation(
+        pdfFile: pdfFile,
+        title: title,
+        description: description,
+        fragments: fragments,
+        isAudio: isAudio,
+        duration: duration));
   }
 }
