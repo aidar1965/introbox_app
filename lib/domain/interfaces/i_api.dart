@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import '../../data/api/models/requests/fragment_request_data.dart';
@@ -48,14 +49,16 @@ abstract class IApi {
       {required String email, required String password});
 
   Future<void> addPdfSubject(
-      {required String pdfFile,
+      {required Uint8List pdfFile,
+      required String pdfFileName,
       required String title,
       String? description,
       required List<FragmentRequestData> fragments,
       int? duration});
 
   Future<void> addPresentation(
-      {required String pdfFile,
+      {required Uint8List pdfFile,
+      required String pdfFileName,
       required String title,
       required bool isAudio,
       String? description,
@@ -160,8 +163,7 @@ abstract class IApi {
   updatePresentation(
       {required int id, required String title, required String description}) {}
 
-  reorderPresentationFragments(
-      {required int presentation, required List<int> fragmentsIds}) {}
+  Future<void> reorderPresentationFragments({required List<int> fragmentsIds});
 
   addPresentationFragment(
       {required int presentationId,
@@ -172,4 +174,6 @@ abstract class IApi {
       required bool isLandscape,
       String? audioPath,
       int? duration}) {}
+
+  Future<void> deletePresentationFragment({required int id});
 }

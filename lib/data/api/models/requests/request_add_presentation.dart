@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:path/path.dart';
@@ -7,7 +8,8 @@ import '../../http_client/i_api_request.dart';
 import 'fragment_request_data.dart';
 
 class RequestAddPresentation extends IApiRequest {
-  final String pdfFile;
+  final Uint8List pdfFile;
+  final String pdfFileName;
   final String title;
   final String? description;
   final bool isAudio;
@@ -16,6 +18,7 @@ class RequestAddPresentation extends IApiRequest {
 
   RequestAddPresentation({
     required this.pdfFile,
+    required this.pdfFileName,
     required this.title,
     this.description,
     required this.fragments,
@@ -28,21 +31,21 @@ class RequestAddPresentation extends IApiRequest {
     List<MultipartFile> audio = [];
     int index = 0;
     for (final f in fragments) {
-      if (f.audioPath != null) {
-        audio.add(await MultipartFile.fromFile(f.audioPath!, headers: {
+      if (f.audioBytes != null) {
+        audio.add(MultipartFile.fromBytes(f.audioBytes!, headers: {
           'index': ['$index'],
           if (f.duration != null)
             'duration': [
               f.duration!.toString(),
             ],
-          'filename': [f.audioPath!]
+          'filename': ['']
         }));
       }
       index++;
     }
     return FormData.fromMap({
-      'pdf_file': await MultipartFile.fromFile(pdfFile, headers: {
-        'filename': [basename(pdfFile)]
+      'pdf_file': MultipartFile.fromBytes(pdfFile, headers: {
+        'filename': [basename(pdfFileName)]
       }),
       'is_audio': isAudio,
       'title': title,

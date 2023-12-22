@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
@@ -41,6 +42,7 @@ import 'models/requests/request_confirmation.dart';
 import 'models/requests/request_delete_course.dart';
 import 'models/requests/request_delete_fragment.dart';
 import 'models/requests/request_delete_fragment_category.dart';
+import 'models/requests/request_delete_presentation_fragment.dart';
 import 'models/requests/request_delete_subject.dart';
 import 'models/requests/request_delete_subject_categories.dart';
 import 'models/requests/request_edit_subject.dart';
@@ -54,6 +56,7 @@ import 'models/requests/request_get_tutor_courses.dart';
 import 'models/requests/request_get_user.dart';
 import 'models/requests/request_login.dart';
 import 'models/requests/request_reorder_fragments.dart';
+import 'models/requests/request_reorder_presentation_fragments.dart';
 import 'models/requests/request_update_fragment.dart';
 import 'models/requests/request_update_subject.dart';
 import 'models/requests/request_update_subject_category.dart';
@@ -171,7 +174,8 @@ class Api implements IApi {
 
   @override
   Future<void> addPdfSubject(
-      {required String pdfFile,
+      {required String pdfFileName,
+      required Uint8List pdfFile,
       required String title,
       String? description,
       required List<FragmentRequestData> fragments,
@@ -179,6 +183,7 @@ class Api implements IApi {
     await httpClient.request(RequestAddPdfSubject(
         pdfFile: pdfFile,
         title: title,
+        pdfFileName: pdfFileName,
         description: description,
         fragments: fragments));
   }
@@ -434,10 +439,10 @@ class Api implements IApi {
   }
 
   @override
-  reorderPresentationFragments(
-      {required int presentation, required List<int> fragmentsIds}) {
-    // TODO: implement reorderPresentationFragments
-    throw UnimplementedError();
+  Future<void> reorderPresentationFragments(
+      {required List<int> fragmentsIds}) async {
+    await httpClient.request(
+        RequestReorderPresentationFragments(fragmentsIds: fragmentsIds));
   }
 
   @override
@@ -449,7 +454,8 @@ class Api implements IApi {
 
   @override
   Future<void> addPresentation(
-      {required String pdfFile,
+      {required Uint8List pdfFile,
+      required String pdfFileName,
       required String title,
       required bool isAudio,
       String? description,
@@ -457,10 +463,16 @@ class Api implements IApi {
       int? duration}) async {
     await httpClient.request(RequestAddPresentation(
         pdfFile: pdfFile,
+        pdfFileName: pdfFileName,
         title: title,
         description: description,
         fragments: fragments,
         isAudio: isAudio,
         duration: duration));
+  }
+
+  @override
+  Future<void> deletePresentationFragment({required int id}) async {
+    await httpClient.request(RequestDeletePresentationFragment(id: id));
   }
 }

@@ -50,11 +50,11 @@ class ThemeBuilder {
 
         scaffoldBackgroundColor: palette.background1,
         navigationRailTheme: NavigationRailThemeData(
-            unselectedIconTheme: IconThemeData(color: palette.text1),
+            unselectedIconTheme: const IconThemeData(opacity: 0, size: 0),
             unselectedLabelTextStyle: TextStyle(
               color: palette.text1,
             ),
-            selectedIconTheme: IconThemeData(color: palette.accent),
+            selectedIconTheme: const IconThemeData(opacity: 0, size: 0),
             selectedLabelTextStyle: TextStyle(
                 color: palette.accent,
                 fontWeight: FontWeight.w600,
@@ -290,9 +290,9 @@ class ThemeBuilder {
 
         scaffoldBackgroundColor: palette.background1,
         navigationRailTheme: NavigationRailThemeData(
-            unselectedIconTheme: IconThemeData(color: palette.text1),
+            unselectedIconTheme: const IconThemeData(opacity: 0, size: 0),
             unselectedLabelTextStyle: TextStyle(color: palette.text1),
-            selectedIconTheme: IconThemeData(color: palette.alwaysWhite),
+            selectedIconTheme: const IconThemeData(opacity: 0, size: 0),
             selectedLabelTextStyle: TextStyle(
                 color: palette.alwaysWhite,
                 fontWeight: FontWeight.w600,

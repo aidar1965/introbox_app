@@ -149,7 +149,7 @@ class _PdfSubjectPlayerViewState extends State<PdfSubjectPlayerView> {
                   width: width - 40,
                   child: Center(
                       child: fragment.imagePath != ''
-                          ? CachedNetworkImage(imageUrl: fragment.imagePath)
+                          ? CachedNetworkImage(imageUrl: fragment.imagePath!)
                           : const SizedBox()))
             ],
           )),

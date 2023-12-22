@@ -69,6 +69,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
     final path = await _audioRecorder.stop();
 
     if (path != null) {
+      print(path);
       widget.onStop((path: path, duration: duration));
     }
   }

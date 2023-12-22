@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:http/http.dart' as http;
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class AudioRecordingScreen extends StatefulWidget {
 class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
   String? _path;
   int? _duration;
+  Uint8List? _audioBytes;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,8 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
         ),
         leading: BackButton(
           onPressed: () => _path != null && _duration != null
-              ? context.router.pop((path: _path, duration: _duration))
+              ? context.router.pop(
+                  (audioBytes: _audioBytes, path: _path, duration: _duration))
               : context.router.pop(),
         ),
       ),
@@ -61,11 +64,13 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: AudioRecorder(
-                          onStop: (pathWithDuration) {
+                          onStop: (pathWithDuration) async {
                             setState(() {
                               _path = pathWithDuration.path;
                               _duration = pathWithDuration.duration;
                             });
+                            final response = await http.get(Uri.parse(_path!));
+                            _audioBytes = response.bodyBytes;
                           },
                         ),
                       ),
@@ -75,7 +80,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: AudioPlayerWidget(
-                          source: _path!,
+                          urlSource: _path!,
                           duration: _duration!,
                           onDelete: () {
                             setState(() {

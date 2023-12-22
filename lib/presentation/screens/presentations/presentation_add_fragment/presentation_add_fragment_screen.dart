@@ -154,7 +154,7 @@ class _ScreenView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: AudioPlayerWidget(
-                        source: audioPath!,
+                        urlSource: audioPath!,
                         duration: duration!,
                         onDelete: () =>
                             BlocProvider.of<PresentationAddFragmentBloc>(

@@ -74,41 +74,97 @@ class _HomeScreenState extends State<HomeScreen> {
                       body: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          NavigationRail(
-                              minExtendedWidth: 160,
-                              destinations: [
-                                const NavigationRailDestination(
-                                    label: Text('Курсы'),
-                                    icon: Icon(Icons.list)),
-                                // const NavigationRailDestination(
-                                //     label: Text('Темы'),
-                                //     icon: Icon(Icons.list)),
-                                const NavigationRailDestination(
-                                    label: Text('Презентации'),
-                                    icon: Icon(Icons.picture_as_pdf)),
-                                // const NavigationRailDestination(
-                                //     label: Text('Записи'),
-                                //     icon: Icon(Icons.list)),
-                                // const NavigationRailDestination(
-                                //     label: Text('Новая тема'),
-                                //     icon: Icon(Icons.add)),
-                                // const NavigationRailDestination(
-                                //     label: Text('Новая запись'),
-                                //     icon: Icon(Icons.mic_sharp)),
-                                state.isAuthorized
-                                    ? const NavigationRailDestination(
-                                        label: Text('Профиль'),
-                                        icon: Icon(Icons.account_circle))
-                                    : const NavigationRailDestination(
-                                        label: Text('Логин'),
-                                        icon: Icon(Icons.login_rounded)),
+                          SizedBox(
+                            width: 160,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 56,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _selectedIndex = 0;
+                                          tabsRouter.setActiveIndex(0);
+                                        });
+                                      },
+                                      child: Row(children: [
+                                        Text(
+                                          'Курсы',
+                                          style: _selectedIndex == 0
+                                              ? const TextStyle(fontSize: 16)
+                                              : const TextStyle(fontSize: 14),
+                                        ),
+                                      ])),
+                                ),
+                                SizedBox(
+                                  height: 56,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _selectedIndex = 1;
+                                          tabsRouter.setActiveIndex(1);
+                                        });
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Презентации',
+                                            style: _selectedIndex == 1
+                                                ? const TextStyle(fontSize: 16)
+                                                : const TextStyle(fontSize: 14),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 56,
+                                  child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _selectedIndex = 2;
+                                          tabsRouter.setActiveIndex(2);
+                                        });
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            state.isAuthorized
+                                                ? 'Профиль'
+                                                : 'Логин',
+                                            style: _selectedIndex == 2
+                                                ? const TextStyle(fontSize: 16)
+                                                : const TextStyle(fontSize: 14),
+                                          ),
+                                        ],
+                                      )),
+                                ),
                               ],
-                              extended: true,
-                              selectedIndex: _selectedIndex,
-                              onDestinationSelected: (int index) {
-                                _selectedIndex = index;
-                                tabsRouter.setActiveIndex(index);
-                              }),
+                            ),
+                          ),
+                          // NavigationRail(
+                          //     minExtendedWidth: 160,
+                          //     destinations: [
+                          //       const NavigationRailDestination(
+                          //           label: Text('Курсы'),
+                          //           icon: Icon(Icons.list)),
+                          //       const NavigationRailDestination(
+                          //           label: Text('Презентации'),
+                          //           icon: Icon(Icons.picture_as_pdf)),
+                          //       state.isAuthorized
+                          //           ? const NavigationRailDestination(
+                          //               label: Text('Профиль'),
+                          //               icon: Icon(Icons.account_circle))
+                          //           : const NavigationRailDestination(
+                          //               label: Text('Логин'),
+                          //               icon: Icon(Icons.login_rounded)),
+                          //     ],
+                          //     extended: true,
+                          //     selectedIndex: _selectedIndex,
+                          //     onDestinationSelected: (int index) {
+                          //       _selectedIndex = index;
+                          //       tabsRouter.setActiveIndex(index);
+                          //     }),
                           const VerticalDivider(),
                           Expanded(child: child),
                         ],

@@ -220,30 +220,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    ProfileRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ProfileScreen(),
-      );
-    },
-    ConfirmationRoute.name: (routeData) {
-      final args = routeData.argsAs<ConfirmationRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ConfirmationScreen(
-          key: args.key,
-          email: args.email,
-        ),
-      );
-    },
-    RegisterRoute.name: (routeData) {
-      final args = routeData.argsAs<RegisterRouteArgs>(
-          orElse: () => const RegisterRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: RegisterScreen(key: args.key),
-      );
-    },
     EditPresentationRoute.name: (routeData) {
       final args = routeData.argsAs<EditPresentationRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -292,7 +268,32 @@ abstract class _$AppRouter extends RootStackRouter {
         child: PresentationPlayerScreen(
           key: args.key,
           presentation: args.presentation,
+          presentationId: args.presentationId,
         ),
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileScreen(),
+      );
+    },
+    ConfirmationRoute.name: (routeData) {
+      final args = routeData.argsAs<ConfirmationRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ConfirmationScreen(
+          key: args.key,
+          email: args.email,
+        ),
+      );
+    },
+    RegisterRoute.name: (routeData) {
+      final args = routeData.argsAs<RegisterRouteArgs>(
+          orElse: () => const RegisterRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: RegisterScreen(key: args.key),
       );
     },
   };
@@ -978,87 +979,6 @@ class PdfSubjectPlayerRouteArgs {
 }
 
 /// generated route for
-/// [ProfileScreen]
-class ProfileRoute extends PageRouteInfo<void> {
-  const ProfileRoute({List<PageRouteInfo>? children})
-      : super(
-          ProfileRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ProfileRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [ConfirmationScreen]
-class ConfirmationRoute extends PageRouteInfo<ConfirmationRouteArgs> {
-  ConfirmationRoute({
-    Key? key,
-    required String email,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ConfirmationRoute.name,
-          args: ConfirmationRouteArgs(
-            key: key,
-            email: email,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'ConfirmationRoute';
-
-  static const PageInfo<ConfirmationRouteArgs> page =
-      PageInfo<ConfirmationRouteArgs>(name);
-}
-
-class ConfirmationRouteArgs {
-  const ConfirmationRouteArgs({
-    this.key,
-    required this.email,
-  });
-
-  final Key? key;
-
-  final String email;
-
-  @override
-  String toString() {
-    return 'ConfirmationRouteArgs{key: $key, email: $email}';
-  }
-}
-
-/// generated route for
-/// [RegisterScreen]
-class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
-  RegisterRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          RegisterRoute.name,
-          args: RegisterRouteArgs(key: key),
-          initialChildren: children,
-        );
-
-  static const String name = 'RegisterRoute';
-
-  static const PageInfo<RegisterRouteArgs> page =
-      PageInfo<RegisterRouteArgs>(name);
-}
-
-class RegisterRouteArgs {
-  const RegisterRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'RegisterRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
 /// [EditPresentationScreen]
 class EditPresentationRoute extends PageRouteInfo<EditPresentationRouteArgs> {
   EditPresentationRoute({
@@ -1205,13 +1125,16 @@ class PresentationPlayerRoute
   PresentationPlayerRoute({
     Key? key,
     required Presentation presentation,
+    required int presentationId,
     List<PageRouteInfo>? children,
   }) : super(
           PresentationPlayerRoute.name,
           args: PresentationPlayerRouteArgs(
             key: key,
             presentation: presentation,
+            presentationId: presentationId,
           ),
+          rawPathParams: {'id': presentationId},
           initialChildren: children,
         );
 
@@ -1225,14 +1148,98 @@ class PresentationPlayerRouteArgs {
   const PresentationPlayerRouteArgs({
     this.key,
     required this.presentation,
+    required this.presentationId,
   });
 
   final Key? key;
 
   final Presentation presentation;
 
+  final int presentationId;
+
   @override
   String toString() {
-    return 'PresentationPlayerRouteArgs{key: $key, presentation: $presentation}';
+    return 'PresentationPlayerRouteArgs{key: $key, presentation: $presentation, presentationId: $presentationId}';
+  }
+}
+
+/// generated route for
+/// [ProfileScreen]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ConfirmationScreen]
+class ConfirmationRoute extends PageRouteInfo<ConfirmationRouteArgs> {
+  ConfirmationRoute({
+    Key? key,
+    required String email,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ConfirmationRoute.name,
+          args: ConfirmationRouteArgs(
+            key: key,
+            email: email,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ConfirmationRoute';
+
+  static const PageInfo<ConfirmationRouteArgs> page =
+      PageInfo<ConfirmationRouteArgs>(name);
+}
+
+class ConfirmationRouteArgs {
+  const ConfirmationRouteArgs({
+    this.key,
+    required this.email,
+  });
+
+  final Key? key;
+
+  final String email;
+
+  @override
+  String toString() {
+    return 'ConfirmationRouteArgs{key: $key, email: $email}';
+  }
+}
+
+/// generated route for
+/// [RegisterScreen]
+class RegisterRoute extends PageRouteInfo<RegisterRouteArgs> {
+  RegisterRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          RegisterRoute.name,
+          args: RegisterRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'RegisterRoute';
+
+  static const PageInfo<RegisterRouteArgs> page =
+      PageInfo<RegisterRouteArgs>(name);
+}
+
+class RegisterRouteArgs {
+  const RegisterRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RegisterRouteArgs{key: $key}';
   }
 }

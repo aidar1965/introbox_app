@@ -1,18 +1,21 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../http_client/i_api_request.dart';
 import 'fragment_request_data.dart';
 
 class RequestAddPdfSubject extends IApiRequest {
-  final String pdfFile;
+  final Uint8List pdfFile;
+  final String pdfFileName;
   final String title;
   final String? description;
   final List<FragmentRequestData> fragments;
 
   RequestAddPdfSubject(
       {required this.pdfFile,
+      required this.pdfFileName,
       required this.title,
       this.description,
       required this.fragments})
@@ -23,14 +26,14 @@ class RequestAddPdfSubject extends IApiRequest {
     List<MultipartFile> audio = [];
     int index = 0;
     for (final f in fragments) {
-      if (f.audioPath != null) {
-        audio.add(await MultipartFile.fromFile(f.audioPath!, headers: {
+      if (f.audioBytes != null) {
+        audio.add(await MultipartFile.fromBytes(f.audioBytes!, headers: {
           'index': ['$index'],
           if (f.duration != null)
             'duration': [
               f.duration!.toString(),
             ],
-          'filename': [f.audioPath!]
+          'filename': ['']
         }));
       }
       index++;

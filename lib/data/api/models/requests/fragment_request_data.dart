@@ -6,7 +6,7 @@ class FragmentRequestData {
     required this.title,
     required this.description,
     required this.image,
-    this.audioPath,
+    this.audioBytes,
     this.duration,
   });
   final String title;
@@ -16,6 +16,6 @@ class FragmentRequestData {
     String fileName,
     bool isLandscape,
   }) image;
-  final String? audioPath;
+  final Uint8List? audioBytes;
   final int? duration;
 }

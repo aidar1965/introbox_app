@@ -173,7 +173,8 @@ class PdfEditSubjectBloc
                   ? _screenState.selectedFragment!.audioPath
                   : null,
           imagePath:
-              _screenState.selectedFragment!.imagePath.contains('http') == false
+              _screenState.selectedFragment!.imagePath?.contains('http') ==
+                      false
                   ? _screenState.selectedFragment!.imagePath
                   : null,
           duration:

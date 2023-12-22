@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,6 +13,7 @@ import '../../../../../domain/models/pdf_fragment.dart';
 import '../../../../../domain/models/presentation.dart';
 
 import '../../../auto_router/app_router.dart';
+import '../../../common/common_loading_error_widget.dart';
 import '../../../values/palette.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
@@ -38,7 +37,13 @@ class EditPresentationScreen extends StatelessWidget {
           child: BlocConsumer<EditPresentationBloc, EditPresentationState>(
               listener: (context, state) => state.mapOrNull(
                   requestError: (state) =>
-                      _showMessage(context, state.errorText)),
+                      _showMessage(context, state.errorText),
+                  loadingError: (_) => CommonLoadingErrorWidget(
+                        onPressed: () =>
+                            BlocProvider.of<EditPresentationBloc>(context).add(
+                                const EditPresentationEvent
+                                    .initialDataRequested()),
+                      )),
               buildWhen: (previous, current) => current.maybeMap(
                   orElse: () => false,
                   pending: (current) => true,
@@ -57,6 +62,7 @@ class EditPresentationScreen extends StatelessWidget {
                         fragmentUpdatePending: state.fragmentUpdatePending,
                         fragmentDeletePending: state.deleteFragmentPending,
                         presentationId: presentation.id,
+                        isAudio: presentation.isAudio,
                       ))),
         ));
   }
@@ -88,7 +94,8 @@ class _ScreenView extends StatelessWidget {
       required this.presentationUpdatePending,
       required this.fragmentUpdatePending,
       required this.fragmentDeletePending,
-      required this.presentationId});
+      required this.presentationId,
+      required this.isAudio});
 
   final List<PdfFragment> fragments;
   final PdfFragment selectedFragment;
@@ -98,6 +105,7 @@ class _ScreenView extends StatelessWidget {
   final bool fragmentUpdatePending;
   final bool fragmentDeletePending;
   final int presentationId;
+  final bool isAudio;
 
   final TextEditingController selectedFragmentTitleController =
       TextEditingController();
@@ -129,16 +137,14 @@ class _ScreenView extends StatelessWidget {
                 children: [
                   SizedBox(
                       height: MediaQuery.of(context).size.height - 260,
-                      child: selectedFragment.imagePath.contains('http')
-                          ? CachedNetworkImage(
-                              imageUrl: selectedFragment.imagePath,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.file(
-                              File(
-                                selectedFragment.imagePath,
-                              ),
-                              fit: BoxFit.cover)),
+                      child:
+                          selectedFragment.imagePath?.contains('http') ?? false
+                              ? CachedNetworkImage(
+                                  imageUrl: selectedFragment.imagePath!,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.file(selectedFragment.image!,
+                                  fit: BoxFit.cover)),
                 ],
               ),
             ),
@@ -156,9 +162,12 @@ class _ScreenView extends StatelessWidget {
                   child: ListView(
                     controller: scrollController,
                     children: [
-                      Text('Назввание и описание темы'),
+                      Text('Название и описание презентации'),
+                      SizedBox(
+                        height: 12,
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
+                        padding: const EdgeInsets.only(right: 12.0, top: 12),
                         child: NameAndDescriptionWidget(
                           titleController: presentationTitleController,
                           descriptionController:
@@ -214,71 +223,40 @@ class _ScreenView extends StatelessWidget {
                               selectedFragmentDescriptionController,
                         ),
                       ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      if (selectedFragment.audioPath == null)
-                        const Padding(
-                          padding: EdgeInsets.only(
-                            bottom: 12,
-                          ),
-                          child: Text('Аудио отсутствует'),
-                        )
-                      else
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                          child: AudioPlayerWidget(
-                            source: selectedFragment.audioPath!,
-                            duration: selectedFragment.duration!,
-                            onDelete: () =>
-                                BlocProvider.of<EditPresentationBloc>(context)
-                                    .add(EditPresentationEvent.deleteAudio(
-                                        fragment: selectedFragment)),
-                          ),
+                      if (isAudio) ...[
+                        const SizedBox(
+                          height: 12,
                         ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                            text: 'Записать аудио',
-                            onPressed: () async {
-                              final result = await _showRecorder(context,
-                                  imagePath: selectedFragment.imagePath);
-                              if (result != null && context.mounted) {
-                                BlocProvider.of<EditPresentationBloc>(context)
-                                    .add(EditPresentationEvent.audioAdded(
-                                        fragment: selectedFragment,
-                                        title: selectedFragmentTitleController
-                                            .text,
-                                        description:
-                                            selectedFragmentDescriptionController
-                                                .text,
-                                        path: result.path,
-                                        duration: result.duration.toString()));
-                              }
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                            text: 'Добавить аудио из файла',
-                            onPressed: () async {
-                              final result =
-                                  await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: ['mp3', 'wav'],
-                              );
-                              if (result != null) {
-                                final audioPath = result.files.single.path!;
-
-                                final durationInSeconds =
-                                    await getDuration(audioPath);
-                                if (context.mounted) {
+                        if (selectedFragment.audioPath == null)
+                          const Padding(
+                            padding: EdgeInsets.only(
+                              bottom: 12,
+                            ),
+                            child: Text('Аудио отсутствует'),
+                          )
+                        else
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: AudioPlayerWidget(
+                              urlSource: selectedFragment.audioPath!,
+                              duration: selectedFragment.duration!,
+                              onDelete: () =>
+                                  BlocProvider.of<EditPresentationBloc>(context)
+                                      .add(EditPresentationEvent.deleteAudio(
+                                          fragment: selectedFragment)),
+                            ),
+                          ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                              text: 'Записать аудио',
+                              onPressed: () async {
+                                final result = await _showRecorder(context,
+                                    imagePath: selectedFragment.imagePath!);
+                                if (result != null && context.mounted) {
                                   BlocProvider.of<EditPresentationBloc>(context)
                                       .add(EditPresentationEvent.audioAdded(
                                           fragment: selectedFragment,
@@ -287,13 +265,49 @@ class _ScreenView extends StatelessWidget {
                                           description:
                                               selectedFragmentDescriptionController
                                                   .text,
-                                          path: audioPath,
+                                          path: result.path,
                                           duration:
-                                              durationInSeconds.toString()));
+                                              result.duration.toString()));
                                 }
-                              }
-                            }),
-                      ),
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                              text: 'Добавить аудио из файла',
+                              onPressed: () async {
+                                final result =
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: ['mp3', 'wav'],
+                                );
+                                if (result != null) {
+                                  final audioPath = result.files.single.path!;
+
+                                  final durationInSeconds =
+                                      await getDuration(audioPath);
+                                  if (context.mounted) {
+                                    BlocProvider.of<EditPresentationBloc>(
+                                            context)
+                                        .add(EditPresentationEvent.audioAdded(
+                                            fragment: selectedFragment,
+                                            title:
+                                                selectedFragmentTitleController
+                                                    .text,
+                                            description:
+                                                selectedFragmentDescriptionController
+                                                    .text,
+                                            path: audioPath,
+                                            duration:
+                                                durationInSeconds.toString()));
+                                  }
+                                }
+                              }),
+                        )
+                      ],
                       const SizedBox(
                         height: 12,
                       ),
@@ -336,7 +350,7 @@ class _ScreenView extends StatelessWidget {
                       ),
                       if (selectedFragment.audioPath?.contains('http') ==
                               false ||
-                          selectedFragment.imagePath.contains('http') == false)
+                          selectedFragment.imagePath?.contains('http') == false)
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
@@ -455,13 +469,13 @@ class _FragmentCard extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: SizedBox(
                     width: 355,
-                    child: fragment.imagePath.contains('http')
+                    child: fragment.imagePath?.contains('http') ?? false
                         ? CachedNetworkImage(
                             progressIndicatorBuilder: (context, _, __) =>
                                 const Center(
                                     child: CircularProgressIndicator()),
-                            imageUrl: fragment.imagePath)
-                        : Image.file(File(fragment.imagePath))))),
+                            imageUrl: fragment.imagePath!)
+                        : Image.file(fragment.image!)))),
       ],
     );
   }

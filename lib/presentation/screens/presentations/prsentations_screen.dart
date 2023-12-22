@@ -190,8 +190,10 @@ class PresentationItem extends StatelessWidget {
           width: 24,
         ),
         IconButton(
-          onPressed: () => context.router
-              .push(PresentationPlayerRoute(presentation: presentation)),
+          onPressed: () => context.router.push(PresentationPlayerRoute(
+            presentation: presentation,
+            presentationId: presentation.id,
+          )),
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         const SizedBox(

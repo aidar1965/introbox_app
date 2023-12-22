@@ -91,7 +91,7 @@ class _PlayerWidgetState extends State<PdfPlayerWidget> {
   Future<void> _startPlay() async {
     if (playerStatus == PlayerStatus.stop ||
         playerStatus == PlayerStatus.pause) {
-      await player.play(UrlSource(fragment.audioPath!), volume: 100);
+      await player.play(UrlSource(fragment.audioPath!), volume: 1);
       setState(() {
         playerStatus = PlayerStatus.play;
       });
@@ -105,7 +105,7 @@ class _PlayerWidgetState extends State<PdfPlayerWidget> {
   Future<void> reStartPlayer() async {
     await player.stop();
     if (fragment.audioPath != null) {
-      await player.play(UrlSource(fragment.audioPath!), volume: 100);
+      await player.play(UrlSource(fragment.audioPath!), volume: 1);
       setState(() {
         playerStatus = PlayerStatus.play;
       });

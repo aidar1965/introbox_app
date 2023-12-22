@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
-import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/locator/locator.dart';
 
 part 'login_bloc.freezed.dart';

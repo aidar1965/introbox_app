@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'dart:html' as html;
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_route/auto_route.dart';
@@ -28,8 +28,10 @@ class PdfCreateSubjectScreen extends StatefulWidget {
 }
 
 class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
-  File? pdfFile;
+  Uint8List? pdfFile;
+  String? pdfFileName;
   List<String?> audioPathList = [];
+  List<Uint8List?> audioBytesList = [];
   List<TextEditingController> recordTitleControllerList = [];
   List<TextEditingController> recordDescriptionControllerList = [];
   List<int?> audioDurationList = [];
@@ -68,6 +70,7 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                             .add(TextEditingController());
                         audioPathList.add(null);
                         audioDurationList.add(null);
+                        audioBytesList.add(null);
                       }
                     }
 
@@ -89,7 +92,7 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                               ),
                               const SizedBox(height: 20),
                               if (pdfFile != null) ...[
-                                Text(basename(pdfFile!.path)),
+                                Text(basename(pdfFileName!)),
                                 const SizedBox(height: 20),
                                 CommonElevatedButton(
                                   onPressed: () {
@@ -102,7 +105,7 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                                         image: state.pdfFragmentList!
                                             .elementAt(i)
                                             .image,
-                                        audioPath: audioPathList[i],
+                                        audioBytes: audioBytesList[i],
                                         title: recordTitleControllerList
                                             .elementAt(i)
                                             .text,
@@ -117,7 +120,8 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                                             context)
                                         .add(PdfCreateSubjectEvent
                                             .savePdfSubject(
-                                                pdfFile: pdfFile!.path,
+                                                pdfFile: pdfFile!,
+                                                pdfFileName: pdfFileName!,
                                                 title: titleController.text,
                                                 description:
                                                     descriptionController.text,
@@ -140,8 +144,9 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
                                       recordTitleControllerList,
                                   descriptionControllerList:
                                       recordDescriptionControllerList,
-                                  onPathChanged: (p, s, i) {
+                                  onPathChanged: (f, p, s, i) {
                                     audioPathList[i] = p;
+                                    audioBytesList[i] = f;
                                     audioDurationList[i] = s;
                                   },
                                 ),
@@ -160,14 +165,16 @@ class _PdfCreateSubjectScreenState extends State<PdfCreateSubjectScreen> {
       ],
     );
 
-    if (result != null) {
-      final File file = File(result.files.single.path!);
+    if (result != null && result.files.isNotEmpty) {
+      final fileBytes = result.files.first.bytes;
+      pdfFileName = result.files.first.name;
       setState(() {
-        pdfFile = file;
+        pdfFile = fileBytes;
+        pdfFileName = result.files.first.name;
       });
       if (mounted) {
         BlocProvider.of<PdfCreateSubjectBloc>(context)
-            .add(PdfCreateSubjectEvent.convertPdf(pdfFilePath: pdfFile!.path));
+            .add(PdfCreateSubjectEvent.convertPdf(pdfFile: fileBytes!));
       }
     } else {
       // User canceled the picker
@@ -188,7 +195,7 @@ class _FragmentListView extends StatelessWidget {
 
   final List<TextEditingController> titleControllerList;
   final List<TextEditingController> descriptionControllerList;
-  final Function(String?, int?, int) onPathChanged;
+  final Function(Uint8List?, String?, int?, int) onPathChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -199,8 +206,8 @@ class _FragmentListView extends StatelessWidget {
           titleController: titleControllerList.elementAt(index),
           descriptionController: descriptionControllerList.elementAt(index),
           imageData: pdfFragmentList.elementAt(index).image,
-          onPathChanged: (p, s) {
-            onPathChanged(p, s, index);
+          onPathChanged: (f, p, s) {
+            onPathChanged(f, p, s, index);
           },
         );
       },
@@ -221,7 +228,7 @@ class FragmentListItem extends StatefulWidget {
   final TextEditingController descriptionController;
   final Uint8List imageData;
 
-  final void Function(String?, int?) onPathChanged;
+  final void Function(Uint8List?, String?, int?) onPathChanged;
 
   @override
   State<FragmentListItem> createState() => _FragmentListItemState();
@@ -262,10 +269,10 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: AudioPlayerWidget(
                           duration: duration!,
-                          source: audioPath!,
+                          urlSource: audioPath!,
                           onDelete: () {
                             setState(() => showPlayer = false);
-                            widget.onPathChanged(null, null);
+                            widget.onPathChanged(null, null, null);
                           },
                         ),
                       )
@@ -278,12 +285,14 @@ class _FragmentListItemState extends State<FragmentListItem> {
                               audioPath = result.path;
                               duration = result.duration;
                             });
+                            final audioBytes = result.audioBytes;
                             showPlayer = true;
 
                             final durationInSeconds =
                                 await getDuration(audioPath!);
                             print(durationInSeconds);
-                            widget.onPathChanged(audioPath, durationInSeconds);
+                            widget.onPathChanged(
+                                audioBytes, audioPath, durationInSeconds);
                           }
                         },
                         text: 'Записать аудио'),
@@ -295,13 +304,23 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         allowedExtensions: ['mp3', 'wav'],
                       );
                       if (result != null) {
-                        setState(() {
-                          audioPath = result.files.single.path!;
-                        });
+                        final fileBytes = result.files.first.bytes;
                         showPlayer = true;
-                        final durationInSeconds = await getDuration(audioPath!);
-                        print(durationInSeconds);
-                        widget.onPathChanged(audioPath, durationInSeconds);
+                        // Преобразование Uint8List в Blob
+                        final blob = html.Blob(
+                          [fileBytes],
+                        );
+
+                        // Преобразование Blob в data URL
+                        final dataUrl = html.Url.createObjectUrlFromBlob(blob);
+                        print(dataUrl);
+                        setState(() {
+                          audioPath = dataUrl;
+                        });
+
+                        final durationInSeconds = await getDuration(dataUrl);
+                        widget.onPathChanged(
+                            fileBytes, audioPath, durationInSeconds);
                       }
                     },
                     text: 'Прикрепить аудио'),
@@ -312,11 +331,12 @@ class _FragmentListItemState extends State<FragmentListItem> {
     );
   }
 
-  Future<({String? path, int? duration})?> _showRecorder(BuildContext context,
+  Future<({Uint8List? audioBytes, String? path, int? duration})?> _showRecorder(
+      BuildContext context,
       {required Uint8List imageData}) async {
     final result =
         await context.router.push(AudioRecordingRoute(imageData: imageData));
-    return result as ({String path, int duration});
+    return result as ({Uint8List? audioBytes, String path, int duration});
   }
 
   Future<int> getDuration(String path) async {

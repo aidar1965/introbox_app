@@ -125,14 +125,14 @@ class _ScreenView extends StatelessWidget {
                 children: [
                   SizedBox(
                       height: MediaQuery.of(context).size.height - 260,
-                      child: selectedFragment.imagePath.contains('http')
+                      child: selectedFragment.imagePath!.contains('http')
                           ? CachedNetworkImage(
-                              imageUrl: selectedFragment.imagePath,
+                              imageUrl: selectedFragment.imagePath!,
                               fit: BoxFit.cover,
                             )
                           : Image.file(
                               File(
-                                selectedFragment.imagePath,
+                                selectedFragment.imagePath!,
                               ),
                               fit: BoxFit.cover)),
                 ],
@@ -219,7 +219,7 @@ class _ScreenView extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           child: AudioPlayerWidget(
-                            source: selectedFragment.audioPath!,
+                            urlSource: selectedFragment.audioPath!,
                             duration: selectedFragment.duration!,
                             onDelete: () =>
                                 BlocProvider.of<PdfEditSubjectBloc>(context)
@@ -236,7 +236,7 @@ class _ScreenView extends StatelessWidget {
                             text: 'Записать аудио',
                             onPressed: () async {
                               final result = await _showRecorder(context,
-                                  imagePath: selectedFragment.imagePath);
+                                  imagePath: selectedFragment.imagePath!);
                               if (result != null && context.mounted) {
                                 BlocProvider.of<PdfEditSubjectBloc>(context)
                                     .add(PdfEditSubjectEvent.audioAdded(
@@ -327,7 +327,7 @@ class _ScreenView extends StatelessWidget {
                       ),
                       if (selectedFragment.audioPath?.contains('http') ==
                               false ||
-                          selectedFragment.imagePath.contains('http') == false)
+                          selectedFragment.imagePath!.contains('http') == false)
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
@@ -446,13 +446,13 @@ class _FragmentCard extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: SizedBox(
                     width: 355,
-                    child: fragment.imagePath.contains('http')
+                    child: fragment.imagePath!.contains('http')
                         ? CachedNetworkImage(
                             progressIndicatorBuilder: (context, _, __) =>
                                 const Center(
                                     child: CircularProgressIndicator()),
-                            imageUrl: fragment.imagePath)
-                        : Image.file(File(fragment.imagePath))))),
+                            imageUrl: fragment.imagePath!)
+                        : Image.file(File(fragment.imagePath!))))),
       ],
     );
   }

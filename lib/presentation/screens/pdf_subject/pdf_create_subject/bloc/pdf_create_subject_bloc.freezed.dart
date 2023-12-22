@@ -16,27 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PdfCreateSubjectEvent {
+  Uint8List get pdfFile => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String description,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
             List<PdfFragmentSample> pdfFragmentList)
         savePdfSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String description,
-            List<PdfFragmentSample> pdfFragmentList)?
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(String title, Uint8List pdfFile, String pdfFileName,
+            String description, List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String description,
-            List<PdfFragmentSample> pdfFragmentList)?
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(String title, Uint8List pdfFile, String pdfFileName,
+            String description, List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
     required TResult orElse(),
   }) =>
@@ -60,6 +65,10 @@ mixin _$PdfCreateSubjectEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $PdfCreateSubjectEventCopyWith<PdfCreateSubjectEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -67,6 +76,8 @@ abstract class $PdfCreateSubjectEventCopyWith<$Res> {
   factory $PdfCreateSubjectEventCopyWith(PdfCreateSubjectEvent value,
           $Res Function(PdfCreateSubjectEvent) then) =
       _$PdfCreateSubjectEventCopyWithImpl<$Res, PdfCreateSubjectEvent>;
+  @useResult
+  $Res call({Uint8List pdfFile});
 }
 
 /// @nodoc
@@ -79,15 +90,30 @@ class _$PdfCreateSubjectEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pdfFile = null,
+  }) {
+    return _then(_value.copyWith(
+      pdfFile: null == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_EventConvertFileCopyWith<$Res> {
+abstract class _$$_EventConvertFileCopyWith<$Res>
+    implements $PdfCreateSubjectEventCopyWith<$Res> {
   factory _$$_EventConvertFileCopyWith(
           _$_EventConvertFile value, $Res Function(_$_EventConvertFile) then) =
       __$$_EventConvertFileCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String pdfFilePath});
+  $Res call({Uint8List pdfFile});
 }
 
 /// @nodoc
@@ -101,13 +127,13 @@ class __$$_EventConvertFileCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pdfFilePath = null,
+    Object? pdfFile = null,
   }) {
     return _then(_$_EventConvertFile(
-      pdfFilePath: null == pdfFilePath
-          ? _value.pdfFilePath
-          : pdfFilePath // ignore: cast_nullable_to_non_nullable
-              as String,
+      pdfFile: null == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
     ));
   }
 }
@@ -115,14 +141,14 @@ class __$$_EventConvertFileCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EventConvertFile implements _EventConvertFile {
-  const _$_EventConvertFile({required this.pdfFilePath});
+  const _$_EventConvertFile({required this.pdfFile});
 
   @override
-  final String pdfFilePath;
+  final Uint8List pdfFile;
 
   @override
   String toString() {
-    return 'PdfCreateSubjectEvent.convertPdf(pdfFilePath: $pdfFilePath)';
+    return 'PdfCreateSubjectEvent.convertPdf(pdfFile: $pdfFile)';
   }
 
   @override
@@ -130,12 +156,12 @@ class _$_EventConvertFile implements _EventConvertFile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EventConvertFile &&
-            (identical(other.pdfFilePath, pdfFilePath) ||
-                other.pdfFilePath == pdfFilePath));
+            const DeepCollectionEquality().equals(other.pdfFile, pdfFile));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pdfFilePath);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(pdfFile));
 
   @JsonKey(ignore: true)
   @override
@@ -146,36 +172,40 @@ class _$_EventConvertFile implements _EventConvertFile {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String description,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
             List<PdfFragmentSample> pdfFragmentList)
         savePdfSubject,
   }) {
-    return convertPdf(pdfFilePath);
+    return convertPdf(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String description,
-            List<PdfFragmentSample> pdfFragmentList)?
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(String title, Uint8List pdfFile, String pdfFileName,
+            String description, List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
   }) {
-    return convertPdf?.call(pdfFilePath);
+    return convertPdf?.call(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String description,
-            List<PdfFragmentSample> pdfFragmentList)?
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(String title, Uint8List pdfFile, String pdfFileName,
+            String description, List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
     required TResult orElse(),
   }) {
     if (convertPdf != null) {
-      return convertPdf(pdfFilePath);
+      return convertPdf(pdfFile);
     }
     return orElse();
   }
@@ -213,24 +243,29 @@ class _$_EventConvertFile implements _EventConvertFile {
 }
 
 abstract class _EventConvertFile implements PdfCreateSubjectEvent {
-  const factory _EventConvertFile({required final String pdfFilePath}) =
+  const factory _EventConvertFile({required final Uint8List pdfFile}) =
       _$_EventConvertFile;
 
-  String get pdfFilePath;
+  @override
+  Uint8List get pdfFile;
+  @override
   @JsonKey(ignore: true)
   _$$_EventConvertFileCopyWith<_$_EventConvertFile> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_EventSavePdfSubjectCopyWith<$Res> {
+abstract class _$$_EventSavePdfSubjectCopyWith<$Res>
+    implements $PdfCreateSubjectEventCopyWith<$Res> {
   factory _$$_EventSavePdfSubjectCopyWith(_$_EventSavePdfSubject value,
           $Res Function(_$_EventSavePdfSubject) then) =
       __$$_EventSavePdfSubjectCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {String title,
-      String pdfFile,
+      Uint8List pdfFile,
+      String pdfFileName,
       String description,
       List<PdfFragmentSample> pdfFragmentList});
 }
@@ -248,6 +283,7 @@ class __$$_EventSavePdfSubjectCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? pdfFile = null,
+    Object? pdfFileName = null,
     Object? description = null,
     Object? pdfFragmentList = null,
   }) {
@@ -259,6 +295,10 @@ class __$$_EventSavePdfSubjectCopyWithImpl<$Res>
       pdfFile: null == pdfFile
           ? _value.pdfFile
           : pdfFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+      pdfFileName: null == pdfFileName
+          ? _value.pdfFileName
+          : pdfFileName // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
           ? _value.description
@@ -278,6 +318,7 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   const _$_EventSavePdfSubject(
       {required this.title,
       required this.pdfFile,
+      required this.pdfFileName,
       required this.description,
       required final List<PdfFragmentSample> pdfFragmentList})
       : _pdfFragmentList = pdfFragmentList;
@@ -285,7 +326,9 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   @override
   final String title;
   @override
-  final String pdfFile;
+  final Uint8List pdfFile;
+  @override
+  final String pdfFileName;
   @override
   final String description;
   final List<PdfFragmentSample> _pdfFragmentList;
@@ -298,7 +341,7 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
 
   @override
   String toString() {
-    return 'PdfCreateSubjectEvent.savePdfSubject(title: $title, pdfFile: $pdfFile, description: $description, pdfFragmentList: $pdfFragmentList)';
+    return 'PdfCreateSubjectEvent.savePdfSubject(title: $title, pdfFile: $pdfFile, pdfFileName: $pdfFileName, description: $description, pdfFragmentList: $pdfFragmentList)';
   }
 
   @override
@@ -307,7 +350,9 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
         (other.runtimeType == runtimeType &&
             other is _$_EventSavePdfSubject &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile) &&
+            const DeepCollectionEquality().equals(other.pdfFile, pdfFile) &&
+            (identical(other.pdfFileName, pdfFileName) ||
+                other.pdfFileName == pdfFileName) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality()
@@ -315,7 +360,12 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, pdfFile, description,
+  int get hashCode => Object.hash(
+      runtimeType,
+      title,
+      const DeepCollectionEquality().hash(pdfFile),
+      pdfFileName,
+      description,
       const DeepCollectionEquality().hash(_pdfFragmentList));
 
   @JsonKey(ignore: true)
@@ -328,36 +378,43 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String description,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
             List<PdfFragmentSample> pdfFragmentList)
         savePdfSubject,
   }) {
-    return savePdfSubject(title, pdfFile, description, pdfFragmentList);
+    return savePdfSubject(
+        title, pdfFile, pdfFileName, description, pdfFragmentList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String description,
-            List<PdfFragmentSample> pdfFragmentList)?
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(String title, Uint8List pdfFile, String pdfFileName,
+            String description, List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
   }) {
-    return savePdfSubject?.call(title, pdfFile, description, pdfFragmentList);
+    return savePdfSubject?.call(
+        title, pdfFile, pdfFileName, description, pdfFragmentList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String description,
-            List<PdfFragmentSample> pdfFragmentList)?
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(String title, Uint8List pdfFile, String pdfFileName,
+            String description, List<PdfFragmentSample> pdfFragmentList)?
         savePdfSubject,
     required TResult orElse(),
   }) {
     if (savePdfSubject != null) {
-      return savePdfSubject(title, pdfFile, description, pdfFragmentList);
+      return savePdfSubject(
+          title, pdfFile, pdfFileName, description, pdfFragmentList);
     }
     return orElse();
   }
@@ -397,15 +454,19 @@ class _$_EventSavePdfSubject implements _EventSavePdfSubject {
 abstract class _EventSavePdfSubject implements PdfCreateSubjectEvent {
   const factory _EventSavePdfSubject(
           {required final String title,
-          required final String pdfFile,
+          required final Uint8List pdfFile,
+          required final String pdfFileName,
           required final String description,
           required final List<PdfFragmentSample> pdfFragmentList}) =
       _$_EventSavePdfSubject;
 
   String get title;
-  String get pdfFile;
+  @override
+  Uint8List get pdfFile;
+  String get pdfFileName;
   String get description;
   List<PdfFragmentSample> get pdfFragmentList;
+  @override
   @JsonKey(ignore: true)
   _$$_EventSavePdfSubjectCopyWith<_$_EventSavePdfSubject> get copyWith =>
       throw _privateConstructorUsedError;

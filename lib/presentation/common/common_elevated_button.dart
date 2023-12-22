@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../theme/dynamic_theme.dart';
 import '../values/palette.dart';
 
 class CommonElevatedButton extends StatelessWidget {
@@ -26,10 +27,12 @@ class CommonElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => onPressed(),
+      onPressed: () => isPending == false ? onPressed() : null,
       style: ElevatedButton.styleFrom(
           minimumSize: const Size.fromHeight(50),
-          backgroundColor: _buttonColor),
+          backgroundColor:
+              _buttonColor ?? DynamicTheme.paletteOf(context).accent,
+          foregroundColor: DynamicTheme.paletteOf(context).alwaysWhite),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

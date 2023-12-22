@@ -7,7 +7,6 @@ import 'package:moki_tutor/domain/models/presentation.dart';
 import 'package:path/path.dart' as p;
 import 'package:printing/printing.dart';
 
-import '../../../../../../data/api/http_client/request_exception.dart';
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
 import '../../../../../../domain/models/pdf_fragment.dart';
@@ -31,7 +30,7 @@ class EditPresentationBloc
         updatePresentation: (event) => onUpdatePresentation(event, emitter),
         updateFragment: (event) => onUpdateFragment(event, emitter),
         deleteFragment: (_) => onDeletePresentation(emitter),
-        reorderFragments: (event) => onReorderDragments(event, emitter)));
+        reorderFragments: (event) => onReorderFragments(event, emitter)));
     _screenState = _ScreenState(
         title: presentation.title,
         description: presentation.description ?? '',
@@ -48,11 +47,8 @@ class EditPresentationBloc
       _screenState = _screenState.copyWith(
           fragments: fragments, selectedFragment: fragments.first);
       emitter(_screenState);
-    } on RequestException catch (e) {
-      emitter(EditPresentationState.requestError(
-          errorText: e.response?['message'] as String?));
     } on Object {
-      emitter(const EditPresentationState.requestError());
+      emitter(const EditPresentationState.loadingError());
       rethrow;
     }
   }
@@ -100,11 +96,10 @@ class EditPresentationBloc
   Future<void> onImageAdded(
       _EventImageAdded event, Emitter<EditPresentationState> emitter) async {
     emitter(const EditPresentationState.pending());
-    late File tempFile;
+    Uint8List? image;
 
     if (p.extension(event.path) == '.pdf') {
       final file = File(event.path);
-      late final Uint8List image;
 
       List<Uint8List> images = [];
 
@@ -113,15 +108,12 @@ class EditPresentationBloc
         images.add(await page.toPng());
       }
       image = images.first;
-      tempFile = File.fromRawPath(image);
-    } else {
-      tempFile = File(event.path);
     }
     final selectedFragment = PdfFragment(
       id: event.fragment.id,
       title: event.title,
       description: event.description,
-      imagePath: tempFile.path,
+      image: image != null ? File.fromRawPath(image) : File(event.path),
       isLandscape: true, // TODO
       audioPath: event.fragment.audioPath,
       duration: event.fragment.duration,
@@ -155,7 +147,8 @@ class EditPresentationBloc
                   ? _screenState.selectedFragment!.audioPath
                   : null,
           imagePath:
-              _screenState.selectedFragment!.imagePath.contains('http') == false
+              _screenState.selectedFragment!.imagePath?.contains('http') ==
+                      false
                   ? _screenState.selectedFragment!.imagePath
                   : null,
           duration:
@@ -201,23 +194,31 @@ class EditPresentationBloc
     if (_screenState.fragments.length > 1) {
       emitter(const EditPresentationState.pending());
       try {
-        await api.deleteFragment(id: _screenState.selectedFragment!.id);
+        await api.deletePresentationFragment(
+            id: _screenState.selectedFragment!.id);
         add(const EditPresentationEvent.initialDataRequested());
-      } catch (e) {}
+      } on Object {
+        emitter(_screenState);
+        emitter(const EditPresentationState.requestError());
+        rethrow;
+      }
     } else {
       emitter(const EditPresentationState.requestError(
           errorText: 'Вы не можете удалить единственный слайд'));
     }
   }
 
-  Future<void> onReorderDragments(_EventReorderFragment event,
+  Future<void> onReorderFragments(_EventReorderFragment event,
       Emitter<EditPresentationState> emitter) async {
     emitter(const EditPresentationState.pending());
     try {
-      await api.reorderPresentationFragments(
-          presentation: presentation.id, fragmentsIds: event.ids);
+      await api.reorderPresentationFragments(fragmentsIds: event.ids);
       add(const EditPresentationEvent.initialDataRequested());
-    } catch (e) {}
+    } on Object {
+      emitter(_screenState);
+      emitter(const EditPresentationState.requestError());
+      rethrow;
+    }
   }
 
   late _ScreenState _screenState;

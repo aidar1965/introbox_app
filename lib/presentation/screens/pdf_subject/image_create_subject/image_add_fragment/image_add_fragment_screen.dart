@@ -97,7 +97,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 25),
                         child: AudioPlayerWidget(
-                            source: audioPath!,
+                            urlSource: audioPath!,
                             duration: duration!,
                             onDelete: () {
                               setState(() {

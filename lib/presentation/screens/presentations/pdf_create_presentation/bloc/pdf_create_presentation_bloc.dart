@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -21,31 +19,44 @@ class PdfCreatePresentationBloc
     on<PdfCreatePresentationEvent>((event, emitter) => event.map(
         convertPdf: (event) => _convertPdf(event, emitter),
         savePdfPresentation: (event) => _savePdfPresentation(event, emitter)));
+    _screenState = const _ScreenState();
   }
 
   final api = getIt<IApi>();
+  late _ScreenState _screenState;
 
   Future<void> _convertPdf(_EventConvertFile event,
       Emitter<PdfCreatePresentationState> emitter) async {
-    emitter(const PdfCreatePresentationState.screenState(
-      isPending: true,
-    ));
+    _screenState = _screenState.copyWith(isPending: true);
+    emitter(_screenState);
+    int i = 0;
     final List<Uint8List> pdfImageList = [];
 
-    final file = File(event.pdfFilePath);
-    await for (var page in Printing.raster(file.readAsBytesSync(), dpi: 300)) {
+    final file = event.pdfFile;
+    _screenState = _screenState.copyWith(countFileGenerated: i);
+    emitter(_screenState);
+    await for (var page in Printing.raster(file, dpi: 300)) {
       final image = await page.toPng();
 
       pdfImageList.add(image);
+      _screenState = _screenState.copyWith(countFileGenerated: i);
+      emitter(_screenState);
+      i++;
     }
-
-    emitter(PdfCreatePresentationState.screenState(
+    _screenState = _screenState.copyWith(
+        isPending: false,
+        countFileGenerated: null,
         pdfFragmentList:
-            pdfImageList.map((e) => PdfFragmentSample(image: e)).toList()));
+            pdfImageList.map((e) => PdfFragmentSample(image: e)).toList());
+    emitter(_screenState);
   }
 
   Future<void> _savePdfPresentation(_EventSavePdfPresentation event,
       Emitter<PdfCreatePresentationState> emitter) async {
+    _screenState = _screenState.copyWith(
+      isPending: true,
+    );
+    emitter(_screenState);
     final List<FragmentRequestData> fragments = [];
     int index = 0;
     for (final f in event.pdfFragmentList) {
@@ -60,16 +71,27 @@ class PdfCreatePresentationBloc
 
               ///TODO: Убрать
             ),
-            audioPath: f.audioPath,
+            audioBytes: f.audioBytes,
             duration: f.duration),
       );
       index++;
     }
-    await api.addPresentation(
-        pdfFile: event.pdfFile,
-        title: event.title,
-        description: event.description,
-        isAudio: event.isAudio,
-        fragments: fragments);
+    try {
+      await api.addPresentation(
+          pdfFile: event.pdfFile,
+          pdfFileName: event.pdfFileName,
+          title: event.title,
+          description: event.description,
+          isAudio: event.isAudio,
+          fragments: fragments);
+
+      emitter(const PdfCreatePresentationState.saveSuccess());
+    } on Object {
+      _screenState = _screenState.copyWith(
+        isPending: false,
+      );
+      emitter(_screenState);
+      emitter(const PdfCreatePresentationState.saveError());
+    }
   }
 }

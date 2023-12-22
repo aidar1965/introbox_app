@@ -1,22 +1,25 @@
 import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart' as ap;
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mime/mime.dart';
 
 import '../common/common_duration_widget.dart';
 
 class AudioPlayerWidget extends StatefulWidget {
   const AudioPlayerWidget({
     Key? key,
-    required this.source,
+    this.urlSource,
+    this.fileBites,
     required this.onDelete,
     required this.duration,
   }) : super(key: key);
 
   /// Path from where to play recorded audio
-  final String source;
+  final String? urlSource;
+  final Uint8List? fileBites;
   final int duration;
 
   /// Callback when audio file should be removed
@@ -31,7 +34,7 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   static const double _controlSize = 56;
   static const double _deleteBtnSize = 24;
 
-  final _audioPlayer = ap.AudioPlayer()..setReleaseMode(ReleaseMode.stop);
+  final _audioPlayer = ap.AudioPlayer()..setReleaseMode(ap.ReleaseMode.stop);
   late StreamSubscription<void> _playerStateChangedSubscription;
 
   late StreamSubscription<Duration> _positionChangedSubscription;
@@ -40,6 +43,8 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   @override
   void initState() {
+    print('duation received by AudioPlayerWidget');
+    print(widget.duration);
     _playerStateChangedSubscription =
         _audioPlayer.onPlayerComplete.listen((state) async {
       await stop();
@@ -166,10 +171,21 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
     );
   }
 
-  Future<void> play() {
-    return _audioPlayer.play(
-      kIsWeb ? ap.UrlSource(widget.source) : ap.DeviceFileSource(widget.source),
-    );
+  Future<void> play() async {
+    if (widget.urlSource != null) {
+      return _audioPlayer.play(ap.UrlSource(widget.urlSource!));
+    } else {
+      String? mimeType = lookupMimeType('', headerBytes: widget.fileBites!);
+      ap.UrlSource urlSourceFromBytes(
+        Uint8List bytes,
+      ) {
+        return ap.UrlSource(
+            Uri.dataFromBytes(bytes, mimeType: mimeType ?? 'audio/wav')
+                .toString());
+      }
+
+      return _audioPlayer.play(urlSourceFromBytes(widget.fileBites!));
+    }
   }
 
   Future<void> pause() => _audioPlayer.pause();

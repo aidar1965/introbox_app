@@ -12,9 +12,13 @@ import 'bloc/presentation_player_bloc.dart';
 
 @RoutePage()
 class PresentationPlayerScreen extends StatelessWidget {
-  const PresentationPlayerScreen({super.key, required this.presentation});
+  const PresentationPlayerScreen(
+      {super.key,
+      required this.presentation,
+      @PathParam('id') required this.presentationId});
 
   final Presentation presentation;
+  final int presentationId;
 
   @override
   Widget build(BuildContext context) {
@@ -225,8 +229,9 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
                   height: height - 40,
                   width: width - 40,
                   child: Center(
-                      child: fragment.imagePath != ''
-                          ? CachedNetworkImage(imageUrl: fragment.imagePath)
+                      child: fragment.imagePath != null &&
+                              fragment.imagePath != ''
+                          ? CachedNetworkImage(imageUrl: fragment.imagePath!)
                           : const SizedBox()))
             ],
           )),

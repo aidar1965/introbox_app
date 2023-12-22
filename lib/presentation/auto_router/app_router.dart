@@ -72,37 +72,37 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
           //   AutoRoute(path: 'edit_subject', page: EditSubjectRoute.page),
           // ]),
           AutoRoute(
-              path: 'presentationsEmpty',
+              path: 'presentations',
               page: PresentationsEmpty.page,
               children: [
                 AutoRoute(
                     path: '', page: PresentationsRoute.page, initial: true),
                 AutoRoute(
-                  path: 'createPdfPresentation',
+                  path: 'create-presentation-pdf',
                   page: PdfCreatePresentationRoute.page,
                 ),
                 AutoRoute(
-                  path: 'createImagePresentation',
+                  path: 'create-presentation-images',
                   page: ImageCreatePresentationRoute.page,
                 ),
                 AutoRoute(
-                  path: 'addImageFragment',
+                  path: 'add-image-fragment',
                   page: ImageAddFragmentRoute.page,
                 ),
                 AutoRoute(
-                    path: 'audioRecording', page: AudioRecordingRoute.page),
+                    path: 'audio-recording', page: AudioRecordingRoute.page),
                 CustomRoute(
-                    path: 'editPdfPresentation',
+                    path: 'edit-presentation',
                     page: EditPresentationRoute.page,
                     transitionsBuilder: TransitionsBuilders.slideLeft,
                     durationInMilliseconds: 400),
                 CustomRoute(
-                    path: 'presentationAddFragment',
+                    path: 'presentation-add-fragment',
                     page: PresentationAddFragmentRoute.page,
                     transitionsBuilder: TransitionsBuilders.slideLeft,
                     durationInMilliseconds: 400),
                 CustomRoute(
-                    path: 'reorderFragments',
+                    path: 'reorder-fragments',
                     page: FragmentsReorderRoute.page,
                     transitionsBuilder: TransitionsBuilders.slideLeft,
                     durationInMilliseconds: 400),
@@ -136,7 +136,7 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
         CustomRoute(
-            path: '/presentationPlayer',
+            path: '/presentation/play/:id',
             page: PresentationPlayerRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),

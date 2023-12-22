@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PdfCreatePresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<PdfFragmentSample>? pdfFragmentList, bool isPending)
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
+            bool isPending, int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
@@ -27,7 +27,8 @@ mixin _$PdfCreatePresentationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
@@ -35,7 +36,8 @@ mixin _$PdfCreatePresentationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
@@ -92,7 +94,10 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
           _$_ScreenState value, $Res Function(_$_ScreenState) then) =
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<PdfFragmentSample>? pdfFragmentList, bool isPending});
+  $Res call(
+      {List<PdfFragmentSample>? pdfFragmentList,
+      bool isPending,
+      int? countFileGenerated});
 }
 
 /// @nodoc
@@ -108,6 +113,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   $Res call({
     Object? pdfFragmentList = freezed,
     Object? isPending = null,
+    Object? countFileGenerated = freezed,
   }) {
     return _then(_$_ScreenState(
       pdfFragmentList: freezed == pdfFragmentList
@@ -118,6 +124,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
               as bool,
+      countFileGenerated: freezed == countFileGenerated
+          ? _value.countFileGenerated
+          : countFileGenerated // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -126,7 +136,9 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 
 class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   const _$_ScreenState(
-      {final List<PdfFragmentSample>? pdfFragmentList, this.isPending = false})
+      {final List<PdfFragmentSample>? pdfFragmentList,
+      this.isPending = false,
+      this.countFileGenerated})
       : _pdfFragmentList = pdfFragmentList;
 
   final List<PdfFragmentSample>? _pdfFragmentList;
@@ -142,10 +154,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @JsonKey()
   final bool isPending;
+  @override
+  final int? countFileGenerated;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PdfCreatePresentationState.screenState(pdfFragmentList: $pdfFragmentList, isPending: $isPending)';
+    return 'PdfCreatePresentationState.screenState(pdfFragmentList: $pdfFragmentList, isPending: $isPending, countFileGenerated: $countFileGenerated)';
   }
 
   @override
@@ -155,7 +169,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       ..add(
           DiagnosticsProperty('type', 'PdfCreatePresentationState.screenState'))
       ..add(DiagnosticsProperty('pdfFragmentList', pdfFragmentList))
-      ..add(DiagnosticsProperty('isPending', isPending));
+      ..add(DiagnosticsProperty('isPending', isPending))
+      ..add(DiagnosticsProperty('countFileGenerated', countFileGenerated));
   }
 
   @override
@@ -166,12 +181,17 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             const DeepCollectionEquality()
                 .equals(other._pdfFragmentList, _pdfFragmentList) &&
             (identical(other.isPending, isPending) ||
-                other.isPending == isPending));
+                other.isPending == isPending) &&
+            (identical(other.countFileGenerated, countFileGenerated) ||
+                other.countFileGenerated == countFileGenerated));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_pdfFragmentList), isPending);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_pdfFragmentList),
+      isPending,
+      countFileGenerated);
 
   @JsonKey(ignore: true)
   @override
@@ -182,37 +202,39 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<PdfFragmentSample>? pdfFragmentList, bool isPending)
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
+            bool isPending, int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
   }) {
-    return screenState(pdfFragmentList, isPending);
+    return screenState(pdfFragmentList, isPending, countFileGenerated);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
   }) {
-    return screenState?.call(pdfFragmentList, isPending);
+    return screenState?.call(pdfFragmentList, isPending, countFileGenerated);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(pdfFragmentList, isPending);
+      return screenState(pdfFragmentList, isPending, countFileGenerated);
     }
     return orElse();
   }
@@ -255,10 +277,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 abstract class _ScreenState implements PdfCreatePresentationState {
   const factory _ScreenState(
       {final List<PdfFragmentSample>? pdfFragmentList,
-      final bool isPending}) = _$_ScreenState;
+      final bool isPending,
+      final int? countFileGenerated}) = _$_ScreenState;
 
   List<PdfFragmentSample>? get pdfFragmentList;
   bool get isPending;
+  int? get countFileGenerated;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -311,8 +335,8 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<PdfFragmentSample>? pdfFragmentList, bool isPending)
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
+            bool isPending, int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
@@ -323,7 +347,8 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
@@ -334,7 +359,8 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
@@ -432,8 +458,8 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<PdfFragmentSample>? pdfFragmentList, bool isPending)
+    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
+            bool isPending, int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
@@ -444,7 +470,8 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
@@ -455,7 +482,8 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending)?
+    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
@@ -508,27 +536,43 @@ abstract class _StateSaveError implements PdfCreatePresentationState {
 
 /// @nodoc
 mixin _$PdfCreatePresentationEvent {
+  Uint8List get pdfFile => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
         savePdfPresentation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)?
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfPresentation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)?
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfPresentation,
     required TResult orElse(),
   }) =>
@@ -553,6 +597,10 @@ mixin _$PdfCreatePresentationEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $PdfCreatePresentationEventCopyWith<PdfCreatePresentationEvent>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -561,6 +609,8 @@ abstract class $PdfCreatePresentationEventCopyWith<$Res> {
           $Res Function(PdfCreatePresentationEvent) then) =
       _$PdfCreatePresentationEventCopyWithImpl<$Res,
           PdfCreatePresentationEvent>;
+  @useResult
+  $Res call({Uint8List pdfFile});
 }
 
 /// @nodoc
@@ -573,15 +623,30 @@ class _$PdfCreatePresentationEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pdfFile = null,
+  }) {
+    return _then(_value.copyWith(
+      pdfFile: null == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_EventConvertFileCopyWith<$Res> {
+abstract class _$$_EventConvertFileCopyWith<$Res>
+    implements $PdfCreatePresentationEventCopyWith<$Res> {
   factory _$$_EventConvertFileCopyWith(
           _$_EventConvertFile value, $Res Function(_$_EventConvertFile) then) =
       __$$_EventConvertFileCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({String pdfFilePath});
+  $Res call({Uint8List pdfFile});
 }
 
 /// @nodoc
@@ -595,13 +660,13 @@ class __$$_EventConvertFileCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pdfFilePath = null,
+    Object? pdfFile = null,
   }) {
     return _then(_$_EventConvertFile(
-      pdfFilePath: null == pdfFilePath
-          ? _value.pdfFilePath
-          : pdfFilePath // ignore: cast_nullable_to_non_nullable
-              as String,
+      pdfFile: null == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
     ));
   }
 }
@@ -611,14 +676,14 @@ class __$$_EventConvertFileCopyWithImpl<$Res>
 class _$_EventConvertFile
     with DiagnosticableTreeMixin
     implements _EventConvertFile {
-  const _$_EventConvertFile({required this.pdfFilePath});
+  const _$_EventConvertFile({required this.pdfFile});
 
   @override
-  final String pdfFilePath;
+  final Uint8List pdfFile;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PdfCreatePresentationEvent.convertPdf(pdfFilePath: $pdfFilePath)';
+    return 'PdfCreatePresentationEvent.convertPdf(pdfFile: $pdfFile)';
   }
 
   @override
@@ -627,7 +692,7 @@ class _$_EventConvertFile
     properties
       ..add(
           DiagnosticsProperty('type', 'PdfCreatePresentationEvent.convertPdf'))
-      ..add(DiagnosticsProperty('pdfFilePath', pdfFilePath));
+      ..add(DiagnosticsProperty('pdfFile', pdfFile));
   }
 
   @override
@@ -635,12 +700,12 @@ class _$_EventConvertFile
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EventConvertFile &&
-            (identical(other.pdfFilePath, pdfFilePath) ||
-                other.pdfFilePath == pdfFilePath));
+            const DeepCollectionEquality().equals(other.pdfFile, pdfFile));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pdfFilePath);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(pdfFile));
 
   @JsonKey(ignore: true)
   @override
@@ -651,36 +716,51 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
         savePdfPresentation,
   }) {
-    return convertPdf(pdfFilePath);
+    return convertPdf(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)?
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfPresentation,
   }) {
-    return convertPdf?.call(pdfFilePath);
+    return convertPdf?.call(pdfFile);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)?
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfPresentation,
     required TResult orElse(),
   }) {
     if (convertPdf != null) {
-      return convertPdf(pdfFilePath);
+      return convertPdf(pdfFile);
     }
     return orElse();
   }
@@ -719,25 +799,30 @@ class _$_EventConvertFile
 }
 
 abstract class _EventConvertFile implements PdfCreatePresentationEvent {
-  const factory _EventConvertFile({required final String pdfFilePath}) =
+  const factory _EventConvertFile({required final Uint8List pdfFile}) =
       _$_EventConvertFile;
 
-  String get pdfFilePath;
+  @override
+  Uint8List get pdfFile;
+  @override
   @JsonKey(ignore: true)
   _$$_EventConvertFileCopyWith<_$_EventConvertFile> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_EventSavePdfPresentationCopyWith<$Res> {
+abstract class _$$_EventSavePdfPresentationCopyWith<$Res>
+    implements $PdfCreatePresentationEventCopyWith<$Res> {
   factory _$$_EventSavePdfPresentationCopyWith(
           _$_EventSavePdfPresentation value,
           $Res Function(_$_EventSavePdfPresentation) then) =
       __$$_EventSavePdfPresentationCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call(
       {String title,
-      String pdfFile,
+      Uint8List pdfFile,
+      String pdfFileName,
       String description,
       bool isAudio,
       List<PdfFragmentSample> pdfFragmentList});
@@ -757,6 +842,7 @@ class __$$_EventSavePdfPresentationCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? pdfFile = null,
+    Object? pdfFileName = null,
     Object? description = null,
     Object? isAudio = null,
     Object? pdfFragmentList = null,
@@ -769,6 +855,10 @@ class __$$_EventSavePdfPresentationCopyWithImpl<$Res>
       pdfFile: null == pdfFile
           ? _value.pdfFile
           : pdfFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+      pdfFileName: null == pdfFileName
+          ? _value.pdfFileName
+          : pdfFileName // ignore: cast_nullable_to_non_nullable
               as String,
       description: null == description
           ? _value.description
@@ -794,6 +884,7 @@ class _$_EventSavePdfPresentation
   const _$_EventSavePdfPresentation(
       {required this.title,
       required this.pdfFile,
+      required this.pdfFileName,
       required this.description,
       required this.isAudio,
       required final List<PdfFragmentSample> pdfFragmentList})
@@ -802,7 +893,9 @@ class _$_EventSavePdfPresentation
   @override
   final String title;
   @override
-  final String pdfFile;
+  final Uint8List pdfFile;
+  @override
+  final String pdfFileName;
   @override
   final String description;
   @override
@@ -817,7 +910,7 @@ class _$_EventSavePdfPresentation
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PdfCreatePresentationEvent.savePdfPresentation(title: $title, pdfFile: $pdfFile, description: $description, isAudio: $isAudio, pdfFragmentList: $pdfFragmentList)';
+    return 'PdfCreatePresentationEvent.savePdfPresentation(title: $title, pdfFile: $pdfFile, pdfFileName: $pdfFileName, description: $description, isAudio: $isAudio, pdfFragmentList: $pdfFragmentList)';
   }
 
   @override
@@ -828,6 +921,7 @@ class _$_EventSavePdfPresentation
           'type', 'PdfCreatePresentationEvent.savePdfPresentation'))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('pdfFile', pdfFile))
+      ..add(DiagnosticsProperty('pdfFileName', pdfFileName))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('isAudio', isAudio))
       ..add(DiagnosticsProperty('pdfFragmentList', pdfFragmentList));
@@ -839,7 +933,9 @@ class _$_EventSavePdfPresentation
         (other.runtimeType == runtimeType &&
             other is _$_EventSavePdfPresentation &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile) &&
+            const DeepCollectionEquality().equals(other.pdfFile, pdfFile) &&
+            (identical(other.pdfFileName, pdfFileName) ||
+                other.pdfFileName == pdfFileName) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.isAudio, isAudio) || other.isAudio == isAudio) &&
@@ -848,8 +944,14 @@ class _$_EventSavePdfPresentation
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, pdfFile, description,
-      isAudio, const DeepCollectionEquality().hash(_pdfFragmentList));
+  int get hashCode => Object.hash(
+      runtimeType,
+      title,
+      const DeepCollectionEquality().hash(pdfFile),
+      pdfFileName,
+      description,
+      isAudio,
+      const DeepCollectionEquality().hash(_pdfFragmentList));
 
   @JsonKey(ignore: true)
   @override
@@ -861,39 +963,54 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pdfFilePath) convertPdf,
-    required TResult Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
         savePdfPresentation,
   }) {
     return savePdfPresentation(
-        title, pdfFile, description, isAudio, pdfFragmentList);
+        title, pdfFile, pdfFileName, description, isAudio, pdfFragmentList);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pdfFilePath)? convertPdf,
-    TResult? Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)?
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfPresentation,
   }) {
     return savePdfPresentation?.call(
-        title, pdfFile, description, isAudio, pdfFragmentList);
+        title, pdfFile, pdfFileName, description, isAudio, pdfFragmentList);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pdfFilePath)? convertPdf,
-    TResult Function(String title, String pdfFile, String description,
-            bool isAudio, List<PdfFragmentSample> pdfFragmentList)?
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
         savePdfPresentation,
     required TResult orElse(),
   }) {
     if (savePdfPresentation != null) {
       return savePdfPresentation(
-          title, pdfFile, description, isAudio, pdfFragmentList);
+          title, pdfFile, pdfFileName, description, isAudio, pdfFragmentList);
     }
     return orElse();
   }
@@ -934,17 +1051,21 @@ class _$_EventSavePdfPresentation
 abstract class _EventSavePdfPresentation implements PdfCreatePresentationEvent {
   const factory _EventSavePdfPresentation(
           {required final String title,
-          required final String pdfFile,
+          required final Uint8List pdfFile,
+          required final String pdfFileName,
           required final String description,
           required final bool isAudio,
           required final List<PdfFragmentSample> pdfFragmentList}) =
       _$_EventSavePdfPresentation;
 
   String get title;
-  String get pdfFile;
+  @override
+  Uint8List get pdfFile;
+  String get pdfFileName;
   String get description;
   bool get isAudio;
   List<PdfFragmentSample> get pdfFragmentList;
+  @override
   @JsonKey(ignore: true)
   _$$_EventSavePdfPresentationCopyWith<_$_EventSavePdfPresentation>
       get copyWith => throw _privateConstructorUsedError;

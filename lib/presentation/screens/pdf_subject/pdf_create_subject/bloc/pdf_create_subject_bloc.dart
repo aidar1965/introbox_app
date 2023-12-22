@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,9 +32,9 @@ class PdfCreateSubjectBloc
     ));
     final List<Uint8List> pdfImageList = [];
 
-    final file = File(event.pdfFilePath);
+    final file = event.pdfFile;
 
-    await for (var page in Printing.raster(file.readAsBytesSync(), dpi: 300)) {
+    await for (var page in Printing.raster(file, dpi: 300)) {
       final image = await page.toPng();
 
       // final savedFile = await File(filePath).writeAsBytes(image);
@@ -66,13 +65,14 @@ class PdfCreateSubjectBloc
 
               ///TODO: Убрать
             ),
-            audioPath: f.audioPath,
+            audioBytes: f.audioBytes,
             duration: f.duration),
       );
       index++;
     }
     await api.addPdfSubject(
         pdfFile: event.pdfFile,
+        pdfFileName: event.pdfFileName,
         title: event.title,
         description: event.description,
         fragments: fragments);

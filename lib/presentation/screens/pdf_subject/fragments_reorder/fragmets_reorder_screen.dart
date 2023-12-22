@@ -75,7 +75,7 @@ class _FragmentsReorderScreenState extends State<FragmentsReorderScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CachedNetworkImage(
-            imageUrl: fragment.imagePath,
+            imageUrl: fragment.imagePath!,
             fit: BoxFit.cover,
           ),
         ),
