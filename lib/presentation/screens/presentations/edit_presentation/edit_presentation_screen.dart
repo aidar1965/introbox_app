@@ -1,13 +1,16 @@
-import 'package:audioplayers/audioplayers.dart';
+import 'dart:html' as html;
+import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
 import 'package:moki_tutor/presentation/common/common_functions.dart';
+import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
 
 import '../../../../../domain/models/pdf_fragment.dart';
 import '../../../../../domain/models/presentation.dart';
@@ -17,6 +20,7 @@ import '../../../common/common_loading_error_widget.dart';
 import '../../../values/palette.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
+import '../audio_recording/audio_recording_screen.dart';
 import 'bloc/edit_presentation_bloc.dart';
 
 @RoutePage()
@@ -38,6 +42,8 @@ class EditPresentationScreen extends StatelessWidget {
               listener: (context, state) => state.mapOrNull(
                   requestError: (state) =>
                       _showMessage(context, state.errorText),
+                  requestSuccess: (_) => CommonFunctions.showMessage(
+                      context, 'Двнные обновлены', Reason.neutral),
                   loadingError: (_) => CommonLoadingErrorWidget(
                         onPressed: () =>
                             BlocProvider.of<EditPresentationBloc>(context).add(
@@ -143,7 +149,7 @@ class _ScreenView extends StatelessWidget {
                                   imageUrl: selectedFragment.imagePath!,
                                   fit: BoxFit.cover,
                                 )
-                              : Image.file(selectedFragment.image!,
+                              : Image.memory(selectedFragment.imageBytes!,
                                   fit: BoxFit.cover)),
                 ],
               ),
@@ -162,7 +168,10 @@ class _ScreenView extends StatelessWidget {
                   child: ListView(
                     controller: scrollController,
                     children: [
-                      Text('Название и описание презентации'),
+                      Text(
+                        'Изменение названия и описания презентации',
+                        style: context.style14w600$title4,
+                      ),
                       SizedBox(
                         height: 12,
                       ),
@@ -194,6 +203,10 @@ class _ScreenView extends StatelessWidget {
                       const SizedBox(
                         height: 12,
                       ),
+                      const Divider(),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
                         child: CommonElevatedButton(
@@ -214,7 +227,11 @@ class _ScreenView extends StatelessWidget {
                       const SizedBox(
                         height: 12,
                       ),
-                      Text('Назввание и описание слайда'),
+                      const Divider(),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Text('Редактирование слайда'),
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
                         child: NameAndDescriptionWidget(
@@ -254,20 +271,19 @@ class _ScreenView extends StatelessWidget {
                           child: CommonElevatedButton(
                               text: 'Записать аудио',
                               onPressed: () async {
-                                final result = await _showRecorder(context,
-                                    imagePath: selectedFragment.imagePath!);
+                                final result = await showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog.fullscreen(
+                                        child: AudioRecordingScreen(
+                                            imageData:
+                                                selectedFragment.imageBytes)));
                                 if (result != null && context.mounted) {
                                   BlocProvider.of<EditPresentationBloc>(context)
                                       .add(EditPresentationEvent.audioAdded(
                                           fragment: selectedFragment,
-                                          title: selectedFragmentTitleController
-                                              .text,
-                                          description:
-                                              selectedFragmentDescriptionController
-                                                  .text,
-                                          path: result.path,
-                                          duration:
-                                              result.duration.toString()));
+                                          audioPath: result.path!,
+                                          audioBytes: result.audioBytes!,
+                                          duration: result.duration!));
                                 }
                               }),
                         ),
@@ -285,24 +301,29 @@ class _ScreenView extends StatelessWidget {
                                   allowedExtensions: ['mp3', 'wav'],
                                 );
                                 if (result != null) {
-                                  final audioPath = result.files.single.path!;
+                                  final fileBytes = result.files.first.bytes;
+                                  print(result.files.first.name);
+
+                                  // Преобразование Uint8List в Blob
+                                  final blob = html.Blob(
+                                    [fileBytes],
+                                  );
+
+                                  // Преобразование Blob в data URL
+                                  final dataUrl =
+                                      html.Url.createObjectUrlFromBlob(blob);
+                                  print(dataUrl);
 
                                   final durationInSeconds =
-                                      await getDuration(audioPath);
+                                      await getDuration(dataUrl);
                                   if (context.mounted) {
                                     BlocProvider.of<EditPresentationBloc>(
                                             context)
                                         .add(EditPresentationEvent.audioAdded(
                                             fragment: selectedFragment,
-                                            title:
-                                                selectedFragmentTitleController
-                                                    .text,
-                                            description:
-                                                selectedFragmentDescriptionController
-                                                    .text,
-                                            path: audioPath,
-                                            duration:
-                                                durationInSeconds.toString()));
+                                            audioBytes: fileBytes!,
+                                            audioPath: dataUrl,
+                                            duration: durationInSeconds));
                                   }
                                 }
                               }),
@@ -329,17 +350,13 @@ class _ScreenView extends StatelessWidget {
                                 ],
                               );
                               if (result != null) {
-                                final imagePath = result.files.single.path!;
+                                final imageBytes = result.files.first.bytes;
 
                                 if (context.mounted) {
                                   BlocProvider.of<EditPresentationBloc>(context)
                                       .add(EditPresentationEvent.imageAdded(
-                                    title: selectedFragmentTitleController.text,
-                                    description:
-                                        selectedFragmentDescriptionController
-                                            .text,
                                     fragment: selectedFragment,
-                                    path: imagePath,
+                                    imageBytes: imageBytes!,
                                   ));
                                 }
                               }
@@ -348,23 +365,21 @@ class _ScreenView extends StatelessWidget {
                       const SizedBox(
                         height: 12,
                       ),
-                      if (selectedFragment.audioPath?.contains('http') ==
-                              false ||
-                          selectedFragment.imagePath?.contains('http') == false)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: CommonElevatedButton(
-                              text: 'Сохранить',
-                              onPressed: () {
-                                BlocProvider.of<EditPresentationBloc>(context)
-                                    .add(EditPresentationEvent.updateFragment(
-                                        title: selectedFragmentTitleController
-                                            .text,
-                                        description:
-                                            selectedFragmentDescriptionController
-                                                .text));
-                              }),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: CommonElevatedButton(
+                            isPending: fragmentUpdatePending,
+                            text: 'Сохранить',
+                            onPressed: () {
+                              BlocProvider.of<EditPresentationBloc>(context)
+                                  .add(EditPresentationEvent.updateFragment(
+                                      title:
+                                          selectedFragmentTitleController.text,
+                                      description:
+                                          selectedFragmentDescriptionController
+                                              .text));
+                            }),
+                      ),
                       const SizedBox(
                         height: 32,
                       ),
@@ -418,8 +433,11 @@ class _ScreenView extends StatelessWidget {
                   }
                 },
                 separatorBuilder: (context, index) => AddFragmentButtons(
-                      index: index - 1,
+                      displayOrder: index == 0
+                          ? 0
+                          : fragments.elementAt(index - 1).displayOrder,
                       presentationId: presentationId,
+                      isAudio: isAudio,
                     ),
                 itemCount: fragments.length + 2),
           ),
@@ -428,27 +446,22 @@ class _ScreenView extends StatelessWidget {
     );
   }
 
-  Future<({String path, int duration})?> _showRecorder(BuildContext context,
-      {required String imagePath}) async {
-    final result =
-        await context.router.push(AudioRecordingRoute(imagePath: imagePath));
-    return result as ({String path, int duration})?;
+  Future<({Uint8List? audioBytes, String? path, int? duration})?>?
+      _showRecorder(BuildContext context, {required String imagePath}) async {
+    final result = await showDialog(
+        context: context,
+        builder: (context) => Dialog.fullscreen(
+            child: AudioRecordingScreen(imagePath: imagePath)));
+    return result as ({Uint8List? audioBytes, String path, int duration})?;
   }
 
-  Future<int> getDuration(String path) async {
+  Future<int> getDuration(String? audioPath) async {
     Duration? duration;
-    final aup = AudioPlayer();
-    await aup.play(
-      DeviceFileSource(
-        path,
-      ),
-      volume: 0,
-    );
-    await aup.getDuration().then((value) {
-      aup.stop();
-      aup.dispose();
-      duration = value;
-    });
+    final aup = ap.AudioPlayer();
+
+    await aup.setSourceDeviceFile(audioPath!);
+
+    duration = await aup.getDuration();
     return duration?.inSeconds ?? 0;
   }
 }
@@ -475,7 +488,7 @@ class _FragmentCard extends StatelessWidget {
                                 const Center(
                                     child: CircularProgressIndicator()),
                             imageUrl: fragment.imagePath!)
-                        : Image.file(fragment.image!)))),
+                        : Image.memory(fragment.imageBytes!)))),
       ],
     );
   }
@@ -484,12 +497,14 @@ class _FragmentCard extends StatelessWidget {
 class AddFragmentButtons extends StatelessWidget {
   const AddFragmentButtons({
     super.key,
-    required this.index,
+    required this.displayOrder,
     required this.presentationId,
+    required this.isAudio,
   });
 
-  final int index;
+  final int displayOrder;
   final int presentationId;
+  final bool isAudio;
 
   @override
   Widget build(BuildContext context) {
@@ -501,7 +516,9 @@ class AddFragmentButtons extends StatelessWidget {
             onPressed: () async {
               final result = await context.router.push(
                   PresentationAddFragmentRoute(
-                      displayOder: index + 1, presentationId: presentationId));
+                      displayOder: displayOrder,
+                      presentationId: presentationId,
+                      isAudio: isAudio));
               if (result != null && result == true) {
                 if (context.mounted) {
                   BlocProvider.of<EditPresentationBloc>(context)

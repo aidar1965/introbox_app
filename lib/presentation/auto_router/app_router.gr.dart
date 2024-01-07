@@ -15,16 +15,10 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    CoursesEmpty.name: (routeData) {
+    HomeEmpty.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: CoursesEmptyPage(),
-      );
-    },
-    SubjectsEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SubjectsEmptyPage(),
+        child: HomeEmptyPage(),
       );
     },
     PresentationsEmpty.name: (routeData) {
@@ -33,70 +27,10 @@ abstract class _$AppRouter extends RootStackRouter {
         child: PresentationsEmptyPage(),
       );
     },
-    RecordsEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: RecordsEmptyPage(),
-      );
-    },
     LoginEmpty.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: LoginEmptyPage(),
-      );
-    },
-    CreatePdfSubjectsEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: CreatePdfSubjectsEmptyPage(),
-      );
-    },
-    CoursePlayerRoute.name: (routeData) {
-      final args = routeData.argsAs<CoursePlayerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: CoursePlayerScreen(
-          key: args.key,
-          course: args.course,
-          remote: args.remote,
-        ),
-      );
-    },
-    PlayerRoute.name: (routeData) {
-      final args = routeData.argsAs<PlayerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PlayerScreen(
-          key: args.key,
-          record: args.record,
-          remote: args.remote,
-        ),
-      );
-    },
-    SubjectPlayerRoute.name: (routeData) {
-      final args = routeData.argsAs<SubjectPlayerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SubjectPlayerScreen(
-          key: args.key,
-          subject: args.subject,
-        ),
-      );
-    },
-    CoursesRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const CoursesScreen(),
-      );
-    },
-    EditCourseRoute.name: (routeData) {
-      final args = routeData.argsAs<EditCourseRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: EditCourseScreen(
-          key: args.key,
-          course: args.course,
-        ),
       );
     },
     HomeRoute.name: (routeData) {
@@ -111,37 +45,15 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
-    PdfAddCourseRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfAddCourseRouteArgs>(
-          orElse: () => const PdfAddCourseRouteArgs());
+    PresentationRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<PresentationRouteArgs>(
+          orElse: () => PresentationRouteArgs(id: pathParams.getInt('id')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: PdfAddCourseScreen(key: args.key),
-      );
-    },
-    PdfCoursesRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PdfCoursesScreen(),
-      );
-    },
-    PdfCourseDetailsRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfCourseDetailsRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PdfCourseDetailsScreen(
+        child: PresentationScreen(
           key: args.key,
-          course: args.course,
-        ),
-      );
-    },
-    PdfEditCourseRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfEditCourseRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PdfEditCourseScreen(
-          key: args.key,
-          course: args.course,
+          id: args.id,
         ),
       );
     },
@@ -154,6 +66,16 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           imageData: args.imageData,
           imagePath: args.imagePath,
+        ),
+      );
+    },
+    EditPresentationRoute.name: (routeData) {
+      final args = routeData.argsAs<EditPresentationRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EditPresentationScreen(
+          key: args.key,
+          presentation: args.presentation,
         ),
       );
     },
@@ -173,61 +95,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: ImageAddFragmentScreen(key: args.key),
-      );
-    },
-    ImageCreateSubjectRoute.name: (routeData) {
-      final args = routeData.argsAs<ImageCreateSubjectRouteArgs>(
-          orElse: () => const ImageCreateSubjectRouteArgs());
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ImageCreateSubjectScreen(key: args.key),
-      );
-    },
-    PdfAddFragmentRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfAddFragmentRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PdfAddFragmentScreen(
-          key: args.key,
-          displayOder: args.displayOder,
-          subjectId: args.subjectId,
-        ),
-      );
-    },
-    PdfCreateSubjectRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PdfCreateSubjectScreen(),
-      );
-    },
-    PdfEditSubjectRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfEditSubjectRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PdfEditSubjectScreen(
-          key: args.key,
-          subject: args.subject,
-        ),
-      );
-    },
-    PdfSubjectPlayerRoute.name: (routeData) {
-      final args = routeData.argsAs<PdfSubjectPlayerRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PdfSubjectPlayerScreen(
-          key: args.key,
-          subject: args.subject,
-        ),
-      );
-    },
-    EditPresentationRoute.name: (routeData) {
-      final args = routeData.argsAs<EditPresentationRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: EditPresentationScreen(
-          key: args.key,
-          presentation: args.presentation,
-        ),
       );
     },
     ImageCreatePresentationRoute.name: (routeData) {
@@ -252,6 +119,7 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           displayOder: args.displayOder,
           presentationId: args.presentationId,
+          isAudio: args.isAudio,
         ),
       );
     },
@@ -300,29 +168,15 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [CoursesEmptyPage]
-class CoursesEmpty extends PageRouteInfo<void> {
-  const CoursesEmpty({List<PageRouteInfo>? children})
+/// [HomeEmptyPage]
+class HomeEmpty extends PageRouteInfo<void> {
+  const HomeEmpty({List<PageRouteInfo>? children})
       : super(
-          CoursesEmpty.name,
+          HomeEmpty.name,
           initialChildren: children,
         );
 
-  static const String name = 'CoursesEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SubjectsEmptyPage]
-class SubjectsEmpty extends PageRouteInfo<void> {
-  const SubjectsEmpty({List<PageRouteInfo>? children})
-      : super(
-          SubjectsEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SubjectsEmpty';
+  static const String name = 'HomeEmpty';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -342,20 +196,6 @@ class PresentationsEmpty extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [RecordsEmptyPage]
-class RecordsEmpty extends PageRouteInfo<void> {
-  const RecordsEmpty({List<PageRouteInfo>? children})
-      : super(
-          RecordsEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RecordsEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [LoginEmptyPage]
 class LoginEmpty extends PageRouteInfo<void> {
   const LoginEmpty({List<PageRouteInfo>? children})
@@ -367,195 +207,6 @@ class LoginEmpty extends PageRouteInfo<void> {
   static const String name = 'LoginEmpty';
 
   static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [CreatePdfSubjectsEmptyPage]
-class CreatePdfSubjectsEmpty extends PageRouteInfo<void> {
-  const CreatePdfSubjectsEmpty({List<PageRouteInfo>? children})
-      : super(
-          CreatePdfSubjectsEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CreatePdfSubjectsEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [CoursePlayerScreen]
-class CoursePlayerRoute extends PageRouteInfo<CoursePlayerRouteArgs> {
-  CoursePlayerRoute({
-    Key? key,
-    required Course course,
-    bool? remote,
-    List<PageRouteInfo>? children,
-  }) : super(
-          CoursePlayerRoute.name,
-          args: CoursePlayerRouteArgs(
-            key: key,
-            course: course,
-            remote: remote,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'CoursePlayerRoute';
-
-  static const PageInfo<CoursePlayerRouteArgs> page =
-      PageInfo<CoursePlayerRouteArgs>(name);
-}
-
-class CoursePlayerRouteArgs {
-  const CoursePlayerRouteArgs({
-    this.key,
-    required this.course,
-    this.remote,
-  });
-
-  final Key? key;
-
-  final Course course;
-
-  final bool? remote;
-
-  @override
-  String toString() {
-    return 'CoursePlayerRouteArgs{key: $key, course: $course, remote: $remote}';
-  }
-}
-
-/// generated route for
-/// [PlayerScreen]
-class PlayerRoute extends PageRouteInfo<PlayerRouteArgs> {
-  PlayerRoute({
-    Key? key,
-    required Fragment record,
-    bool? remote = false,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PlayerRoute.name,
-          args: PlayerRouteArgs(
-            key: key,
-            record: record,
-            remote: remote,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PlayerRoute';
-
-  static const PageInfo<PlayerRouteArgs> page = PageInfo<PlayerRouteArgs>(name);
-}
-
-class PlayerRouteArgs {
-  const PlayerRouteArgs({
-    this.key,
-    required this.record,
-    this.remote = false,
-  });
-
-  final Key? key;
-
-  final Fragment record;
-
-  final bool? remote;
-
-  @override
-  String toString() {
-    return 'PlayerRouteArgs{key: $key, record: $record, remote: $remote}';
-  }
-}
-
-/// generated route for
-/// [SubjectPlayerScreen]
-class SubjectPlayerRoute extends PageRouteInfo<SubjectPlayerRouteArgs> {
-  SubjectPlayerRoute({
-    Key? key,
-    required Subject subject,
-    List<PageRouteInfo>? children,
-  }) : super(
-          SubjectPlayerRoute.name,
-          args: SubjectPlayerRouteArgs(
-            key: key,
-            subject: subject,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'SubjectPlayerRoute';
-
-  static const PageInfo<SubjectPlayerRouteArgs> page =
-      PageInfo<SubjectPlayerRouteArgs>(name);
-}
-
-class SubjectPlayerRouteArgs {
-  const SubjectPlayerRouteArgs({
-    this.key,
-    required this.subject,
-  });
-
-  final Key? key;
-
-  final Subject subject;
-
-  @override
-  String toString() {
-    return 'SubjectPlayerRouteArgs{key: $key, subject: $subject}';
-  }
-}
-
-/// generated route for
-/// [CoursesScreen]
-class CoursesRoute extends PageRouteInfo<void> {
-  const CoursesRoute({List<PageRouteInfo>? children})
-      : super(
-          CoursesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CoursesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [EditCourseScreen]
-class EditCourseRoute extends PageRouteInfo<EditCourseRouteArgs> {
-  EditCourseRoute({
-    Key? key,
-    required Course course,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EditCourseRoute.name,
-          args: EditCourseRouteArgs(
-            key: key,
-            course: course,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EditCourseRoute';
-
-  static const PageInfo<EditCourseRouteArgs> page =
-      PageInfo<EditCourseRouteArgs>(name);
-}
-
-class EditCourseRouteArgs {
-  const EditCourseRouteArgs({
-    this.key,
-    required this.course,
-  });
-
-  final Key? key;
-
-  final Course course;
-
-  @override
-  String toString() {
-    return 'EditCourseRouteArgs{key: $key, course: $course}';
-  }
 }
 
 /// generated route for
@@ -587,121 +238,41 @@ class LoginRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PdfAddCourseScreen]
-class PdfAddCourseRoute extends PageRouteInfo<PdfAddCourseRouteArgs> {
-  PdfAddCourseRoute({
+/// [PresentationScreen]
+class PresentationRoute extends PageRouteInfo<PresentationRouteArgs> {
+  PresentationRoute({
     Key? key,
+    required int id,
     List<PageRouteInfo>? children,
   }) : super(
-          PdfAddCourseRoute.name,
-          args: PdfAddCourseRouteArgs(key: key),
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfAddCourseRoute';
-
-  static const PageInfo<PdfAddCourseRouteArgs> page =
-      PageInfo<PdfAddCourseRouteArgs>(name);
-}
-
-class PdfAddCourseRouteArgs {
-  const PdfAddCourseRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'PdfAddCourseRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [PdfCoursesScreen]
-class PdfCoursesRoute extends PageRouteInfo<void> {
-  const PdfCoursesRoute({List<PageRouteInfo>? children})
-      : super(
-          PdfCoursesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfCoursesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [PdfCourseDetailsScreen]
-class PdfCourseDetailsRoute extends PageRouteInfo<PdfCourseDetailsRouteArgs> {
-  PdfCourseDetailsRoute({
-    Key? key,
-    required Course course,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PdfCourseDetailsRoute.name,
-          args: PdfCourseDetailsRouteArgs(
+          PresentationRoute.name,
+          args: PresentationRouteArgs(
             key: key,
-            course: course,
+            id: id,
           ),
+          rawPathParams: {'id': id},
           initialChildren: children,
         );
 
-  static const String name = 'PdfCourseDetailsRoute';
+  static const String name = 'PresentationRoute';
 
-  static const PageInfo<PdfCourseDetailsRouteArgs> page =
-      PageInfo<PdfCourseDetailsRouteArgs>(name);
+  static const PageInfo<PresentationRouteArgs> page =
+      PageInfo<PresentationRouteArgs>(name);
 }
 
-class PdfCourseDetailsRouteArgs {
-  const PdfCourseDetailsRouteArgs({
+class PresentationRouteArgs {
+  const PresentationRouteArgs({
     this.key,
-    required this.course,
+    required this.id,
   });
 
   final Key? key;
 
-  final Course course;
+  final int id;
 
   @override
   String toString() {
-    return 'PdfCourseDetailsRouteArgs{key: $key, course: $course}';
-  }
-}
-
-/// generated route for
-/// [PdfEditCourseScreen]
-class PdfEditCourseRoute extends PageRouteInfo<PdfEditCourseRouteArgs> {
-  PdfEditCourseRoute({
-    Key? key,
-    required Course course,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PdfEditCourseRoute.name,
-          args: PdfEditCourseRouteArgs(
-            key: key,
-            course: course,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfEditCourseRoute';
-
-  static const PageInfo<PdfEditCourseRouteArgs> page =
-      PageInfo<PdfEditCourseRouteArgs>(name);
-}
-
-class PdfEditCourseRouteArgs {
-  const PdfEditCourseRouteArgs({
-    this.key,
-    required this.course,
-  });
-
-  final Key? key;
-
-  final Course course;
-
-  @override
-  String toString() {
-    return 'PdfEditCourseRouteArgs{key: $key, course: $course}';
+    return 'PresentationRouteArgs{key: $key, id: $id}';
   }
 }
 
@@ -745,6 +316,44 @@ class AudioRecordingRouteArgs {
   @override
   String toString() {
     return 'AudioRecordingRouteArgs{key: $key, imageData: $imageData, imagePath: $imagePath}';
+  }
+}
+
+/// generated route for
+/// [EditPresentationScreen]
+class EditPresentationRoute extends PageRouteInfo<EditPresentationRouteArgs> {
+  EditPresentationRoute({
+    Key? key,
+    required Presentation presentation,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EditPresentationRoute.name,
+          args: EditPresentationRouteArgs(
+            key: key,
+            presentation: presentation,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'EditPresentationRoute';
+
+  static const PageInfo<EditPresentationRouteArgs> page =
+      PageInfo<EditPresentationRouteArgs>(name);
+}
+
+class EditPresentationRouteArgs {
+  const EditPresentationRouteArgs({
+    this.key,
+    required this.presentation,
+  });
+
+  final Key? key;
+
+  final Presentation presentation;
+
+  @override
+  String toString() {
+    return 'EditPresentationRouteArgs{key: $key, presentation: $presentation}';
   }
 }
 
@@ -816,207 +425,6 @@ class ImageAddFragmentRouteArgs {
 }
 
 /// generated route for
-/// [ImageCreateSubjectScreen]
-class ImageCreateSubjectRoute
-    extends PageRouteInfo<ImageCreateSubjectRouteArgs> {
-  ImageCreateSubjectRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
-          ImageCreateSubjectRoute.name,
-          args: ImageCreateSubjectRouteArgs(key: key),
-          initialChildren: children,
-        );
-
-  static const String name = 'ImageCreateSubjectRoute';
-
-  static const PageInfo<ImageCreateSubjectRouteArgs> page =
-      PageInfo<ImageCreateSubjectRouteArgs>(name);
-}
-
-class ImageCreateSubjectRouteArgs {
-  const ImageCreateSubjectRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'ImageCreateSubjectRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [PdfAddFragmentScreen]
-class PdfAddFragmentRoute extends PageRouteInfo<PdfAddFragmentRouteArgs> {
-  PdfAddFragmentRoute({
-    Key? key,
-    required int displayOder,
-    required int subjectId,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PdfAddFragmentRoute.name,
-          args: PdfAddFragmentRouteArgs(
-            key: key,
-            displayOder: displayOder,
-            subjectId: subjectId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfAddFragmentRoute';
-
-  static const PageInfo<PdfAddFragmentRouteArgs> page =
-      PageInfo<PdfAddFragmentRouteArgs>(name);
-}
-
-class PdfAddFragmentRouteArgs {
-  const PdfAddFragmentRouteArgs({
-    this.key,
-    required this.displayOder,
-    required this.subjectId,
-  });
-
-  final Key? key;
-
-  final int displayOder;
-
-  final int subjectId;
-
-  @override
-  String toString() {
-    return 'PdfAddFragmentRouteArgs{key: $key, displayOder: $displayOder, subjectId: $subjectId}';
-  }
-}
-
-/// generated route for
-/// [PdfCreateSubjectScreen]
-class PdfCreateSubjectRoute extends PageRouteInfo<void> {
-  const PdfCreateSubjectRoute({List<PageRouteInfo>? children})
-      : super(
-          PdfCreateSubjectRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfCreateSubjectRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [PdfEditSubjectScreen]
-class PdfEditSubjectRoute extends PageRouteInfo<PdfEditSubjectRouteArgs> {
-  PdfEditSubjectRoute({
-    Key? key,
-    required Subject subject,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PdfEditSubjectRoute.name,
-          args: PdfEditSubjectRouteArgs(
-            key: key,
-            subject: subject,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfEditSubjectRoute';
-
-  static const PageInfo<PdfEditSubjectRouteArgs> page =
-      PageInfo<PdfEditSubjectRouteArgs>(name);
-}
-
-class PdfEditSubjectRouteArgs {
-  const PdfEditSubjectRouteArgs({
-    this.key,
-    required this.subject,
-  });
-
-  final Key? key;
-
-  final Subject subject;
-
-  @override
-  String toString() {
-    return 'PdfEditSubjectRouteArgs{key: $key, subject: $subject}';
-  }
-}
-
-/// generated route for
-/// [PdfSubjectPlayerScreen]
-class PdfSubjectPlayerRoute extends PageRouteInfo<PdfSubjectPlayerRouteArgs> {
-  PdfSubjectPlayerRoute({
-    Key? key,
-    required Subject subject,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PdfSubjectPlayerRoute.name,
-          args: PdfSubjectPlayerRouteArgs(
-            key: key,
-            subject: subject,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PdfSubjectPlayerRoute';
-
-  static const PageInfo<PdfSubjectPlayerRouteArgs> page =
-      PageInfo<PdfSubjectPlayerRouteArgs>(name);
-}
-
-class PdfSubjectPlayerRouteArgs {
-  const PdfSubjectPlayerRouteArgs({
-    this.key,
-    required this.subject,
-  });
-
-  final Key? key;
-
-  final Subject subject;
-
-  @override
-  String toString() {
-    return 'PdfSubjectPlayerRouteArgs{key: $key, subject: $subject}';
-  }
-}
-
-/// generated route for
-/// [EditPresentationScreen]
-class EditPresentationRoute extends PageRouteInfo<EditPresentationRouteArgs> {
-  EditPresentationRoute({
-    Key? key,
-    required Presentation presentation,
-    List<PageRouteInfo>? children,
-  }) : super(
-          EditPresentationRoute.name,
-          args: EditPresentationRouteArgs(
-            key: key,
-            presentation: presentation,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'EditPresentationRoute';
-
-  static const PageInfo<EditPresentationRouteArgs> page =
-      PageInfo<EditPresentationRouteArgs>(name);
-}
-
-class EditPresentationRouteArgs {
-  const EditPresentationRouteArgs({
-    this.key,
-    required this.presentation,
-  });
-
-  final Key? key;
-
-  final Presentation presentation;
-
-  @override
-  String toString() {
-    return 'EditPresentationRouteArgs{key: $key, presentation: $presentation}';
-  }
-}
-
-/// generated route for
 /// [ImageCreatePresentationScreen]
 class ImageCreatePresentationRoute
     extends PageRouteInfo<ImageCreatePresentationRouteArgs> {
@@ -1068,6 +476,7 @@ class PresentationAddFragmentRoute
     Key? key,
     required int displayOder,
     required int presentationId,
+    required bool isAudio,
     List<PageRouteInfo>? children,
   }) : super(
           PresentationAddFragmentRoute.name,
@@ -1075,6 +484,7 @@ class PresentationAddFragmentRoute
             key: key,
             displayOder: displayOder,
             presentationId: presentationId,
+            isAudio: isAudio,
           ),
           initialChildren: children,
         );
@@ -1090,6 +500,7 @@ class PresentationAddFragmentRouteArgs {
     this.key,
     required this.displayOder,
     required this.presentationId,
+    required this.isAudio,
   });
 
   final Key? key;
@@ -1098,9 +509,11 @@ class PresentationAddFragmentRouteArgs {
 
   final int presentationId;
 
+  final bool isAudio;
+
   @override
   String toString() {
-    return 'PresentationAddFragmentRouteArgs{key: $key, displayOder: $displayOder, presentationId: $presentationId}';
+    return 'PresentationAddFragmentRouteArgs{key: $key, displayOder: $displayOder, presentationId: $presentationId, isAudio: $isAudio}';
   }
 }
 

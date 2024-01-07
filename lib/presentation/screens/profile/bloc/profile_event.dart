@@ -9,6 +9,6 @@ class ProfileEvent with _$ProfileEvent {
     required String lastname,
     String? secondname,
     String? about,
-    String? image,
+    Uint8List? imageBytes,
   }) = _UpdateUser;
 }

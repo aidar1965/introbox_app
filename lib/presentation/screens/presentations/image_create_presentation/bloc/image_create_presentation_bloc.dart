@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
-
-import '../../../pdf_subject/image_create_subject/image_fragment.dart';
+import '../../../../../data/api/models/requests/fragment_request_data.dart';
+import '../../../../../domain/models/image_fragment.dart';
 
 part 'image_create_presentation_state.dart';
 part 'image_create_presentation_event.dart';
@@ -30,12 +30,13 @@ class ImageCreatePresentationBloc
     ImageFragment addedFragment = event.imageFragment;
 
     fragmentsList.add(ImageFragment(
-        image: addedFragment.image,
+        imageBytes: addedFragment.imageBytes,
         isLandscape: true,
 
         /// TODO
         title: addedFragment.title,
         description: addedFragment.description,
+        audioBytes: addedFragment.audioBytes,
         audioPath: addedFragment.audioPath,
         duration: addedFragment.duration));
     _screenState = _screenState.copyWith(fragments: fragmentsList);
@@ -45,10 +46,17 @@ class ImageCreatePresentationBloc
   Future<void> saveImageSubject(_EventSaveImageSubject event,
       Emitter<ImageCreatePresentationState> emitter) async {
     try {
-      await api.addImageSubject(
+      await api.addImagePresentation(
           title: event.title,
           description: event.description,
-          fragments: _screenState.fragments);
+          fragments: _screenState.fragments
+              .map((e) => FragmentRequestData(
+                  title: e.title,
+                  description: e.description ?? '',
+                  image: (file: e.imageBytes, isLandscape: true, fileName: ''),
+                  audioBytes: e.audioBytes,
+                  duration: e.duration))
+              .toList());
       emitter(const ImageCreatePresentationState.saveSuccess());
     } on Object {
       emitter(const ImageCreatePresentationState.saveError());

@@ -1,11 +1,11 @@
-import 'dart:io';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
-import 'package:moki_tutor/presentation/screens/pdf_subject/image_create_subject/image_fragment.dart';
 
+import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
+import 'package:moki_tutor/presentation/screens/presentations/play_fragment_screen.dart';
+
+import '../../../../domain/models/image_fragment.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
 import '../../../widgets/name_and_description.dart';
@@ -38,7 +38,7 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                 screenState: (state) => Scaffold(
                       appBar: AppBar(
                         title: Text(
-                          'Новая тема',
+                          'Новая презентация',
                         ),
                         actions: [
                           if (state.fragments.isNotEmpty &&
@@ -75,14 +75,18 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                       body: Row(children: [
                         Expanded(
                             flex: 1,
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 24),
-                                NameAndDescriptionWidget(
-                                  titleController: titleController,
-                                  descriptionController: descriptionController,
-                                )
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 24),
+                                  NameAndDescriptionWidget(
+                                    titleController: titleController,
+                                    descriptionController:
+                                        descriptionController,
+                                  )
+                                ],
+                              ),
                             )),
                         SizedBox(width: 24),
                         Expanded(
@@ -158,7 +162,7 @@ class _FragmentListState extends State<FragmentList> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 100, width: 100, child: Image.file(File(f.image))),
+          SizedBox(height: 100, width: 100, child: Image.memory(f.imageBytes)),
           const SizedBox(width: 24),
           Expanded(
             child: Column(
@@ -177,7 +181,20 @@ class _FragmentListState extends State<FragmentList> {
             ),
           ),
           const SizedBox(width: 24),
-          IconButton(onPressed: () {}, icon: Icon(Icons.play_circle)),
+          IconButton(
+              onPressed: () {
+                print('ImageCreatePresentationScreen: audio:');
+                print(f.audioPath);
+                showDialog(
+                    context: context,
+                    builder: (context) => Dialog.fullscreen(
+                            child: PlayFragmentScreen(
+                          imageBytes: f.imageBytes,
+                          audioPath: f.audioPath,
+                          duration: f.duration,
+                        )));
+              },
+              icon: Icon(Icons.play_circle)),
           const SizedBox(width: 24),
           IconButton(
               onPressed: () {

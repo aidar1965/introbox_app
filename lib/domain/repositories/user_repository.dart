@@ -64,14 +64,14 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
     required String lastName,
     String? secondName,
     String? about,
-    String? image,
+    Uint8List? imageBytes,
   }) async {
     await api.updateUser(
         firstName: firstName,
         secondName: secondName,
         about: about,
         lastName: lastName,
-        image: image);
+        imageBytes: imageBytes);
     // TODO await localCache.setUser(user: user);
     // _user = user;
     // notifyListeners();

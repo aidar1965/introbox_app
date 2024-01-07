@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,9 +9,9 @@ class PdfFragment extends Equatable {
 
   final String? description;
 
-  final String? imagePath;
+  final Uint8List? imageBytes;
 
-  final File? image;
+  final String? imagePath;
 
   final bool isLandscape;
 
@@ -21,14 +19,17 @@ class PdfFragment extends Equatable {
 
   final String? audioPath;
 
+  final Uint8List? audioBytes;
+
   final int displayOrder;
 
   const PdfFragment({
     required this.id,
     required this.title,
     this.description,
+    this.imageBytes,
+    this.audioBytes,
     this.imagePath,
-    this.image,
     this.duration,
     this.audioPath,
     required this.isLandscape,
@@ -38,7 +39,7 @@ class PdfFragment extends Equatable {
   PdfFragment copyWith({
     String? title,
     String? description,
-    String? imagePath,
+    Uint8List? imageBytes,
     bool? isLandscape,
     int? duration,
     String? audioPath,
@@ -48,7 +49,7 @@ class PdfFragment extends Equatable {
         id: id,
         title: title ?? this.title,
         description: description ?? this.description,
-        imagePath: imagePath ?? this.imagePath,
+        imageBytes: imageBytes ?? this.imageBytes,
         isLandscape: isLandscape ?? this.isLandscape,
         duration: duration ?? this.duration,
         audioPath: audioPath ?? this.audioPath,

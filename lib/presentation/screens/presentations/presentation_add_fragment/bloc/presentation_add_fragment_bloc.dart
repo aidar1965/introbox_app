@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:path/path.dart' as p;
+import 'package:mime/mime.dart';
+
 import 'package:printing/printing.dart';
 
 import '../../../../../../data/api/http_client/request_exception.dart';
@@ -33,32 +32,35 @@ class PresentationAddFragmentBloc
   final api = getIt<IApi>();
 
   late _ScreenState _screenState;
-  late bool isLandscape;
+  bool isLandscape = true;
+
+  /// TODO
 
   void onAudioAdded(
       _EventAudioAdded event, Emitter<PresentationAddFragmentState> emitter) {
     _screenState = _screenState.copyWith(
-        audioPath: event.audioPath, duration: event.duration);
+      audioBytes: event.audioBytes,
+      duration: event.duration,
+      audioPath: event.audioPath,
+    );
     emitter(_screenState);
   }
 
   Future<void> onImageAdded(_EventImageAdded event,
       Emitter<PresentationAddFragmentState> emitter) async {
     Uint8List? image;
-    if (p.extension(event.imagePath) == '.pdf') {
-      final file = File(event.imagePath);
-
+    var mime = lookupMimeType('', headerBytes: event.imageBytes);
+    if (extensionFromMime(mime!) == '.pdf') {
       List<Uint8List> images = [];
 
-      await for (var page
-          in Printing.raster(file.readAsBytesSync(), dpi: 300)) {
+      await for (var page in Printing.raster(event.imageBytes, dpi: 300)) {
         images.add(await page.toPng());
       }
       image = images.first;
     }
 
     _screenState = _screenState.copyWith(
-        image: image != null ? File.fromRawPath(image) : File(event.imagePath));
+        imageBytes: image != null ? image : event.imageBytes);
     emitter(_screenState);
   }
 
@@ -72,9 +74,9 @@ class PresentationAddFragmentBloc
           displayOrder: displayOrder,
           title: event.title,
           description: event.description,
-          image: _screenState.image!,
+          image: _screenState.imageBytes!,
           isLandscape: isLandscape,
-          audioPath: _screenState.audioPath,
+          audio: _screenState.audioBytes,
           duration: _screenState.duration);
       emitter(const PresentationAddFragmentState.requestSuccess());
     } on RequestException catch (e) {
@@ -87,7 +89,7 @@ class PresentationAddFragmentBloc
   }
 
   void onDeleteAudio(Emitter<PresentationAddFragmentState> emitter) {
-    _screenState = _screenState.copyWith(audioPath: null);
+    _screenState = _screenState.copyWith(audioBytes: null);
     emitter(_screenState);
   }
 }

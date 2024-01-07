@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import '../models/user.dart';
 
 abstract class IUserRepository {
@@ -26,7 +28,7 @@ abstract class IUserRepository {
     required String lastName,
     String? secondName,
     String? about,
-    String? image,
+    Uint8List? imageBytes,
   });
 
   Future<void> uploadUserImage({required File image});

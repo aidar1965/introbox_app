@@ -4,10 +4,12 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import '../../data/api/models/requests/fragment_request_data.dart';
-import '../../presentation/screens/pdf_subject/image_create_subject/image_fragment.dart';
+
 import '../models/course.dart';
 import '../models/fragment_category.dart';
+import '../models/image_fragment.dart';
 import '../models/pdf_fragment.dart';
+import '../models/presentation_with_fragments.dart';
 import '../models/responses/paginated_courses.dart';
 import '../models/responses/paginated_presentations.dart';
 import '../models/responses/paginated_subjects.dart';
@@ -34,7 +36,7 @@ abstract class IApi {
     required String lastName,
     String? secondName,
     String? about,
-    String? image,
+    Uint8List? imageBytes,
   });
 
   Future<void> uploadUserImage({required File image});
@@ -160,20 +162,39 @@ abstract class IApi {
 
   Future<List<PdfFragment>> getPresentationFragments({required int id});
 
-  updatePresentation(
-      {required int id, required String title, required String description}) {}
+  Future<void> updatePresentation(
+      {required int id, required String title, String description});
 
   Future<void> reorderPresentationFragments({required List<int> fragmentsIds});
 
-  addPresentationFragment(
+  Future<void> addPresentationFragment(
       {required int presentationId,
       required int displayOrder,
       required String title,
       required String description,
-      required File image,
+      required Uint8List image,
       required bool isLandscape,
-      String? audioPath,
-      int? duration}) {}
+      Uint8List? audio,
+      int? duration});
 
   Future<void> deletePresentationFragment({required int id});
+
+  Future<void> updatePresentationFragment({
+    required int id,
+    String? title,
+    String? description,
+    Uint8List? imageBytes,
+    bool? isLandscape,
+    Uint8List? audioBytes,
+    int? presentationDurationDifference,
+    int? duration,
+  });
+
+  Future<void> addImagePresentation(
+      {required String title,
+      String? description,
+      required List<FragmentRequestData> fragments,
+      int? duration});
+
+  Future<PresentationWithFragments> getPresentation(int id);
 }

@@ -7,7 +7,7 @@ import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart'
 import '../../../../../domain/models/pdf_fragment.dart';
 import '../../../../../domain/models/presentation.dart';
 
-import '../../../player/pdf_player_widget.dart';
+import '../../../common/pdf_player_widget.dart';
 import 'bloc/presentation_player_bloc.dart';
 
 @RoutePage()
@@ -124,13 +124,17 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
 
   late int numberOfFragments;
   int currentIndex = 0;
+  late double width;
+  late double height;
 
   @override
   void initState() {
     super.initState();
+    print('initialization');
     numberOfFragments = widget.fragments.length;
     fragment = widget.fragments.first;
     isLast = currentIndex == numberOfFragments - 1;
+
     if (fragment.audioPath == null && widget.presentation.isAudio) {
       _playNextFragment();
     }
@@ -162,6 +166,7 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
 
   void _playNextFragment() {
     if (currentIndex < numberOfFragments - 1) {
+      print('176');
       setState(() {
         currentIndex++;
         fragment = widget.fragments.elementAt(currentIndex);
@@ -206,6 +211,13 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
     });
   }
 
+  @override
+  void didChangeDependencies() {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    super.didChangeDependencies();
+  }
+
   void _showPreviousFragment() {
     setState(() {
       currentIndex--;
@@ -216,8 +228,6 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
     return Stack(children: [
       Container(
           height: height,
@@ -273,28 +283,29 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
               duration: const Duration(milliseconds: 300),
               opacity: rightOpacity,
               child: Align(
-                  alignment: Alignment.centerRight,
-                  child: MouseRegion(
-                    onHover: _showRight,
-                    onExit: _hideRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: FloatingActionButton(
-                        heroTag: 'right',
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.grey,
-                        child: const Icon(Icons.arrow_right,
-                            color: Colors.black, size: 48),
-                        onPressed: () {
-                          if (widget.presentation.isAudio) {
-                            _playNextFragment();
-                          } else {
-                            _showNextFragment();
-                          }
-                        },
-                      ),
+                alignment: Alignment.centerRight,
+                child: MouseRegion(
+                  onHover: _showRight,
+                  onExit: _hideRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: FloatingActionButton(
+                      heroTag: 'right',
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.grey,
+                      child: const Icon(Icons.arrow_right,
+                          color: Colors.black, size: 48),
+                      onPressed: () {
+                        if (widget.presentation.isAudio) {
+                          _playNextFragment();
+                        } else {
+                          _showNextFragment();
+                        }
+                      },
                     ),
-                  )),
+                  ),
+                ),
+              ),
             )
           : const SizedBox(),
       currentIndex != 0

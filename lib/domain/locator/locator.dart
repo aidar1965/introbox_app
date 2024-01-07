@@ -17,6 +17,6 @@ final getIt = GetIt.instance;
 void setup() async {
   getIt.registerSingleton<IApi>(Api());
   getIt.registerFactory<ILocalCache>(() => LocalCache());
-  getIt.registerSingleton<IUserRepository>(UserRepository());
+  getIt.registerSingleton<IUserRepository>(UserRepository()).init();
   getIt.registerSingleton<IAuthController>(AuthController());
 }

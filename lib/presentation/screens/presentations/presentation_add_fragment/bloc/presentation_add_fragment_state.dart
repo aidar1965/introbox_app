@@ -3,7 +3,8 @@ part of 'presentation_add_fragment_bloc.dart';
 @freezed
 class PresentationAddFragmentState with _$PresentationAddFragmentState {
   const factory PresentationAddFragmentState.screenState(
-      {File? image,
+      {Uint8List? imageBytes,
+      Uint8List? audioBytes,
       String? audioPath,
       int? duration,
       @Default(false) bool isSavePending}) = _ScreenState;

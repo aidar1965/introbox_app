@@ -9,17 +9,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
+
 import 'package:path/path.dart';
 
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
+import '../../../common/common_functions.dart';
 
 import '../../../../../domain/models/pdf_fragment_sample.dart';
 
 import '../../../common/common_elevated_button.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
+import '../audio_recording/audio_recording_screen.dart';
 import 'bloc/pdf_create_presentation_bloc.dart';
 
 @RoutePage()
@@ -40,7 +40,7 @@ class _PdfCreatePresentationScreenState
   List<TextEditingController> recordTitleControllerList = [];
   List<TextEditingController> recordDescriptionControllerList = [];
   List<int?> audioDurationList = [];
-  bool isAudio = false;
+  bool isAudio = true;
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
@@ -88,6 +88,7 @@ class _PdfCreatePresentationScreenState
 
                     return Row(
                       children: [
+                        const SizedBox(width: 24),
                         Expanded(
                           flex: 1,
                           child: Column(
@@ -98,24 +99,24 @@ class _PdfCreatePresentationScreenState
                                 descriptionController: descriptionController,
                               ),
                               const SizedBox(height: 20),
-                              CheckboxListTile(
-                                  tileColor:
-                                      DynamicTheme.paletteOf(context).accent,
-                                  checkColor: DynamicTheme.paletteOf(context)
-                                      .alwaysWhite,
-                                  side: BorderSide(
-                                      color: DynamicTheme.paletteOf(context)
-                                          .alwaysWhite),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4)),
-                                  title: Text('Презентация с аудио'),
-                                  value: isAudio,
-                                  onChanged: (v) {
-                                    setState(() {
-                                      isAudio = v!;
-                                    });
-                                  }),
-                              const SizedBox(height: 20),
+                              // CheckboxListTile(
+                              //     tileColor:
+                              //         DynamicTheme.paletteOf(context).accent,
+                              //     checkColor: DynamicTheme.paletteOf(context)
+                              //         .alwaysWhite,
+                              //     side: BorderSide(
+                              //         color: DynamicTheme.paletteOf(context)
+                              //             .alwaysWhite),
+                              //     shape: RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(4)),
+                              //     title: Text('Презентация с аудио'),
+                              //     value: isAudio,
+                              //     onChanged: (v) {
+                              //       setState(() {
+                              //         isAudio = v!;
+                              //       });
+                              //     }),
+                              // const SizedBox(height: 20),
                               CommonElevatedButton(
                                 onPressed: () => _onSelectFile(context),
                                 text: 'Выберите PDF файл',
@@ -402,9 +403,11 @@ class _FragmentListItemState extends State<FragmentListItem> {
   Future<({Uint8List? audioBytes, String? path, int? duration})?> _showRecorder(
       BuildContext context,
       {required Uint8List imageData}) async {
-    final result =
-        await context.router.push(AudioRecordingRoute(imageData: imageData));
-    return result as ({Uint8List? audioBytes, String path, int duration});
+    final result = await showDialog(
+        context: context,
+        builder: (context) => Dialog.fullscreen(
+            child: AudioRecordingScreen(imageData: imageData)));
+    return result as ({Uint8List? audioBytes, String path, int duration})?;
   }
 
   Future<int> getDuration(String? audioPath) async {

@@ -9,15 +9,15 @@ part 'presentations_event.dart';
 part 'presentations_state.dart';
 part 'presentations_bloc.freezed.dart';
 
-class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
-  PresentationBloc() : super(const _StatePending()) {
-    on<PresentationEvent>((event, emitter) => event.map(
+class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
+  PresentationsBloc() : super(const _StatePending()) {
+    on<PresentationsEvent>((event, emitter) => event.map(
         deletePresentation: (event) => onDeletePresentation(event, emitter),
         initialDataRequested: (_) => onInitialDataRequested(emitter),
         reloadData: (_) => reloadData(),
         loadMore: (_) => loadMore()));
 
-    add(const PresentationEvent.initialDataRequested());
+    add(const PresentationsEvent.initialDataRequested());
     _screenState = const _ScreenState(presentations: []);
   }
 
@@ -30,7 +30,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   int? total;
 
   Future<void> onDeletePresentation(_EventDeletePresentation event,
-      Emitter<PresentationState> emitter) async {
+      Emitter<PresentationsState> emitter) async {
     try {
       await api.deletePresentation(id: event.id);
       final oldPresentations =
@@ -39,17 +39,17 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       _screenState = _screenState.copyWith(presentations: oldPresentations);
       emitter(_screenState);
     } on Object {
-      emitter(const PresentationState.requestError());
+      emitter(const PresentationsState.requestError());
       rethrow;
     }
   }
 
   Future<void> onInitialDataRequested(
-      Emitter<PresentationState> emitter) async {
+      Emitter<PresentationsState> emitter) async {
     if (total != null && total! <= _screenState.presentations.length) {
       return;
     }
-    emitter(const PresentationState.pending());
+    emitter(const PresentationsState.pending());
     try {
       final paginatedPresentations =
           await api.getPresentations(offset: offset, limit: limit);
@@ -61,7 +61,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       _screenState = _screenState.copyWith(presentations: oldPresentations);
       emitter(_screenState);
     } on Object {
-      emitter(const PresentationState.loadingError());
+      emitter(const PresentationsState.loadingError());
       rethrow;
     }
   }
@@ -70,7 +70,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     offset = 0;
     total = null;
     _screenState = _screenState.copyWith(presentations: []);
-    add(const PresentationEvent.initialDataRequested());
+    add(const PresentationsEvent.initialDataRequested());
   }
 
   loadMore() {}

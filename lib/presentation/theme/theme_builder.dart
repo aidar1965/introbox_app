@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
 import '../values/dynamic_palette.dart';
 import 'theme_type.dart';

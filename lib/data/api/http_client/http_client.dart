@@ -14,7 +14,7 @@ import 'request_exception.dart';
 
 class DioClient {
   DioClient({bool useLocaleSettings = false}) {
-    _baseUrl = 'http://176.120.72.131:8080';
+    _baseUrl = 'https://studio.introbox.app/api';
 
     // настройка использования разных языков
     if (useLocaleSettings) {
@@ -229,7 +229,7 @@ class DioClient {
 
     try {
       final Response<String> response =
-          await Dio(_dioOptions).post<String>(url, data: body);
+          await Dio(_dioOptions).post<String>(url, data: jsonEncode(body));
 
       if (debugMode) {
         _logger(url, response, body: body);
@@ -356,6 +356,7 @@ class DioClient {
 
       return response;
     } on DioException catch (dioError, stackTrace) {
+      print(dioError.response);
       if (debugMode) {
         _logger(url, dioError.response, body: request.body);
       }

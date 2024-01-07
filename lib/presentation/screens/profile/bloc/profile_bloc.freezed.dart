@@ -21,7 +21,7 @@ mixin _$ProfileEvent {
     required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about, String? image)
+            String? secondname, String? about, Uint8List? imageBytes)
         updateUser,
   }) =>
       throw _privateConstructorUsedError;
@@ -30,7 +30,7 @@ mixin _$ProfileEvent {
     TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ mixin _$ProfileEvent {
     TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
     required TResult orElse(),
   }) =>
@@ -127,7 +127,7 @@ class _$_EventDataRequested implements _EventDataRequested {
     required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about, String? image)
+            String? secondname, String? about, Uint8List? imageBytes)
         updateUser,
   }) {
     return dataRequested();
@@ -139,7 +139,7 @@ class _$_EventDataRequested implements _EventDataRequested {
     TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
   }) {
     return dataRequested?.call();
@@ -151,7 +151,7 @@ class _$_EventDataRequested implements _EventDataRequested {
     TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
     required TResult orElse(),
   }) {
@@ -239,7 +239,7 @@ class _$_Logout implements _Logout {
     required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about, String? image)
+            String? secondname, String? about, Uint8List? imageBytes)
         updateUser,
   }) {
     return logout();
@@ -251,7 +251,7 @@ class _$_Logout implements _Logout {
     TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
   }) {
     return logout?.call();
@@ -263,7 +263,7 @@ class _$_Logout implements _Logout {
     TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
     required TResult orElse(),
   }) {
@@ -323,7 +323,7 @@ abstract class _$$_UpdateUserCopyWith<$Res> {
       String lastname,
       String? secondname,
       String? about,
-      String? image});
+      Uint8List? imageBytes});
 }
 
 /// @nodoc
@@ -341,7 +341,7 @@ class __$$_UpdateUserCopyWithImpl<$Res>
     Object? lastname = null,
     Object? secondname = freezed,
     Object? about = freezed,
-    Object? image = freezed,
+    Object? imageBytes = freezed,
   }) {
     return _then(_$_UpdateUser(
       firstname: null == firstname
@@ -360,10 +360,10 @@ class __$$_UpdateUserCopyWithImpl<$Res>
           ? _value.about
           : about // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as String?,
+      imageBytes: freezed == imageBytes
+          ? _value.imageBytes
+          : imageBytes // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
     ));
   }
 }
@@ -376,7 +376,7 @@ class _$_UpdateUser implements _UpdateUser {
       required this.lastname,
       this.secondname,
       this.about,
-      this.image});
+      this.imageBytes});
 
   @override
   final String firstname;
@@ -387,11 +387,11 @@ class _$_UpdateUser implements _UpdateUser {
   @override
   final String? about;
   @override
-  final String? image;
+  final Uint8List? imageBytes;
 
   @override
   String toString() {
-    return 'ProfileEvent.updateUser(firstname: $firstname, lastname: $lastname, secondname: $secondname, about: $about, image: $image)';
+    return 'ProfileEvent.updateUser(firstname: $firstname, lastname: $lastname, secondname: $secondname, about: $about, imageBytes: $imageBytes)';
   }
 
   @override
@@ -406,12 +406,13 @@ class _$_UpdateUser implements _UpdateUser {
             (identical(other.secondname, secondname) ||
                 other.secondname == secondname) &&
             (identical(other.about, about) || other.about == about) &&
-            (identical(other.image, image) || other.image == image));
+            const DeepCollectionEquality()
+                .equals(other.imageBytes, imageBytes));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, firstname, lastname, secondname, about, image);
+  int get hashCode => Object.hash(runtimeType, firstname, lastname, secondname,
+      about, const DeepCollectionEquality().hash(imageBytes));
 
   @JsonKey(ignore: true)
   @override
@@ -425,10 +426,10 @@ class _$_UpdateUser implements _UpdateUser {
     required TResult Function() dataRequested,
     required TResult Function() logout,
     required TResult Function(String firstname, String lastname,
-            String? secondname, String? about, String? image)
+            String? secondname, String? about, Uint8List? imageBytes)
         updateUser,
   }) {
-    return updateUser(firstname, lastname, secondname, about, image);
+    return updateUser(firstname, lastname, secondname, about, imageBytes);
   }
 
   @override
@@ -437,10 +438,10 @@ class _$_UpdateUser implements _UpdateUser {
     TResult? Function()? dataRequested,
     TResult? Function()? logout,
     TResult? Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
   }) {
-    return updateUser?.call(firstname, lastname, secondname, about, image);
+    return updateUser?.call(firstname, lastname, secondname, about, imageBytes);
   }
 
   @override
@@ -449,12 +450,12 @@ class _$_UpdateUser implements _UpdateUser {
     TResult Function()? dataRequested,
     TResult Function()? logout,
     TResult Function(String firstname, String lastname, String? secondname,
-            String? about, String? image)?
+            String? about, Uint8List? imageBytes)?
         updateUser,
     required TResult orElse(),
   }) {
     if (updateUser != null) {
-      return updateUser(firstname, lastname, secondname, about, image);
+      return updateUser(firstname, lastname, secondname, about, imageBytes);
     }
     return orElse();
   }
@@ -500,13 +501,13 @@ abstract class _UpdateUser implements ProfileEvent {
       required final String lastname,
       final String? secondname,
       final String? about,
-      final String? image}) = _$_UpdateUser;
+      final Uint8List? imageBytes}) = _$_UpdateUser;
 
   String get firstname;
   String get lastname;
   String? get secondname;
   String? get about;
-  String? get image;
+  Uint8List? get imageBytes;
   @JsonKey(ignore: true)
   _$$_UpdateUserCopyWith<_$_UpdateUser> get copyWith =>
       throw _privateConstructorUsedError;

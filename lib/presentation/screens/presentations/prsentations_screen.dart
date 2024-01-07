@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
+import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
 import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
 import '../../../../domain/models/presentation.dart';
 
 import '../../auto_router/app_router.dart';
 import '../../common/common_functions.dart';
+
 import 'bloc/presentations_bloc.dart';
 
 @RoutePage()
@@ -19,23 +21,30 @@ class PresentationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PresentationBloc(),
-      child: BlocConsumer<PresentationBloc, PresentationState>(
+      create: (context) => PresentationsBloc(),
+      child: BlocConsumer<PresentationsBloc, PresentationsState>(
         listener: (context, state) {
           // TODO: implement listener
         },
+        buildWhen: ((previous, current) => current.maybeMap(
+            orElse: () => false,
+            pending: (_) => true,
+            screenState: (_) => true,
+            loadingError: (_) => true)),
         builder: (context, state) => state.maybeMap(
           orElse: () =>
               throw UnsupportedError('PresentationsScreen unsupported state'),
           pending: (_) => Scaffold(
+              drawer: NavigationDrawer(),
               appBar: AppBar(
                   title: const Text(
-                'Список тем',
+                'Список презентаций',
               )),
               body: const Center(
                 child: CircularProgressIndicator(),
               )),
           screenState: (state) => Scaffold(
+              drawer: NavigationDrawer(),
               appBar: AppBar(
                 title: const Text(
                   'Список презентаций',
@@ -52,8 +61,8 @@ class PresentationsScreen extends StatelessWidget {
                             color:
                                 DynamicTheme.paletteOf(context).alwaysWhite)),
                     onPressed: () {
-                      BlocProvider.of<PresentationBloc>(context)
-                          .add(const PresentationEvent.reloadData());
+                      BlocProvider.of<PresentationsBloc>(context)
+                          .add(const PresentationsEvent.reloadData());
                     },
                   ),
                   TextButton.icon(
@@ -71,8 +80,8 @@ class PresentationsScreen extends StatelessWidget {
                           .push(const PdfCreatePresentationRoute());
                       if (context.mounted) {
                         if (result != null) {
-                          BlocProvider.of<PresentationBloc>(context)
-                              .add(const PresentationEvent.reloadData());
+                          BlocProvider.of<PresentationsBloc>(context)
+                              .add(const PresentationsEvent.reloadData());
                         }
                       }
                     },
@@ -92,12 +101,12 @@ class PresentationsScreen extends StatelessWidget {
                           .push(ImageCreatePresentationRoute());
                       if (context.mounted) {
                         if (result != null) {
-                          BlocProvider.of<PresentationBloc>(context)
-                              .add(const PresentationEvent.reloadData());
+                          BlocProvider.of<PresentationsBloc>(context)
+                              .add(const PresentationsEvent.reloadData());
                         }
                       }
                     },
-                  )
+                  ),
                 ],
               ),
               body: _PresentationList(presentations: state.presentations)),
@@ -152,8 +161,8 @@ class _PresentationList extends StatelessWidget {
               return PresentationItem(
                 presentation: presentations.elementAt(index),
                 onDeleteConfirm: () =>
-                    BlocProvider.of<PresentationBloc>(context).add(
-                        PresentationEvent.deletePresentation(
+                    BlocProvider.of<PresentationsBloc>(context).add(
+                        PresentationsEvent.deletePresentation(
                             presentations.elementAt(index).id)),
               );
             },
@@ -190,10 +199,8 @@ class PresentationItem extends StatelessWidget {
           width: 24,
         ),
         IconButton(
-          onPressed: () => context.router.push(PresentationPlayerRoute(
-            presentation: presentation,
-            presentationId: presentation.id,
-          )),
+          onPressed: () =>
+              context.router.push(PresentationRoute(id: presentation.id)),
           icon: const Icon(Icons.play_arrow_rounded),
         ),
         const SizedBox(
@@ -204,7 +211,10 @@ class PresentationItem extends StatelessWidget {
             final result = await context.router
                 .push(EditPresentationRoute(presentation: presentation));
             if (context.mounted) {
-              if (result == true) {}
+              if (result == true) {
+                BlocProvider.of<PresentationsBloc>(context)
+                    .add(const PresentationsEvent.initialDataRequested());
+              }
             }
           },
           icon: const Icon(Icons.edit),
@@ -259,7 +269,36 @@ class _LoadingError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonLoadingErrorWidget(
-        onPressed: () => BlocProvider.of<PresentationBloc>(context)
-            .add(const PresentationEvent.initialDataRequested()));
+        onPressed: () => BlocProvider.of<PresentationsBloc>(context)
+            .add(const PresentationsEvent.initialDataRequested()));
+  }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      // Add a ListView to the drawer. This ensures the user can scroll
+      // through the options in the drawer if there isn't enough vertical
+      // space to fit everything.
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          ListTile(
+            title: Text(
+              'Профиль',
+              style: context.style16w400$text1,
+            ),
+            onTap: () {
+              context.router.pop();
+              context.router.push(const ProfileRoute());
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

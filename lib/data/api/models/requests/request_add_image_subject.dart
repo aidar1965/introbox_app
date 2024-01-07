@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 
-import '../../../../presentation/screens/pdf_subject/image_create_subject/image_fragment.dart';
+import '../../../../domain/models/image_fragment.dart';
 import '../../http_client/i_api_request.dart';
 
 class RequestAddImageSubject extends IApiRequest {
@@ -20,14 +20,16 @@ class RequestAddImageSubject extends IApiRequest {
     List<MultipartFile> images = [];
     int index = 0;
     for (final f in fragments) {
-      if (f.audioPath != null) {
-        audio.add(await MultipartFile.fromFile(f.audioPath!, headers: {
+      if (f.audioBytes != null) {
+        audio.add(await MultipartFile.fromBytes(f.audioBytes!, headers: {
           'index': ['$index'],
           if (f.duration != null)
             'duration': [
               f.duration!.toString(),
             ],
-          'filename': [f.audioPath!]
+          'extention': ['']
+
+          /// TODO use mime
         }));
       }
       index++;
@@ -35,9 +37,11 @@ class RequestAddImageSubject extends IApiRequest {
 
     index = 0;
     for (final f in fragments) {
-      images.add(await MultipartFile.fromFile(f.image, headers: {
+      images.add(await MultipartFile.fromBytes(f.imageBytes, headers: {
         'index': ['$index'],
-        'filename': [f.image],
+        'extention': [''],
+
+        /// TODO use mime
         'title': [
           f.title,
         ],

@@ -1,11 +1,11 @@
 part of 'presentations_bloc.dart';
 
 @freezed
-class PresentationState with _$PresentationState {
-  const factory PresentationState.pending() = _StatePending;
-  const factory PresentationState.screenState(
+class PresentationsState with _$PresentationsState {
+  const factory PresentationsState.pending() = _StatePending;
+  const factory PresentationsState.screenState(
       {required List<Presentation> presentations}) = _ScreenState;
-  const factory PresentationState.requestError({String? errorText}) =
+  const factory PresentationsState.requestError({String? errorText}) =
       _StateRequestError;
-  const factory PresentationState.loadingError() = _StateLoadingError;
+  const factory PresentationsState.loadingError() = _StateLoadingError;
 }

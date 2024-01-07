@@ -5,6 +5,7 @@ import '../../../domain/models/course_category.dart';
 import '../../../domain/models/fragment_category.dart';
 import '../../../domain/models/pdf_fragment.dart';
 import '../../../domain/models/presentation.dart';
+import '../../../domain/models/presentation_with_fragments.dart';
 import '../../../domain/models/subject.dart';
 import '../../../domain/models/subject_category.dart';
 import '../../../domain/models/token_pair.dart';
@@ -15,6 +16,7 @@ import '../models/responses/course_dto.dart';
 import '../models/responses/fragment_category_dto.dart';
 import '../models/responses/pdf_fragment_dto.dart';
 import '../models/responses/presentation_dto.dart';
+import '../models/responses/presentation_with_fragments_dto.dart';
 import '../models/responses/subject_category_dto.dart';
 import '../models/responses/subject_dto.dart';
 import '../models/responses/user_dto.dart';
@@ -106,5 +108,22 @@ class ApiDataMapper {
         pdfFile: dto.pdfFile,
         links: dto.links,
         isPublished: dto.isPublished);
+  }
+
+  PresentationWithFragments mapPresentationWithFragments(
+      PresentationWithFragmentsDto dto) {
+    return PresentationWithFragments(
+        presentation: Presentation(
+            id: dto.id,
+            title: dto.title,
+            firstImage: '',
+            isAudio: true,
+            isPublic: true,
+            includePdf: false,
+            freeMode: true,
+            createdAt: DateTime.parse(dto.createdAt),
+            isPublished: true,
+            description: dto.description),
+        fragments: dto.fragmentDtoList.map((e) => mapPdfFragment(e)).toList());
   }
 }

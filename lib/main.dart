@@ -6,6 +6,7 @@ import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 //import 'domain/constants.dart';
 import 'domain/locator/locator.dart';
 import 'presentation/auto_router/app_router.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,7 @@ Future<void> main() async {
       path: 'assets/languages',
       fallbackLocale: const Locale('ru', 'RU'),
       child: const DynamicTheme(child: Application())));
+  setUrlStrategy(PathUrlStrategy());
 }
 
 // assuing this is the root widget of your App

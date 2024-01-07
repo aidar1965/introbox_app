@@ -20,10 +20,12 @@ import 'package:moki_tutor/domain/models/subject_category.dart';
 
 import 'package:moki_tutor/domain/models/user.dart';
 import 'package:moki_tutor/domain/models/course.dart';
-import 'package:moki_tutor/presentation/screens/pdf_subject/image_create_subject/image_fragment.dart';
 
 import '../../domain/models/fragment.dart';
+import '../../domain/models/image_fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
+
+import '../../domain/models/presentation_with_fragments.dart';
 import '../../domain/models/responses/paginated_presentations.dart';
 import '../../domain/models/responses/paginated_subjects.dart';
 import '../../domain/models/user_with_tokens.dart';
@@ -33,19 +35,24 @@ import 'models/requests/fragment_request_data.dart';
 import 'models/requests/register_request.dart';
 import 'models/requests/request_add_course.dart';
 import 'models/requests/request_add_fragment.dart';
+import 'models/requests/request_add_image_presentation.dart';
 import 'models/requests/request_add_image_subject.dart';
 import 'models/requests/request_add_pdf_subject.dart';
 import 'models/requests/request_add_presentation.dart';
+import 'models/requests/request_add_presentation_fragment.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
 import 'models/requests/request_confirmation.dart';
 import 'models/requests/request_delete_course.dart';
 import 'models/requests/request_delete_fragment.dart';
 import 'models/requests/request_delete_fragment_category.dart';
+import 'models/requests/request_delete_presentation.dart';
 import 'models/requests/request_delete_presentation_fragment.dart';
 import 'models/requests/request_delete_subject.dart';
 import 'models/requests/request_delete_subject_categories.dart';
+import 'models/requests/request_edit_presentation_fragment.dart';
 import 'models/requests/request_edit_subject.dart';
+import 'models/requests/request_get_presentation.dart';
 import 'models/requests/request_get_presentation_fragments.dart';
 import 'models/requests/request_get_presentations.dart';
 import 'models/requests/request_get_subject_categories.dart';
@@ -58,12 +65,14 @@ import 'models/requests/request_login.dart';
 import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_reorder_presentation_fragments.dart';
 import 'models/requests/request_update_fragment.dart';
+import 'models/requests/request_update_presentation.dart';
 import 'models/requests/request_update_subject.dart';
 import 'models/requests/request_update_subject_category.dart';
 import 'models/requests/request_update_user.dart';
 import 'models/responses/course_dto.dart';
 import 'models/responses/pdf_fragment_dto.dart';
 
+import 'models/responses/presentation_with_fragments_dto.dart';
 import 'models/responses/subject_category_dto.dart';
 import 'models/responses/user_dto.dart';
 import 'models/responses/user_with_tokens_dto.dart';
@@ -120,14 +129,14 @@ class Api implements IApi {
     required String lastName,
     String? secondName,
     String? about,
-    String? image,
+    Uint8List? imageBytes,
   }) async {
     await httpClient.request(RequestUpdateUser(
         firstName: firstName,
         secondName: secondName,
         lastName: lastName,
         about: about,
-        imagePath: image));
+        imageBytes: imageBytes));
   }
 
   @override
@@ -410,23 +419,29 @@ class Api implements IApi {
   }
 
   @override
-  addPresentationFragment(
+  Future<void> addPresentationFragment(
       {required int presentationId,
       required int displayOrder,
       required String title,
       required String description,
-      required File image,
+      required Uint8List image,
       required bool isLandscape,
-      String? audioPath,
-      int? duration}) {
-    // TODO: implement addPresentationFragment
-    throw UnimplementedError();
+      Uint8List? audio,
+      int? duration}) async {
+    await httpClient.request(RequestAddPresentationFragment(
+        presentationId: presentationId,
+        displayOrder: displayOrder,
+        title: title,
+        description: description,
+        audioBytes: audio,
+        duration: duration,
+        imageBytes: image,
+        isLandscape: isLandscape));
   }
 
   @override
-  deletePresentation({required int id}) {
-    // TODO: implement deletePresentation
-    throw UnimplementedError();
+  Future<void> deletePresentation({required int id}) async {
+    await httpClient.request(RequestDeletePresentation(id: id));
   }
 
   @override
@@ -446,10 +461,10 @@ class Api implements IApi {
   }
 
   @override
-  updatePresentation(
-      {required int id, required String title, required String description}) {
-    // TODO: implement updatePresentation
-    throw UnimplementedError();
+  Future<void> updatePresentation(
+      {required int id, required String title, String? description}) async {
+    await httpClient.request(RequestUpdatePresentation(
+        id: id, title: title, description: description));
   }
 
   @override
@@ -474,5 +489,48 @@ class Api implements IApi {
   @override
   Future<void> deletePresentationFragment({required int id}) async {
     await httpClient.request(RequestDeletePresentationFragment(id: id));
+  }
+
+  @override
+  Future<void> updatePresentationFragment(
+      {required int id,
+      String? title,
+      String? description,
+      Uint8List? imageBytes,
+      bool? isLandscape,
+      Uint8List? audioBytes,
+      int? presentationDurationDifference,
+      int? duration}) async {
+    await httpClient.request(RequestEditPresentationFragment(
+        id: id,
+        title: title,
+        description: description,
+        imageBytes: imageBytes,
+        audioBytes: audioBytes,
+        duration: duration,
+        isLandscape: isLandscape,
+        presentationDurationDifference: presentationDurationDifference ?? 0));
+  }
+
+  @override
+  Future<void> addImagePresentation(
+      {required String title,
+      String? description,
+      required List<FragmentRequestData> fragments,
+      int? duration}) async {
+    await httpClient.request(RequestAddImagePresentation(
+        title: title,
+        fragments: fragments,
+        description: description,
+        duration: duration));
+  }
+
+  @override
+  Future<PresentationWithFragments> getPresentation(int id) async {
+    final result = await httpClient.request(RequestGetPresentation(id: id));
+
+    return mapper.mapPresentationWithFragments(
+        PresentationWithFragmentsDto.fromJson(
+            jsonDecode(result!.data as String)));
   }
 }

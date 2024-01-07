@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:moki_tutor/data/api/http_client/request_exception.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 
@@ -22,6 +23,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       await userRepository.login(email: event.email, password: event.password);
       emitter(const LoginState.loginSuccess());
+    } on RequestException catch (e) {
+      print(e.httpStatusCode);
+      rethrow;
     } on Object {
       emitter(const LoginState.loginError(errorText: 'Ошибка'));
       rethrow;

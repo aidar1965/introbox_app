@@ -14,6 +14,7 @@ class EditPresentationState with _$EditPresentationState {
   }) = _ScreenState;
   const factory EditPresentationState.requestError({String? errorText}) =
       _StateRequestError;
+  const factory EditPresentationState.requestSuccess() = _StateRequestSuccess;
   const factory EditPresentationState.loadingError({String? errorText}) =
       _StateLoadingError;
 }

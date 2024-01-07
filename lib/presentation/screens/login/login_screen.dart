@@ -21,7 +21,8 @@ class LoginScreen extends StatelessWidget {
       child: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) => state.mapOrNull(
             loginError: (state) => _onLoginError(context, state.errorText),
-            loginSuccess: (_) => context.router.push(PdfAddCourseRoute())),
+            loginSuccess: (_) =>
+                context.router.replace(const PresentationsRoute())),
         builder: (context, state) {
           return Scaffold(
             body: Center(

@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$PresentationEvent {
+mixin _$PresentationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int id) deletePresentation,
@@ -71,16 +71,16 @@ mixin _$PresentationEvent {
 }
 
 /// @nodoc
-abstract class $PresentationEventCopyWith<$Res> {
-  factory $PresentationEventCopyWith(
-          PresentationEvent value, $Res Function(PresentationEvent) then) =
-      _$PresentationEventCopyWithImpl<$Res, PresentationEvent>;
+abstract class $PresentationsEventCopyWith<$Res> {
+  factory $PresentationsEventCopyWith(
+          PresentationsEvent value, $Res Function(PresentationsEvent) then) =
+      _$PresentationsEventCopyWithImpl<$Res, PresentationsEvent>;
 }
 
 /// @nodoc
-class _$PresentationEventCopyWithImpl<$Res, $Val extends PresentationEvent>
-    implements $PresentationEventCopyWith<$Res> {
-  _$PresentationEventCopyWithImpl(this._value, this._then);
+class _$PresentationsEventCopyWithImpl<$Res, $Val extends PresentationsEvent>
+    implements $PresentationsEventCopyWith<$Res> {
+  _$PresentationsEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -99,7 +99,7 @@ abstract class _$$_EventDeletePresentationCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventDeletePresentationCopyWithImpl<$Res>
-    extends _$PresentationEventCopyWithImpl<$Res, _$_EventDeletePresentation>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventDeletePresentation>
     implements _$$_EventDeletePresentationCopyWith<$Res> {
   __$$_EventDeletePresentationCopyWithImpl(_$_EventDeletePresentation _value,
       $Res Function(_$_EventDeletePresentation) _then)
@@ -129,7 +129,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
 
   @override
   String toString() {
-    return 'PresentationEvent.deletePresentation(id: $id)';
+    return 'PresentationsEvent.deletePresentation(id: $id)';
   }
 
   @override
@@ -228,7 +228,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   }
 }
 
-abstract class _EventDeletePresentation implements PresentationEvent {
+abstract class _EventDeletePresentation implements PresentationsEvent {
   const factory _EventDeletePresentation(final int id) =
       _$_EventDeletePresentation;
 
@@ -248,7 +248,7 @@ abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
-    extends _$PresentationEventCopyWithImpl<$Res, _$_EventInitialDataRequested>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventInitialDataRequested>
     implements _$$_EventInitialDataRequestedCopyWith<$Res> {
   __$$_EventInitialDataRequestedCopyWithImpl(
       _$_EventInitialDataRequested _value,
@@ -263,7 +263,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
 
   @override
   String toString() {
-    return 'PresentationEvent.initialDataRequested()';
+    return 'PresentationsEvent.initialDataRequested()';
   }
 
   @override
@@ -353,7 +353,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   }
 }
 
-abstract class _EventInitialDataRequested implements PresentationEvent {
+abstract class _EventInitialDataRequested implements PresentationsEvent {
   const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
 }
 
@@ -366,7 +366,7 @@ abstract class _$$_EventReloadDataCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventReloadDataCopyWithImpl<$Res>
-    extends _$PresentationEventCopyWithImpl<$Res, _$_EventReloadData>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventReloadData>
     implements _$$_EventReloadDataCopyWith<$Res> {
   __$$_EventReloadDataCopyWithImpl(
       _$_EventReloadData _value, $Res Function(_$_EventReloadData) _then)
@@ -380,7 +380,7 @@ class _$_EventReloadData implements _EventReloadData {
 
   @override
   String toString() {
-    return 'PresentationEvent.reloadData()';
+    return 'PresentationsEvent.reloadData()';
   }
 
   @override
@@ -469,7 +469,7 @@ class _$_EventReloadData implements _EventReloadData {
   }
 }
 
-abstract class _EventReloadData implements PresentationEvent {
+abstract class _EventReloadData implements PresentationsEvent {
   const factory _EventReloadData() = _$_EventReloadData;
 }
 
@@ -482,7 +482,7 @@ abstract class _$$_EventLoadMoreCopyWith<$Res> {
 
 /// @nodoc
 class __$$_EventLoadMoreCopyWithImpl<$Res>
-    extends _$PresentationEventCopyWithImpl<$Res, _$_EventLoadMore>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventLoadMore>
     implements _$$_EventLoadMoreCopyWith<$Res> {
   __$$_EventLoadMoreCopyWithImpl(
       _$_EventLoadMore _value, $Res Function(_$_EventLoadMore) _then)
@@ -496,7 +496,7 @@ class _$_EventLoadMore implements _EventLoadMore {
 
   @override
   String toString() {
-    return 'PresentationEvent.loadMore()';
+    return 'PresentationsEvent.loadMore()';
   }
 
   @override
@@ -585,12 +585,12 @@ class _$_EventLoadMore implements _EventLoadMore {
   }
 }
 
-abstract class _EventLoadMore implements PresentationEvent {
+abstract class _EventLoadMore implements PresentationsEvent {
   const factory _EventLoadMore() = _$_EventLoadMore;
 }
 
 /// @nodoc
-mixin _$PresentationState {
+mixin _$PresentationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
@@ -644,16 +644,16 @@ mixin _$PresentationState {
 }
 
 /// @nodoc
-abstract class $PresentationStateCopyWith<$Res> {
-  factory $PresentationStateCopyWith(
-          PresentationState value, $Res Function(PresentationState) then) =
-      _$PresentationStateCopyWithImpl<$Res, PresentationState>;
+abstract class $PresentationsStateCopyWith<$Res> {
+  factory $PresentationsStateCopyWith(
+          PresentationsState value, $Res Function(PresentationsState) then) =
+      _$PresentationsStateCopyWithImpl<$Res, PresentationsState>;
 }
 
 /// @nodoc
-class _$PresentationStateCopyWithImpl<$Res, $Val extends PresentationState>
-    implements $PresentationStateCopyWith<$Res> {
-  _$PresentationStateCopyWithImpl(this._value, this._then);
+class _$PresentationsStateCopyWithImpl<$Res, $Val extends PresentationsState>
+    implements $PresentationsStateCopyWith<$Res> {
+  _$PresentationsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -670,7 +670,7 @@ abstract class _$$_StatePendingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_StatePendingCopyWithImpl<$Res>
-    extends _$PresentationStateCopyWithImpl<$Res, _$_StatePending>
+    extends _$PresentationsStateCopyWithImpl<$Res, _$_StatePending>
     implements _$$_StatePendingCopyWith<$Res> {
   __$$_StatePendingCopyWithImpl(
       _$_StatePending _value, $Res Function(_$_StatePending) _then)
@@ -684,7 +684,7 @@ class _$_StatePending implements _StatePending {
 
   @override
   String toString() {
-    return 'PresentationState.pending()';
+    return 'PresentationsState.pending()';
   }
 
   @override
@@ -771,7 +771,7 @@ class _$_StatePending implements _StatePending {
   }
 }
 
-abstract class _StatePending implements PresentationState {
+abstract class _StatePending implements PresentationsState {
   const factory _StatePending() = _$_StatePending;
 }
 
@@ -786,7 +786,7 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ScreenStateCopyWithImpl<$Res>
-    extends _$PresentationStateCopyWithImpl<$Res, _$_ScreenState>
+    extends _$PresentationsStateCopyWithImpl<$Res, _$_ScreenState>
     implements _$$_ScreenStateCopyWith<$Res> {
   __$$_ScreenStateCopyWithImpl(
       _$_ScreenState _value, $Res Function(_$_ScreenState) _then)
@@ -822,7 +822,7 @@ class _$_ScreenState implements _ScreenState {
 
   @override
   String toString() {
-    return 'PresentationState.screenState(presentations: $presentations)';
+    return 'PresentationsState.screenState(presentations: $presentations)';
   }
 
   @override
@@ -919,7 +919,7 @@ class _$_ScreenState implements _ScreenState {
   }
 }
 
-abstract class _ScreenState implements PresentationState {
+abstract class _ScreenState implements PresentationsState {
   const factory _ScreenState(
       {required final List<Presentation> presentations}) = _$_ScreenState;
 
@@ -940,7 +940,7 @@ abstract class _$$_StateRequestErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_StateRequestErrorCopyWithImpl<$Res>
-    extends _$PresentationStateCopyWithImpl<$Res, _$_StateRequestError>
+    extends _$PresentationsStateCopyWithImpl<$Res, _$_StateRequestError>
     implements _$$_StateRequestErrorCopyWith<$Res> {
   __$$_StateRequestErrorCopyWithImpl(
       _$_StateRequestError _value, $Res Function(_$_StateRequestError) _then)
@@ -970,7 +970,7 @@ class _$_StateRequestError implements _StateRequestError {
 
   @override
   String toString() {
-    return 'PresentationState.requestError(errorText: $errorText)';
+    return 'PresentationsState.requestError(errorText: $errorText)';
   }
 
   @override
@@ -1067,7 +1067,7 @@ class _$_StateRequestError implements _StateRequestError {
   }
 }
 
-abstract class _StateRequestError implements PresentationState {
+abstract class _StateRequestError implements PresentationsState {
   const factory _StateRequestError({final String? errorText}) =
       _$_StateRequestError;
 
@@ -1086,7 +1086,7 @@ abstract class _$$_StateLoadingErrorCopyWith<$Res> {
 
 /// @nodoc
 class __$$_StateLoadingErrorCopyWithImpl<$Res>
-    extends _$PresentationStateCopyWithImpl<$Res, _$_StateLoadingError>
+    extends _$PresentationsStateCopyWithImpl<$Res, _$_StateLoadingError>
     implements _$$_StateLoadingErrorCopyWith<$Res> {
   __$$_StateLoadingErrorCopyWithImpl(
       _$_StateLoadingError _value, $Res Function(_$_StateLoadingError) _then)
@@ -1100,7 +1100,7 @@ class _$_StateLoadingError implements _StateLoadingError {
 
   @override
   String toString() {
-    return 'PresentationState.loadingError()';
+    return 'PresentationsState.loadingError()';
   }
 
   @override
@@ -1187,6 +1187,6 @@ class _$_StateLoadingError implements _StateLoadingError {
   }
 }
 
-abstract class _StateLoadingError implements PresentationState {
+abstract class _StateLoadingError implements PresentationsState {
   const factory _StateLoadingError() = _$_StateLoadingError;
 }

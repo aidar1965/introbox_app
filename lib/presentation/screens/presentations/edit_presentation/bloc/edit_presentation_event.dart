@@ -8,18 +8,15 @@ class EditPresentationEvent with _$EditPresentationEvent {
       {required PdfFragment fragment}) = _EventFragmentSelected;
   const factory EditPresentationEvent.audioAdded(
       {required PdfFragment fragment,
-      required String title,
-      required String description,
-      required String path,
-      required String duration}) = _EventAudioAdded;
+      required Uint8List audioBytes,
+      required String audioPath,
+      required int duration}) = _EventAudioAdded;
   const factory EditPresentationEvent.deleteAudio({
     required PdfFragment fragment,
   }) = _EventAudioDeleted;
   const factory EditPresentationEvent.imageAdded({
     required PdfFragment fragment,
-    required String title,
-    required String description,
-    required String path,
+    required Uint8List imageBytes,
   }) = _EventImageAdded;
   const factory EditPresentationEvent.updatePresentation(
       {required String title,

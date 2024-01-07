@@ -7,7 +7,7 @@ class RequestDeletePresentationFragment extends IApiRequest {
     required this.id,
   }) : super(
             methodType: AvailableApiMethods.delete,
-            url: '/presentation/fragment/delete/');
+            url: '/presentation/fragment/');
 
   @override
   Map<String, Object?>? get body => {

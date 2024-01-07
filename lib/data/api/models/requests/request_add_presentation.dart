@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:mime/mime.dart';
 import 'package:path/path.dart';
 
 import '../../http_client/i_api_request.dart';
@@ -32,17 +33,20 @@ class RequestAddPresentation extends IApiRequest {
     int index = 0;
     for (final f in fragments) {
       if (f.audioBytes != null) {
+        var mime = lookupMimeType('', headerBytes: f.audioBytes);
+        print(extensionFromMime(mime!));
         audio.add(MultipartFile.fromBytes(f.audioBytes!, headers: {
           'index': ['$index'],
           if (f.duration != null)
             'duration': [
               f.duration!.toString(),
             ],
-          'filename': ['']
+          'extension': ['.${extensionFromMime(mime)}']
         }));
       }
       index++;
     }
+    print('sending audio ${audio.length} items');
     return FormData.fromMap({
       'pdf_file': MultipartFile.fromBytes(pdfFile, headers: {
         'filename': [basename(pdfFileName)]

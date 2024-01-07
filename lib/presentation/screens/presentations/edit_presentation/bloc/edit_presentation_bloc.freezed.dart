@@ -29,6 +29,7 @@ mixin _$EditPresentationState {
             bool deleteFragmentPending)
         screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function() requestSuccess,
     required TResult Function(String? errorText) loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ mixin _$EditPresentationState {
             bool deleteFragmentPending)?
         screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -61,6 +63,7 @@ mixin _$EditPresentationState {
             bool deleteFragmentPending)?
         screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function()? requestSuccess,
     TResult Function(String? errorText)? loadingError,
     required TResult orElse(),
   }) =>
@@ -70,6 +73,7 @@ mixin _$EditPresentationState {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,6 +82,7 @@ mixin _$EditPresentationState {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -86,6 +91,7 @@ mixin _$EditPresentationState {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) =>
@@ -167,6 +173,7 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
             bool deleteFragmentPending)
         screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function() requestSuccess,
     required TResult Function(String? errorText) loadingError,
   }) {
     return pending();
@@ -186,6 +193,7 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
             bool deleteFragmentPending)?
         screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? loadingError,
   }) {
     return pending?.call();
@@ -205,6 +213,7 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
             bool deleteFragmentPending)?
         screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function()? requestSuccess,
     TResult Function(String? errorText)? loadingError,
     required TResult orElse(),
   }) {
@@ -220,6 +229,7 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return pending(this);
@@ -231,6 +241,7 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return pending?.call(this);
@@ -242,6 +253,7 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -434,6 +446,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             bool deleteFragmentPending)
         screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function() requestSuccess,
     required TResult Function(String? errorText) loadingError,
   }) {
     return screenState(
@@ -460,6 +473,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             bool deleteFragmentPending)?
         screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? loadingError,
   }) {
     return screenState?.call(
@@ -486,6 +500,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             bool deleteFragmentPending)?
         screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function()? requestSuccess,
     TResult Function(String? errorText)? loadingError,
     required TResult orElse(),
   }) {
@@ -508,6 +523,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return screenState(this);
@@ -519,6 +535,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return screenState?.call(this);
@@ -530,6 +547,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -649,6 +667,7 @@ class _$_StateRequestError
             bool deleteFragmentPending)
         screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function() requestSuccess,
     required TResult Function(String? errorText) loadingError,
   }) {
     return requestError(errorText);
@@ -668,6 +687,7 @@ class _$_StateRequestError
             bool deleteFragmentPending)?
         screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? loadingError,
   }) {
     return requestError?.call(errorText);
@@ -687,6 +707,7 @@ class _$_StateRequestError
             bool deleteFragmentPending)?
         screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function()? requestSuccess,
     TResult Function(String? errorText)? loadingError,
     required TResult orElse(),
   }) {
@@ -702,6 +723,7 @@ class _$_StateRequestError
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return requestError(this);
@@ -713,6 +735,7 @@ class _$_StateRequestError
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return requestError?.call(this);
@@ -724,6 +747,7 @@ class _$_StateRequestError
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -742,6 +766,159 @@ abstract class _StateRequestError implements EditPresentationState {
   @JsonKey(ignore: true)
   _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateRequestSuccessCopyWith<$Res> {
+  factory _$$_StateRequestSuccessCopyWith(_$_StateRequestSuccess value,
+          $Res Function(_$_StateRequestSuccess) then) =
+      __$$_StateRequestSuccessCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StateRequestSuccessCopyWithImpl<$Res>
+    extends _$EditPresentationStateCopyWithImpl<$Res, _$_StateRequestSuccess>
+    implements _$$_StateRequestSuccessCopyWith<$Res> {
+  __$$_StateRequestSuccessCopyWithImpl(_$_StateRequestSuccess _value,
+      $Res Function(_$_StateRequestSuccess) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StateRequestSuccess
+    with DiagnosticableTreeMixin
+    implements _StateRequestSuccess {
+  const _$_StateRequestSuccess();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'EditPresentationState.requestSuccess()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'EditPresentationState.requestSuccess'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StateRequestSuccess);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(
+            String title,
+            String description,
+            List<PdfFragment> fragments,
+            PdfFragment? selectedFragment,
+            bool presentationUpdatePending,
+            bool fragmentUpdatePending,
+            bool deleteFragmentPending)
+        screenState,
+    required TResult Function(String? errorText) requestError,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) loadingError,
+  }) {
+    return requestSuccess();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(
+            String title,
+            String description,
+            List<PdfFragment> fragments,
+            PdfFragment? selectedFragment,
+            bool presentationUpdatePending,
+            bool fragmentUpdatePending,
+            bool deleteFragmentPending)?
+        screenState,
+    TResult? Function(String? errorText)? requestError,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? loadingError,
+  }) {
+    return requestSuccess?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(
+            String title,
+            String description,
+            List<PdfFragment> fragments,
+            PdfFragment? selectedFragment,
+            bool presentationUpdatePending,
+            bool fragmentUpdatePending,
+            bool deleteFragmentPending)?
+        screenState,
+    TResult Function(String? errorText)? requestError,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? loadingError,
+    required TResult orElse(),
+  }) {
+    if (requestSuccess != null) {
+      return requestSuccess();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateLoadingError value) loadingError,
+  }) {
+    return requestSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateLoadingError value)? loadingError,
+  }) {
+    return requestSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateLoadingError value)? loadingError,
+    required TResult orElse(),
+  }) {
+    if (requestSuccess != null) {
+      return requestSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateRequestSuccess implements EditPresentationState {
+  const factory _StateRequestSuccess() = _$_StateRequestSuccess;
 }
 
 /// @nodoc
@@ -831,6 +1008,7 @@ class _$_StateLoadingError
             bool deleteFragmentPending)
         screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function() requestSuccess,
     required TResult Function(String? errorText) loadingError,
   }) {
     return loadingError(errorText);
@@ -850,6 +1028,7 @@ class _$_StateLoadingError
             bool deleteFragmentPending)?
         screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? loadingError,
   }) {
     return loadingError?.call(errorText);
@@ -869,6 +1048,7 @@ class _$_StateLoadingError
             bool deleteFragmentPending)?
         screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function()? requestSuccess,
     TResult Function(String? errorText)? loadingError,
     required TResult orElse(),
   }) {
@@ -884,6 +1064,7 @@ class _$_StateLoadingError
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return loadingError(this);
@@ -895,6 +1076,7 @@ class _$_StateLoadingError
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return loadingError?.call(this);
@@ -906,6 +1088,7 @@ class _$_StateLoadingError
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -932,12 +1115,11 @@ mixin _$EditPresentationEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -950,13 +1132,11 @@ mixin _$EditPresentationEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -967,13 +1147,11 @@ mixin _$EditPresentationEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -1097,12 +1275,11 @@ class _$_EventInitialDataRequested
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -1118,13 +1295,11 @@ class _$_EventInitialDataRequested
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -1138,13 +1313,11 @@ class _$_EventInitialDataRequested
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -1295,12 +1468,11 @@ class _$_EventFragmentSelected
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -1316,13 +1488,11 @@ class _$_EventFragmentSelected
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -1336,13 +1506,11 @@ class _$_EventFragmentSelected
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -1428,10 +1596,9 @@ abstract class _$$_EventAudioAddedCopyWith<$Res> {
   @useResult
   $Res call(
       {PdfFragment fragment,
-      String title,
-      String description,
-      String path,
-      String duration});
+      Uint8List audioBytes,
+      String audioPath,
+      int duration});
 }
 
 /// @nodoc
@@ -1446,9 +1613,8 @@ class __$$_EventAudioAddedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? fragment = null,
-    Object? title = null,
-    Object? description = null,
-    Object? path = null,
+    Object? audioBytes = null,
+    Object? audioPath = null,
     Object? duration = null,
   }) {
     return _then(_$_EventAudioAdded(
@@ -1456,22 +1622,18 @@ class __$$_EventAudioAddedCopyWithImpl<$Res>
           ? _value.fragment
           : fragment // ignore: cast_nullable_to_non_nullable
               as PdfFragment,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      path: null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
+      audioBytes: null == audioBytes
+          ? _value.audioBytes
+          : audioBytes // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
+      audioPath: null == audioPath
+          ? _value.audioPath
+          : audioPath // ignore: cast_nullable_to_non_nullable
               as String,
       duration: null == duration
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
     ));
   }
 }
@@ -1483,25 +1645,22 @@ class _$_EventAudioAdded
     implements _EventAudioAdded {
   const _$_EventAudioAdded(
       {required this.fragment,
-      required this.title,
-      required this.description,
-      required this.path,
+      required this.audioBytes,
+      required this.audioPath,
       required this.duration});
 
   @override
   final PdfFragment fragment;
   @override
-  final String title;
+  final Uint8List audioBytes;
   @override
-  final String description;
+  final String audioPath;
   @override
-  final String path;
-  @override
-  final String duration;
+  final int duration;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditPresentationEvent.audioAdded(fragment: $fragment, title: $title, description: $description, path: $path, duration: $duration)';
+    return 'EditPresentationEvent.audioAdded(fragment: $fragment, audioBytes: $audioBytes, audioPath: $audioPath, duration: $duration)';
   }
 
   @override
@@ -1510,9 +1669,8 @@ class _$_EventAudioAdded
     properties
       ..add(DiagnosticsProperty('type', 'EditPresentationEvent.audioAdded'))
       ..add(DiagnosticsProperty('fragment', fragment))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('path', path))
+      ..add(DiagnosticsProperty('audioBytes', audioBytes))
+      ..add(DiagnosticsProperty('audioPath', audioPath))
       ..add(DiagnosticsProperty('duration', duration));
   }
 
@@ -1523,17 +1681,17 @@ class _$_EventAudioAdded
             other is _$_EventAudioAdded &&
             (identical(other.fragment, fragment) ||
                 other.fragment == fragment) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.path, path) || other.path == path) &&
+            const DeepCollectionEquality()
+                .equals(other.audioBytes, audioBytes) &&
+            (identical(other.audioPath, audioPath) ||
+                other.audioPath == audioPath) &&
             (identical(other.duration, duration) ||
                 other.duration == duration));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, fragment, title, description, path, duration);
+  int get hashCode => Object.hash(runtimeType, fragment,
+      const DeepCollectionEquality().hash(audioBytes), audioPath, duration);
 
   @JsonKey(ignore: true)
   @override
@@ -1546,12 +1704,11 @@ class _$_EventAudioAdded
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -1559,7 +1716,7 @@ class _$_EventAudioAdded
     required TResult Function() deleteFragment,
     required TResult Function(List<int> ids) reorderFragments,
   }) {
-    return audioAdded(fragment, title, description, path, duration);
+    return audioAdded(fragment, audioBytes, audioPath, duration);
   }
 
   @override
@@ -1567,19 +1724,17 @@ class _$_EventAudioAdded
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<int> ids)? reorderFragments,
   }) {
-    return audioAdded?.call(fragment, title, description, path, duration);
+    return audioAdded?.call(fragment, audioBytes, audioPath, duration);
   }
 
   @override
@@ -1587,13 +1742,11 @@ class _$_EventAudioAdded
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -1601,7 +1754,7 @@ class _$_EventAudioAdded
     required TResult orElse(),
   }) {
     if (audioAdded != null) {
-      return audioAdded(fragment, title, description, path, duration);
+      return audioAdded(fragment, audioBytes, audioPath, duration);
     }
     return orElse();
   }
@@ -1664,16 +1817,14 @@ class _$_EventAudioAdded
 abstract class _EventAudioAdded implements EditPresentationEvent {
   const factory _EventAudioAdded(
       {required final PdfFragment fragment,
-      required final String title,
-      required final String description,
-      required final String path,
-      required final String duration}) = _$_EventAudioAdded;
+      required final Uint8List audioBytes,
+      required final String audioPath,
+      required final int duration}) = _$_EventAudioAdded;
 
   PdfFragment get fragment;
-  String get title;
-  String get description;
-  String get path;
-  String get duration;
+  Uint8List get audioBytes;
+  String get audioPath;
+  int get duration;
   @JsonKey(ignore: true)
   _$$_EventAudioAddedCopyWith<_$_EventAudioAdded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1757,12 +1908,11 @@ class _$_EventAudioDeleted
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -1778,13 +1928,11 @@ class _$_EventAudioDeleted
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -1798,13 +1946,11 @@ class _$_EventAudioDeleted
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -1888,8 +2034,7 @@ abstract class _$$_EventImageAddedCopyWith<$Res> {
           _$_EventImageAdded value, $Res Function(_$_EventImageAdded) then) =
       __$$_EventImageAddedCopyWithImpl<$Res>;
   @useResult
-  $Res call(
-      {PdfFragment fragment, String title, String description, String path});
+  $Res call({PdfFragment fragment, Uint8List imageBytes});
 }
 
 /// @nodoc
@@ -1904,27 +2049,17 @@ class __$$_EventImageAddedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? fragment = null,
-    Object? title = null,
-    Object? description = null,
-    Object? path = null,
+    Object? imageBytes = null,
   }) {
     return _then(_$_EventImageAdded(
       fragment: null == fragment
           ? _value.fragment
           : fragment // ignore: cast_nullable_to_non_nullable
               as PdfFragment,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      path: null == path
-          ? _value.path
-          : path // ignore: cast_nullable_to_non_nullable
-              as String,
+      imageBytes: null == imageBytes
+          ? _value.imageBytes
+          : imageBytes // ignore: cast_nullable_to_non_nullable
+              as Uint8List,
     ));
   }
 }
@@ -1934,24 +2069,16 @@ class __$$_EventImageAddedCopyWithImpl<$Res>
 class _$_EventImageAdded
     with DiagnosticableTreeMixin
     implements _EventImageAdded {
-  const _$_EventImageAdded(
-      {required this.fragment,
-      required this.title,
-      required this.description,
-      required this.path});
+  const _$_EventImageAdded({required this.fragment, required this.imageBytes});
 
   @override
   final PdfFragment fragment;
   @override
-  final String title;
-  @override
-  final String description;
-  @override
-  final String path;
+  final Uint8List imageBytes;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditPresentationEvent.imageAdded(fragment: $fragment, title: $title, description: $description, path: $path)';
+    return 'EditPresentationEvent.imageAdded(fragment: $fragment, imageBytes: $imageBytes)';
   }
 
   @override
@@ -1960,9 +2087,7 @@ class _$_EventImageAdded
     properties
       ..add(DiagnosticsProperty('type', 'EditPresentationEvent.imageAdded'))
       ..add(DiagnosticsProperty('fragment', fragment))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description))
-      ..add(DiagnosticsProperty('path', path));
+      ..add(DiagnosticsProperty('imageBytes', imageBytes));
   }
 
   @override
@@ -1972,15 +2097,13 @@ class _$_EventImageAdded
             other is _$_EventImageAdded &&
             (identical(other.fragment, fragment) ||
                 other.fragment == fragment) &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.path, path) || other.path == path));
+            const DeepCollectionEquality()
+                .equals(other.imageBytes, imageBytes));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, fragment, title, description, path);
+  int get hashCode => Object.hash(
+      runtimeType, fragment, const DeepCollectionEquality().hash(imageBytes));
 
   @JsonKey(ignore: true)
   @override
@@ -1993,12 +2116,11 @@ class _$_EventImageAdded
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -2006,7 +2128,7 @@ class _$_EventImageAdded
     required TResult Function() deleteFragment,
     required TResult Function(List<int> ids) reorderFragments,
   }) {
-    return imageAdded(fragment, title, description, path);
+    return imageAdded(fragment, imageBytes);
   }
 
   @override
@@ -2014,19 +2136,17 @@ class _$_EventImageAdded
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<int> ids)? reorderFragments,
   }) {
-    return imageAdded?.call(fragment, title, description, path);
+    return imageAdded?.call(fragment, imageBytes);
   }
 
   @override
@@ -2034,13 +2154,11 @@ class _$_EventImageAdded
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -2048,7 +2166,7 @@ class _$_EventImageAdded
     required TResult orElse(),
   }) {
     if (imageAdded != null) {
-      return imageAdded(fragment, title, description, path);
+      return imageAdded(fragment, imageBytes);
     }
     return orElse();
   }
@@ -2111,14 +2229,10 @@ class _$_EventImageAdded
 abstract class _EventImageAdded implements EditPresentationEvent {
   const factory _EventImageAdded(
       {required final PdfFragment fragment,
-      required final String title,
-      required final String description,
-      required final String path}) = _$_EventImageAdded;
+      required final Uint8List imageBytes}) = _$_EventImageAdded;
 
   PdfFragment get fragment;
-  String get title;
-  String get description;
-  String get path;
+  Uint8List get imageBytes;
   @JsonKey(ignore: true)
   _$$_EventImageAddedCopyWith<_$_EventImageAdded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2215,12 +2329,11 @@ class _$_EventUpdatePresentation
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -2236,13 +2349,11 @@ class _$_EventUpdatePresentation
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -2256,13 +2367,11 @@ class _$_EventUpdatePresentation
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -2430,12 +2539,11 @@ class _$_EventUpdateFragment
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -2451,13 +2559,11 @@ class _$_EventUpdateFragment
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -2471,13 +2577,11 @@ class _$_EventUpdateFragment
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -2606,12 +2710,11 @@ class _$_EventDeleteFragment
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -2627,13 +2730,11 @@ class _$_EventDeleteFragment
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -2647,13 +2748,11 @@ class _$_EventDeleteFragment
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
@@ -2809,12 +2908,11 @@ class _$_EventReorderFragment
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, String title,
-            String description, String path, String duration)
+    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(
-            PdfFragment fragment, String title, String description, String path)
+    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
@@ -2830,13 +2928,11 @@ class _$_EventReorderFragment
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
@@ -2850,13 +2946,11 @@ class _$_EventReorderFragment
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path, String duration)?
+    TResult Function(PdfFragment fragment, Uint8List audioBytes,
+            String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, String title, String description,
-            String path)?
-        imageAdded,
+    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,

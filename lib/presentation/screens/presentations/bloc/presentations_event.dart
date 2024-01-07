@@ -1,11 +1,11 @@
 part of 'presentations_bloc.dart';
 
 @freezed
-class PresentationEvent with _$PresentationEvent {
-  const factory PresentationEvent.deletePresentation(int id) =
+class PresentationsEvent with _$PresentationsEvent {
+  const factory PresentationsEvent.deletePresentation(int id) =
       _EventDeletePresentation;
-  const factory PresentationEvent.initialDataRequested() =
+  const factory PresentationsEvent.initialDataRequested() =
       _EventInitialDataRequested;
-  const factory PresentationEvent.reloadData() = _EventReloadData;
-  const factory PresentationEvent.loadMore() = _EventLoadMore;
+  const factory PresentationsEvent.reloadData() = _EventReloadData;
+  const factory PresentationsEvent.loadMore() = _EventLoadMore;
 }
