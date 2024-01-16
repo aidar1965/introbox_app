@@ -20,7 +20,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     add(const PresentationEvent.initialDataRequested());
   }
 
-  final int id;
+  final String id;
   final api = getIt<IApi>();
   late PresentationWithFragments presentationWithFragments;
 
@@ -30,7 +30,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     emitter(const PresentationState.pending());
     try {
       presentationWithFragments = await api.getPresentation(id);
-      print(presentationWithFragments.fragments.length);
+
       _screenState = _ScreenState(
           selectedFragment: presentationWithFragments.fragments.first,
           isFirst: presentationWithFragments.fragments.length > 1,

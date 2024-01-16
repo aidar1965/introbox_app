@@ -1,7 +1,7 @@
 import '../../http_client/i_api_request.dart';
 
 class RequestGetPresentation extends IApiRequest {
-  final int id;
+  final String id;
 
   RequestGetPresentation({
     required this.id,

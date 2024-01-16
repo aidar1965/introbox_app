@@ -8,7 +8,7 @@ part of '../pdf_fragment_dto.dart';
 
 PdfFragmentDto _$PdfFragmentDtoFromJson(Map<String, dynamic> json) =>
     PdfFragmentDto(
-      id: json['id'] as int,
+      id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       imagePath: json['image_path'] as String,

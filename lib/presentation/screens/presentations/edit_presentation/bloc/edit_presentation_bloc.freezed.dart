@@ -1125,7 +1125,7 @@ mixin _$EditPresentationEvent {
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1140,7 +1140,7 @@ mixin _$EditPresentationEvent {
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1155,7 +1155,7 @@ mixin _$EditPresentationEvent {
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1285,7 +1285,7 @@ class _$_EventInitialDataRequested
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return initialDataRequested();
   }
@@ -1303,7 +1303,7 @@ class _$_EventInitialDataRequested
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return initialDataRequested?.call();
   }
@@ -1321,7 +1321,7 @@ class _$_EventInitialDataRequested
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -1478,7 +1478,7 @@ class _$_EventFragmentSelected
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return fragmentSelected(fragment);
   }
@@ -1496,7 +1496,7 @@ class _$_EventFragmentSelected
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return fragmentSelected?.call(fragment);
   }
@@ -1514,7 +1514,7 @@ class _$_EventFragmentSelected
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (fragmentSelected != null) {
@@ -1714,7 +1714,7 @@ class _$_EventAudioAdded
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return audioAdded(fragment, audioBytes, audioPath, duration);
   }
@@ -1732,7 +1732,7 @@ class _$_EventAudioAdded
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return audioAdded?.call(fragment, audioBytes, audioPath, duration);
   }
@@ -1750,7 +1750,7 @@ class _$_EventAudioAdded
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (audioAdded != null) {
@@ -1918,7 +1918,7 @@ class _$_EventAudioDeleted
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return deleteAudio(fragment);
   }
@@ -1936,7 +1936,7 @@ class _$_EventAudioDeleted
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return deleteAudio?.call(fragment);
   }
@@ -1954,7 +1954,7 @@ class _$_EventAudioDeleted
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (deleteAudio != null) {
@@ -2126,7 +2126,7 @@ class _$_EventImageAdded
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return imageAdded(fragment, imageBytes);
   }
@@ -2144,7 +2144,7 @@ class _$_EventImageAdded
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return imageAdded?.call(fragment, imageBytes);
   }
@@ -2162,7 +2162,7 @@ class _$_EventImageAdded
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (imageAdded != null) {
@@ -2339,7 +2339,7 @@ class _$_EventUpdatePresentation
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return updatePresentation(title, description);
   }
@@ -2357,7 +2357,7 @@ class _$_EventUpdatePresentation
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return updatePresentation?.call(title, description);
   }
@@ -2375,7 +2375,7 @@ class _$_EventUpdatePresentation
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (updatePresentation != null) {
@@ -2549,7 +2549,7 @@ class _$_EventUpdateFragment
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return updateFragment(title, description);
   }
@@ -2567,7 +2567,7 @@ class _$_EventUpdateFragment
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return updateFragment?.call(title, description);
   }
@@ -2585,7 +2585,7 @@ class _$_EventUpdateFragment
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (updateFragment != null) {
@@ -2720,7 +2720,7 @@ class _$_EventDeleteFragment
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return deleteFragment();
   }
@@ -2738,7 +2738,7 @@ class _$_EventDeleteFragment
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return deleteFragment?.call();
   }
@@ -2756,7 +2756,7 @@ class _$_EventDeleteFragment
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (deleteFragment != null) {
@@ -2830,7 +2830,7 @@ abstract class _$$_EventReorderFragmentCopyWith<$Res> {
           $Res Function(_$_EventReorderFragment) then) =
       __$$_EventReorderFragmentCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<int> ids});
+  $Res call({List<String> ids});
 }
 
 /// @nodoc
@@ -2850,7 +2850,7 @@ class __$$_EventReorderFragmentCopyWithImpl<$Res>
       ids: null == ids
           ? _value._ids
           : ids // ignore: cast_nullable_to_non_nullable
-              as List<int>,
+              as List<String>,
     ));
   }
 }
@@ -2860,11 +2860,11 @@ class __$$_EventReorderFragmentCopyWithImpl<$Res>
 class _$_EventReorderFragment
     with DiagnosticableTreeMixin
     implements _EventReorderFragment {
-  const _$_EventReorderFragment({required final List<int> ids}) : _ids = ids;
+  const _$_EventReorderFragment({required final List<String> ids}) : _ids = ids;
 
-  final List<int> _ids;
+  final List<String> _ids;
   @override
-  List<int> get ids {
+  List<String> get ids {
     if (_ids is EqualUnmodifiableListView) return _ids;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_ids);
@@ -2918,7 +2918,7 @@ class _$_EventReorderFragment
         updatePresentation,
     required TResult Function(String title, String description) updateFragment,
     required TResult Function() deleteFragment,
-    required TResult Function(List<int> ids) reorderFragments,
+    required TResult Function(List<String> ids) reorderFragments,
   }) {
     return reorderFragments(ids);
   }
@@ -2936,7 +2936,7 @@ class _$_EventReorderFragment
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description)? updateFragment,
     TResult? Function()? deleteFragment,
-    TResult? Function(List<int> ids)? reorderFragments,
+    TResult? Function(List<String> ids)? reorderFragments,
   }) {
     return reorderFragments?.call(ids);
   }
@@ -2954,7 +2954,7 @@ class _$_EventReorderFragment
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description)? updateFragment,
     TResult Function()? deleteFragment,
-    TResult Function(List<int> ids)? reorderFragments,
+    TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (reorderFragments != null) {
@@ -3019,10 +3019,10 @@ class _$_EventReorderFragment
 }
 
 abstract class _EventReorderFragment implements EditPresentationEvent {
-  const factory _EventReorderFragment({required final List<int> ids}) =
+  const factory _EventReorderFragment({required final List<String> ids}) =
       _$_EventReorderFragment;
 
-  List<int> get ids;
+  List<String> get ids;
   @JsonKey(ignore: true)
   _$$_EventReorderFragmentCopyWith<_$_EventReorderFragment> get copyWith =>
       throw _privateConstructorUsedError;

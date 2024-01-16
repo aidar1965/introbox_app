@@ -9,7 +9,7 @@ part of '../presentation_with_fragments_dto.dart';
 PresentationWithFragmentsDto _$PresentationWithFragmentsDtoFromJson(
         Map<String, dynamic> json) =>
     PresentationWithFragmentsDto(
-      id: json['id'] as int,
+      id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String?,
       createdAt: json['created_at'] as String,

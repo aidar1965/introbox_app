@@ -23,7 +23,7 @@ class PresentationAddFragmentScreen extends StatelessWidget {
       required this.isAudio});
 
   final int displayOder;
-  final int presentationId;
+  final String presentationId;
   final bool isAudio;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();

@@ -110,7 +110,7 @@ class _ScreenView extends StatelessWidget {
   final bool presentationUpdatePending;
   final bool fragmentUpdatePending;
   final bool fragmentDeletePending;
-  final int presentationId;
+  final String presentationId;
   final bool isAudio;
 
   final TextEditingController selectedFragmentTitleController =
@@ -219,7 +219,7 @@ class _ScreenView extends StatelessWidget {
                                   BlocProvider.of<EditPresentationBloc>(context)
                                       .add(EditPresentationEvent
                                           .reorderFragments(
-                                              ids: result as List<int>));
+                                              ids: result as List<String>));
                                 }
                               }
                             }),
@@ -503,7 +503,7 @@ class AddFragmentButtons extends StatelessWidget {
   });
 
   final int displayOrder;
-  final int presentationId;
+  final String presentationId;
   final bool isAudio;
 
   @override

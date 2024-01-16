@@ -48,7 +48,7 @@ abstract class _$AppRouter extends RootStackRouter {
     PresentationRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<PresentationRouteArgs>(
-          orElse: () => PresentationRouteArgs(id: pathParams.getInt('id')));
+          orElse: () => PresentationRouteArgs(id: pathParams.getString('id')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: PresentationScreen(
@@ -242,7 +242,7 @@ class LoginRoute extends PageRouteInfo<void> {
 class PresentationRoute extends PageRouteInfo<PresentationRouteArgs> {
   PresentationRoute({
     Key? key,
-    required int id,
+    required String id,
     List<PageRouteInfo>? children,
   }) : super(
           PresentationRoute.name,
@@ -268,7 +268,7 @@ class PresentationRouteArgs {
 
   final Key? key;
 
-  final int id;
+  final String id;
 
   @override
   String toString() {
@@ -475,7 +475,7 @@ class PresentationAddFragmentRoute
   PresentationAddFragmentRoute({
     Key? key,
     required int displayOder,
-    required int presentationId,
+    required String presentationId,
     required bool isAudio,
     List<PageRouteInfo>? children,
   }) : super(
@@ -507,7 +507,7 @@ class PresentationAddFragmentRouteArgs {
 
   final int displayOder;
 
-  final int presentationId;
+  final String presentationId;
 
   final bool isAudio;
 

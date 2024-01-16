@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class PdfFragment extends Equatable {
-  final int id;
+  final String id;
 
   final String title;
 

@@ -135,8 +135,8 @@ abstract class IApi {
     required Locale locale,
   });
 
-  Future<void> publishCourse({
-    required int id,
+  Future<void> publishPresentation({
+    required String id,
   });
 
   Future<void> deleteCourse({
@@ -158,17 +158,18 @@ abstract class IApi {
   Future<PaginatedPresentations> getPresentations(
       {int? offset, int? limit, int? categoryId});
 
-  deletePresentation({required int id}) {}
+  Future<void> deletePresentation({required String id});
 
-  Future<List<PdfFragment>> getPresentationFragments({required int id});
+  Future<List<PdfFragment>> getPresentationFragments({required String id});
 
   Future<void> updatePresentation(
-      {required int id, required String title, String description});
+      {required String id, required String title, String description});
 
-  Future<void> reorderPresentationFragments({required List<int> fragmentsIds});
+  Future<void> reorderPresentationFragments(
+      {required List<String> fragmentsIds});
 
   Future<void> addPresentationFragment(
-      {required int presentationId,
+      {required String presentationId,
       required int displayOrder,
       required String title,
       required String description,
@@ -177,10 +178,10 @@ abstract class IApi {
       Uint8List? audio,
       int? duration});
 
-  Future<void> deletePresentationFragment({required int id});
+  Future<void> deletePresentationFragment({required String id});
 
   Future<void> updatePresentationFragment({
-    required int id,
+    required String id,
     String? title,
     String? description,
     Uint8List? imageBytes,
@@ -196,5 +197,11 @@ abstract class IApi {
       required List<FragmentRequestData> fragments,
       int? duration});
 
-  Future<PresentationWithFragments> getPresentation(int id);
+  Future<PresentationWithFragments> getPresentation(String id);
+
+  Future<void> setPresentationPassword({
+    required String password,
+    required String confirmPassword,
+    required String id,
+  });
 }

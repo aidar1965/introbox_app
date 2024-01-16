@@ -18,26 +18,50 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PresentationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deletePresentation,
+    required TResult Function(String id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deletePresentation,
+    TResult? Function(String id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deletePresentation,
+    TResult Function(String id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,6 +73,9 @@ mixin _$PresentationsEvent {
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
     required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +84,8 @@ mixin _$PresentationsEvent {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +94,8 @@ mixin _$PresentationsEvent {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -94,7 +125,7 @@ abstract class _$$_EventDeletePresentationCopyWith<$Res> {
           $Res Function(_$_EventDeletePresentation) then) =
       __$$_EventDeletePresentationCopyWithImpl<$Res>;
   @useResult
-  $Res call({int id});
+  $Res call({String id});
 }
 
 /// @nodoc
@@ -114,7 +145,7 @@ class __$$_EventDeletePresentationCopyWithImpl<$Res>
       null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ));
   }
 }
@@ -125,7 +156,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   const _$_EventDeletePresentation(this.id);
 
   @override
-  final int id;
+  final String id;
 
   @override
   String toString() {
@@ -154,10 +185,18 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deletePresentation,
+    required TResult Function(String id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
   }) {
     return deletePresentation(id);
   }
@@ -165,10 +204,18 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deletePresentation,
+    TResult? Function(String id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
   }) {
     return deletePresentation?.call(id);
   }
@@ -176,10 +223,18 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deletePresentation,
+    TResult Function(String id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
     required TResult orElse(),
   }) {
     if (deletePresentation != null) {
@@ -197,6 +252,9 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
     required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
   }) {
     return deletePresentation(this);
   }
@@ -208,6 +266,8 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
   }) {
     return deletePresentation?.call(this);
   }
@@ -219,6 +279,8 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     required TResult orElse(),
   }) {
     if (deletePresentation != null) {
@@ -229,10 +291,10 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
 }
 
 abstract class _EventDeletePresentation implements PresentationsEvent {
-  const factory _EventDeletePresentation(final int id) =
+  const factory _EventDeletePresentation(final String id) =
       _$_EventDeletePresentation;
 
-  int get id;
+  String get id;
   @JsonKey(ignore: true)
   _$$_EventDeletePresentationCopyWith<_$_EventDeletePresentation>
       get copyWith => throw _privateConstructorUsedError;
@@ -279,10 +341,18 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deletePresentation,
+    required TResult Function(String id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
   }) {
     return initialDataRequested();
   }
@@ -290,10 +360,18 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deletePresentation,
+    TResult? Function(String id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
   }) {
     return initialDataRequested?.call();
   }
@@ -301,10 +379,18 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deletePresentation,
+    TResult Function(String id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -322,6 +408,9 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
     required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
   }) {
     return initialDataRequested(this);
   }
@@ -333,6 +422,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
   }) {
     return initialDataRequested?.call(this);
   }
@@ -344,6 +435,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -395,10 +488,18 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deletePresentation,
+    required TResult Function(String id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
   }) {
     return reloadData();
   }
@@ -406,10 +507,18 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deletePresentation,
+    TResult? Function(String id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
   }) {
     return reloadData?.call();
   }
@@ -417,10 +526,18 @@ class _$_EventReloadData implements _EventReloadData {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deletePresentation,
+    TResult Function(String id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
     required TResult orElse(),
   }) {
     if (reloadData != null) {
@@ -438,6 +555,9 @@ class _$_EventReloadData implements _EventReloadData {
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
     required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
   }) {
     return reloadData(this);
   }
@@ -449,6 +569,8 @@ class _$_EventReloadData implements _EventReloadData {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
   }) {
     return reloadData?.call(this);
   }
@@ -460,6 +582,8 @@ class _$_EventReloadData implements _EventReloadData {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     required TResult orElse(),
   }) {
     if (reloadData != null) {
@@ -511,10 +635,18 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int id) deletePresentation,
+    required TResult Function(String id) deletePresentation,
     required TResult Function() initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
   }) {
     return loadMore();
   }
@@ -522,10 +654,18 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int id)? deletePresentation,
+    TResult? Function(String id)? deletePresentation,
     TResult? Function()? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
   }) {
     return loadMore?.call();
   }
@@ -533,10 +673,18 @@ class _$_EventLoadMore implements _EventLoadMore {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int id)? deletePresentation,
+    TResult Function(String id)? deletePresentation,
     TResult Function()? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
     required TResult orElse(),
   }) {
     if (loadMore != null) {
@@ -554,6 +702,9 @@ class _$_EventLoadMore implements _EventLoadMore {
         initialDataRequested,
     required TResult Function(_EventReloadData value) reloadData,
     required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
   }) {
     return loadMore(this);
   }
@@ -565,6 +716,8 @@ class _$_EventLoadMore implements _EventLoadMore {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventReloadData value)? reloadData,
     TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
   }) {
     return loadMore?.call(this);
   }
@@ -576,6 +729,8 @@ class _$_EventLoadMore implements _EventLoadMore {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventReloadData value)? reloadData,
     TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     required TResult orElse(),
   }) {
     if (loadMore != null) {
@@ -590,12 +745,391 @@ abstract class _EventLoadMore implements PresentationsEvent {
 }
 
 /// @nodoc
+abstract class _$$_EventPublishPresentationCopyWith<$Res> {
+  factory _$$_EventPublishPresentationCopyWith(
+          _$_EventPublishPresentation value,
+          $Res Function(_$_EventPublishPresentation) then) =
+      __$$_EventPublishPresentationCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$_EventPublishPresentationCopyWithImpl<$Res>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventPublishPresentation>
+    implements _$$_EventPublishPresentationCopyWith<$Res> {
+  __$$_EventPublishPresentationCopyWithImpl(_$_EventPublishPresentation _value,
+      $Res Function(_$_EventPublishPresentation) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$_EventPublishPresentation(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventPublishPresentation implements _EventPublishPresentation {
+  const _$_EventPublishPresentation(this.id);
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'PresentationsEvent.publishPresentation(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventPublishPresentation &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventPublishPresentationCopyWith<_$_EventPublishPresentation>
+      get copyWith => __$$_EventPublishPresentationCopyWithImpl<
+          _$_EventPublishPresentation>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) deletePresentation,
+    required TResult Function() initialDataRequested,
+    required TResult Function() reloadData,
+    required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
+  }) {
+    return publishPresentation(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id)? deletePresentation,
+    TResult? Function()? initialDataRequested,
+    TResult? Function()? reloadData,
+    TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
+  }) {
+    return publishPresentation?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? deletePresentation,
+    TResult Function()? initialDataRequested,
+    TResult Function()? reloadData,
+    TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
+    required TResult orElse(),
+  }) {
+    if (publishPresentation != null) {
+      return publishPresentation(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventReloadData value) reloadData,
+    required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
+  }) {
+    return publishPresentation(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventReloadData value)? reloadData,
+    TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
+  }) {
+    return publishPresentation?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventReloadData value)? reloadData,
+    TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
+    required TResult orElse(),
+  }) {
+    if (publishPresentation != null) {
+      return publishPresentation(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventPublishPresentation implements PresentationsEvent {
+  const factory _EventPublishPresentation(final String id) =
+      _$_EventPublishPresentation;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$_EventPublishPresentationCopyWith<_$_EventPublishPresentation>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventOnPasswordChangedCopyWith<$Res> {
+  factory _$$_EventOnPasswordChangedCopyWith(_$_EventOnPasswordChanged value,
+          $Res Function(_$_EventOnPasswordChanged) then) =
+      __$$_EventOnPasswordChangedCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {String id,
+      ({String confirmPassword, String password}) passwordWithConfirmation});
+}
+
+/// @nodoc
+class __$$_EventOnPasswordChangedCopyWithImpl<$Res>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventOnPasswordChanged>
+    implements _$$_EventOnPasswordChangedCopyWith<$Res> {
+  __$$_EventOnPasswordChangedCopyWithImpl(_$_EventOnPasswordChanged _value,
+      $Res Function(_$_EventOnPasswordChanged) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? passwordWithConfirmation = null,
+  }) {
+    return _then(_$_EventOnPasswordChanged(
+      null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == passwordWithConfirmation
+          ? _value.passwordWithConfirmation
+          : passwordWithConfirmation // ignore: cast_nullable_to_non_nullable
+              as ({String confirmPassword, String password}),
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
+  const _$_EventOnPasswordChanged(this.id, this.passwordWithConfirmation);
+
+  @override
+  final String id;
+  @override
+  final ({String confirmPassword, String password}) passwordWithConfirmation;
+
+  @override
+  String toString() {
+    return 'PresentationsEvent.onPasswordChanged(id: $id, passwordWithConfirmation: $passwordWithConfirmation)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventOnPasswordChanged &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(
+                    other.passwordWithConfirmation, passwordWithConfirmation) ||
+                other.passwordWithConfirmation == passwordWithConfirmation));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, passwordWithConfirmation);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventOnPasswordChangedCopyWith<_$_EventOnPasswordChanged> get copyWith =>
+      __$$_EventOnPasswordChangedCopyWithImpl<_$_EventOnPasswordChanged>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) deletePresentation,
+    required TResult Function() initialDataRequested,
+    required TResult Function() reloadData,
+    required TResult Function() loadMore,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
+  }) {
+    return onPasswordChanged(id, passwordWithConfirmation);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id)? deletePresentation,
+    TResult? Function()? initialDataRequested,
+    TResult? Function()? reloadData,
+    TResult? Function()? loadMore,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
+  }) {
+    return onPasswordChanged?.call(id, passwordWithConfirmation);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? deletePresentation,
+    TResult Function()? initialDataRequested,
+    TResult Function()? reloadData,
+    TResult Function()? loadMore,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
+    required TResult orElse(),
+  }) {
+    if (onPasswordChanged != null) {
+      return onPasswordChanged(id, passwordWithConfirmation);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventReloadData value) reloadData,
+    required TResult Function(_EventLoadMore value) loadMore,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
+  }) {
+    return onPasswordChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventReloadData value)? reloadData,
+    TResult? Function(_EventLoadMore value)? loadMore,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
+  }) {
+    return onPasswordChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventReloadData value)? reloadData,
+    TResult Function(_EventLoadMore value)? loadMore,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
+    required TResult orElse(),
+  }) {
+    if (onPasswordChanged != null) {
+      return onPasswordChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventOnPasswordChanged implements PresentationsEvent {
+  const factory _EventOnPasswordChanged(
+      final String id,
+      final ({
+        String confirmPassword,
+        String password
+      }) passwordWithConfirmation) = _$_EventOnPasswordChanged;
+
+  String get id;
+  ({String confirmPassword, String password}) get passwordWithConfirmation;
+  @JsonKey(ignore: true)
+  _$$_EventOnPasswordChangedCopyWith<_$_EventOnPasswordChanged> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PresentationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
     required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function(String? message) requestSuccess,
     required TResult Function() loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -604,6 +1138,7 @@ mixin _$PresentationsState {
     TResult? Function()? pending,
     TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function(String? message)? requestSuccess,
     TResult? Function()? loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -612,6 +1147,7 @@ mixin _$PresentationsState {
     TResult Function()? pending,
     TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function(String? message)? requestSuccess,
     TResult Function()? loadingError,
     required TResult orElse(),
   }) =>
@@ -621,6 +1157,7 @@ mixin _$PresentationsState {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -629,6 +1166,7 @@ mixin _$PresentationsState {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) =>
       throw _privateConstructorUsedError;
@@ -637,6 +1175,7 @@ mixin _$PresentationsState {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) =>
@@ -702,6 +1241,7 @@ class _$_StatePending implements _StatePending {
     required TResult Function() pending,
     required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function(String? message) requestSuccess,
     required TResult Function() loadingError,
   }) {
     return pending();
@@ -713,6 +1253,7 @@ class _$_StatePending implements _StatePending {
     TResult? Function()? pending,
     TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function(String? message)? requestSuccess,
     TResult? Function()? loadingError,
   }) {
     return pending?.call();
@@ -724,6 +1265,7 @@ class _$_StatePending implements _StatePending {
     TResult Function()? pending,
     TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function(String? message)? requestSuccess,
     TResult Function()? loadingError,
     required TResult orElse(),
   }) {
@@ -739,6 +1281,7 @@ class _$_StatePending implements _StatePending {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return pending(this);
@@ -750,6 +1293,7 @@ class _$_StatePending implements _StatePending {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return pending?.call(this);
@@ -761,6 +1305,7 @@ class _$_StatePending implements _StatePending {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -850,6 +1395,7 @@ class _$_ScreenState implements _ScreenState {
     required TResult Function() pending,
     required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function(String? message) requestSuccess,
     required TResult Function() loadingError,
   }) {
     return screenState(presentations);
@@ -861,6 +1407,7 @@ class _$_ScreenState implements _ScreenState {
     TResult? Function()? pending,
     TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function(String? message)? requestSuccess,
     TResult? Function()? loadingError,
   }) {
     return screenState?.call(presentations);
@@ -872,6 +1419,7 @@ class _$_ScreenState implements _ScreenState {
     TResult Function()? pending,
     TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function(String? message)? requestSuccess,
     TResult Function()? loadingError,
     required TResult orElse(),
   }) {
@@ -887,6 +1435,7 @@ class _$_ScreenState implements _ScreenState {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return screenState(this);
@@ -898,6 +1447,7 @@ class _$_ScreenState implements _ScreenState {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return screenState?.call(this);
@@ -909,6 +1459,7 @@ class _$_ScreenState implements _ScreenState {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -998,6 +1549,7 @@ class _$_StateRequestError implements _StateRequestError {
     required TResult Function() pending,
     required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function(String? message) requestSuccess,
     required TResult Function() loadingError,
   }) {
     return requestError(errorText);
@@ -1009,6 +1561,7 @@ class _$_StateRequestError implements _StateRequestError {
     TResult? Function()? pending,
     TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function(String? message)? requestSuccess,
     TResult? Function()? loadingError,
   }) {
     return requestError?.call(errorText);
@@ -1020,6 +1573,7 @@ class _$_StateRequestError implements _StateRequestError {
     TResult Function()? pending,
     TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function(String? message)? requestSuccess,
     TResult Function()? loadingError,
     required TResult orElse(),
   }) {
@@ -1035,6 +1589,7 @@ class _$_StateRequestError implements _StateRequestError {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return requestError(this);
@@ -1046,6 +1601,7 @@ class _$_StateRequestError implements _StateRequestError {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return requestError?.call(this);
@@ -1057,6 +1613,7 @@ class _$_StateRequestError implements _StateRequestError {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {
@@ -1074,6 +1631,159 @@ abstract class _StateRequestError implements PresentationsState {
   String? get errorText;
   @JsonKey(ignore: true)
   _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateRequestSuccessCopyWith<$Res> {
+  factory _$$_StateRequestSuccessCopyWith(_$_StateRequestSuccess value,
+          $Res Function(_$_StateRequestSuccess) then) =
+      __$$_StateRequestSuccessCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? message});
+}
+
+/// @nodoc
+class __$$_StateRequestSuccessCopyWithImpl<$Res>
+    extends _$PresentationsStateCopyWithImpl<$Res, _$_StateRequestSuccess>
+    implements _$$_StateRequestSuccessCopyWith<$Res> {
+  __$$_StateRequestSuccessCopyWithImpl(_$_StateRequestSuccess _value,
+      $Res Function(_$_StateRequestSuccess) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? message = freezed,
+  }) {
+    return _then(_$_StateRequestSuccess(
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StateRequestSuccess implements _StateRequestSuccess {
+  const _$_StateRequestSuccess({this.message});
+
+  @override
+  final String? message;
+
+  @override
+  String toString() {
+    return 'PresentationsState.requestSuccess(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateRequestSuccess &&
+            (identical(other.message, message) || other.message == message));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, message);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateRequestSuccessCopyWith<_$_StateRequestSuccess> get copyWith =>
+      __$$_StateRequestSuccessCopyWithImpl<_$_StateRequestSuccess>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(List<Presentation> presentations) screenState,
+    required TResult Function(String? errorText) requestError,
+    required TResult Function(String? message) requestSuccess,
+    required TResult Function() loadingError,
+  }) {
+    return requestSuccess(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(List<Presentation> presentations)? screenState,
+    TResult? Function(String? errorText)? requestError,
+    TResult? Function(String? message)? requestSuccess,
+    TResult? Function()? loadingError,
+  }) {
+    return requestSuccess?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(List<Presentation> presentations)? screenState,
+    TResult Function(String? errorText)? requestError,
+    TResult Function(String? message)? requestSuccess,
+    TResult Function()? loadingError,
+    required TResult orElse(),
+  }) {
+    if (requestSuccess != null) {
+      return requestSuccess(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateLoadingError value) loadingError,
+  }) {
+    return requestSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateLoadingError value)? loadingError,
+  }) {
+    return requestSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateLoadingError value)? loadingError,
+    required TResult orElse(),
+  }) {
+    if (requestSuccess != null) {
+      return requestSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateRequestSuccess implements PresentationsState {
+  const factory _StateRequestSuccess({final String? message}) =
+      _$_StateRequestSuccess;
+
+  String? get message;
+  @JsonKey(ignore: true)
+  _$$_StateRequestSuccessCopyWith<_$_StateRequestSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1118,6 +1828,7 @@ class _$_StateLoadingError implements _StateLoadingError {
     required TResult Function() pending,
     required TResult Function(List<Presentation> presentations) screenState,
     required TResult Function(String? errorText) requestError,
+    required TResult Function(String? message) requestSuccess,
     required TResult Function() loadingError,
   }) {
     return loadingError();
@@ -1129,6 +1840,7 @@ class _$_StateLoadingError implements _StateLoadingError {
     TResult? Function()? pending,
     TResult? Function(List<Presentation> presentations)? screenState,
     TResult? Function(String? errorText)? requestError,
+    TResult? Function(String? message)? requestSuccess,
     TResult? Function()? loadingError,
   }) {
     return loadingError?.call();
@@ -1140,6 +1852,7 @@ class _$_StateLoadingError implements _StateLoadingError {
     TResult Function()? pending,
     TResult Function(List<Presentation> presentations)? screenState,
     TResult Function(String? errorText)? requestError,
+    TResult Function(String? message)? requestSuccess,
     TResult Function()? loadingError,
     required TResult orElse(),
   }) {
@@ -1155,6 +1868,7 @@ class _$_StateLoadingError implements _StateLoadingError {
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateRequestError value) requestError,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
     required TResult Function(_StateLoadingError value) loadingError,
   }) {
     return loadingError(this);
@@ -1166,6 +1880,7 @@ class _$_StateLoadingError implements _StateLoadingError {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateRequestError value)? requestError,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
     TResult? Function(_StateLoadingError value)? loadingError,
   }) {
     return loadingError?.call(this);
@@ -1177,6 +1892,7 @@ class _$_StateLoadingError implements _StateLoadingError {
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateRequestError value)? requestError,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
     TResult Function(_StateLoadingError value)? loadingError,
     required TResult orElse(),
   }) {

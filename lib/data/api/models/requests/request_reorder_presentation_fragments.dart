@@ -2,7 +2,7 @@ import 'dart:convert';
 import '../../http_client/i_api_request.dart';
 
 class RequestReorderPresentationFragments extends IApiRequest {
-  final List<int> fragmentsIds;
+  final List<String> fragmentsIds;
 
   RequestReorderPresentationFragments({
     required this.fragmentsIds,

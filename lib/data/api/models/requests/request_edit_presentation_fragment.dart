@@ -6,7 +6,7 @@ import 'package:mime/mime.dart';
 import '../../http_client/i_api_request.dart';
 
 class RequestEditPresentationFragment extends IApiRequest {
-  final int id;
+  final String id;
   final String? title;
   final String? description;
   final Uint8List? imageBytes;

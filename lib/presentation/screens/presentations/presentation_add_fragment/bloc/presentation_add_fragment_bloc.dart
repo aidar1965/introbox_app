@@ -27,7 +27,7 @@ class PresentationAddFragmentBloc
     _screenState = const _ScreenState();
   }
 
-  final int presentationId;
+  final String presentationId;
   final int displayOrder;
   final api = getIt<IApi>();
 

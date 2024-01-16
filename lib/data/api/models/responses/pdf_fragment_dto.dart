@@ -16,7 +16,7 @@ class PdfFragmentDto {
   });
 
   @JsonKey(name: 'id')
-  final int id;
+  final String id;
 
   @JsonKey(name: 'title')
   final String title;

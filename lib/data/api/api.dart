@@ -7,7 +7,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:moki_tutor/data/api/models/requests/request_add_fragment_category.dart';
 import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categories.dart';
-import 'package:moki_tutor/data/api/models/requests/request_publish_course.dart';
+
 import 'package:moki_tutor/data/api/models/requests/request_update_fragment_category.dart';
 import 'package:moki_tutor/data/api/models/responses/fragment_category_dto.dart';
 import 'package:moki_tutor/data/api/models/responses/presentation_dto.dart';
@@ -40,6 +40,7 @@ import 'models/requests/request_add_image_subject.dart';
 import 'models/requests/request_add_pdf_subject.dart';
 import 'models/requests/request_add_presentation.dart';
 import 'models/requests/request_add_presentation_fragment.dart';
+import 'models/requests/request_add_presentation_password.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
 import 'models/requests/request_confirmation.dart';
@@ -62,6 +63,7 @@ import 'models/requests/request_get_tutor_course.dart';
 import 'models/requests/request_get_tutor_courses.dart';
 import 'models/requests/request_get_user.dart';
 import 'models/requests/request_login.dart';
+import 'models/requests/request_publish_presentation.dart';
 import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_reorder_presentation_fragments.dart';
 import 'models/requests/request_update_fragment.dart';
@@ -116,8 +118,8 @@ class Api implements IApi {
       {required String phone, required String lang}) async {}
 
   @override
-  Future<void> publishCourse({required int id}) async {
-    await httpClient.request(RequestPublishCourse(id: id));
+  Future<void> publishPresentation({required String id}) async {
+    await httpClient.request(RequestPublishPresentation(id: id));
   }
 
   @override
@@ -420,7 +422,7 @@ class Api implements IApi {
 
   @override
   Future<void> addPresentationFragment(
-      {required int presentationId,
+      {required String presentationId,
       required int displayOrder,
       required String title,
       required String description,
@@ -440,12 +442,13 @@ class Api implements IApi {
   }
 
   @override
-  Future<void> deletePresentation({required int id}) async {
+  Future<void> deletePresentation({required String id}) async {
     await httpClient.request(RequestDeletePresentation(id: id));
   }
 
   @override
-  Future<List<PdfFragment>> getPresentationFragments({required int id}) async {
+  Future<List<PdfFragment>> getPresentationFragments(
+      {required String id}) async {
     final result =
         await httpClient.request(RequestGetPresentationFragments(id: id));
     return (jsonDecode(result!.data as String) as List)
@@ -455,14 +458,14 @@ class Api implements IApi {
 
   @override
   Future<void> reorderPresentationFragments(
-      {required List<int> fragmentsIds}) async {
+      {required List<String> fragmentsIds}) async {
     await httpClient.request(
         RequestReorderPresentationFragments(fragmentsIds: fragmentsIds));
   }
 
   @override
   Future<void> updatePresentation(
-      {required int id, required String title, String? description}) async {
+      {required String id, required String title, String? description}) async {
     await httpClient.request(RequestUpdatePresentation(
         id: id, title: title, description: description));
   }
@@ -487,13 +490,13 @@ class Api implements IApi {
   }
 
   @override
-  Future<void> deletePresentationFragment({required int id}) async {
+  Future<void> deletePresentationFragment({required String id}) async {
     await httpClient.request(RequestDeletePresentationFragment(id: id));
   }
 
   @override
   Future<void> updatePresentationFragment(
-      {required int id,
+      {required String id,
       String? title,
       String? description,
       Uint8List? imageBytes,
@@ -526,11 +529,20 @@ class Api implements IApi {
   }
 
   @override
-  Future<PresentationWithFragments> getPresentation(int id) async {
+  Future<PresentationWithFragments> getPresentation(String id) async {
     final result = await httpClient.request(RequestGetPresentation(id: id));
 
     return mapper.mapPresentationWithFragments(
         PresentationWithFragmentsDto.fromJson(
             jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> setPresentationPassword(
+      {required String password,
+      required String confirmPassword,
+      required String id}) async {
+    await httpClient.request(RequestAddPresentationPassword(
+        password: password, confirmPassword: confirmPassword, id: id));
   }
 }

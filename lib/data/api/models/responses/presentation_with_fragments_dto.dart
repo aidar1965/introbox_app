@@ -16,7 +16,7 @@ class PresentationWithFragmentsDto {
   });
 
   @JsonKey(name: 'id') // "first_name":"nfgn"
-  final int id;
+  final String id;
   @JsonKey(name: 'title') // "first_name":"nfgn"
   final String title;
   @JsonKey(name: 'description') // "first_name":"nfgn"

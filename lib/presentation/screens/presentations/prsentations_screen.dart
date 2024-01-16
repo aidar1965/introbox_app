@@ -12,6 +12,7 @@ import '../../../../domain/models/presentation.dart';
 import '../../auto_router/app_router.dart';
 import '../../common/common_functions.dart';
 
+import '../../common/common_text_field.dart';
 import 'bloc/presentations_bloc.dart';
 
 @RoutePage()
@@ -23,9 +24,14 @@ class PresentationsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => PresentationsBloc(),
       child: BlocConsumer<PresentationsBloc, PresentationsState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
+        listener: (context, state) => state.mapOrNull(
+          requestError: (state) => CommonFunctions.showMessage(
+              context,
+              state.errorText ?? 'Во время запроса призошла ошибка',
+              Reason.error),
+          requestSuccess: (state) => CommonFunctions.showMessage(context,
+              state.message ?? 'Данные успешно сохранены', Reason.neutral),
+        ),
         buildWhen: ((previous, current) => current.maybeMap(
             orElse: () => false,
             pending: (_) => true,
@@ -167,7 +173,7 @@ class _PresentationList extends StatelessWidget {
               );
             },
           )
-        : Center(
+        : const Center(
             child: Text('Список презентаций пуст'),
           );
   }
@@ -227,20 +233,91 @@ class PresentationItem extends StatelessWidget {
               context, presentation.id, onDeleteConfirm),
           icon: const Icon(Icons.delete),
         ),
+        const SizedBox(
+          width: 24,
+        ),
+        TextButton(
+            onPressed: () {
+              BlocProvider.of<PresentationsBloc>(context)
+                  .add(PresentationsEvent.publishPresentation(presentation.id));
+            },
+            child: Text(
+                presentation.isPublished ? 'Снять публикацию' : 'Опубиковать')),
+        const SizedBox(
+          width: 24,
+        ),
+        TextButton(
+            onPressed: () async {
+              final passwordController = TextEditingController();
+              final confirmPasswordController = TextEditingController();
+              final result = await showDialog(
+                  context: context,
+                  builder: (context) => SizedBox(
+                        child: SimpleDialog(
+                          contentPadding: const EdgeInsets.all(24),
+                          children: [
+                            const SizedBox(
+                              width: 200,
+                              child: Text(
+                                  'При вводе пароля просмотр презентации при публикации будет защищен паролем'),
+                            ),
+                            const SizedBox(height: 12),
+                            CommonTextField(
+                                controller: passwordController,
+                                obscureText: true,
+                                labelText: 'Пароль'),
+                            const SizedBox(height: 12),
+                            CommonTextField(
+                                controller: confirmPasswordController,
+                                obscureText: true,
+                                labelText: 'Повторите пароль'),
+                            const SizedBox(height: 12),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                TextButton(
+                                    onPressed: () => context.router.pop(),
+                                    child: Text('Отмена')),
+                                TextButton(
+                                    onPressed: () {
+                                      context.router.pop((
+                                        password: passwordController.text,
+                                        confirmPassword:
+                                            confirmPasswordController.text
+                                      ));
+                                    },
+                                    child: Text('Сохранить')),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ));
+              if (result != null &&
+                  result is ({String password, String confirmPassword})) {
+                if (context.mounted) {
+                  BlocProvider.of<PresentationsBloc>(context).add(
+                      PresentationsEvent.onPasswordChanged(
+                          presentation.id, result));
+                }
+              }
+            },
+            child: Text(presentation.hasPassword
+                ? 'Снять пароль'
+                : 'Установить пароль')),
       ],
     );
   }
 
   Future<void> _showDeleteConfirmDialog(
-      BuildContext context, int id, Function() onDeleteConfirmed) {
+      BuildContext context, String id, Function() onDeleteConfirmed) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (context) {
         return AlertDialog(
           // <-- SEE HERE
-          title: const Text('Удаление темы'),
-          content: Text('Вы уверены, что хотите удалить таму?'),
+          title: const Text('Удаление презентации'),
+          content: Text('Вы уверены, что хотите удалить презентацию?'),
 
           actions: <Widget>[
             TextButton(

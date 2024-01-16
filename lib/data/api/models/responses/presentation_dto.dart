@@ -12,6 +12,7 @@ class PresentationDto {
     required this.createdAt,
     this.duration,
     required this.isPublished,
+    required this.hasPassword,
     this.pdfFile,
     required this.isAudio,
     required this.isPublic,
@@ -21,7 +22,7 @@ class PresentationDto {
   });
 
   @JsonKey(name: 'id')
-  final int id;
+  final String id;
 
   @JsonKey(name: 'title')
   final String title;
@@ -46,6 +47,9 @@ class PresentationDto {
 
   @JsonKey(name: 'is_public')
   final bool isPublic;
+
+  @JsonKey(name: 'has_password')
+  final bool hasPassword;
 
   @JsonKey(name: 'is_published')
   final bool isPublished;

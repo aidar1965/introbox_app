@@ -12,12 +12,13 @@ class Presentation {
     required this.isPublic,
     required this.includePdf,
     required this.freeMode,
+    required this.hasPassword,
     this.links,
     required this.createdAt,
     required this.isPublished,
   });
 
-  final int id;
+  final String id;
   final String title;
   final String? description;
   final String firstImage;
@@ -25,6 +26,7 @@ class Presentation {
   final bool isAudio;
   final bool isPublic;
   final bool isPublished;
+  final bool hasPassword;
   final bool includePdf;
   final bool freeMode;
   final String? links;

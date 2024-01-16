@@ -26,5 +26,5 @@ class EditPresentationEvent with _$EditPresentationEvent {
       required String description}) = _EventUpdateFragment;
   const factory EditPresentationEvent.deleteFragment() = _EventDeleteFragment;
   const factory EditPresentationEvent.reorderFragments(
-      {required List<int> ids}) = _EventReorderFragment;
+      {required List<String> ids}) = _EventReorderFragment;
 }

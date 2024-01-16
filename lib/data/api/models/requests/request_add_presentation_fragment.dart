@@ -6,7 +6,7 @@ import 'package:mime/mime.dart';
 import '../../http_client/i_api_request.dart';
 
 class RequestAddPresentationFragment extends IApiRequest {
-  final int presentationId;
+  final String presentationId;
   final int displayOrder;
   final String title;
   final String? description;

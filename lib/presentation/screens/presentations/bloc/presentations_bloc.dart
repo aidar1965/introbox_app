@@ -11,11 +11,15 @@ part 'presentations_bloc.freezed.dart';
 
 class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
   PresentationsBloc() : super(const _StatePending()) {
-    on<PresentationsEvent>((event, emitter) => event.map(
-        deletePresentation: (event) => onDeletePresentation(event, emitter),
-        initialDataRequested: (_) => onInitialDataRequested(emitter),
-        reloadData: (_) => reloadData(),
-        loadMore: (_) => loadMore()));
+    on<PresentationsEvent>(
+      (event, emitter) => event.map(
+          deletePresentation: (event) => onDeletePresentation(event, emitter),
+          initialDataRequested: (_) => onInitialDataRequested(emitter),
+          publishPresentation: (event) => onPublishPresentation(event, emitter),
+          reloadData: (_) => reloadData(),
+          loadMore: (_) => loadMore(),
+          onPasswordChanged: (event) => onPasswordChanged(event, emitter)),
+    );
 
     add(const PresentationsEvent.initialDataRequested());
     _screenState = const _ScreenState(presentations: []);
@@ -74,4 +78,39 @@ class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
   }
 
   loadMore() {}
+
+  Future<void> onPublishPresentation(_EventPublishPresentation event,
+      Emitter<PresentationsState> emitter) async {
+    try {
+      await api.publishPresentation(id: event.id);
+      add(const PresentationsEvent.reloadData());
+    } on Object {
+      emitter(const PresentationsState.requestError());
+      rethrow;
+    }
+  }
+
+  Future<void> onPasswordChanged(_EventOnPasswordChanged event,
+      Emitter<PresentationsState> emitter) async {
+    if (event.passwordWithConfirmation.password !=
+        event.passwordWithConfirmation.confirmPassword) {
+      print('Пароль и повторение пароля не совпадают');
+      emitter(const PresentationsState.requestError(
+          errorText: 'Пароль и повторение пароля не совпадают'));
+      return;
+    }
+    try {
+      await api.setPresentationPassword(
+        password: event.passwordWithConfirmation.password,
+        confirmPassword: event.passwordWithConfirmation.confirmPassword,
+        id: event.id,
+      );
+      emitter(const PresentationsState.requestSuccess(
+          message: 'Данные успешно сохранены'));
+      add(const PresentationsEvent.reloadData());
+    } on Object {
+      emitter(const PresentationsState.requestError());
+      rethrow;
+    }
+  }
 }

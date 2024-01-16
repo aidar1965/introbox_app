@@ -1,7 +1,7 @@
 import '../../http_client/i_api_request.dart';
 
 class RequestDeletePresentation extends IApiRequest {
-  final int id;
+  final String id;
 
   RequestDeletePresentation({
     required this.id,

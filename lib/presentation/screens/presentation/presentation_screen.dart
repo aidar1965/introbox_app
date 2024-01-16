@@ -12,7 +12,7 @@ import 'bloc/presentation_bloc.dart';
 class PresentationScreen extends StatelessWidget {
   const PresentationScreen({super.key, @pathParam required this.id});
 
-  final int id;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +71,12 @@ class _ScreenViewState extends State<_ScreenView> {
   late double width;
   late double height;
   String? audioUrl;
+  late String imageUrl;
 
   @override
   void initState() {
-    print('76');
     super.initState();
+    imageUrl = widget.imageUrl;
     audioUrl = widget.audioUrl;
     // if (audioUrl != null) {
     //   setState(() {
@@ -118,7 +119,8 @@ class _ScreenViewState extends State<_ScreenView> {
   @override
   void didUpdateWidget(_ScreenView oldWidget) {
     audioUrl = widget.audioUrl;
-    print('121 $audioUrl');
+    imageUrl = widget.imageUrl;
+
     leftOpacity = 0.0;
     rightOpacity = 0.0;
 
@@ -139,7 +141,14 @@ class _ScreenViewState extends State<_ScreenView> {
                     height: height,
                     width: width,
                     child: Center(
-                        child: CachedNetworkImage(imageUrl: widget.imageUrl)))
+                      child: CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          placeholder: (context, imageUrl) => const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )),
+                    ))
               ],
             )),
         AnimatedOpacity(

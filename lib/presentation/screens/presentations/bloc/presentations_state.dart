@@ -7,5 +7,7 @@ class PresentationsState with _$PresentationsState {
       {required List<Presentation> presentations}) = _ScreenState;
   const factory PresentationsState.requestError({String? errorText}) =
       _StateRequestError;
+  const factory PresentationsState.requestSuccess({String? message}) =
+      _StateRequestSuccess;
   const factory PresentationsState.loadingError() = _StateLoadingError;
 }

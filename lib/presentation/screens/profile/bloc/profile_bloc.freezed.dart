@@ -104,12 +104,20 @@ class __$$_EventDataRequestedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventDataRequested implements _EventDataRequested {
+class _$_EventDataRequested
+    with DiagnosticableTreeMixin
+    implements _EventDataRequested {
   const _$_EventDataRequested();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileEvent.dataRequested()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ProfileEvent.dataRequested'));
   }
 
   @override
@@ -216,12 +224,18 @@ class __$$_LogoutCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Logout implements _Logout {
+class _$_Logout with DiagnosticableTreeMixin implements _Logout {
   const _$_Logout();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileEvent.logout()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ProfileEvent.logout'));
   }
 
   @override
@@ -370,7 +384,7 @@ class __$$_UpdateUserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateUser implements _UpdateUser {
+class _$_UpdateUser with DiagnosticableTreeMixin implements _UpdateUser {
   const _$_UpdateUser(
       {required this.firstname,
       required this.lastname,
@@ -390,8 +404,20 @@ class _$_UpdateUser implements _UpdateUser {
   final Uint8List? imageBytes;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileEvent.updateUser(firstname: $firstname, lastname: $lastname, secondname: $secondname, about: $about, imageBytes: $imageBytes)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProfileEvent.updateUser'))
+      ..add(DiagnosticsProperty('firstname', firstname))
+      ..add(DiagnosticsProperty('lastname', lastname))
+      ..add(DiagnosticsProperty('secondname', secondname))
+      ..add(DiagnosticsProperty('about', about))
+      ..add(DiagnosticsProperty('imageBytes', imageBytes));
   }
 
   @override
@@ -609,12 +635,18 @@ class __$$_StatePendingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StatePending implements _StatePending {
+class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
   const _$_StatePending();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileState.pending()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ProfileState.pending'));
   }
 
   @override
@@ -744,15 +776,23 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ScreenState implements _ScreenState {
+class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   const _$_ScreenState({required this.user});
 
   @override
   final User user;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileState.screenState(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProfileState.screenState'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
@@ -880,12 +920,20 @@ class __$$_StateLoadingErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateLoadingError implements _StateLoadingError {
+class _$_StateLoadingError
+    with DiagnosticableTreeMixin
+    implements _StateLoadingError {
   const _$_StateLoadingError();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileState.loadingError()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ProfileState.loadingError'));
   }
 
   @override
@@ -1000,12 +1048,20 @@ class __$$_StateLogoutSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateLogoutSuccess implements _StateLogoutSuccess {
+class _$_StateLogoutSuccess
+    with DiagnosticableTreeMixin
+    implements _StateLogoutSuccess {
   const _$_StateLogoutSuccess();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileState.logoutSuccess()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ProfileState.logoutSuccess'));
   }
 
   @override
@@ -1135,15 +1191,25 @@ class __$$_StateRequestErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateRequestError implements _StateRequestError {
+class _$_StateRequestError
+    with DiagnosticableTreeMixin
+    implements _StateRequestError {
   const _$_StateRequestError({this.errorText});
 
   @override
   final String? errorText;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileState.requestError(errorText: $errorText)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProfileState.requestError'))
+      ..add(DiagnosticsProperty('errorText', errorText));
   }
 
   @override
