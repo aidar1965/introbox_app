@@ -14,6 +14,7 @@ class RequestAddFragment extends IApiRequest {
   final bool isLandscape;
   final String? audioPath;
   final int? duration;
+  final bool isTitleOverImage;
 
   RequestAddFragment({
     required this.subjectId,
@@ -24,6 +25,7 @@ class RequestAddFragment extends IApiRequest {
     required this.isLandscape,
     this.audioPath,
     this.duration,
+    required this.isTitleOverImage,
   }) : super(methodType: AvailableApiMethods.post, url: '/fragment/add/');
 
   @override
@@ -37,6 +39,7 @@ class RequestAddFragment extends IApiRequest {
       'title': title,
       'description': description,
       'is_landscape': isLandscape,
+      'is_title_over_image': isTitleOverImage
     };
     if (audioPath != null) {
       audio = await MultipartFile.fromFile(audioPath!, headers: {

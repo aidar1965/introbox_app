@@ -7,6 +7,7 @@ import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:moki_tutor/data/api/models/requests/request_add_fragment_category.dart';
 import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categories.dart';
+import 'package:moki_tutor/data/api/models/requests/request_recover_password.dart';
 
 import 'package:moki_tutor/data/api/models/requests/request_update_fragment_category.dart';
 import 'package:moki_tutor/data/api/models/responses/fragment_category_dto.dart';
@@ -21,6 +22,8 @@ import 'package:moki_tutor/domain/models/subject_category.dart';
 import 'package:moki_tutor/domain/models/user.dart';
 import 'package:moki_tutor/domain/models/course.dart';
 
+import '../../domain/interfaces/i_auth_controller.dart';
+import '../../domain/locator/locator.dart';
 import '../../domain/models/fragment.dart';
 import '../../domain/models/image_fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
@@ -66,6 +69,7 @@ import 'models/requests/request_login.dart';
 import 'models/requests/request_publish_presentation.dart';
 import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_reorder_presentation_fragments.dart';
+import 'models/requests/request_set_password.dart';
 import 'models/requests/request_update_fragment.dart';
 import 'models/requests/request_update_presentation.dart';
 import 'models/requests/request_update_subject.dart';
@@ -85,6 +89,8 @@ typedef _JsonObject = Map<String, Object?>;
 class Api implements IApi {
   ApiDataMapper mapper = ApiDataMapper();
   DioClient httpClient = DioClient();
+
+  final authController = getIt<IAuthController>();
 
   @override
   Future<void> register({
@@ -262,24 +268,28 @@ class Api implements IApi {
   }
 
   @override
-  Future<void> addFragment(
-      {required int subjectId,
-      required int displayOrder,
-      required String title,
-      required String description,
-      required File image,
-      required bool isLandscape,
-      String? audioPath,
-      int? duration}) async {
+  Future<void> addFragment({
+    required int subjectId,
+    required int displayOrder,
+    required String title,
+    required String description,
+    required File image,
+    required bool isLandscape,
+    String? audioPath,
+    int? duration,
+    required bool isTitleOverImage,
+  }) async {
     await httpClient.request(RequestAddFragment(
-        subjectId: subjectId,
-        displayOrder: displayOrder,
-        title: title,
-        description: description,
-        imageFile: image,
-        isLandscape: isLandscape,
-        audioPath: audioPath,
-        duration: duration));
+      subjectId: subjectId,
+      displayOrder: displayOrder,
+      title: title,
+      description: description,
+      imageFile: image,
+      isLandscape: isLandscape,
+      audioPath: audioPath,
+      duration: duration,
+      isTitleOverImage: isTitleOverImage,
+    ));
   }
 
   @override
@@ -428,6 +438,8 @@ class Api implements IApi {
       required String description,
       required Uint8List image,
       required bool isLandscape,
+      required bool isTitleOverImage,
+      required List<String> fragmentsIds,
       Uint8List? audio,
       int? duration}) async {
     await httpClient.request(RequestAddPresentationFragment(
@@ -438,7 +450,9 @@ class Api implements IApi {
         audioBytes: audio,
         duration: duration,
         imageBytes: image,
-        isLandscape: isLandscape));
+        isLandscape: isLandscape,
+        isTitleOverImage: isTitleOverImage,
+        fragmentsIds: fragmentsIds));
   }
 
   @override
@@ -498,6 +512,7 @@ class Api implements IApi {
   Future<void> updatePresentationFragment(
       {required String id,
       String? title,
+      required bool isTitleOverImage,
       String? description,
       Uint8List? imageBytes,
       bool? isLandscape,
@@ -512,6 +527,7 @@ class Api implements IApi {
         audioBytes: audioBytes,
         duration: duration,
         isLandscape: isLandscape,
+        isTitleOverImage: isTitleOverImage,
         presentationDurationDifference: presentationDurationDifference ?? 0));
   }
 
@@ -544,5 +560,21 @@ class Api implements IApi {
       required String id}) async {
     await httpClient.request(RequestAddPresentationPassword(
         password: password, confirmPassword: confirmPassword, id: id));
+  }
+
+  @override
+  Future<void> recoverPassword({required String email}) async {
+    await httpClient.request(RequestRecoverPassword(email: email));
+  }
+
+  @override
+  Future<void> setPassword(
+      {required String oldPassword,
+      required String password,
+      required String confirmPassword}) async {
+    await httpClient.request(RequestSetPassword(
+        oldPassword: oldPassword,
+        password: password,
+        confirmPassword: confirmPassword));
   }
 }

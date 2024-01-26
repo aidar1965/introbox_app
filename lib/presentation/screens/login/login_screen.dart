@@ -17,60 +17,74 @@ class LoginScreen extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     return BlocProvider(
-      create: (context) => LoginBloc(),
-      child: BlocConsumer<LoginBloc, LoginState>(
-        listener: (context, state) => state.mapOrNull(
-            loginError: (state) => _onLoginError(context, state.errorText),
-            loginSuccess: (_) =>
-                context.router.replace(const PresentationsRoute())),
-        builder: (context, state) {
-          return Scaffold(
-            body: Center(
-              child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 300),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Вход', style: context.style18w600$title2),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      CommonTextField(
-                          controller: emailController, labelText: 'Email'),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      CommonTextField(
-                        controller: passwordController,
-                        labelText: 'Пароль',
-                        obscureText: true,
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      CommonElevatedButton(
-                          onPressed: () {
-                            BlocProvider.of<LoginBloc>(context).add(
-                                LoginEvent.login(
-                                    email: emailController.text,
-                                    password: passwordController.text));
-                          },
-                          text: 'Войти'),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      TextButton(
-                          onPressed: () => context.router.push(RegisterRoute()),
-                          child: Text('Зарегистрироваться'))
-                    ],
-                  )),
-            ),
-          );
-        },
-      ),
-    );
+        create: (context) => LoginBloc(),
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listener: (context, state) => state.mapOrNull(
+              loginError: (state) => _onLoginError(context, state.errorText),
+              loginSuccess: (_) =>
+                  context.router.replace(const PresentationsRoute())),
+          buildWhen: ((previous, current) =>
+              current.maybeMap(orElse: () => false, screenState: (_) => true)),
+          builder: (context, state) => state.maybeMap(
+            orElse: () =>
+                throw UnsupportedError('State not supporting nuilding'),
+            screenState: (state) {
+              return Scaffold(
+                body: Center(
+                  child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 300),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Вход', style: context.style18w600$title2),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          CommonTextField(
+                              controller: emailController, labelText: 'Email'),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          CommonTextField(
+                            controller: passwordController,
+                            labelText: 'Пароль',
+                            obscureText: true,
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          CommonElevatedButton(
+                              isPending: state.isPending,
+                              onPressed: () {
+                                BlocProvider.of<LoginBloc>(context).add(
+                                    LoginEvent.login(
+                                        email: emailController.text,
+                                        password: passwordController.text));
+                              },
+                              text: 'Войти'),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          TextButton(
+                              onPressed: () =>
+                                  context.router.push(RegisterRoute()),
+                              child: Text('Зарегистрироваться')),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          TextButton(
+                              onPressed: () => context.router
+                                  .push(const RecoverPasswordRoute()),
+                              child: Text('Забыли пароль?'))
+                        ],
+                      )),
+                ),
+              );
+            },
+          ),
+        ));
   }
 
   void _onLoginError(BuildContext context, String? errorText) {

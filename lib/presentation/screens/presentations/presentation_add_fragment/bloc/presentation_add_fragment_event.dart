@@ -12,6 +12,7 @@ class PresentationAddFragmentEvent with _$PresentationAddFragmentEvent {
   const factory PresentationAddFragmentEvent.fragmentSaveClicked({
     required String title,
     required String description,
+    required bool isTitleOverImage,
   }) = _EventFragmentSaveClicked;
   const factory PresentationAddFragmentEvent.deleteAudio() = _EventDeleteAudio;
 }

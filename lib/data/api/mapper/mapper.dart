@@ -52,15 +52,15 @@ class ApiDataMapper {
 
   PdfFragment mapPdfFragment(PdfFragmentDto dto) {
     return PdfFragment(
-      id: dto.id,
-      title: dto.title,
-      duration: dto.duration,
-      description: dto.description,
-      audioPath: dto.audioPath,
-      imagePath: dto.imagePath,
-      isLandscape: dto.isLandscape,
-      displayOrder: dto.displayOrder,
-    );
+        id: dto.id,
+        title: dto.title,
+        duration: dto.duration,
+        description: dto.description,
+        audioPath: dto.audioPath,
+        imagePath: dto.imagePath,
+        isLandscape: dto.isLandscape,
+        displayOrder: dto.displayOrder,
+        isTitleOverImage: dto.isTitleOverImage);
   }
 
   Course mapCourse(CourseDto dto) {

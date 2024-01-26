@@ -3,18 +3,23 @@ import 'package:flutter/material.dart';
 import '../theme/dynamic_theme.dart';
 
 class NameAndDescriptionWidget extends StatelessWidget {
-  const NameAndDescriptionWidget(
-      {super.key,
-      required this.titleController,
-      required this.descriptionController,
-      this.initialName,
-      this.initialDescription});
+  const NameAndDescriptionWidget({
+    super.key,
+    required this.titleController,
+    required this.descriptionController,
+    this.initialName,
+    this.initialDescription,
+    this.titleLabelName,
+    this.descriptionLabelName,
+  });
 
   final TextEditingController titleController;
   final TextEditingController descriptionController;
 
   final String? initialName;
   final String? initialDescription;
+  final String? titleLabelName;
+  final String? descriptionLabelName;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class NameAndDescriptionWidget extends StatelessWidget {
           controller: titleController,
           maxLines: null,
           decoration: InputDecoration(
-            labelText: 'Название',
+            labelText: titleLabelName ?? 'Название',
             labelStyle: TextStyle(color: DynamicTheme.paletteOf(context).text2),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -48,7 +53,7 @@ class NameAndDescriptionWidget extends StatelessWidget {
           minLines: 4,
           maxLines: null,
           decoration: InputDecoration(
-            labelText: 'Описание',
+            labelText: descriptionLabelName ?? 'Описание',
             labelStyle: TextStyle(color: DynamicTheme.paletteOf(context).text2),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

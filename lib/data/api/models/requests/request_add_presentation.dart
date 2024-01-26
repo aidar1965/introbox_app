@@ -41,7 +41,8 @@ class RequestAddPresentation extends IApiRequest {
             'duration': [
               f.duration!.toString(),
             ],
-          'extension': ['.${extensionFromMime(mime)}']
+          'extension': ['.${extensionFromMime(mime)}'],
+          'is_title_over_image': [f.image.isTitleOverImage.toString()]
         }));
       }
       index++;

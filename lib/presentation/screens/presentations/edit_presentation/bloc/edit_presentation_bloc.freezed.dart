@@ -1123,7 +1123,9 @@ mixin _$EditPresentationEvent {
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) =>
@@ -1138,7 +1140,8 @@ mixin _$EditPresentationEvent {
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) =>
@@ -1153,7 +1156,8 @@ mixin _$EditPresentationEvent {
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1283,7 +1287,9 @@ class _$_EventInitialDataRequested
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1301,7 +1307,8 @@ class _$_EventInitialDataRequested
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1319,7 +1326,8 @@ class _$_EventInitialDataRequested
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1476,7 +1484,9 @@ class _$_EventFragmentSelected
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1494,7 +1504,8 @@ class _$_EventFragmentSelected
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1512,7 +1523,8 @@ class _$_EventFragmentSelected
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1712,7 +1724,9 @@ class _$_EventAudioAdded
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1730,7 +1744,8 @@ class _$_EventAudioAdded
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1748,7 +1763,8 @@ class _$_EventAudioAdded
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1916,7 +1932,9 @@ class _$_EventAudioDeleted
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1934,7 +1952,8 @@ class _$_EventAudioDeleted
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1952,7 +1971,8 @@ class _$_EventAudioDeleted
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2124,7 +2144,9 @@ class _$_EventImageAdded
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2142,7 +2164,8 @@ class _$_EventImageAdded
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2160,7 +2183,8 @@ class _$_EventImageAdded
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2337,7 +2361,9 @@ class _$_EventUpdatePresentation
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2355,7 +2381,8 @@ class _$_EventUpdatePresentation
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2373,7 +2400,8 @@ class _$_EventUpdatePresentation
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2457,7 +2485,7 @@ abstract class _$$_EventUpdateFragmentCopyWith<$Res> {
           $Res Function(_$_EventUpdateFragment) then) =
       __$$_EventUpdateFragmentCopyWithImpl<$Res>;
   @useResult
-  $Res call({String title, String description});
+  $Res call({String title, String description, bool isTitleOverImage});
 }
 
 /// @nodoc
@@ -2473,6 +2501,7 @@ class __$$_EventUpdateFragmentCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? description = null,
+    Object? isTitleOverImage = null,
   }) {
     return _then(_$_EventUpdateFragment(
       title: null == title
@@ -2483,6 +2512,10 @@ class __$$_EventUpdateFragmentCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      isTitleOverImage: null == isTitleOverImage
+          ? _value.isTitleOverImage
+          : isTitleOverImage // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -2493,16 +2526,20 @@ class _$_EventUpdateFragment
     with DiagnosticableTreeMixin
     implements _EventUpdateFragment {
   const _$_EventUpdateFragment(
-      {required this.title, required this.description});
+      {required this.title,
+      required this.description,
+      required this.isTitleOverImage});
 
   @override
   final String title;
   @override
   final String description;
+  @override
+  final bool isTitleOverImage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditPresentationEvent.updateFragment(title: $title, description: $description)';
+    return 'EditPresentationEvent.updateFragment(title: $title, description: $description, isTitleOverImage: $isTitleOverImage)';
   }
 
   @override
@@ -2511,7 +2548,8 @@ class _$_EventUpdateFragment
     properties
       ..add(DiagnosticsProperty('type', 'EditPresentationEvent.updateFragment'))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('isTitleOverImage', isTitleOverImage));
   }
 
   @override
@@ -2521,11 +2559,14 @@ class _$_EventUpdateFragment
             other is _$_EventUpdateFragment &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.isTitleOverImage, isTitleOverImage) ||
+                other.isTitleOverImage == isTitleOverImage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, description);
+  int get hashCode =>
+      Object.hash(runtimeType, title, description, isTitleOverImage);
 
   @JsonKey(ignore: true)
   @override
@@ -2547,11 +2588,13 @@ class _$_EventUpdateFragment
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
-    return updateFragment(title, description);
+    return updateFragment(title, description, isTitleOverImage);
   }
 
   @override
@@ -2565,11 +2608,12 @@ class _$_EventUpdateFragment
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
-    return updateFragment?.call(title, description);
+    return updateFragment?.call(title, description, isTitleOverImage);
   }
 
   @override
@@ -2583,13 +2627,14 @@ class _$_EventUpdateFragment
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (updateFragment != null) {
-      return updateFragment(title, description);
+      return updateFragment(title, description, isTitleOverImage);
     }
     return orElse();
   }
@@ -2652,10 +2697,12 @@ class _$_EventUpdateFragment
 abstract class _EventUpdateFragment implements EditPresentationEvent {
   const factory _EventUpdateFragment(
       {required final String title,
-      required final String description}) = _$_EventUpdateFragment;
+      required final String description,
+      required final bool isTitleOverImage}) = _$_EventUpdateFragment;
 
   String get title;
   String get description;
+  bool get isTitleOverImage;
   @JsonKey(ignore: true)
   _$$_EventUpdateFragmentCopyWith<_$_EventUpdateFragment> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2718,7 +2765,9 @@ class _$_EventDeleteFragment
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2736,7 +2785,8 @@ class _$_EventDeleteFragment
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2754,7 +2804,8 @@ class _$_EventDeleteFragment
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2916,7 +2967,9 @@ class _$_EventReorderFragment
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
-    required TResult Function(String title, String description) updateFragment,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2934,7 +2987,8 @@ class _$_EventReorderFragment
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
-    TResult? Function(String title, String description)? updateFragment,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2952,7 +3006,8 @@ class _$_EventReorderFragment
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
     TResult Function(String title, String description)? updatePresentation,
-    TResult Function(String title, String description)? updateFragment,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),

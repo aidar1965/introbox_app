@@ -15,7 +15,8 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     on<PresentationEvent>((event, emitter) => event.map(
         initialDataRequested: (_) => initialDataRequested(emitter),
         nextSlideClicked: (_) => nextSlideClicked(emitter),
-        previousSlideClicked: (_) => previousSlideClicked(emitter)));
+        previousSlideClicked: (_) => previousSlideClicked(emitter),
+        fragmentClicked: (event) => fragmentClicked(event, emitter)));
 
     add(const PresentationEvent.initialDataRequested());
   }
@@ -37,7 +38,9 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
           isLast: presentationWithFragments.fragments.length == 1,
           presentationTitle: presentationWithFragments.presentation.title,
           presentationDescription:
-              presentationWithFragments.presentation.description);
+              presentationWithFragments.presentation.description,
+          pdfFile: presentationWithFragments.presentation.pdfFile,
+          fragments: presentationWithFragments.fragments);
       emitter(_screenState);
     } on Object {
       emitter(const PresentationState.loadingError());
@@ -48,10 +51,6 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
     final currentIndex = presentationWithFragments.fragments.indexOf(
         presentationWithFragments.fragments.firstWhere(
             (element) => element.id == _screenState.selectedFragment.id));
-    print('presentation bloc audio:');
-    print(presentationWithFragments.fragments
-        .elementAt(currentIndex + 1)
-        .audioPath);
 
     _screenState = _screenState.copyWith(
         selectedFragment:
@@ -71,6 +70,17 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
             presentationWithFragments.fragments.elementAt(currentIndex - 1),
         isFirst: currentIndex == 1,
         isLast: false);
+    emitter(_screenState);
+  }
+
+  void fragmentClicked(
+      _EventFragmentClicked event, Emitter<PresentationState> emitter) {
+    _screenState = _screenState.copyWith(
+      selectedFragment:
+          presentationWithFragments.fragments.elementAt(event.index),
+      isLast: event.index == presentationWithFragments.fragments.length - 1,
+      isFirst: event.index == 0,
+    );
     emitter(_screenState);
   }
 }

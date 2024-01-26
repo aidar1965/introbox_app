@@ -9,12 +9,15 @@ class ImageFragment {
   final Uint8List? audioBytes;
   final String? audioPath;
   final int? duration;
-  const ImageFragment(
-      {required this.imageBytes,
-      required this.isLandscape,
-      this.audioBytes,
-      this.audioPath,
-      required this.title,
-      this.description,
-      this.duration});
+  final bool isTitleOverImage;
+  const ImageFragment({
+    required this.imageBytes,
+    required this.isLandscape,
+    this.audioBytes,
+    this.audioPath,
+    required this.title,
+    this.description,
+    this.duration,
+    required this.isTitleOverImage,
+  });
 }

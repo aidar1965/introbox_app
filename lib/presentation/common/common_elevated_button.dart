@@ -29,6 +29,7 @@ class CommonElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => isPending == false ? onPressed() : null,
       style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           minimumSize: const Size.fromHeight(50),
           backgroundColor:
               _buttonColor ?? DynamicTheme.paletteOf(context).accent,

@@ -8,6 +8,8 @@ class PresentationState with _$PresentationState {
     required bool isFirst,
     required String presentationTitle,
     String? presentationDescription,
+    String? pdfFile,
+    required List<PdfFragment> fragments,
   }) = _ScreenState;
   const factory PresentationState.loadingError() = _StateLoadingError;
   const factory PresentationState.pending() = _StatePending;

@@ -16,7 +16,9 @@ part 'presentation_add_fragment_bloc.freezed.dart';
 class PresentationAddFragmentBloc
     extends Bloc<PresentationAddFragmentEvent, PresentationAddFragmentState> {
   PresentationAddFragmentBloc(
-      {required this.presentationId, required this.displayOrder})
+      {required this.presentationId,
+      required this.displayOrder,
+      required this.fragmentsIds})
       : super(const _ScreenState()) {
     on<PresentationAddFragmentEvent>((event, emitter) => event.map(
         audioAdded: (event) => onAudioAdded(event, emitter),
@@ -25,10 +27,13 @@ class PresentationAddFragmentBloc
         deleteAudio: (_) => onDeleteAudio(emitter)));
 
     _screenState = const _ScreenState();
+    print(fragmentsIds.toString());
+    print(displayOrder);
   }
 
   final String presentationId;
   final int displayOrder;
+  final List<String> fragmentsIds;
   final api = getIt<IApi>();
 
   late _ScreenState _screenState;
@@ -59,8 +64,7 @@ class PresentationAddFragmentBloc
       image = images.first;
     }
 
-    _screenState = _screenState.copyWith(
-        imageBytes: image != null ? image : event.imageBytes);
+    _screenState = _screenState.copyWith(imageBytes: image ?? event.imageBytes);
     emitter(_screenState);
   }
 
@@ -77,7 +81,9 @@ class PresentationAddFragmentBloc
           image: _screenState.imageBytes!,
           isLandscape: isLandscape,
           audio: _screenState.audioBytes,
-          duration: _screenState.duration);
+          duration: _screenState.duration,
+          isTitleOverImage: event.isTitleOverImage,
+          fragmentsIds: fragmentsIds);
       emitter(const PresentationAddFragmentState.requestSuccess());
     } on RequestException catch (e) {
       emitter(PresentationAddFragmentState.requestError(

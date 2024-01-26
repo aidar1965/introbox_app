@@ -46,8 +46,9 @@ class PdfCreatePresentationBloc
     _screenState = _screenState.copyWith(
         isPending: false,
         countFileGenerated: null,
-        pdfFragmentList:
-            pdfImageList.map((e) => PdfFragmentSample(image: e)).toList());
+        pdfFragmentList: pdfImageList
+            .map((e) => PdfFragmentSample(image: e, isTitleOverImage: false))
+            .toList());
     emitter(_screenState);
   }
 
@@ -68,6 +69,7 @@ class PdfCreatePresentationBloc
               file: f.image,
               fileName: 'image$index.png',
               isLandscape: true,
+              isTitleOverImage: f.isTitleOverImage,
 
               ///TODO: Убрать
             ),

@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:moki_tutor/domain/models/token_pair.dart';
 
 import '../../../domain/interfaces/i_auth_controller.dart';
+import '../../../domain/locator/locator.dart';
 import '../models/requests/register_request.dart';
 import '../models/requests/request_confirmation.dart';
 import '../models/requests/request_login.dart';
@@ -35,7 +36,7 @@ class DioClient {
   static const String englishLocaleSettings = 'en-US,en;q=0.9,ru-RU';
   static const String russianLocaleSettings = 'ru-RU,ru;q=0.9,en-US';
 
-  IAuthController? authenticateController;
+  final IAuthController authenticateController = getIt<IAuthController>();
 
   String? _refreshToken;
 
@@ -131,17 +132,30 @@ class DioClient {
           return handler.next(response);
         },
         onError: (dioError, handler) async {
+          if (dioError.response?.statusCode == HttpStatus.forbidden) {
+            print('dio 135');
+            clearTokens();
+            authenticateController.onAuthenticationFailed();
+            handler.next(dioError);
+            return;
+          }
           // если поступила ошибка аутентификации
           if (dioError.response?.statusCode == HttpStatus.unauthorized &&
               (_refreshToken?.isNotEmpty ?? false)) {
             // запрашиваем новый токен
             final Map<String, Object?>? tokensPair = await _requestNewToken();
 
+            if (tokensPair == null) {
+              clearTokens();
+              authenticateController.onAuthenticationFailed();
+              handler.next(dioError);
+              return;
+            }
+
             // если токены получены - сохраняем в клиент и передаем слушателям
             String? receivedAccessToken;
             String? receivedRefreshToken;
-            if (tokensPair != null &&
-                tokensPair.containsKey('access') &&
+            if (tokensPair.containsKey('access') &&
                 tokensPair.containsKey('refresh')) {
               receivedAccessToken = '${tokensPair['access']}';
               receivedRefreshToken = '${tokensPair['refresh']}';
@@ -150,7 +164,7 @@ class DioClient {
                   _getTokenWithBearer(receivedAccessToken);
 
               _refreshToken = receivedRefreshToken;
-              await authenticateController?.onAccessTokensUpdated(TokenPair(
+              await authenticateController.onAccessTokensUpdated(TokenPair(
                   accessToken: receivedAccessToken,
                   refreshToken: receivedRefreshToken));
             }
@@ -198,7 +212,7 @@ class DioClient {
               } on DioException catch (e) {
                 if ((e.response?.statusCode ?? 0) == HttpStatus.forbidden) {
                   clearTokens();
-                  authenticateController?.onAuthenticationFailed();
+                  authenticateController.onAuthenticationFailed();
                   handler.next(dioError);
                   return;
                 } else {
@@ -249,27 +263,21 @@ class DioClient {
               _getTokenWithBearer(receivedAccessToken);
 
           _refreshToken = receivedRefreshToken;
-          await authenticateController?.onAccessTokensUpdated(TokenPair(
+          await authenticateController.onAccessTokensUpdated(TokenPair(
               accessToken: receivedAccessToken,
               refreshToken: receivedRefreshToken));
         }
 
         return data;
       }
+    } on DioException catch (e) {
+      if ((e.response?.statusCode ?? 0) == HttpStatus.forbidden) {
+        return null;
+      }
     } on Object {
       return null;
     }
     return null;
-  }
-
-  // ---------------------------------------------------------------------------
-  void setAuthenticateController(IAuthController controller) {
-    authenticateController = controller;
-  }
-
-  // ---------------------------------------------------------------------------
-  void removeAuthenticateController() {
-    authenticateController = null;
   }
 
   // ---------------------------------------------------------------------------
@@ -317,7 +325,13 @@ class DioClient {
         request.endPoint == '$_baseUrl/refresh_tokens/') {
     } else {
       if (request.formData != null) {
-        await _requestNewToken();
+        final r = await _requestNewToken();
+        if (r == null) {
+          clearTokens();
+          authenticateController.onAuthenticationFailed();
+
+          return null;
+        }
         _dioOptions.headers['Content-Type'] = 'multipart/form-data';
       } else {
         _dioOptions.headers['Content-Type'] = 'application/json';

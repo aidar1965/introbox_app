@@ -112,6 +112,7 @@ abstract class IApi {
     required bool isLandscape,
     String? audioPath,
     int? duration,
+    required bool isTitleOverImage,
   });
 
   Future<void> reorderFragments(
@@ -168,15 +169,18 @@ abstract class IApi {
   Future<void> reorderPresentationFragments(
       {required List<String> fragmentsIds});
 
-  Future<void> addPresentationFragment(
-      {required String presentationId,
-      required int displayOrder,
-      required String title,
-      required String description,
-      required Uint8List image,
-      required bool isLandscape,
-      Uint8List? audio,
-      int? duration});
+  Future<void> addPresentationFragment({
+    required String presentationId,
+    required int displayOrder,
+    required String title,
+    required String description,
+    required Uint8List image,
+    required bool isLandscape,
+    required bool isTitleOverImage,
+    Uint8List? audio,
+    int? duration,
+    required List<String> fragmentsIds,
+  });
 
   Future<void> deletePresentationFragment({required String id});
 
@@ -189,6 +193,7 @@ abstract class IApi {
     Uint8List? audioBytes,
     int? presentationDurationDifference,
     int? duration,
+    required bool isTitleOverImage,
   });
 
   Future<void> addImagePresentation(
@@ -204,4 +209,13 @@ abstract class IApi {
     required String confirmPassword,
     required String id,
   });
+
+  Future<void> recoverPassword({
+    required String email,
+  });
+
+  Future<void> setPassword(
+      {required String oldPassword,
+      required String password,
+      required String confirmPassword});
 }

@@ -37,10 +37,27 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                     throw UnsupportedError('state not supporting build'),
                 screenState: (state) => Scaffold(
                       appBar: AppBar(
-                        title: Text(
+                        title: const Text(
                           'Новая презентация',
                         ),
                         actions: [
+                          IconButton(
+                              onPressed: () async {
+                                final result = await context.router
+                                    .push(ImageAddFragmentRoute());
+                                if (result != null) {
+                                  if (context.mounted) {
+                                    BlocProvider.of<
+                                                ImageCreatePresentationBloc>(
+                                            context)
+                                        .add(ImageCreatePresentationEvent
+                                            .fragmentAdded(
+                                                imageFragment:
+                                                    result as ImageFragment));
+                                  }
+                                }
+                              },
+                              icon: const Icon(Icons.add)),
                           if (state.fragments.isNotEmpty &&
                               titleController.text.isNotEmpty)
                             IconButton(
@@ -56,22 +73,6 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                 icon: const Icon(Icons.save))
                         ],
                       ),
-                      floatingActionButton: IconButton(
-                          onPressed: () async {
-                            final result = await context.router
-                                .push(ImageAddFragmentRoute());
-                            if (result != null) {
-                              if (context.mounted) {
-                                BlocProvider.of<ImageCreatePresentationBloc>(
-                                        context)
-                                    .add(ImageCreatePresentationEvent
-                                        .fragmentAdded(
-                                            imageFragment:
-                                                result as ImageFragment));
-                              }
-                            }
-                          },
-                          icon: const Icon(Icons.add)),
                       body: Row(children: [
                         Expanded(
                             flex: 1,
@@ -88,14 +89,14 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                 ],
                               ),
                             )),
-                        SizedBox(width: 24),
+                        const SizedBox(width: 24),
                         Expanded(
                             flex: 3,
                             child: Padding(
                               padding: const EdgeInsets.all(24),
                               child: FragmentList(fragments: state.fragments),
                             )),
-                        SizedBox(
+                        const SizedBox(
                           width: 52,
                         )
                       ]),
@@ -194,7 +195,7 @@ class _FragmentListState extends State<FragmentList> {
                           duration: f.duration,
                         )));
               },
-              icon: Icon(Icons.play_circle)),
+              icon: const Icon(Icons.play_circle)),
           const SizedBox(width: 24),
           IconButton(
               onPressed: () {
@@ -202,7 +203,7 @@ class _FragmentListState extends State<FragmentList> {
                     ImageCreatePresentationEvent.onDeleteFragment(
                         index: index));
               },
-              icon: Icon(Icons.delete)),
+              icon: const Icon(Icons.delete)),
           const SizedBox(width: 24),
         ],
       ),

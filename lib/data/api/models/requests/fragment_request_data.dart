@@ -15,6 +15,7 @@ class FragmentRequestData {
     Uint8List file,
     String fileName,
     bool isLandscape,
+    bool isTitleOverImage,
   }) image;
   final Uint8List? audioBytes;
   final int? duration;

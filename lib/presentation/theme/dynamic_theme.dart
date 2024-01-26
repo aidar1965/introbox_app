@@ -74,6 +74,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
   // ---------------------------------------------------------------------------
   @override
   void didChangeDependencies() {
+    // TODO при изменении размера экрана тема тоже рабилдится, что приводит к перезагрузке приложения
     if (widget.initialThemeKey == null && !isThemeInitialized) {
       final Brightness systemBrightness =
           MediaQuery.of(context).platformBrightness;

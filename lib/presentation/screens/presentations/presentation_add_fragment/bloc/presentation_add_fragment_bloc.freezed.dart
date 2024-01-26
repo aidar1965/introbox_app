@@ -18,8 +18,13 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PresentationAddFragmentState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)
+    required TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
@@ -27,8 +32,13 @@ mixin _$PresentationAddFragmentState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult? Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
@@ -36,8 +46,13 @@ mixin _$PresentationAddFragmentState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
@@ -100,7 +115,8 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       Uint8List? audioBytes,
       String? audioPath,
       int? duration,
-      bool isSavePending});
+      bool isSavePending,
+      bool isTitleOverImage});
 }
 
 /// @nodoc
@@ -119,6 +135,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
     Object? audioPath = freezed,
     Object? duration = freezed,
     Object? isSavePending = null,
+    Object? isTitleOverImage = null,
   }) {
     return _then(_$_ScreenState(
       imageBytes: freezed == imageBytes
@@ -141,6 +158,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.isSavePending
           : isSavePending // ignore: cast_nullable_to_non_nullable
               as bool,
+      isTitleOverImage: null == isTitleOverImage
+          ? _value.isTitleOverImage
+          : isTitleOverImage // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -153,7 +174,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       this.audioBytes,
       this.audioPath,
       this.duration,
-      this.isSavePending = false});
+      this.isSavePending = false,
+      this.isTitleOverImage = false});
 
   @override
   final Uint8List? imageBytes;
@@ -166,10 +188,13 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @JsonKey()
   final bool isSavePending;
+  @override
+  @JsonKey()
+  final bool isTitleOverImage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PresentationAddFragmentState.screenState(imageBytes: $imageBytes, audioBytes: $audioBytes, audioPath: $audioPath, duration: $duration, isSavePending: $isSavePending)';
+    return 'PresentationAddFragmentState.screenState(imageBytes: $imageBytes, audioBytes: $audioBytes, audioPath: $audioPath, duration: $duration, isSavePending: $isSavePending, isTitleOverImage: $isTitleOverImage)';
   }
 
   @override
@@ -182,7 +207,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       ..add(DiagnosticsProperty('audioBytes', audioBytes))
       ..add(DiagnosticsProperty('audioPath', audioPath))
       ..add(DiagnosticsProperty('duration', duration))
-      ..add(DiagnosticsProperty('isSavePending', isSavePending));
+      ..add(DiagnosticsProperty('isSavePending', isSavePending))
+      ..add(DiagnosticsProperty('isTitleOverImage', isTitleOverImage));
   }
 
   @override
@@ -199,7 +225,9 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             (identical(other.duration, duration) ||
                 other.duration == duration) &&
             (identical(other.isSavePending, isSavePending) ||
-                other.isSavePending == isSavePending));
+                other.isSavePending == isSavePending) &&
+            (identical(other.isTitleOverImage, isTitleOverImage) ||
+                other.isTitleOverImage == isTitleOverImage));
   }
 
   @override
@@ -209,7 +237,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       const DeepCollectionEquality().hash(audioBytes),
       audioPath,
       duration,
-      isSavePending);
+      isSavePending,
+      isTitleOverImage);
 
   @JsonKey(ignore: true)
   @override
@@ -220,42 +249,57 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)
+    required TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
   }) {
-    return screenState(
-        imageBytes, audioBytes, audioPath, duration, isSavePending);
+    return screenState(imageBytes, audioBytes, audioPath, duration,
+        isSavePending, isTitleOverImage);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult? Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
   }) {
-    return screenState?.call(
-        imageBytes, audioBytes, audioPath, duration, isSavePending);
+    return screenState?.call(imageBytes, audioBytes, audioPath, duration,
+        isSavePending, isTitleOverImage);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(
-          imageBytes, audioBytes, audioPath, duration, isSavePending);
+      return screenState(imageBytes, audioBytes, audioPath, duration,
+          isSavePending, isTitleOverImage);
     }
     return orElse();
   }
@@ -301,13 +345,15 @@ abstract class _ScreenState implements PresentationAddFragmentState {
       final Uint8List? audioBytes,
       final String? audioPath,
       final int? duration,
-      final bool isSavePending}) = _$_ScreenState;
+      final bool isSavePending,
+      final bool isTitleOverImage}) = _$_ScreenState;
 
   Uint8List? get imageBytes;
   Uint8List? get audioBytes;
   String? get audioPath;
   int? get duration;
   bool get isSavePending;
+  bool get isTitleOverImage;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -361,8 +407,13 @@ class _$_StateRequestSuccess
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)
+    required TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
@@ -373,8 +424,13 @@ class _$_StateRequestSuccess
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult? Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
@@ -385,8 +441,13 @@ class _$_StateRequestSuccess
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
@@ -514,8 +575,13 @@ class _$_StateRequestError
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)
+    required TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)
         screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
@@ -526,8 +592,13 @@ class _$_StateRequestError
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult? Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
@@ -538,8 +609,13 @@ class _$_StateRequestError
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Uint8List? imageBytes, Uint8List? audioBytes,
-            String? audioPath, int? duration, bool isSavePending)?
+    TResult Function(
+            Uint8List? imageBytes,
+            Uint8List? audioBytes,
+            String? audioPath,
+            int? duration,
+            bool isSavePending,
+            bool isTitleOverImage)?
         screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
@@ -604,7 +680,8 @@ mixin _$PresentationAddFragmentEvent {
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(Uint8List imageBytes) imageAdded,
-    required TResult Function(String title, String description)
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
         fragmentSaveClicked,
     required TResult Function() deleteAudio,
   }) =>
@@ -614,7 +691,8 @@ mixin _$PresentationAddFragmentEvent {
     TResult? Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(Uint8List imageBytes)? imageAdded,
-    TResult? Function(String title, String description)? fragmentSaveClicked,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult? Function()? deleteAudio,
   }) =>
       throw _privateConstructorUsedError;
@@ -623,7 +701,8 @@ mixin _$PresentationAddFragmentEvent {
     TResult Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(Uint8List imageBytes)? imageAdded,
-    TResult Function(String title, String description)? fragmentSaveClicked,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult Function()? deleteAudio,
     required TResult orElse(),
   }) =>
@@ -781,7 +860,8 @@ class _$_EventAudioAdded
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(Uint8List imageBytes) imageAdded,
-    required TResult Function(String title, String description)
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
         fragmentSaveClicked,
     required TResult Function() deleteAudio,
   }) {
@@ -794,7 +874,8 @@ class _$_EventAudioAdded
     TResult? Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(Uint8List imageBytes)? imageAdded,
-    TResult? Function(String title, String description)? fragmentSaveClicked,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult? Function()? deleteAudio,
   }) {
     return audioAdded?.call(audioBytes, audioPath, duration);
@@ -806,7 +887,8 @@ class _$_EventAudioAdded
     TResult Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(Uint8List imageBytes)? imageAdded,
-    TResult Function(String title, String description)? fragmentSaveClicked,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult Function()? deleteAudio,
     required TResult orElse(),
   }) {
@@ -950,7 +1032,8 @@ class _$_EventImageAdded
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(Uint8List imageBytes) imageAdded,
-    required TResult Function(String title, String description)
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
         fragmentSaveClicked,
     required TResult Function() deleteAudio,
   }) {
@@ -963,7 +1046,8 @@ class _$_EventImageAdded
     TResult? Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(Uint8List imageBytes)? imageAdded,
-    TResult? Function(String title, String description)? fragmentSaveClicked,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult? Function()? deleteAudio,
   }) {
     return imageAdded?.call(imageBytes);
@@ -975,7 +1059,8 @@ class _$_EventImageAdded
     TResult Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(Uint8List imageBytes)? imageAdded,
-    TResult Function(String title, String description)? fragmentSaveClicked,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult Function()? deleteAudio,
     required TResult orElse(),
   }) {
@@ -1041,7 +1126,7 @@ abstract class _$$_EventFragmentSaveClickedCopyWith<$Res> {
           $Res Function(_$_EventFragmentSaveClicked) then) =
       __$$_EventFragmentSaveClickedCopyWithImpl<$Res>;
   @useResult
-  $Res call({String title, String description});
+  $Res call({String title, String description, bool isTitleOverImage});
 }
 
 /// @nodoc
@@ -1058,6 +1143,7 @@ class __$$_EventFragmentSaveClickedCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? description = null,
+    Object? isTitleOverImage = null,
   }) {
     return _then(_$_EventFragmentSaveClicked(
       title: null == title
@@ -1068,6 +1154,10 @@ class __$$_EventFragmentSaveClickedCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      isTitleOverImage: null == isTitleOverImage
+          ? _value.isTitleOverImage
+          : isTitleOverImage // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1078,16 +1168,20 @@ class _$_EventFragmentSaveClicked
     with DiagnosticableTreeMixin
     implements _EventFragmentSaveClicked {
   const _$_EventFragmentSaveClicked(
-      {required this.title, required this.description});
+      {required this.title,
+      required this.description,
+      required this.isTitleOverImage});
 
   @override
   final String title;
   @override
   final String description;
+  @override
+  final bool isTitleOverImage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PresentationAddFragmentEvent.fragmentSaveClicked(title: $title, description: $description)';
+    return 'PresentationAddFragmentEvent.fragmentSaveClicked(title: $title, description: $description, isTitleOverImage: $isTitleOverImage)';
   }
 
   @override
@@ -1097,7 +1191,8 @@ class _$_EventFragmentSaveClicked
       ..add(DiagnosticsProperty(
           'type', 'PresentationAddFragmentEvent.fragmentSaveClicked'))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('description', description));
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('isTitleOverImage', isTitleOverImage));
   }
 
   @override
@@ -1107,11 +1202,14 @@ class _$_EventFragmentSaveClicked
             other is _$_EventFragmentSaveClicked &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
-                other.description == description));
+                other.description == description) &&
+            (identical(other.isTitleOverImage, isTitleOverImage) ||
+                other.isTitleOverImage == isTitleOverImage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, description);
+  int get hashCode =>
+      Object.hash(runtimeType, title, description, isTitleOverImage);
 
   @JsonKey(ignore: true)
   @override
@@ -1127,11 +1225,12 @@ class _$_EventFragmentSaveClicked
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(Uint8List imageBytes) imageAdded,
-    required TResult Function(String title, String description)
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
         fragmentSaveClicked,
     required TResult Function() deleteAudio,
   }) {
-    return fragmentSaveClicked(title, description);
+    return fragmentSaveClicked(title, description, isTitleOverImage);
   }
 
   @override
@@ -1140,10 +1239,11 @@ class _$_EventFragmentSaveClicked
     TResult? Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(Uint8List imageBytes)? imageAdded,
-    TResult? Function(String title, String description)? fragmentSaveClicked,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult? Function()? deleteAudio,
   }) {
-    return fragmentSaveClicked?.call(title, description);
+    return fragmentSaveClicked?.call(title, description, isTitleOverImage);
   }
 
   @override
@@ -1152,12 +1252,13 @@ class _$_EventFragmentSaveClicked
     TResult Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(Uint8List imageBytes)? imageAdded,
-    TResult Function(String title, String description)? fragmentSaveClicked,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult Function()? deleteAudio,
     required TResult orElse(),
   }) {
     if (fragmentSaveClicked != null) {
-      return fragmentSaveClicked(title, description);
+      return fragmentSaveClicked(title, description, isTitleOverImage);
     }
     return orElse();
   }
@@ -1205,10 +1306,12 @@ abstract class _EventFragmentSaveClicked
     implements PresentationAddFragmentEvent {
   const factory _EventFragmentSaveClicked(
       {required final String title,
-      required final String description}) = _$_EventFragmentSaveClicked;
+      required final String description,
+      required final bool isTitleOverImage}) = _$_EventFragmentSaveClicked;
 
   String get title;
   String get description;
+  bool get isTitleOverImage;
   @JsonKey(ignore: true)
   _$$_EventFragmentSaveClickedCopyWith<_$_EventFragmentSaveClicked>
       get copyWith => throw _privateConstructorUsedError;
@@ -1265,7 +1368,8 @@ class _$_EventDeleteAudio
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(Uint8List imageBytes) imageAdded,
-    required TResult Function(String title, String description)
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
         fragmentSaveClicked,
     required TResult Function() deleteAudio,
   }) {
@@ -1278,7 +1382,8 @@ class _$_EventDeleteAudio
     TResult? Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(Uint8List imageBytes)? imageAdded,
-    TResult? Function(String title, String description)? fragmentSaveClicked,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult? Function()? deleteAudio,
   }) {
     return deleteAudio?.call();
@@ -1290,7 +1395,8 @@ class _$_EventDeleteAudio
     TResult Function(Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(Uint8List imageBytes)? imageAdded,
-    TResult Function(String title, String description)? fragmentSaveClicked,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        fragmentSaveClicked,
     TResult Function()? deleteAudio,
     required TResult orElse(),
   }) {

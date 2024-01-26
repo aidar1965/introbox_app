@@ -21,6 +21,7 @@ mixin _$PresentationEvent {
     required TResult Function() initialDataRequested,
     required TResult Function() nextSlideClicked,
     required TResult Function() previousSlideClicked,
+    required TResult Function(int index) fragmentClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -28,6 +29,7 @@ mixin _$PresentationEvent {
     TResult? Function()? initialDataRequested,
     TResult? Function()? nextSlideClicked,
     TResult? Function()? previousSlideClicked,
+    TResult? Function(int index)? fragmentClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -35,6 +37,7 @@ mixin _$PresentationEvent {
     TResult Function()? initialDataRequested,
     TResult Function()? nextSlideClicked,
     TResult Function()? previousSlideClicked,
+    TResult Function(int index)? fragmentClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -45,6 +48,7 @@ mixin _$PresentationEvent {
     required TResult Function(_EventNextSlideClicked value) nextSlideClicked,
     required TResult Function(_EventPreviousSlideClicked value)
         previousSlideClicked,
+    required TResult Function(_EventFragmentClicked value) fragmentClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -52,6 +56,7 @@ mixin _$PresentationEvent {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult? Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult? Function(_EventFragmentClicked value)? fragmentClicked,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -59,6 +64,7 @@ mixin _$PresentationEvent {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult Function(_EventFragmentClicked value)? fragmentClicked,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -126,6 +132,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     required TResult Function() initialDataRequested,
     required TResult Function() nextSlideClicked,
     required TResult Function() previousSlideClicked,
+    required TResult Function(int index) fragmentClicked,
   }) {
     return initialDataRequested();
   }
@@ -136,6 +143,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function()? initialDataRequested,
     TResult? Function()? nextSlideClicked,
     TResult? Function()? previousSlideClicked,
+    TResult? Function(int index)? fragmentClicked,
   }) {
     return initialDataRequested?.call();
   }
@@ -146,6 +154,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function()? initialDataRequested,
     TResult Function()? nextSlideClicked,
     TResult Function()? previousSlideClicked,
+    TResult Function(int index)? fragmentClicked,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -162,6 +171,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     required TResult Function(_EventNextSlideClicked value) nextSlideClicked,
     required TResult Function(_EventPreviousSlideClicked value)
         previousSlideClicked,
+    required TResult Function(_EventFragmentClicked value) fragmentClicked,
   }) {
     return initialDataRequested(this);
   }
@@ -172,6 +182,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult? Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult? Function(_EventFragmentClicked value)? fragmentClicked,
   }) {
     return initialDataRequested?.call(this);
   }
@@ -182,6 +193,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult Function(_EventFragmentClicked value)? fragmentClicked,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -236,6 +248,7 @@ class _$_EventNextSlideClicked implements _EventNextSlideClicked {
     required TResult Function() initialDataRequested,
     required TResult Function() nextSlideClicked,
     required TResult Function() previousSlideClicked,
+    required TResult Function(int index) fragmentClicked,
   }) {
     return nextSlideClicked();
   }
@@ -246,6 +259,7 @@ class _$_EventNextSlideClicked implements _EventNextSlideClicked {
     TResult? Function()? initialDataRequested,
     TResult? Function()? nextSlideClicked,
     TResult? Function()? previousSlideClicked,
+    TResult? Function(int index)? fragmentClicked,
   }) {
     return nextSlideClicked?.call();
   }
@@ -256,6 +270,7 @@ class _$_EventNextSlideClicked implements _EventNextSlideClicked {
     TResult Function()? initialDataRequested,
     TResult Function()? nextSlideClicked,
     TResult Function()? previousSlideClicked,
+    TResult Function(int index)? fragmentClicked,
     required TResult orElse(),
   }) {
     if (nextSlideClicked != null) {
@@ -272,6 +287,7 @@ class _$_EventNextSlideClicked implements _EventNextSlideClicked {
     required TResult Function(_EventNextSlideClicked value) nextSlideClicked,
     required TResult Function(_EventPreviousSlideClicked value)
         previousSlideClicked,
+    required TResult Function(_EventFragmentClicked value) fragmentClicked,
   }) {
     return nextSlideClicked(this);
   }
@@ -282,6 +298,7 @@ class _$_EventNextSlideClicked implements _EventNextSlideClicked {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult? Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult? Function(_EventFragmentClicked value)? fragmentClicked,
   }) {
     return nextSlideClicked?.call(this);
   }
@@ -292,6 +309,7 @@ class _$_EventNextSlideClicked implements _EventNextSlideClicked {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult Function(_EventFragmentClicked value)? fragmentClicked,
     required TResult orElse(),
   }) {
     if (nextSlideClicked != null) {
@@ -349,6 +367,7 @@ class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
     required TResult Function() initialDataRequested,
     required TResult Function() nextSlideClicked,
     required TResult Function() previousSlideClicked,
+    required TResult Function(int index) fragmentClicked,
   }) {
     return previousSlideClicked();
   }
@@ -359,6 +378,7 @@ class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
     TResult? Function()? initialDataRequested,
     TResult? Function()? nextSlideClicked,
     TResult? Function()? previousSlideClicked,
+    TResult? Function(int index)? fragmentClicked,
   }) {
     return previousSlideClicked?.call();
   }
@@ -369,6 +389,7 @@ class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
     TResult Function()? initialDataRequested,
     TResult Function()? nextSlideClicked,
     TResult Function()? previousSlideClicked,
+    TResult Function(int index)? fragmentClicked,
     required TResult orElse(),
   }) {
     if (previousSlideClicked != null) {
@@ -385,6 +406,7 @@ class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
     required TResult Function(_EventNextSlideClicked value) nextSlideClicked,
     required TResult Function(_EventPreviousSlideClicked value)
         previousSlideClicked,
+    required TResult Function(_EventFragmentClicked value) fragmentClicked,
   }) {
     return previousSlideClicked(this);
   }
@@ -395,6 +417,7 @@ class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult? Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult? Function(_EventFragmentClicked value)? fragmentClicked,
   }) {
     return previousSlideClicked?.call(this);
   }
@@ -405,6 +428,7 @@ class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventNextSlideClicked value)? nextSlideClicked,
     TResult Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult Function(_EventFragmentClicked value)? fragmentClicked,
     required TResult orElse(),
   }) {
     if (previousSlideClicked != null) {
@@ -419,6 +443,155 @@ abstract class _EventPreviousSlideClicked implements PresentationEvent {
 }
 
 /// @nodoc
+abstract class _$$_EventFragmentClickedCopyWith<$Res> {
+  factory _$$_EventFragmentClickedCopyWith(_$_EventFragmentClicked value,
+          $Res Function(_$_EventFragmentClicked) then) =
+      __$$_EventFragmentClickedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$_EventFragmentClickedCopyWithImpl<$Res>
+    extends _$PresentationEventCopyWithImpl<$Res, _$_EventFragmentClicked>
+    implements _$$_EventFragmentClickedCopyWith<$Res> {
+  __$$_EventFragmentClickedCopyWithImpl(_$_EventFragmentClicked _value,
+      $Res Function(_$_EventFragmentClicked) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$_EventFragmentClicked(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventFragmentClicked implements _EventFragmentClicked {
+  const _$_EventFragmentClicked(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'PresentationEvent.fragmentClicked(index: $index)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventFragmentClicked &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventFragmentClickedCopyWith<_$_EventFragmentClicked> get copyWith =>
+      __$$_EventFragmentClickedCopyWithImpl<_$_EventFragmentClicked>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function() nextSlideClicked,
+    required TResult Function() previousSlideClicked,
+    required TResult Function(int index) fragmentClicked,
+  }) {
+    return fragmentClicked(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function()? nextSlideClicked,
+    TResult? Function()? previousSlideClicked,
+    TResult? Function(int index)? fragmentClicked,
+  }) {
+    return fragmentClicked?.call(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function()? nextSlideClicked,
+    TResult Function()? previousSlideClicked,
+    TResult Function(int index)? fragmentClicked,
+    required TResult orElse(),
+  }) {
+    if (fragmentClicked != null) {
+      return fragmentClicked(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventNextSlideClicked value) nextSlideClicked,
+    required TResult Function(_EventPreviousSlideClicked value)
+        previousSlideClicked,
+    required TResult Function(_EventFragmentClicked value) fragmentClicked,
+  }) {
+    return fragmentClicked(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventNextSlideClicked value)? nextSlideClicked,
+    TResult? Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult? Function(_EventFragmentClicked value)? fragmentClicked,
+  }) {
+    return fragmentClicked?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventNextSlideClicked value)? nextSlideClicked,
+    TResult Function(_EventPreviousSlideClicked value)? previousSlideClicked,
+    TResult Function(_EventFragmentClicked value)? fragmentClicked,
+    required TResult orElse(),
+  }) {
+    if (fragmentClicked != null) {
+      return fragmentClicked(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventFragmentClicked implements PresentationEvent {
+  const factory _EventFragmentClicked(final int index) =
+      _$_EventFragmentClicked;
+
+  int get index;
+  @JsonKey(ignore: true)
+  _$$_EventFragmentClickedCopyWith<_$_EventFragmentClicked> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -427,7 +600,9 @@ mixin _$PresentationState {
             bool isLast,
             bool isFirst,
             String presentationTitle,
-            String? presentationDescription)
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
@@ -435,8 +610,14 @@ mixin _$PresentationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult? Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
@@ -444,8 +625,14 @@ mixin _$PresentationState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,
@@ -505,7 +692,9 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       bool isLast,
       bool isFirst,
       String presentationTitle,
-      String? presentationDescription});
+      String? presentationDescription,
+      String? pdfFile,
+      List<PdfFragment> fragments});
 }
 
 /// @nodoc
@@ -524,6 +713,8 @@ class __$$_ScreenStateCopyWithImpl<$Res>
     Object? isFirst = null,
     Object? presentationTitle = null,
     Object? presentationDescription = freezed,
+    Object? pdfFile = freezed,
+    Object? fragments = null,
   }) {
     return _then(_$_ScreenState(
       selectedFragment: null == selectedFragment
@@ -546,6 +737,14 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.presentationDescription
           : presentationDescription // ignore: cast_nullable_to_non_nullable
               as String?,
+      pdfFile: freezed == pdfFile
+          ? _value.pdfFile
+          : pdfFile // ignore: cast_nullable_to_non_nullable
+              as String?,
+      fragments: null == fragments
+          ? _value._fragments
+          : fragments // ignore: cast_nullable_to_non_nullable
+              as List<PdfFragment>,
     ));
   }
 }
@@ -558,7 +757,10 @@ class _$_ScreenState implements _ScreenState {
       required this.isLast,
       required this.isFirst,
       required this.presentationTitle,
-      this.presentationDescription});
+      this.presentationDescription,
+      this.pdfFile,
+      required final List<PdfFragment> fragments})
+      : _fragments = fragments;
 
   @override
   final PdfFragment selectedFragment;
@@ -570,10 +772,19 @@ class _$_ScreenState implements _ScreenState {
   final String presentationTitle;
   @override
   final String? presentationDescription;
+  @override
+  final String? pdfFile;
+  final List<PdfFragment> _fragments;
+  @override
+  List<PdfFragment> get fragments {
+    if (_fragments is EqualUnmodifiableListView) return _fragments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_fragments);
+  }
 
   @override
   String toString() {
-    return 'PresentationState.screenState(selectedFragment: $selectedFragment, isLast: $isLast, isFirst: $isFirst, presentationTitle: $presentationTitle, presentationDescription: $presentationDescription)';
+    return 'PresentationState.screenState(selectedFragment: $selectedFragment, isLast: $isLast, isFirst: $isFirst, presentationTitle: $presentationTitle, presentationDescription: $presentationDescription, pdfFile: $pdfFile, fragments: $fragments)';
   }
 
   @override
@@ -589,12 +800,22 @@ class _$_ScreenState implements _ScreenState {
                 other.presentationTitle == presentationTitle) &&
             (identical(
                     other.presentationDescription, presentationDescription) ||
-                other.presentationDescription == presentationDescription));
+                other.presentationDescription == presentationDescription) &&
+            (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile) &&
+            const DeepCollectionEquality()
+                .equals(other._fragments, _fragments));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedFragment, isLast,
-      isFirst, presentationTitle, presentationDescription);
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedFragment,
+      isLast,
+      isFirst,
+      presentationTitle,
+      presentationDescription,
+      pdfFile,
+      const DeepCollectionEquality().hash(_fragments));
 
   @JsonKey(ignore: true)
   @override
@@ -610,33 +831,47 @@ class _$_ScreenState implements _ScreenState {
             bool isLast,
             bool isFirst,
             String presentationTitle,
-            String? presentationDescription)
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
   }) {
     return screenState(selectedFragment, isLast, isFirst, presentationTitle,
-        presentationDescription);
+        presentationDescription, pdfFile, fragments);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult? Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
   }) {
     return screenState?.call(selectedFragment, isLast, isFirst,
-        presentationTitle, presentationDescription);
+        presentationTitle, presentationDescription, pdfFile, fragments);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,
@@ -644,7 +879,7 @@ class _$_ScreenState implements _ScreenState {
   }) {
     if (screenState != null) {
       return screenState(selectedFragment, isLast, isFirst, presentationTitle,
-          presentationDescription);
+          presentationDescription, pdfFile, fragments);
     }
     return orElse();
   }
@@ -690,13 +925,17 @@ abstract class _ScreenState implements PresentationState {
       required final bool isLast,
       required final bool isFirst,
       required final String presentationTitle,
-      final String? presentationDescription}) = _$_ScreenState;
+      final String? presentationDescription,
+      final String? pdfFile,
+      required final List<PdfFragment> fragments}) = _$_ScreenState;
 
   PdfFragment get selectedFragment;
   bool get isLast;
   bool get isFirst;
   String get presentationTitle;
   String? get presentationDescription;
+  String? get pdfFile;
+  List<PdfFragment> get fragments;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -745,7 +984,9 @@ class _$_StateLoadingError implements _StateLoadingError {
             bool isLast,
             bool isFirst,
             String presentationTitle,
-            String? presentationDescription)
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
@@ -756,8 +997,14 @@ class _$_StateLoadingError implements _StateLoadingError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult? Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
@@ -768,8 +1015,14 @@ class _$_StateLoadingError implements _StateLoadingError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,
@@ -863,7 +1116,9 @@ class _$_StatePending implements _StatePending {
             bool isLast,
             bool isFirst,
             String presentationTitle,
-            String? presentationDescription)
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
@@ -874,8 +1129,14 @@ class _$_StatePending implements _StatePending {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult? Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
@@ -886,8 +1147,14 @@ class _$_StatePending implements _StatePending {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(PdfFragment selectedFragment, bool isLast, bool isFirst,
-            String presentationTitle, String? presentationDescription)?
+    TResult Function(
+            PdfFragment selectedFragment,
+            bool isLast,
+            bool isFirst,
+            String presentationTitle,
+            String? presentationDescription,
+            String? pdfFile,
+            List<PdfFragment> fragments)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,

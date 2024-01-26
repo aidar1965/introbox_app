@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:html' as html;
+import 'package:path/path.dart' as p;
 
+import '../../../domain/models/pdf_fragment.dart';
 import '../../common/common_audio_player.dart';
 
 import '../../common/common_elevated_button.dart';
@@ -21,15 +26,13 @@ class PresentationScreen extends StatelessWidget {
         child: BlocBuilder<PresentationBloc, PresentationState>(
             builder: (context, state) => state.map(
                 screenState: (state) => _ScreenView(
-                      imageUrl: state.selectedFragment.imagePath!,
-                      audioUrl: state.selectedFragment.audioPath,
-                      duration: state.selectedFragment.duration,
                       isFirst: state.isFirst,
                       isLast: state.isLast,
                       presentationTitle: state.presentationTitle,
                       presentationDescription: state.presentationDescription,
-                      fragmentTitle: state.selectedFragment.title,
-                      fragmentDescription: state.selectedFragment.description,
+                      pdfFile: state.pdfFile,
+                      fragments: state.fragments,
+                      selectedFragment: state.selectedFragment,
                     ),
                 loadingError: (_) => const _LoadingErrorView(),
                 pending: (_) => const _PendingView())));
@@ -37,27 +40,25 @@ class PresentationScreen extends StatelessWidget {
 }
 
 class _ScreenView extends StatefulWidget {
-  const _ScreenView(
-      {super.key,
-      required this.imageUrl,
-      this.audioUrl,
-      this.duration,
-      required this.isFirst,
-      required this.isLast,
-      required this.fragmentTitle,
-      this.fragmentDescription,
-      required this.presentationTitle,
-      this.presentationDescription});
+  const _ScreenView({
+    super.key,
+    required this.isFirst,
+    required this.isLast,
+    required this.selectedFragment,
+    required this.presentationTitle,
+    this.presentationDescription,
+    this.pdfFile,
+    required this.fragments,
+  });
 
-  final String imageUrl;
-  final String? audioUrl;
-  final int? duration;
   final bool isFirst;
   final bool isLast;
-  final String fragmentTitle;
-  final String? fragmentDescription;
+
   final String presentationTitle;
   final String? presentationDescription;
+  final String? pdfFile;
+  final List<PdfFragment> fragments;
+  final PdfFragment selectedFragment;
 
   @override
   State<_ScreenView> createState() => _ScreenViewState();
@@ -67,239 +68,301 @@ class _ScreenViewState extends State<_ScreenView> {
   double opacityLevel = 0.0;
   double leftOpacity = 0.0;
   double rightOpacity = 0.0;
+  double infoOpacity = 0.0;
 
   late double width;
   late double height;
   String? audioUrl;
-  late String imageUrl;
+  bool showControls = false;
+  late bool isFirstAudio;
+  late bool isTitleOverImage;
+
+  late Stream<bool> clickScreenStream;
+
+  StreamController<bool> controller = StreamController<bool>();
 
   @override
   void initState() {
     super.initState();
-    imageUrl = widget.imageUrl;
-    audioUrl = widget.audioUrl;
+
+    isTitleOverImage = widget.selectedFragment.isTitleOverImage;
+    audioUrl = widget.selectedFragment.audioPath;
+    if (audioUrl != null) {
+      isFirstAudio = true;
+    } else {
+      isFirstAudio = false;
+    }
+
+    clickScreenStream = controller.stream;
+    clickScreenStream.listen((event) {
+      setState(() {
+        showControls = !showControls;
+      });
+      if (showControls) {
+        opacityLevel = 0.5;
+        leftOpacity = 0.5;
+        rightOpacity = 0.5;
+      } else {
+        opacityLevel = 0;
+        leftOpacity = 0;
+        rightOpacity = 0;
+      }
+    });
     // if (audioUrl != null) {
     //   setState(() {
+    //     showControls = true;
     //     opacityLevel = 0.5;
     //   });
     // }
-  }
-
-  void _showPlayer(PointerEvent details) {
-    setState(() => opacityLevel = 0.5);
-  }
-
-  void _hidePlayer(PointerEvent details) {
-    setState(() => opacityLevel = 0.0);
-  }
-
-  void _showLeft(PointerEvent details) {
-    setState(() => leftOpacity = 0.5);
-  }
-
-  void _hideLeft(PointerEvent details) {
-    setState(() => leftOpacity = 0.0);
-  }
-
-  void _showRight(PointerEvent details) {
-    setState(() => rightOpacity = 0.5);
-  }
-
-  void _hideRight(PointerEvent details) {
-    setState(() => rightOpacity = 0.0);
   }
 
   @override
   void didChangeDependencies() {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+
     super.didChangeDependencies();
   }
 
   @override
   void didUpdateWidget(_ScreenView oldWidget) {
-    audioUrl = widget.audioUrl;
-    imageUrl = widget.imageUrl;
-
-    leftOpacity = 0.0;
-    rightOpacity = 0.0;
+    opacityLevel = 0;
+    leftOpacity = 0;
+    rightOpacity = 0;
+    audioUrl = widget.selectedFragment.audioPath;
+    isTitleOverImage = widget.selectedFragment.isTitleOverImage;
+    if (showControls) {
+      controller.add(showControls);
+    }
+    if (isFirstAudio == true && audioUrl != null) {
+      isFirstAudio = false;
+    }
 
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Stack(children: [
-        Container(
-            height: height,
-            width: width,
-            color: Colors.black,
-            child: Column(
-              children: [
-                SizedBox(
-                    height: height,
-                    width: width,
-                    child: Center(
-                      child: CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          placeholder: (context, imageUrl) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )),
-                    ))
-              ],
-            )),
-        AnimatedOpacity(
-            duration: const Duration(milliseconds: 300),
-            opacity: opacityLevel,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                    padding: const EdgeInsets.only(bottom: 24.0),
-                    child: MouseRegion(
-                      onHover: _showPlayer,
-                      onExit: _hidePlayer,
-                      child: Container(
-                        color: Colors.black,
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 1000),
-                          child: Padding(
-                            padding: const EdgeInsets.all(24.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Expanded(
-                                    child:
-                                        ListView(shrinkWrap: true, children: [
-                                      Text(widget.presentationTitle,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          )),
-                                      const SizedBox(
-                                        height: 24,
+    return GestureDetector(
+        onTap: () => controller.add(showControls),
+        onHorizontalDragEnd: (dragEndDetails) {
+          if (dragEndDetails.primaryVelocity! < 0) {
+            BlocProvider.of<PresentationBloc>(context)
+                .add(const PresentationEvent.nextSlideClicked());
+          } else if (dragEndDetails.primaryVelocity! > 0) {
+            BlocProvider.of<PresentationBloc>(context)
+                .add(const PresentationEvent.previousSlideClicked());
+          }
+        },
+        child: Material(
+          child: Stack(children: [
+            Container(
+                height: height,
+                width: width,
+                color: Colors.black,
+                child: Column(
+                  children: [
+                    SizedBox(
+                        height: height,
+                        width: width,
+                        child: Center(
+                            child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: widget.selectedFragment.imagePath!,
+                              progressIndicatorBuilder:
+                                  (context, _, progress) =>
+                                      const CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                            if (isTitleOverImage)
+                              Positioned(
+                                  bottom: 20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.5,
+                                        child: DecoratedBox(
+                                            decoration: const BoxDecoration(
+                                                color: Colors.black),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                widget.selectedFragment.title,
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )),
                                       ),
-                                      Text(widget.presentationDescription ?? '',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.white,
-                                          )),
-                                      const SizedBox(
-                                        height: 24,
-                                      ),
-                                      Text(widget.fragmentTitle,
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white,
-                                          )),
-                                      const SizedBox(
-                                        height: 24,
-                                      ),
-                                      Text(widget.fragmentDescription ?? '',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.white,
-                                          )),
-                                      const SizedBox(
-                                        height: 24,
-                                      ),
-                                    ]),
-                                  ),
-                                  if (audioUrl != null)
-                                    Container(
-                                      color: Colors.black,
-                                      height: 200,
-                                      child: Center(
-                                        child: SizedBox(
-                                          width: 320,
-                                          height: 240,
-                                          child: Center(
-                                              child: CommonAudioPlayer(
-                                            audioUrl: audioUrl!,
-                                            audioDurationInSeconds:
-                                                widget.duration!,
-                                            onEnd: () {
-                                              if (widget.isLast != true) {
-                                                BlocProvider.of<
-                                                            PresentationBloc>(
-                                                        context)
-                                                    .add(const PresentationEvent
-                                                        .nextSlideClicked());
-                                              }
-                                            },
-                                          )),
-                                        ),
-                                      ),
-                                    ),
-                                ]),
-                          ),
-                        ),
-                      ),
-                    )))),
-        !widget.isLast
-            ? AnimatedOpacity(
+                                    ],
+                                  ))
+                          ],
+                        )))
+                  ],
+                )),
+            Row(children: [
+              const Spacer(),
+              AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
-                opacity: rightOpacity,
+                opacity: opacityLevel,
                 child: Align(
-                  alignment: Alignment.centerRight,
-                  child: MouseRegion(
-                    onHover: _showRight,
-                    onExit: _hideRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: FloatingActionButton(
-                        heroTag: 'right',
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.grey,
-                        child: const Icon(Icons.arrow_right,
-                            color: Colors.black, size: 48),
-                        onPressed: () {
-                          BlocProvider.of<PresentationBloc>(context)
-                              .add(const PresentationEvent.nextSlideClicked());
-                        },
-                      ),
-                    ),
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    color: Colors.black,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            color: Colors.black,
+                            height: audioUrl != null ? 200 : 0,
+                            child: Center(
+                                child: CommonAudioPlayer(
+                              audioUrl: audioUrl,
+                              audioDurationInSeconds:
+                                  widget.selectedFragment.duration,
+                              onEnd: () {
+                                if (widget.isLast != true) {
+                                  BlocProvider.of<PresentationBloc>(context)
+                                      .add(const PresentationEvent
+                                          .nextSlideClicked());
+                                }
+                              },
+                              onClicked: () {
+                                controller.add(showControls);
+                              },
+                            )),
+                          ),
+                        ]),
                   ),
                 ),
-              )
-            : const SizedBox(),
-        !widget.isFirst
-            ? AnimatedOpacity(
-                duration: const Duration(milliseconds: 300),
-                opacity: leftOpacity,
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: MouseRegion(
-                      onHover: _showLeft,
-                      onExit: _hideLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: FloatingActionButton(
-                          heroTag: 'left',
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.grey,
-                          child: const Icon(
-                            Icons.arrow_left,
-                            color: Colors.black,
-                            size: 48,
+              ),
+              const Spacer(),
+            ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                !widget.isFirst
+                    ? MouseRegion(
+                        onHover: (_) {
+                          setState(() {
+                            leftOpacity = 0.5;
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            leftOpacity = 0.0;
+                          });
+                        },
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: leftOpacity,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: FloatingActionButton(
+                                heroTag: 'left',
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.grey,
+                                child: const Icon(
+                                  Icons.arrow_left,
+                                  color: Colors.black,
+                                  size: 48,
+                                ),
+                                onPressed: () {
+                                  BlocProvider.of<PresentationBloc>(context)
+                                      .add(const PresentationEvent
+                                          .previousSlideClicked());
+                                },
+                              ),
+                            ),
                           ),
-                          onPressed: () {
-                            BlocProvider.of<PresentationBloc>(context).add(
-                                const PresentationEvent.previousSlideClicked());
-                          },
                         ),
-                      ),
-                    )),
-              )
-            : const SizedBox()
-      ]),
-    );
+                      )
+                    : const SizedBox(),
+                widget.isLast == false
+                    ? MouseRegion(
+                        onHover: (_) {
+                          setState(() {
+                            rightOpacity = 0.5;
+                          });
+                        },
+                        onExit: (_) {
+                          setState(() {
+                            rightOpacity = 0.0;
+                          });
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: AnimatedOpacity(
+                            duration: const Duration(milliseconds: 300),
+                            opacity: rightOpacity,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: SizedBox(
+                                width: 60,
+                                height: 60,
+                                child: FloatingActionButton(
+                                  heroTag: 'right',
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: Colors.grey,
+                                  child: const Icon(Icons.arrow_right,
+                                      color: Colors.black, size: 48),
+                                  onPressed: () {
+                                    BlocProvider.of<PresentationBloc>(context)
+                                        .add(const PresentationEvent
+                                            .nextSlideClicked());
+                                  },
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            ),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                        onPressed: () async {
+                          final result = await showDialog(
+                              context: context,
+                              builder: (context) => Dialog.fullscreen(
+                                    backgroundColor: Colors.black,
+                                    child: InfoView(
+                                      fragments: widget.fragments,
+                                      selectedFragment: widget.selectedFragment,
+                                      title: widget.presentationTitle,
+                                      description:
+                                          widget.presentationDescription,
+                                      pdfFile: widget.pdfFile,
+                                    ),
+                                  ));
+                          if (result is int) {
+                            if (context.mounted) {
+                              BlocProvider.of<PresentationBloc>(context).add(
+                                  PresentationEvent.fragmentClicked(result));
+                            }
+                          }
+                        },
+                        icon: const Icon(Icons.info)),
+                    IconButton(
+                        onPressed: () => context.router.pop(),
+                        icon: Icon(Icons.close))
+                  ],
+                ))
+          ]),
+        ));
   }
 }
 
@@ -342,6 +405,123 @@ class _PendingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class InfoView extends StatelessWidget {
+  const InfoView({
+    super.key,
+    required this.fragments,
+    required this.selectedFragment,
+    required this.title,
+    this.description,
+    this.pdfFile,
+  });
+
+  final List<PdfFragment> fragments;
+  final PdfFragment selectedFragment;
+  final String title;
+  final String? description;
+  final String? pdfFile;
+
+  void downloadFile(String url) {
+    html.AnchorElement anchorElement = html.AnchorElement(href: url);
+    anchorElement.download = url;
+    anchorElement.click();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (pdfFile != null)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        p.basename(pdfFile!),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            decoration: TextDecoration.underline),
+                      ),
+                      const SizedBox(width: 24),
+                      IconButton(
+                          onPressed: () => downloadFile(pdfFile!),
+                          icon: const Icon(
+                            Icons.download,
+                            color: Colors.white,
+                          ))
+                    ],
+                  ),
+                const SizedBox(height: 24),
+                Text(
+                  title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+                if (description != null) ...[
+                  const SizedBox(height: 24),
+                  Text(
+                    description!,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18),
+                  ),
+                ],
+                const SizedBox(height: 32),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: fragments.length,
+                    itemBuilder: (context, index) => ListTile(
+                          selected: fragments.elementAt(index).id ==
+                              selectedFragment.id,
+                          selectedTileColor:
+                              const Color.fromARGB(255, 5, 35, 88),
+                          onTap: () {
+                            context.router.pop(index);
+                          },
+                          title: Text(
+                            fragments.elementAt(index).title,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          subtitle:
+                              fragments.elementAt(index).description != null
+                                  ? Text(
+                                      fragments.elementAt(index).description!,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14),
+                                    )
+                                  : null,
+                        )),
+              ],
+            ),
+          ),
+        ),
+        Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+                onPressed: () => context.router.pop(),
+                icon: const Icon(Icons.close, color: Colors.white)))
+      ],
     );
   }
 }

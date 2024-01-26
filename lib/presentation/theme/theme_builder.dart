@@ -272,6 +272,9 @@ class ThemeBuilder {
           labelColor: palette.text3,
           unselectedLabelColor: palette.text3,
         ),
+
+        textSelectionTheme:
+            TextSelectionThemeData(selectionColor: palette.accent),
       );
 
   // ---------------------------------------------------------------------------

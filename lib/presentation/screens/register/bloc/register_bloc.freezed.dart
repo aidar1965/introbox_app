@@ -325,21 +325,21 @@ abstract class _EventRegister implements RegisterEvent {
 mixin _$RegisterState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() screenState,
+    required TResult Function(bool isPending) screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? screenState,
+    TResult? Function(bool isPending)? screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? screenState,
+    TResult Function(bool isPending)? screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
     required TResult orElse(),
@@ -392,6 +392,8 @@ abstract class _$$_StateScreenCopyWith<$Res> {
   factory _$$_StateScreenCopyWith(
           _$_StateScreen value, $Res Function(_$_StateScreen) then) =
       __$$_StateScreenCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isPending});
 }
 
 /// @nodoc
@@ -401,57 +403,83 @@ class __$$_StateScreenCopyWithImpl<$Res>
   __$$_StateScreenCopyWithImpl(
       _$_StateScreen _value, $Res Function(_$_StateScreen) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isPending = null,
+  }) {
+    return _then(_$_StateScreen(
+      isPending: null == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_StateScreen implements _StateScreen {
-  const _$_StateScreen();
+  const _$_StateScreen({this.isPending = false});
+
+  @override
+  @JsonKey()
+  final bool isPending;
 
   @override
   String toString() {
-    return 'RegisterState.screenState()';
+    return 'RegisterState.screenState(isPending: $isPending)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_StateScreen);
+        (other.runtimeType == runtimeType &&
+            other is _$_StateScreen &&
+            (identical(other.isPending, isPending) ||
+                other.isPending == isPending));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isPending);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateScreenCopyWith<_$_StateScreen> get copyWith =>
+      __$$_StateScreenCopyWithImpl<_$_StateScreen>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() screenState,
+    required TResult Function(bool isPending) screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
   }) {
-    return screenState();
+    return screenState(isPending);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? screenState,
+    TResult? Function(bool isPending)? screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
   }) {
-    return screenState?.call();
+    return screenState?.call(isPending);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? screenState,
+    TResult Function(bool isPending)? screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState();
+      return screenState(isPending);
     }
     return orElse();
   }
@@ -492,7 +520,12 @@ class _$_StateScreen implements _StateScreen {
 }
 
 abstract class _StateScreen implements RegisterState {
-  const factory _StateScreen() = _$_StateScreen;
+  const factory _StateScreen({final bool isPending}) = _$_StateScreen;
+
+  bool get isPending;
+  @JsonKey(ignore: true)
+  _$$_StateScreenCopyWith<_$_StateScreen> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -533,7 +566,7 @@ class _$_StateRequestSuccess implements _StateRequestSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() screenState,
+    required TResult Function(bool isPending) screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
   }) {
@@ -543,7 +576,7 @@ class _$_StateRequestSuccess implements _StateRequestSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? screenState,
+    TResult? Function(bool isPending)? screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
   }) {
@@ -553,7 +586,7 @@ class _$_StateRequestSuccess implements _StateRequestSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? screenState,
+    TResult Function(bool isPending)? screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
     required TResult orElse(),
@@ -669,7 +702,7 @@ class _$_StateRequestError implements _StateRequestError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() screenState,
+    required TResult Function(bool isPending) screenState,
     required TResult Function() requestSuccess,
     required TResult Function(String? errorText) requestError,
   }) {
@@ -679,7 +712,7 @@ class _$_StateRequestError implements _StateRequestError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? screenState,
+    TResult? Function(bool isPending)? screenState,
     TResult? Function()? requestSuccess,
     TResult? Function(String? errorText)? requestError,
   }) {
@@ -689,7 +722,7 @@ class _$_StateRequestError implements _StateRequestError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? screenState,
+    TResult Function(bool isPending)? screenState,
     TResult Function()? requestSuccess,
     TResult Function(String? errorText)? requestError,
     required TResult orElse(),

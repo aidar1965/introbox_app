@@ -17,6 +17,7 @@ import '../../../common/common_functions.dart';
 import '../../../../../domain/models/pdf_fragment_sample.dart';
 
 import '../../../common/common_elevated_button.dart';
+import '../../../utils/responsive.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
 import '../audio_recording/audio_recording_screen.dart';
@@ -41,9 +42,20 @@ class _PdfCreatePresentationScreenState
   List<TextEditingController> recordDescriptionControllerList = [];
   List<int?> audioDurationList = [];
   bool isAudio = true;
+  bool isTitleOverImage = false;
+  late String title;
 
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    title = titleController.text;
+    titleController.addListener(() {
+      title = titleController.text;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,54 +98,34 @@ class _PdfCreatePresentationScreenState
                       }
                     }
 
-                    return Row(
-                      children: [
-                        const SizedBox(width: 24),
-                        Expanded(
-                          flex: 1,
-                          child: Column(
-                            children: [
-                              const SizedBox(height: 24),
-                              NameAndDescriptionWidget(
-                                titleController: titleController,
-                                descriptionController: descriptionController,
-                              ),
+                    return Row(children: [
+                      const SizedBox(width: 24),
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 24),
+                            NameAndDescriptionWidget(
+                              titleController: titleController,
+                              descriptionController: descriptionController,
+                            ),
+                            const SizedBox(height: 20),
+                            CommonElevatedButton(
+                              onPressed: () => _onSelectFile(context),
+                              text: 'Выберите PDF файл',
+                            ),
+                            const SizedBox(height: 20),
+                            if (pdfFile != null) ...[
+                              Text(basename(pdfFileName!)),
                               const SizedBox(height: 20),
-                              // CheckboxListTile(
-                              //     tileColor:
-                              //         DynamicTheme.paletteOf(context).accent,
-                              //     checkColor: DynamicTheme.paletteOf(context)
-                              //         .alwaysWhite,
-                              //     side: BorderSide(
-                              //         color: DynamicTheme.paletteOf(context)
-                              //             .alwaysWhite),
-                              //     shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(4)),
-                              //     title: Text('Презентация с аудио'),
-                              //     value: isAudio,
-                              //     onChanged: (v) {
-                              //       setState(() {
-                              //         isAudio = v!;
-                              //       });
-                              //     }),
-                              // const SizedBox(height: 20),
                               CommonElevatedButton(
-                                onPressed: () => _onSelectFile(context),
-                                text: 'Выберите PDF файл',
-                              ),
-                              const SizedBox(height: 20),
-                              if (pdfFile != null) ...[
-                                Text(basename(pdfFileName!)),
-                                const SizedBox(height: 20),
-                                CommonElevatedButton(
-                                  isPending: state.isPending,
-                                  onPressed: () {
-                                    final pdfFragmentList =
-                                        <PdfFragmentSample>[];
-                                    for (int i = 0;
-                                        i < state.pdfFragmentList!.length;
-                                        i++) {
-                                      pdfFragmentList.add(PdfFragmentSample(
+                                isPending: state.isPending,
+                                onPressed: () {
+                                  final pdfFragmentList = <PdfFragmentSample>[];
+                                  for (int i = 0;
+                                      i < state.pdfFragmentList!.length;
+                                      i++) {
+                                    pdfFragmentList.add(PdfFragmentSample(
                                         image: state.pdfFragmentList!
                                             .elementAt(i)
                                             .image,
@@ -146,32 +138,32 @@ class _PdfCreatePresentationScreenState
                                                 .elementAt(i)
                                                 .text,
                                         duration: audioDurationList[i],
-                                      ));
-                                    }
-                                    BlocProvider.of<PdfCreatePresentationBloc>(
-                                            context)
-                                        .add(PdfCreatePresentationEvent
-                                            .savePdfPresentation(
-                                                pdfFile: pdfFile!,
-                                                pdfFileName: pdfFileName!,
-                                                title: titleController.text,
-                                                description:
-                                                    descriptionController.text,
-                                                pdfFragmentList:
-                                                    pdfFragmentList,
-                                                isAudio: isAudio));
+                                        isTitleOverImage: isTitleOverImage));
+                                  }
+                                  BlocProvider.of<PdfCreatePresentationBloc>(
+                                          context)
+                                      .add(PdfCreatePresentationEvent
+                                          .savePdfPresentation(
+                                              pdfFile: pdfFile!,
+                                              pdfFileName: pdfFileName!,
+                                              title: titleController.text,
+                                              description:
+                                                  descriptionController.text,
+                                              pdfFragmentList: pdfFragmentList,
+                                              isAudio: isAudio));
 
-                                    /// TODO
-                                  },
-                                  text: 'Создать тему',
-                                ),
-                              ],
+                                  /// TODO
+                                },
+                                text: 'Создать тему',
+                              ),
                             ],
-                          ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 12,
-                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      if (Responsive.isMobile(context) == false) ...[
                         Expanded(
                           flex: 4,
                           child: state.countFileGenerated != null
@@ -194,10 +186,11 @@ class _PdfCreatePresentationScreenState
                                         audioBytesList[i] = f;
                                         audioDurationList[i] = s;
                                       },
-                                    ),
+                                      isTitleOverImage: false,
+                                      title: title),
                         ),
                       ],
-                    );
+                    ]);
                   }))),
     );
   }
@@ -235,6 +228,8 @@ class _FragmentListView extends StatelessWidget {
     required this.descriptionControllerList,
     required this.onPathChanged,
     required this.isAudio,
+    required this.isTitleOverImage,
+    required this.title,
   }) : super(key: key);
 
   final List<PdfFragmentSample> pdfFragmentList;
@@ -243,6 +238,8 @@ class _FragmentListView extends StatelessWidget {
   final List<TextEditingController> descriptionControllerList;
   final Function(Uint8List?, String?, int?, int) onPathChanged;
   final bool isAudio;
+  final bool isTitleOverImage;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -261,6 +258,8 @@ class _FragmentListView extends StatelessWidget {
           ) {
             onPathChanged(f, p, s, index);
           },
+          isTitleOverImage: isTitleOverImage,
+          title: title,
         );
       },
     );
@@ -275,12 +274,16 @@ class FragmentListItem extends StatefulWidget {
     required this.imageData,
     required this.onPathChanged,
     required this.isAudio,
+    required this.isTitleOverImage,
+    required this.title,
   });
 
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final Uint8List imageData;
   final bool isAudio;
+  final bool isTitleOverImage;
+  final String title;
 
   final void Function(Uint8List?, String? path, int? seconds) onPathChanged;
 
@@ -293,16 +296,22 @@ class _FragmentListItemState extends State<FragmentListItem> {
   String? audioPath;
   int? duration;
   late bool isAudio;
+  late bool isTitleOverImage;
+  late String title;
   @override
   void initState() {
     super.initState();
     showPlayer = false;
     isAudio = widget.isAudio;
+    isTitleOverImage = widget.isTitleOverImage;
+    title = widget.title;
   }
 
   @override
   void didUpdateWidget(FragmentListItem oldWidget) {
     isAudio = widget.isAudio;
+    isTitleOverImage = widget.isTitleOverImage;
+    title = widget.title;
     super.didUpdateWidget(oldWidget);
   }
 
@@ -311,7 +320,14 @@ class _FragmentListItemState extends State<FragmentListItem> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(flex: 3, child: Image.memory(widget.imageData)),
+        Expanded(
+            flex: 3,
+            child: Stack(
+              children: [
+                Image.memory(widget.imageData),
+                if (isTitleOverImage) Positioned(bottom: 0, child: Text(title))
+              ],
+            )),
         const SizedBox(width: 32),
         Expanded(
             flex: 1,

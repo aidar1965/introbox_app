@@ -21,9 +21,11 @@ class EditPresentationEvent with _$EditPresentationEvent {
   const factory EditPresentationEvent.updatePresentation(
       {required String title,
       required String description}) = _EventUpdatePresentation;
-  const factory EditPresentationEvent.updateFragment(
-      {required String title,
-      required String description}) = _EventUpdateFragment;
+  const factory EditPresentationEvent.updateFragment({
+    required String title,
+    required String description,
+    required bool isTitleOverImage,
+  }) = _EventUpdateFragment;
   const factory EditPresentationEvent.deleteFragment() = _EventDeleteFragment;
   const factory EditPresentationEvent.reorderFragments(
       {required List<String> ids}) = _EventReorderFragment;

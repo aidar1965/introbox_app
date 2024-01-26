@@ -13,6 +13,7 @@ class PdfFragmentDto {
     this.audioPath,
     this.duration,
     required this.displayOrder,
+    required this.isTitleOverImage,
   });
 
   @JsonKey(name: 'id')
@@ -38,6 +39,9 @@ class PdfFragmentDto {
 
   @JsonKey(name: 'display_order')
   final int displayOrder;
+
+  @JsonKey(name: 'is_title_over_image')
+  final bool isTitleOverImage;
 
   static PdfFragmentDto fromJson(Object json) =>
       _$PdfFragmentDtoFromJson(json as Map<String, dynamic>);

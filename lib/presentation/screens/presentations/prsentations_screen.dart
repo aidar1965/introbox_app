@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
@@ -13,6 +14,7 @@ import '../../auto_router/app_router.dart';
 import '../../common/common_functions.dart';
 
 import '../../common/common_text_field.dart';
+import '../../utils/responsive.dart';
 import 'bloc/presentations_bloc.dart';
 
 @RoutePage()
@@ -41,24 +43,23 @@ class PresentationsScreen extends StatelessWidget {
           orElse: () =>
               throw UnsupportedError('PresentationsScreen unsupported state'),
           pending: (_) => Scaffold(
-              drawer: NavigationDrawer(),
+              drawer: const NavigationDrawer(),
               appBar: AppBar(
                   title: const Text(
-                'Список презентаций',
+                'Презентации',
               )),
               body: const Center(
                 child: CircularProgressIndicator(),
               )),
           screenState: (state) => Scaffold(
-              drawer: NavigationDrawer(),
+              drawer: const NavigationDrawer(),
               appBar: AppBar(
                 title: const Text(
-                  'Список презентаций',
+                  'Презентации',
                 ),
                 actions: [
-                  TextButton.icon(
-                    icon: Icon(Icons.redo_rounded),
-                    label: Text('Обновить страницу'),
+                  IconButton(
+                    icon: const Icon(Icons.refresh),
                     style: TextButton.styleFrom(
                         iconColor: DynamicTheme.paletteOf(context).alwaysWhite,
                         foregroundColor:
@@ -71,16 +72,11 @@ class PresentationsScreen extends StatelessWidget {
                           .add(const PresentationsEvent.reloadData());
                     },
                   ),
-                  TextButton.icon(
-                    icon: Icon(Icons.picture_as_pdf),
-                    label: Text('Добавить из PDF'),
-                    style: TextButton.styleFrom(
-                        iconColor: DynamicTheme.paletteOf(context).alwaysWhite,
-                        foregroundColor:
-                            DynamicTheme.paletteOf(context).alwaysWhite,
-                        textStyle: TextStyle(
-                            color:
-                                DynamicTheme.paletteOf(context).alwaysWhite)),
+                  IconButton(
+                    icon: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [Icon(Icons.picture_as_pdf), Icon(Icons.add)],
+                    ),
                     onPressed: () async {
                       final result = await context.router
                           .push(const PdfCreatePresentationRoute());
@@ -92,16 +88,11 @@ class PresentationsScreen extends StatelessWidget {
                       }
                     },
                   ),
-                  TextButton.icon(
-                    icon: Icon(Icons.image),
-                    label: Text('Добавить из изображений'),
-                    style: TextButton.styleFrom(
-                        iconColor: DynamicTheme.paletteOf(context).alwaysWhite,
-                        foregroundColor:
-                            DynamicTheme.paletteOf(context).alwaysWhite,
-                        textStyle: TextStyle(
-                            color:
-                                DynamicTheme.paletteOf(context).alwaysWhite)),
+                  IconButton(
+                    icon: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [Icon(Icons.image), Icon(Icons.add)],
+                    ),
                     onPressed: () async {
                       final result = await context.router
                           .push(ImageCreatePresentationRoute());
@@ -119,7 +110,7 @@ class PresentationsScreen extends StatelessWidget {
           loadingError: (_) => Scaffold(
               appBar: AppBar(
                 title: const Text(
-                  'Список тем',
+                  'Презентации',
                 ),
               ),
               floatingActionButton: IconButton(
@@ -191,31 +182,41 @@ class PresentationItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(
-            height: 100,
-            width: 100,
-            child: CachedNetworkImage(imageUrl: presentation.firstImage)),
+        if (Responsive.isMobile(context) == false) ...[
+          SizedBox(
+              height: 100,
+              width: 100,
+              child: CachedNetworkImage(imageUrl: presentation.firstImage)),
+          const SizedBox(
+            width: 12,
+          )
+        ],
         Expanded(child: Text(presentation.title)),
         const SizedBox(
-          width: 24,
+          width: 12,
         ),
-        Expanded(child: Text(presentation.description ?? '')),
-        Text(DateFormat('dd.MM.yyy kk:mm').format(presentation.createdAt)),
-        const SizedBox(
-          width: 24,
-        ),
+        if (Responsive.isMobile(context) == false) ...[
+          Expanded(child: Text(presentation.description ?? '')),
+          const SizedBox(
+            width: 12,
+          ),
+          Text(
+            DateFormat('dd.MM.yyy kk:mm').format(presentation.createdAt),
+            style: context.style12w400$text3Grey,
+          ),
+          const SizedBox(
+            width: 12,
+          )
+        ],
         IconButton(
           onPressed: () =>
               context.router.push(PresentationRoute(id: presentation.id)),
           icon: const Icon(Icons.play_arrow_rounded),
         ),
-        const SizedBox(
-          width: 24,
-        ),
         IconButton(
           onPressed: () async {
             final result = await context.router
-                .push(EditPresentationRoute(presentation: presentation));
+                .push(EditPresentationRoute(id: presentation.id));
             if (context.mounted) {
               if (result == true) {
                 BlocProvider.of<PresentationsBloc>(context)
@@ -225,28 +226,32 @@ class PresentationItem extends StatelessWidget {
           },
           icon: const Icon(Icons.edit),
         ),
-        const SizedBox(
-          width: 24,
-        ),
         IconButton(
           onPressed: () => _showDeleteConfirmDialog(
               context, presentation.id, onDeleteConfirm),
           icon: const Icon(Icons.delete),
         ),
-        const SizedBox(
-          width: 24,
-        ),
-        TextButton(
+        IconButton(
+            tooltip:
+                presentation.isPublished ? 'Снять публикацию' : 'Опубликовать',
             onPressed: () {
               BlocProvider.of<PresentationsBloc>(context)
                   .add(PresentationsEvent.publishPresentation(presentation.id));
             },
-            child: Text(
-                presentation.isPublished ? 'Снять публикацию' : 'Опубиковать')),
-        const SizedBox(
-          width: 24,
-        ),
-        TextButton(
+            icon: Icon(Icons.public,
+                color: presentation.isPublished ? Colors.green : Colors.grey)),
+        IconButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => Dialog.fullscreen(
+                        child: _LinkView(presentationId: presentation.id),
+                      ));
+            },
+            icon: const Icon(Icons.share)),
+        IconButton(
+            tooltip:
+                presentation.hasPassword ? 'Защищено паролем' : 'Без пароля',
             onPressed: () async {
               final passwordController = TextEditingController();
               final confirmPasswordController = TextEditingController();
@@ -277,7 +282,7 @@ class PresentationItem extends StatelessWidget {
                               children: [
                                 TextButton(
                                     onPressed: () => context.router.pop(),
-                                    child: Text('Отмена')),
+                                    child: const Text('Отмена')),
                                 TextButton(
                                     onPressed: () {
                                       context.router.pop((
@@ -286,7 +291,7 @@ class PresentationItem extends StatelessWidget {
                                             confirmPasswordController.text
                                       ));
                                     },
-                                    child: Text('Сохранить')),
+                                    child: const Text('Сохранить')),
                               ],
                             ),
                           ],
@@ -301,9 +306,8 @@ class PresentationItem extends StatelessWidget {
                 }
               }
             },
-            child: Text(presentation.hasPassword
-                ? 'Снять пароль'
-                : 'Установить пароль')),
+            icon: Icon(Icons.lock,
+                color: presentation.hasPassword ? Colors.green : Colors.grey)),
       ],
     );
   }
@@ -317,7 +321,7 @@ class PresentationItem extends StatelessWidget {
         return AlertDialog(
           // <-- SEE HERE
           title: const Text('Удаление презентации'),
-          content: Text('Вы уверены, что хотите удалить презентацию?'),
+          content: const Text('Вы уверены, что хотите удалить презентацию?'),
 
           actions: <Widget>[
             TextButton(
@@ -357,25 +361,161 @@ class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // Add a ListView to the drawer. This ensures the user can scroll
-      // through the options in the drawer if there isn't enough vertical
-      // space to fit everything.
+      backgroundColor: Colors.white,
       child: ListView(
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
+          const SizedBox(height: 24),
           ListTile(
-            title: Text(
+            title: const Text(
               'Профиль',
-              style: context.style16w400$text1,
+              style: TextStyle(color: Colors.black),
             ),
             onTap: () {
               context.router.pop();
               context.router.push(const ProfileRoute());
             },
           ),
+          ListTile(
+            title: const Text(
+              'Изменить пароль',
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () {
+              context.router.pop();
+              context.router.push(const ChangePasswordRoute());
+            },
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _LinkView extends StatelessWidget {
+  const _LinkView({super.key, required this.presentationId});
+
+  final String presentationId;
+
+  @override
+  Widget build(BuildContext context) {
+    final linkText =
+        '''https://presentations.introbox.app/presentation/$presentationId''';
+    final htmlText = '''<!DOCTYPE html>
+      <html>
+        <head>
+          <title>Презентация</title> 
+          <style type="text/css"> 
+            html { 
+              overflow: auto; 
+            } 
+            
+            html, 
+            body, 
+            div, 
+            iframe { 
+              margin: 0px; 
+              padding: 0px; 
+              height: 100%; 
+              border: none; 
+            } 
+            
+            iframe { 
+              display: block; 
+              width: 100%; 
+              border: none; 
+              overflow-y: auto; 
+              overflow-x: hidden; 
+            } 
+          </style> 
+        </head>
+      <body>
+        <iframe src="https://presentations.introbox.app/presentation/$presentationId"></iframe>
+      
+      </body>
+    </html>
+    ''';
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 24),
+              Text(
+                'Ссылка на презентацию',
+                style: context.style18w600$title2,
+              ),
+              const SizedBox(height: 24),
+              DecoratedBox(
+                decoration: const BoxDecoration(color: Colors.black),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                          color: Colors.white,
+                          onPressed: () async {
+                            await Clipboard.setData(
+                                ClipboardData(text: linkText));
+                            // copied successfully
+                          },
+                          icon: const Icon(Icons.copy)),
+                      SelectableText(
+                        showCursor: true,
+                        maxLines: null,
+                        linkText,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'Код HTML страницы Для Вашего сайта с отображением презентации',
+                style: context.style18w600$title2,
+              ),
+              const SizedBox(height: 24),
+              DecoratedBox(
+                  decoration: const BoxDecoration(color: Colors.black),
+                  child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16, right: 16, bottom: 16),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                                color: Colors.white,
+                                onPressed: () async {
+                                  await Clipboard.setData(
+                                      ClipboardData(text: htmlText));
+                                },
+                                icon: const Icon(Icons.copy)),
+                            SelectableText(htmlText,
+                                maxLines: null,
+                                showCursor: true,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                )),
+                          ])))
+            ],
+          ),
+        ),
+        Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+                onPressed: () {
+                  context.router.pop();
+                },
+                icon: const Icon(Icons.close)))
+      ],
     );
   }
 }

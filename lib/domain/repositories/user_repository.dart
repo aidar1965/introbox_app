@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
+import 'package:moki_tutor/domain/interfaces/i_auth_controller.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
 import 'package:moki_tutor/domain/models/user.dart';
@@ -12,6 +13,7 @@ import '../locator/locator.dart';
 class UserRepository extends ChangeNotifier implements IUserRepository {
   final IApi api = getIt<IApi>();
   final localCache = getIt<ILocalCache>();
+  final authController = getIt<IAuthController>();
 
   UserRepository() {
     init();
@@ -39,6 +41,7 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
     await localCache.clearTokenPair();
     //  await api.clearToken();
     _user = null;
+    authController.setAuthStatus(false);
     notifyListeners();
   }
 
@@ -111,8 +114,10 @@ class UserRepository extends ChangeNotifier implements IUserRepository {
 
     await localCache.saveTokenPair(tokenPair: userWithTokens.tokens);
     await localCache.setUser(user: _user!);
+    authController.setAuthStatus(true);
     api.setTokens(
         userWithTokens.tokens.accessToken, userWithTokens.tokens.refreshToken);
+
     notifyListeners();
   }
 

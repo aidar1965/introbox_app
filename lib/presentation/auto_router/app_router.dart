@@ -8,6 +8,7 @@ import '../../domain/locator/locator.dart';
 import '../../domain/models/pdf_fragment.dart';
 import '../../domain/models/presentation.dart';
 
+import '../screens/change_password/change_password_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/login/login_screen.dart';
 
@@ -23,6 +24,7 @@ import '../screens/presentations/prsentation_player/presentation_player_screen.d
 import '../screens/presentations/prsentations_screen.dart';
 import '../screens/profile/profile_screen.dart';
 
+import '../screens/recover_password_screen/recover_password_screen.dart';
 import '../screens/register/confirmation/confirmation_screen.dart';
 import '../screens/register/register_screen.dart';
 
@@ -32,8 +34,12 @@ part 'app_router.gr.dart';
 class AppRouter extends _$AppRouter implements AutoRouteGuard {
   AppRouter() {
     isAuthenticated = authController.isAuthenticated;
+
     authController.addChangeListener(() {
       isAuthenticated = authController.isAuthenticated;
+      if (isAuthenticated == false) {
+        replace(const LoginRoute());
+      }
     });
   }
 
@@ -61,7 +67,7 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
             durationInMilliseconds: 400),
 
         CustomRoute(
-            path: '/edit-presentation',
+            path: '/edit-presentation/:id',
             page: EditPresentationRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
@@ -97,6 +103,14 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
           path: '/login',
           page: LoginRoute.page,
         ),
+        AutoRoute(
+          path: '/recover',
+          page: RecoverPasswordRoute.page,
+        ),
+        AutoRoute(
+          path: '/change_password',
+          page: ChangePasswordRoute.page,
+        ),
         CustomRoute(
             path: '/register',
             page: RegisterRoute.page,
@@ -123,13 +137,13 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
   void onNavigation(NavigationResolver resolver, StackRouter router) {
     print('navigating');
 
-    if (isAuthenticated ||
-        resolver.route.name == LoginRoute.name ||
+    if (isAuthenticated) {
+      resolver.next();
+    } else if (resolver.route.name == LoginRoute.name ||
         resolver.route.name == RegisterRoute.name ||
         resolver.route.name == ConfirmationRoute.name ||
-        resolver.route.name == PresentationRoute.name) {
-      print('126');
-      print(resolver.route.name);
+        resolver.route.name == PresentationRoute.name ||
+        resolver.route.name == RecoverPasswordRoute.name) {
       // we continue navigation
       resolver.next();
     } else {

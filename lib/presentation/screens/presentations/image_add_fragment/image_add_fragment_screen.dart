@@ -6,6 +6,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:moki_tutor/presentation/common/common_functions.dart';
+import 'package:moki_tutor/presentation/values/dynamic_palette.dart';
 
 import '../../../../domain/models/image_fragment.dart';
 
@@ -30,6 +31,20 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
   Uint8List? audioBytes;
   String? audioPath;
   int? duration;
+  bool isTitleOverImage = false;
+  late String title;
+
+  @override
+  void initState() {
+    super.initState();
+    title = widget.titleController.text;
+    widget.titleController.addListener(() {
+      setState(() {
+        title = widget.titleController.text;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +52,33 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
         body: Row(children: [
           Expanded(
             child: imageBytes != null
-                ? Image.memory(imageBytes!)
+                ? Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.memory(imageBytes!),
+                      if (isTitleOverImage)
+                        Positioned(
+                            bottom: 20,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Opacity(
+                                  opacity: 0.5,
+                                  child: DecoratedBox(
+                                      decoration:
+                                          BoxDecoration(color: Colors.black),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Text(
+                                          title,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ))
+                    ],
+                  )
                 : const SizedBox(),
           ),
           const SizedBox(
@@ -58,6 +99,22 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                       descriptionController: widget.descriptionController,
                     ),
                   ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  CheckboxListTile(
+                      tileColor: DynamicPalette.light().accent,
+                      title: Text(
+                        'Название поверх изображения',
+                        style: TextStyle(
+                            color: DynamicPalette.light().alwaysWhite),
+                      ),
+                      value: isTitleOverImage,
+                      onChanged: (v) {
+                        setState(() {
+                          isTitleOverImage = !isTitleOverImage;
+                        });
+                      }),
                   const SizedBox(
                     height: 12,
                   ),
@@ -184,7 +241,8 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                     audioPath: audioPath,
                                     duration: duration,
                                     description:
-                                        widget.descriptionController.text));
+                                        widget.descriptionController.text,
+                                    isTitleOverImage: isTitleOverImage));
                               } else {
                                 CommonFunctions.showMessage(
                                     context,

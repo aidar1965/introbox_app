@@ -10,13 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
 import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
 
 import '../../../../../domain/models/pdf_fragment.dart';
-import '../../../../../domain/models/presentation.dart';
 
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_loading_error_widget.dart';
+import '../../../utils/responsive.dart';
+import '../../../values/dynamic_palette.dart';
 import '../../../values/palette.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
@@ -25,19 +25,22 @@ import 'bloc/edit_presentation_bloc.dart';
 
 @RoutePage()
 class EditPresentationScreen extends StatelessWidget {
-  const EditPresentationScreen({Key? key, required this.presentation})
+  const EditPresentationScreen({Key? key, @pathParam required this.id})
       : super(key: key);
 
-  final Presentation presentation;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Редактирование темы'),
+          title: const Text('Редактирование темы'),
+          leading: IconButton(
+              onPressed: () => context.router.replace(PresentationsRoute()),
+              icon: const Icon(Icons.arrow_back)),
         ),
         body: BlocProvider(
-          create: (context) => EditPresentationBloc(presentation),
+          create: (context) => EditPresentationBloc(id),
           child: BlocConsumer<EditPresentationBloc, EditPresentationState>(
               listener: (context, state) => state.mapOrNull(
                   requestError: (state) =>
@@ -67,8 +70,7 @@ class EditPresentationScreen extends StatelessWidget {
                             state.presentationUpdatePending,
                         fragmentUpdatePending: state.fragmentUpdatePending,
                         fragmentDeletePending: state.deleteFragmentPending,
-                        presentationId: presentation.id,
-                        isAudio: presentation.isAudio,
+                        presentationId: id,
                       ))),
         ));
   }
@@ -90,18 +92,18 @@ class _PendingView extends StatelessWidget {
   }
 }
 
-class _ScreenView extends StatelessWidget {
-  _ScreenView(
-      {super.key,
-      required this.fragments,
-      required this.selectedFragment,
-      this.title,
-      this.description,
-      required this.presentationUpdatePending,
-      required this.fragmentUpdatePending,
-      required this.fragmentDeletePending,
-      required this.presentationId,
-      required this.isAudio});
+class _ScreenView extends StatefulWidget {
+  _ScreenView({
+    super.key,
+    required this.fragments,
+    required this.selectedFragment,
+    this.title,
+    this.description,
+    required this.presentationUpdatePending,
+    required this.fragmentUpdatePending,
+    required this.fragmentDeletePending,
+    required this.presentationId,
+  });
 
   final List<PdfFragment> fragments;
   final PdfFragment selectedFragment;
@@ -111,140 +113,224 @@ class _ScreenView extends StatelessWidget {
   final bool fragmentUpdatePending;
   final bool fragmentDeletePending;
   final String presentationId;
-  final bool isAudio;
 
+  @override
+  State<_ScreenView> createState() => _ScreenViewState();
+}
+
+class _ScreenViewState extends State<_ScreenView> {
   final TextEditingController selectedFragmentTitleController =
       TextEditingController();
+
   final TextEditingController selectedFragmentDescriptionController =
       TextEditingController();
 
   final TextEditingController presentationTitleController =
       TextEditingController();
+
   final TextEditingController presentationDescriptionController =
       TextEditingController();
+
   final ScrollController scrollController = ScrollController();
+
+  late bool isTitleOverImage;
+
+  @override
+  void initState() {
+    super.initState();
+    isTitleOverImage = widget.selectedFragment.isTitleOverImage;
+  }
+
+  @override
+  void didUpdateWidget(_ScreenView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    isTitleOverImage = widget.selectedFragment.isTitleOverImage;
+  }
 
   @override
   Widget build(BuildContext context) {
-    selectedFragmentTitleController.text = selectedFragment.title;
+    selectedFragmentTitleController.text = widget.selectedFragment.title;
     selectedFragmentDescriptionController.text =
-        selectedFragment.description ?? '';
-    presentationTitleController.text = title ?? '';
-    presentationDescriptionController.text = description ?? '';
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height - 260,
-                      child:
-                          selectedFragment.imagePath?.contains('http') ?? false
-                              ? CachedNetworkImage(
-                                  imageUrl: selectedFragment.imagePath!,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.memory(selectedFragment.imageBytes!,
-                                  fit: BoxFit.cover)),
-                ],
+        widget.selectedFragment.description ?? '';
+    presentationTitleController.text = widget.title ?? '';
+    presentationDescriptionController.text = widget.description ?? '';
+    if (Responsive.isMobile(context) == false) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height - 260,
+                  child: widget.selectedFragment.imagePath?.contains('http') ??
+                          false
+                      ? Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CachedNetworkImage(
+                              imageUrl: widget.selectedFragment.imagePath!,
+                              fit: BoxFit.cover,
+                            ),
+                            if (isTitleOverImage)
+                              Positioned(
+                                  bottom: 20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.5,
+                                        child: DecoratedBox(
+                                            decoration: const BoxDecoration(
+                                                color: Colors.black),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                widget.selectedFragment.title,
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )),
+                                      ),
+                                    ],
+                                  ))
+                          ],
+                        )
+                      : Stack(
+                          children: [
+                            Image.memory(widget.selectedFragment.imageBytes!,
+                                fit: BoxFit.cover),
+                            if (widget.selectedFragment.isTitleOverImage)
+                              Positioned(
+                                  bottom: 20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.5,
+                                        child: DecoratedBox(
+                                            decoration: const BoxDecoration(
+                                                color: Colors.black),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                widget.selectedFragment.title,
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )),
+                                      ),
+                                    ],
+                                  ))
+                          ],
+                        ),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 360,
-              height: MediaQuery.of(context).size.height - 260,
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: RawScrollbar(
-                  thumbColor: Palette.hint,
-                  thumbVisibility: true,
-                  radius: const Radius.circular(4),
-                  thickness: 8,
-                  controller: scrollController,
-                  child: ListView(
+              SizedBox(
+                width: 360,
+                height: MediaQuery.of(context).size.height - 260,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 12, left: 24, right: 24, bottom: 24),
+                  child: RawScrollbar(
+                    thumbColor: Palette.hint,
+                    thumbVisibility: true,
+                    radius: const Radius.circular(4),
+                    thickness: 8,
                     controller: scrollController,
-                    children: [
-                      Text(
-                        'Изменение названия и описания презентации',
-                        style: context.style14w600$title4,
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0, top: 12),
-                        child: NameAndDescriptionWidget(
-                          titleController: presentationTitleController,
-                          descriptionController:
-                              presentationDescriptionController,
+                    child: ListView(
+                      controller: scrollController,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0, top: 12),
+                          child: NameAndDescriptionWidget(
+                            titleController: presentationTitleController,
+                            descriptionController:
+                                presentationDescriptionController,
+                            titleLabelName: 'Название презентации',
+                            descriptionLabelName: 'Описание презентации',
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                          isPending: presentationUpdatePending,
-                          text: 'Сохранить',
-                          onPressed: () =>
-                              BlocProvider.of<EditPresentationBloc>(context)
-                                  .add(EditPresentationEvent.updatePresentation(
-                                      title: presentationTitleController.text,
-                                      description:
-                                          presentationDescriptionController
-                                              .text)),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Divider(),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                            text: 'Изменить порядок',
-                            onPressed: () async {
-                              final result = await context.router.push(
-                                  FragmentsReorderRoute(fragments: fragments));
-                              if (result != null) {
-                                if (context.mounted) {
-                                  BlocProvider.of<EditPresentationBloc>(context)
-                                      .add(EditPresentationEvent
-                                          .reorderFragments(
-                                              ids: result as List<String>));
-                                }
-                              }
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Divider(),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Text('Редактирование слайда'),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: NameAndDescriptionWidget(
-                          titleController: selectedFragmentTitleController,
-                          descriptionController:
-                              selectedFragmentDescriptionController,
-                        ),
-                      ),
-                      if (isAudio) ...[
                         const SizedBox(
                           height: 12,
                         ),
-                        if (selectedFragment.audioPath == null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                            isPending: widget.presentationUpdatePending,
+                            text: 'Сохранить',
+                            onPressed: () => BlocProvider.of<
+                                    EditPresentationBloc>(context)
+                                .add(EditPresentationEvent.updatePresentation(
+                                    title: presentationTitleController.text,
+                                    description:
+                                        presentationDescriptionController
+                                            .text)),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                              text: 'Изменить порядок',
+                              onPressed: () async {
+                                final result = await context.router.push(
+                                    FragmentsReorderRoute(
+                                        fragments: widget.fragments));
+                                if (result != null) {
+                                  if (context.mounted) {
+                                    BlocProvider.of<EditPresentationBloc>(
+                                            context)
+                                        .add(EditPresentationEvent
+                                            .reorderFragments(
+                                                ids: result as List<String>));
+                                  }
+                                }
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CheckboxListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              tileColor: DynamicPalette.light().accent,
+                              title: Text(
+                                'Название слайда поверх изображения',
+                                style: TextStyle(
+                                    color: DynamicPalette.light().alwaysWhite),
+                              ),
+                              value: isTitleOverImage,
+                              onChanged: (v) {
+                                setState(() {
+                                  isTitleOverImage = !isTitleOverImage;
+                                });
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: NameAndDescriptionWidget(
+                            titleController: selectedFragmentTitleController,
+                            descriptionController:
+                                selectedFragmentDescriptionController,
+                            titleLabelName: 'Название слайда',
+                            descriptionLabelName: 'Описание слайда',
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        if (widget.selectedFragment.audioPath == null)
                           const Padding(
                             padding: EdgeInsets.only(
                               bottom: 12,
@@ -255,12 +341,12 @@ class _ScreenView extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 25),
                             child: AudioPlayerWidget(
-                              urlSource: selectedFragment.audioPath!,
-                              duration: selectedFragment.duration!,
+                              urlSource: widget.selectedFragment.audioPath!,
+                              duration: widget.selectedFragment.duration!,
                               onDelete: () =>
                                   BlocProvider.of<EditPresentationBloc>(context)
                                       .add(EditPresentationEvent.deleteAudio(
-                                          fragment: selectedFragment)),
+                                          fragment: widget.selectedFragment)),
                             ),
                           ),
                         const SizedBox(
@@ -275,12 +361,12 @@ class _ScreenView extends StatelessWidget {
                                     context: context,
                                     builder: (context) => Dialog.fullscreen(
                                         child: AudioRecordingScreen(
-                                            imageData:
-                                                selectedFragment.imageBytes)));
+                                            imageData: widget
+                                                .selectedFragment.imageBytes)));
                                 if (result != null && context.mounted) {
                                   BlocProvider.of<EditPresentationBloc>(context)
                                       .add(EditPresentationEvent.audioAdded(
-                                          fragment: selectedFragment,
+                                          fragment: widget.selectedFragment,
                                           audioPath: result.path!,
                                           audioBytes: result.audioBytes!,
                                           duration: result.duration!));
@@ -302,7 +388,6 @@ class _ScreenView extends StatelessWidget {
                                 );
                                 if (result != null) {
                                   final fileBytes = result.files.first.bytes;
-                                  print(result.files.first.name);
 
                                   // Преобразование Uint8List в Blob
                                   final blob = html.Blob(
@@ -312,7 +397,6 @@ class _ScreenView extends StatelessWidget {
                                   // Преобразование Blob в data URL
                                   final dataUrl =
                                       html.Url.createObjectUrlFromBlob(blob);
-                                  print(dataUrl);
 
                                   final durationInSeconds =
                                       await getDuration(dataUrl);
@@ -320,130 +404,135 @@ class _ScreenView extends StatelessWidget {
                                     BlocProvider.of<EditPresentationBloc>(
                                             context)
                                         .add(EditPresentationEvent.audioAdded(
-                                            fragment: selectedFragment,
+                                            fragment: widget.selectedFragment,
                                             audioBytes: fileBytes!,
                                             audioPath: dataUrl,
                                             duration: durationInSeconds));
                                   }
                                 }
                               }),
-                        )
-                      ],
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                            text: 'Заменить изображение',
-                            onPressed: () async {
-                              final result =
-                                  await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: [
-                                  'pdf',
-                                  'jpg',
-                                  'jpeg',
-                                  'png',
-                                  'webp',
-                                  'gif'
-                                ],
-                              );
-                              if (result != null) {
-                                final imageBytes = result.files.first.bytes;
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                              text: 'Заменить изображение',
+                              onPressed: () async {
+                                final result =
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: [
+                                    'pdf',
+                                    'jpg',
+                                    'jpeg',
+                                    'png',
+                                    'webp',
+                                    'gif'
+                                  ],
+                                );
+                                if (result != null) {
+                                  final imageBytes = result.files.first.bytes;
 
-                                if (context.mounted) {
-                                  BlocProvider.of<EditPresentationBloc>(context)
-                                      .add(EditPresentationEvent.imageAdded(
-                                    fragment: selectedFragment,
-                                    imageBytes: imageBytes!,
-                                  ));
+                                  if (context.mounted) {
+                                    BlocProvider.of<EditPresentationBloc>(
+                                            context)
+                                        .add(EditPresentationEvent.imageAdded(
+                                      fragment: widget.selectedFragment,
+                                      imageBytes: imageBytes!,
+                                    ));
+                                  }
                                 }
-                              }
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                            isPending: fragmentUpdatePending,
-                            text: 'Сохранить',
-                            onPressed: () {
-                              BlocProvider.of<EditPresentationBloc>(context)
-                                  .add(EditPresentationEvent.updateFragment(
-                                      title:
-                                          selectedFragmentTitleController.text,
-                                      description:
-                                          selectedFragmentDescriptionController
-                                              .text));
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton.red(
-                            text: 'Удалить слайд',
-                            onPressed: () {
-                              CommonFunctions.showStyledDialog(
-                                  context: context,
-                                  message:
-                                      'Вы действительно хотите удалить слайд?',
-                                  positiveButtonText: 'Удалить',
-                                  negativeButtonText: 'Отмена',
-                                  onPositiveTap: () =>
-                                      BlocProvider.of<EditPresentationBloc>(
-                                              context)
-                                          .add(const EditPresentationEvent
-                                              .deleteFragment()));
-                            }),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                              isPending: widget.fragmentUpdatePending,
+                              text: 'Сохранить',
+                              onPressed: () {
+                                BlocProvider.of<EditPresentationBloc>(context)
+                                    .add(EditPresentationEvent.updateFragment(
+                                        title: selectedFragmentTitleController
+                                            .text,
+                                        description:
+                                            selectedFragmentDescriptionController
+                                                .text,
+                                        isTitleOverImage: isTitleOverImage));
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton.red(
+                              text: 'Удалить слайд',
+                              onPressed: () {
+                                CommonFunctions.showStyledDialog(
+                                    context: context,
+                                    message:
+                                        'Вы действительно хотите удалить слайд?',
+                                    positiveButtonText: 'Удалить',
+                                    negativeButtonText: 'Отмена',
+                                    onPositiveTap: () =>
+                                        BlocProvider.of<EditPresentationBloc>(
+                                                context)
+                                            .add(const EditPresentationEvent
+                                                .deleteFragment()));
+                              }),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        SizedBox(
-          height: 190,
-          child: ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
-              PointerDeviceKind.touch,
-              PointerDeviceKind.mouse,
-            }),
-            child: ListView.separated(
-                physics: const AlwaysScrollableScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  if (index > 0 && index < fragments.length + 1) {
-                    return _FragmentCard(
-                        fragment: fragments.elementAt(index - 1));
-                  } else {
-                    return const SizedBox();
-                  }
-                },
-                separatorBuilder: (context, index) => AddFragmentButtons(
-                      displayOrder: index == 0
-                          ? 0
-                          : fragments.elementAt(index - 1).displayOrder,
-                      presentationId: presentationId,
-                      isAudio: isAudio,
-                    ),
-                itemCount: fragments.length + 2),
+            ],
           ),
-        )
-      ],
-    );
+          const SizedBox(
+            height: 12,
+          ),
+          SizedBox(
+            height: 190,
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(dragDevices: {
+                PointerDeviceKind.touch,
+                PointerDeviceKind.mouse,
+              }),
+              child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    if (index > 0 && index < widget.fragments.length + 1) {
+                      return _FragmentCard(
+                          fragment: widget.fragments.elementAt(index - 1));
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                  separatorBuilder: (context, index) => AddFragmentButtons(
+                        displayOrder: index,
+                        presentationId: widget.presentationId,
+                        fragmentsIds:
+                            widget.fragments.map((e) => e.id).toList(),
+                      ),
+                  itemCount: widget.fragments.length + 2),
+            ),
+          )
+        ],
+      );
+    } else {
+      return const Center(
+        child: Text('Мобильная версия в разработке))'),
+      );
+    }
   }
 
   Future<({Uint8List? audioBytes, String? path, int? duration})?>?
@@ -495,16 +584,15 @@ class _FragmentCard extends StatelessWidget {
 }
 
 class AddFragmentButtons extends StatelessWidget {
-  const AddFragmentButtons({
-    super.key,
-    required this.displayOrder,
-    required this.presentationId,
-    required this.isAudio,
-  });
+  const AddFragmentButtons(
+      {super.key,
+      required this.displayOrder,
+      required this.presentationId,
+      required this.fragmentsIds});
 
   final int displayOrder;
   final String presentationId;
-  final bool isAudio;
+  final List<String> fragmentsIds;
 
   @override
   Widget build(BuildContext context) {
@@ -518,7 +606,7 @@ class AddFragmentButtons extends StatelessWidget {
                   PresentationAddFragmentRoute(
                       displayOder: displayOrder,
                       presentationId: presentationId,
-                      isAudio: isAudio));
+                      fragmentsIds: fragmentsIds));
               if (result != null && result == true) {
                 if (context.mounted) {
                   BlocProvider.of<EditPresentationBloc>(context)

@@ -33,6 +33,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: LoginEmptyPage(),
       );
     },
+    ChangePasswordRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChangePasswordScreen(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -70,12 +76,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     EditPresentationRoute.name: (routeData) {
-      final args = routeData.argsAs<EditPresentationRouteArgs>();
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<EditPresentationRouteArgs>(
+          orElse: () =>
+              EditPresentationRouteArgs(id: pathParams.getString('id')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: EditPresentationScreen(
           key: args.key,
-          presentation: args.presentation,
+          id: args.id,
         ),
       );
     },
@@ -119,7 +128,7 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           displayOder: args.displayOder,
           presentationId: args.presentationId,
-          isAudio: args.isAudio,
+          fragmentsIds: args.fragmentsIds,
         ),
       );
     },
@@ -144,6 +153,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const ProfileScreen(),
+      );
+    },
+    RecoverPasswordRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const RecoverPasswordScreen(),
       );
     },
     ConfirmationRoute.name: (routeData) {
@@ -205,6 +220,20 @@ class LoginEmpty extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginEmpty';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ChangePasswordScreen]
+class ChangePasswordRoute extends PageRouteInfo<void> {
+  const ChangePasswordRoute({List<PageRouteInfo>? children})
+      : super(
+          ChangePasswordRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangePasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -324,14 +353,15 @@ class AudioRecordingRouteArgs {
 class EditPresentationRoute extends PageRouteInfo<EditPresentationRouteArgs> {
   EditPresentationRoute({
     Key? key,
-    required Presentation presentation,
+    required String id,
     List<PageRouteInfo>? children,
   }) : super(
           EditPresentationRoute.name,
           args: EditPresentationRouteArgs(
             key: key,
-            presentation: presentation,
+            id: id,
           ),
+          rawPathParams: {'id': id},
           initialChildren: children,
         );
 
@@ -344,16 +374,16 @@ class EditPresentationRoute extends PageRouteInfo<EditPresentationRouteArgs> {
 class EditPresentationRouteArgs {
   const EditPresentationRouteArgs({
     this.key,
-    required this.presentation,
+    required this.id,
   });
 
   final Key? key;
 
-  final Presentation presentation;
+  final String id;
 
   @override
   String toString() {
-    return 'EditPresentationRouteArgs{key: $key, presentation: $presentation}';
+    return 'EditPresentationRouteArgs{key: $key, id: $id}';
   }
 }
 
@@ -476,7 +506,7 @@ class PresentationAddFragmentRoute
     Key? key,
     required int displayOder,
     required String presentationId,
-    required bool isAudio,
+    required List<String> fragmentsIds,
     List<PageRouteInfo>? children,
   }) : super(
           PresentationAddFragmentRoute.name,
@@ -484,7 +514,7 @@ class PresentationAddFragmentRoute
             key: key,
             displayOder: displayOder,
             presentationId: presentationId,
-            isAudio: isAudio,
+            fragmentsIds: fragmentsIds,
           ),
           initialChildren: children,
         );
@@ -500,7 +530,7 @@ class PresentationAddFragmentRouteArgs {
     this.key,
     required this.displayOder,
     required this.presentationId,
-    required this.isAudio,
+    required this.fragmentsIds,
   });
 
   final Key? key;
@@ -509,11 +539,11 @@ class PresentationAddFragmentRouteArgs {
 
   final String presentationId;
 
-  final bool isAudio;
+  final List<String> fragmentsIds;
 
   @override
   String toString() {
-    return 'PresentationAddFragmentRouteArgs{key: $key, displayOder: $displayOder, presentationId: $presentationId, isAudio: $isAudio}';
+    return 'PresentationAddFragmentRouteArgs{key: $key, displayOder: $displayOder, presentationId: $presentationId, fragmentsIds: $fragmentsIds}';
   }
 }
 
@@ -586,6 +616,20 @@ class ProfileRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [RecoverPasswordScreen]
+class RecoverPasswordRoute extends PageRouteInfo<void> {
+  const RecoverPasswordRoute({List<PageRouteInfo>? children})
+      : super(
+          RecoverPasswordRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RecoverPasswordRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

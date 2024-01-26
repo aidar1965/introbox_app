@@ -15,7 +15,7 @@ class ImageCreatePresentationBloc
   ImageCreatePresentationBloc() : super(const _ScreenState(fragments: [])) {
     on<ImageCreatePresentationEvent>((event, emitter) => event.map(
         fragmentAdded: (event) => onFragmentAdded(event, emitter),
-        saveImageSubject: (event) => saveImageSubject(event, emitter),
+        saveImageSubject: (event) => saveImagePresentation(event, emitter),
         onReorderFragments: (event) => onReorderFragments(event, emitter),
         onDeleteFragment: (event) => onDeleteFragment(event, emitter)));
     _screenState = const _ScreenState(fragments: []);
@@ -30,21 +30,24 @@ class ImageCreatePresentationBloc
     ImageFragment addedFragment = event.imageFragment;
 
     fragmentsList.add(ImageFragment(
-        imageBytes: addedFragment.imageBytes,
-        isLandscape: true,
+      imageBytes: addedFragment.imageBytes,
+      isLandscape: true,
 
-        /// TODO
-        title: addedFragment.title,
-        description: addedFragment.description,
-        audioBytes: addedFragment.audioBytes,
-        audioPath: addedFragment.audioPath,
-        duration: addedFragment.duration));
+      /// TODO
+      title: addedFragment.title,
+      description: addedFragment.description,
+      audioBytes: addedFragment.audioBytes,
+      audioPath: addedFragment.audioPath,
+      duration: addedFragment.duration,
+      isTitleOverImage: addedFragment.isTitleOverImage,
+    ));
     _screenState = _screenState.copyWith(fragments: fragmentsList);
     emitter(_screenState);
   }
 
-  Future<void> saveImageSubject(_EventSaveImageSubject event,
+  Future<void> saveImagePresentation(_EventSaveImageSubject event,
       Emitter<ImageCreatePresentationState> emitter) async {
+    print(_screenState.fragments.first.isTitleOverImage);
     try {
       await api.addImagePresentation(
           title: event.title,
@@ -53,7 +56,12 @@ class ImageCreatePresentationBloc
               .map((e) => FragmentRequestData(
                   title: e.title,
                   description: e.description ?? '',
-                  image: (file: e.imageBytes, isLandscape: true, fileName: ''),
+                  image: (
+                    file: e.imageBytes,
+                    isLandscape: true,
+                    fileName: '',
+                    isTitleOverImage: e.isTitleOverImage
+                  ),
                   audioBytes: e.audioBytes,
                   duration: e.duration))
               .toList());

@@ -18,7 +18,5 @@ abstract class IAuthController {
 
   void removeChangeListener(VoidCallback listener);
 
-  /// принимает событие о том, что токены успешно обновлены
-  /// получает свежие токены
   Future<void> onAccessTokensUpdated(TokenPair tokenPair);
 }

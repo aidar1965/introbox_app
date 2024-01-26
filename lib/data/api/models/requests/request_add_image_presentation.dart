@@ -47,6 +47,7 @@ class RequestAddImagePresentation extends IApiRequest {
       'images': List.generate(fragments.length, (index) {
         var mime = lookupMimeType('',
             headerBytes: fragments.elementAt(index).image.file);
+
         return MultipartFile.fromBytes(fragments.elementAt(index).image.file,
             headers: {
               'index': [
@@ -59,6 +60,9 @@ class RequestAddImagePresentation extends IApiRequest {
               'extension': [extensionFromMime(mime!)],
               'is_landscape': [
                 fragments.elementAt(index).image.isLandscape.toString()
+              ],
+              'is_title_over_image': [
+                fragments.elementAt(index).image.isTitleOverImage.toString()
               ]
             });
       }).toList(),

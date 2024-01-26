@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:mime/mime.dart';
-import 'package:moki_tutor/domain/models/presentation.dart';
 
 import 'package:printing/printing.dart';
 
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
 import '../../../../../../domain/models/pdf_fragment.dart';
+import '../../../../../domain/models/presentation_with_fragments.dart';
 
 part 'edit_presentation_state.dart';
 part 'edit_presentation_event.dart';
@@ -16,7 +16,7 @@ part 'edit_presentation_bloc.freezed.dart';
 
 class EditPresentationBloc
     extends Bloc<EditPresentationEvent, EditPresentationState> {
-  EditPresentationBloc(this.presentation) : super(const _StatePending()) {
+  EditPresentationBloc(this.id) : super(const _StatePending()) {
     on<EditPresentationEvent>((event, emitter) => event.map(
         initialDataRequested: (_) => onInitialDataRequested(emitter),
         fragmentSelected: (event) => onFragmentSelected(event, emitter),
@@ -30,24 +30,25 @@ class EditPresentationBloc
         updateFragment: (event) => onUpdateFragment(event, emitter),
         deleteFragment: (_) => onDeleteFragment(emitter),
         reorderFragments: (event) => onReorderFragments(event, emitter)));
-    _screenState = _ScreenState(
-        title: presentation.title,
-        description: presentation.description ?? '',
-        fragments: []);
+
     add(const EditPresentationEvent.initialDataRequested());
   }
-  final Presentation presentation;
+
+  final String id;
   final api = getIt<IApi>();
   late _ScreenState _screenState;
   late List<PdfFragment> fragments;
+  late PresentationWithFragments presentationWithfragments;
 
   Future<void> onInitialDataRequested(
       Emitter<EditPresentationState> emitter) async {
     try {
-      fragments = await api.getPresentationFragments(id: presentation.id);
-      _screenState = _screenState.copyWith(
-          fragments: fragments,
-          selectedFragment: fragments.first,
+      presentationWithfragments = await api.getPresentation(id);
+      _screenState = _ScreenState(
+          title: presentationWithfragments.presentation.title,
+          description: presentationWithfragments.presentation.description ?? '',
+          fragments: presentationWithfragments.fragments,
+          selectedFragment: presentationWithfragments.fragments.first,
           presentationUpdatePending: false,
           fragmentUpdatePending: false,
           deleteFragmentPending: false);
@@ -141,7 +142,9 @@ class EditPresentationBloc
 
   Future<void> onUpdateFragment(_EventUpdateFragment event,
       Emitter<EditPresentationState> emitter) async {
-    _screenState = _screenState.copyWith(fragmentUpdatePending: true);
+    _screenState = _screenState.copyWith(
+      fragmentUpdatePending: true,
+    );
     emitter(_screenState);
     try {
       final durationDifference =
@@ -151,10 +154,11 @@ class EditPresentationBloc
                           element.id == _screenState.selectedFragment!.id)
                       .duration ??
                   0);
-      print(durationDifference);
+
       await api.updatePresentationFragment(
           id: _screenState.selectedFragment!.id,
           title: event.title,
+          isTitleOverImage: event.isTitleOverImage,
           description: event.description,
           audioBytes: _screenState.selectedFragment!.audioBytes,
           imageBytes: _screenState.selectedFragment!.imageBytes,
@@ -179,9 +183,7 @@ class EditPresentationBloc
     emitter(_screenState);
     try {
       await api.updatePresentation(
-          id: presentation.id,
-          title: event.title,
-          description: event.description);
+          id: id, title: event.title, description: event.description);
 
       _screenState = _screenState.copyWith(
         presentationUpdatePending: false,

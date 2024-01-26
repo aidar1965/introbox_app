@@ -10,21 +10,24 @@ import 'package:moki_tutor/presentation/common/common_functions.dart';
 import 'package:moki_tutor/presentation/screens/presentations/audio_recording/audio_recording_screen.dart';
 
 import '../../../common/common_elevated_button.dart';
+import '../../../values/dynamic_palette.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
 import 'bloc/presentation_add_fragment_bloc.dart';
 
 @RoutePage()
 class PresentationAddFragmentScreen extends StatelessWidget {
-  PresentationAddFragmentScreen(
-      {super.key,
-      required this.displayOder,
-      required this.presentationId,
-      required this.isAudio});
+  PresentationAddFragmentScreen({
+    super.key,
+    required this.displayOder,
+    required this.presentationId,
+    required this.fragmentsIds,
+  });
 
   final int displayOder;
   final String presentationId;
-  final bool isAudio;
+  final List<String> fragmentsIds;
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
@@ -36,7 +39,9 @@ class PresentationAddFragmentScreen extends StatelessWidget {
         ),
         body: BlocProvider(
             create: (context) => PresentationAddFragmentBloc(
-                presentationId: presentationId, displayOrder: displayOder),
+                presentationId: presentationId,
+                displayOrder: displayOder,
+                fragmentsIds: fragmentsIds),
             child: BlocConsumer<PresentationAddFragmentBloc,
                     PresentationAddFragmentState>(
                 listener: (context, state) => state.mapOrNull(
@@ -50,14 +55,14 @@ class PresentationAddFragmentScreen extends StatelessWidget {
                       orElse: () => throw UnsupportedError(
                           'state not supporting building'),
                       screenState: (state) => _ScreenView(
-                          isSavePending: state.isSavePending,
-                          titleController: titleController,
-                          descriptionController: descriptionController,
-                          duration: state.duration,
-                          image: state.imageBytes,
-                          audioBytes: state.audioBytes,
-                          audioPath: state.audioPath,
-                          isAudio: isAudio),
+                        isSavePending: state.isSavePending,
+                        titleController: titleController,
+                        descriptionController: descriptionController,
+                        duration: state.duration,
+                        image: state.imageBytes,
+                        audioBytes: state.audioBytes,
+                        audioPath: state.audioPath,
+                      ),
                     ))));
   }
 
@@ -71,7 +76,7 @@ class PresentationAddFragmentScreen extends StatelessWidget {
   }
 }
 
-class _ScreenView extends StatelessWidget {
+class _ScreenView extends StatefulWidget {
   _ScreenView(
       {super.key,
       required this.isSavePending,
@@ -80,7 +85,6 @@ class _ScreenView extends StatelessWidget {
       required this.titleController,
       required this.descriptionController,
       this.duration,
-      required this.isAudio,
       this.audioPath});
 
   final bool isSavePending;
@@ -88,18 +92,53 @@ class _ScreenView extends StatelessWidget {
   final Uint8List? audioBytes;
   final String? audioPath;
   final int? duration;
-  final bool isAudio;
 
   final TextEditingController titleController;
   final TextEditingController descriptionController;
 
   @override
+  State<_ScreenView> createState() => _ScreenViewState();
+}
+
+class _ScreenViewState extends State<_ScreenView> {
+  bool isTitleOverImage = false;
+
+  @override
   Widget build(BuildContext context) {
-    return isSavePending
+    return widget.isSavePending
         ? const Center(child: Text('Сохранение данных...'))
         : Row(children: [
             Expanded(
-                child: image != null ? Image.memory(image!) : const SizedBox()),
+                child: widget.image != null
+                    ? Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.memory(widget.image!),
+                          if (isTitleOverImage)
+                            Positioned(
+                                bottom: 20,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Opacity(
+                                      opacity: 0.5,
+                                      child: DecoratedBox(
+                                          decoration: const BoxDecoration(
+                                              color: Colors.black),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Text(
+                                              widget.titleController.text,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          )),
+                                    ),
+                                  ],
+                                ))
+                        ],
+                      )
+                    : const SizedBox()),
             const SizedBox(
               width: 24,
             ),
@@ -114,8 +153,8 @@ class _ScreenView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: NameAndDescriptionWidget(
-                        titleController: titleController,
-                        descriptionController: descriptionController,
+                        titleController: widget.titleController,
+                        descriptionController: widget.descriptionController,
                       ),
                     ),
                     const SizedBox(
@@ -123,8 +162,27 @@ class _ScreenView extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
+                      child: CheckboxListTile(
+                          tileColor: DynamicPalette.light().accent,
+                          title: Text(
+                            'Название поверх изображения',
+                            style: TextStyle(
+                                color: DynamicPalette.light().alwaysWhite),
+                          ),
+                          value: isTitleOverImage,
+                          onChanged: (v) {
+                            setState(() {
+                              isTitleOverImage = !isTitleOverImage;
+                            });
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
                       child: CommonElevatedButton(
-                          text: image == null
+                          text: widget.image == null
                               ? 'Добавить изображение'
                               : 'Изменить изображение',
                           onPressed: () async {
@@ -154,20 +212,20 @@ class _ScreenView extends StatelessWidget {
                     const SizedBox(
                       height: 12,
                     ),
-                    if (image != null && isAudio) ...[
-                      if (audioBytes == null)
+                    if (widget.image != null) ...[
+                      if (widget.audioBytes == null)
                         const Padding(
                           padding: EdgeInsets.only(
                             bottom: 12,
                           ),
                           child: Text('Аудио отсутствует'),
                         ),
-                      if (audioBytes != null)
+                      if (widget.audioBytes != null)
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 25),
                           child: AudioPlayerWidget(
-                              urlSource: audioPath!,
-                              duration: duration!,
+                              urlSource: widget.audioPath!,
+                              duration: widget.duration!,
                               onDelete: () =>
                                   BlocProvider.of<PresentationAddFragmentBloc>(
                                           context)
@@ -183,7 +241,7 @@ class _ScreenView extends StatelessWidget {
                             text: 'Записать аудио',
                             onPressed: () async {
                               final result = await _showRecorder(context,
-                                  imageData: image!);
+                                  imageData: widget.image!);
                               if (result != null && context.mounted) {
                                 BlocProvider.of<PresentationAddFragmentBloc>(
                                         context)
@@ -248,9 +306,10 @@ class _ScreenView extends StatelessWidget {
                                       context)
                                   .add(PresentationAddFragmentEvent
                                       .fragmentSaveClicked(
-                                          title: titleController.text,
-                                          description:
-                                              descriptionController.text))),
+                                title: widget.titleController.text,
+                                description: widget.descriptionController.text,
+                                isTitleOverImage: isTitleOverImage,
+                              ))),
                     ),
                     const SizedBox(
                       width: 24,

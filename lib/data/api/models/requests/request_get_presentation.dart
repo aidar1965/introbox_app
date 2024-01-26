@@ -5,7 +5,7 @@ class RequestGetPresentation extends IApiRequest {
 
   RequestGetPresentation({
     required this.id,
-  }) : super(methodType: AvailableApiMethods.get, url: '/presentation/');
+  }) : super(methodType: AvailableApiMethods.get, url: '/user/presentation/');
 
   @override
   Map<String, Object?>? get queryParameters => {

@@ -14,17 +14,19 @@ class RequestEditPresentationFragment extends IApiRequest {
   final Uint8List? audioBytes;
   final int? duration;
   final int? presentationDurationDifference;
+  final bool isTitleOverImage;
 
-  RequestEditPresentationFragment({
-    required this.id,
-    this.title,
-    this.description,
-    this.imageBytes,
-    this.isLandscape,
-    this.audioBytes,
-    this.duration,
-    this.presentationDurationDifference,
-  }) : super(
+  RequestEditPresentationFragment(
+      {required this.id,
+      this.title,
+      this.description,
+      this.imageBytes,
+      this.isLandscape,
+      this.audioBytes,
+      this.duration,
+      this.presentationDurationDifference,
+      required this.isTitleOverImage})
+      : super(
             methodType: AvailableApiMethods.put,
             url: '/presentation/fragment/');
 
@@ -38,6 +40,7 @@ class RequestEditPresentationFragment extends IApiRequest {
       'title': title,
       'description': description,
       'is_landscape': isLandscape,
+      'is_title_over_image': isTitleOverImage,
       'presentation_duration_difference': presentationDurationDifference
     };
 

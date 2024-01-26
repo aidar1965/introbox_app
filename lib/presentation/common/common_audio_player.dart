@@ -10,12 +10,14 @@ class CommonAudioPlayer extends StatefulWidget {
   const CommonAudioPlayer(
       {super.key,
       this.onEnd,
-      required this.audioUrl,
-      required this.audioDurationInSeconds});
+      this.audioUrl,
+      this.audioDurationInSeconds,
+      this.onClicked});
 
   final void Function()? onEnd;
-  final String audioUrl;
-  final int audioDurationInSeconds;
+  final String? audioUrl;
+  final int? audioDurationInSeconds;
+  final void Function()? onClicked;
 
   @override
   State<CommonAudioPlayer> createState() => _CommonAudioPlayerState();
@@ -64,24 +66,27 @@ class _CommonAudioPlayerState extends State<CommonAudioPlayer> {
 
   /// Строка с длительностью аудио
   Future<void> _setAudioDurationString() async {
-    audioDuration = Duration(seconds: widget.audioDurationInSeconds);
-    print('duration: $audioDuration');
-    setState(() {
-      recordDuration =
-          '${audioDuration!.inMinutes}:${audioDuration!.inSeconds % 60}';
-      if (audioDuration!.inSeconds % 60 < 10) {
+    if (widget.audioDurationInSeconds != null) {
+      audioDuration = Duration(seconds: widget.audioDurationInSeconds!);
+      print('duration: $audioDuration');
+      setState(() {
         recordDuration =
-            '${audioDuration!.inMinutes}:0${audioDuration!.inSeconds % 60}';
-      }
-    });
+            '${audioDuration!.inMinutes}:${audioDuration!.inSeconds % 60}';
+        if (audioDuration!.inSeconds % 60 < 10) {
+          recordDuration =
+              '${audioDuration!.inMinutes}:0${audioDuration!.inSeconds % 60}';
+        }
+      });
+    }
   }
 
   Future<void> _startPlay() async {
-    print('start playing ${widget.audioUrl}');
-    await player.play(UrlSource(widget.audioUrl), volume: 1);
-    setState(() {
-      playerStatus = PlayerStatus.play;
-    });
+    if (widget.audioUrl != null) {
+      await player.play(UrlSource(widget.audioUrl!), volume: 1);
+      setState(() {
+        playerStatus = PlayerStatus.play;
+      });
+    }
   }
 
   Future<void> stopPlayer() async {

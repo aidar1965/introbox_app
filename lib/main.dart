@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
-import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
+
+import 'package:moki_tutor/presentation/theme/theme_builder.dart';
+import 'package:moki_tutor/presentation/theme/theme_type.dart';
 
 //import 'domain/constants.dart';
 import 'domain/locator/locator.dart';
 import 'presentation/auto_router/app_router.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
+import 'presentation/values/dynamic_palette.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  // Must add this line.
 
   // await Constants.init();
 
   setup();
 
   await getIt.allReady();
-  print(getIt<IUserRepository>().user?.lastName ?? 'No user was uninitialized');
 
   runApp(EasyLocalization(
       supportedLocales: const [
@@ -28,7 +29,7 @@ Future<void> main() async {
       ],
       path: 'assets/languages',
       fallbackLocale: const Locale('ru', 'RU'),
-      child: const DynamicTheme(child: Application())));
+      child: const Application()));
   setUrlStrategy(PathUrlStrategy());
 }
 
@@ -47,8 +48,8 @@ class Application extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      title: 'Moki Tutor',
-      theme: DynamicTheme.themeOf(context),
+      title: 'IntroBox Studio',
+      theme: ThemeBuilder.getTheme(ThemeTypes.light, DynamicPalette.light()),
     );
   }
 }

@@ -7,4 +7,6 @@ class PresentationEvent with _$PresentationEvent {
   const factory PresentationEvent.nextSlideClicked() = _EventNextSlideClicked;
   const factory PresentationEvent.previousSlideClicked() =
       _EventPreviousSlideClicked;
+  const factory PresentationEvent.fragmentClicked(int index) =
+      _EventFragmentClicked;
 }

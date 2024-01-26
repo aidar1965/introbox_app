@@ -16,6 +16,7 @@ PdfFragmentDto _$PdfFragmentDtoFromJson(Map<String, dynamic> json) =>
       audioPath: json['audio_path'] as String?,
       duration: json['duration'] as int?,
       displayOrder: json['display_order'] as int,
+      isTitleOverImage: json['is_title_over_image'] as bool,
     );
 
 Map<String, dynamic> _$PdfFragmentDtoToJson(PdfFragmentDto instance) =>
@@ -28,4 +29,5 @@ Map<String, dynamic> _$PdfFragmentDtoToJson(PdfFragmentDto instance) =>
       'is_landscape': instance.isLandscape,
       'audio_path': instance.audioPath,
       'display_order': instance.displayOrder,
+      'is_title_over_image': instance.isTitleOverImage,
     };
