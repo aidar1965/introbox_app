@@ -11,7 +11,7 @@ PdfFragmentDto _$PdfFragmentDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      imagePath: json['image_path'] as String,
+      imagePath: json['image_path'] as String?,
       isLandscape: json['is_landscape'] as bool,
       audioPath: json['audio_path'] as String?,
       duration: json['duration'] as int?,

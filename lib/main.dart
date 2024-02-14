@@ -48,7 +48,7 @@ class Application extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      title: 'IntroBox Studio',
+      title: 'IntroBox',
       theme: ThemeBuilder.getTheme(ThemeTypes.light, DynamicPalette.light()),
     );
   }

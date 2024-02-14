@@ -2,6 +2,10 @@ part of 'pdf_create_presentation_bloc.dart';
 
 @freezed
 class PdfCreatePresentationEvent with _$PdfCreatePresentationEvent {
+  const factory PdfCreatePresentationEvent.initialDataRequested() =
+      _EventInitialDataRequested;
+  const factory PdfCreatePresentationEvent.channelSelected(
+      {required Channel channel}) = _EventChannelSelected;
   const factory PdfCreatePresentationEvent.convertPdf(
       {required Uint8List pdfFile}) = _EventConvertFile;
   const factory PdfCreatePresentationEvent.savePdfPresentation(

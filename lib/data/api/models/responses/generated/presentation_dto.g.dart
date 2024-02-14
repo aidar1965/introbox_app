@@ -11,7 +11,7 @@ PresentationDto _$PresentationDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String?,
-      firstImage: json['first_image'] as String,
+      firstImage: json['first_image'] as String?,
       createdAt: json['created_at'] as String,
       duration: json['duration'] as int?,
       isPublished: json['is_published'] as bool,
@@ -22,6 +22,7 @@ PresentationDto _$PresentationDtoFromJson(Map<String, dynamic> json) =>
       includePdf: json['include_pdf'] as bool,
       freeMode: json['free_mode'] as bool,
       links: json['links'] as String?,
+      channelDto: ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PresentationDtoToJson(PresentationDto instance) =>
@@ -40,4 +41,5 @@ Map<String, dynamic> _$PresentationDtoToJson(PresentationDto instance) =>
       'include_pdf': instance.includePdf,
       'free_mode': instance.freeMode,
       'links': instance.links,
+      'channel': instance.channelDto,
     };

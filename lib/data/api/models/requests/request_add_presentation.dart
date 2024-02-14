@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -12,6 +13,7 @@ class RequestAddPresentation extends IApiRequest {
   final Uint8List pdfFile;
   final String pdfFileName;
   final String title;
+  final String channelId;
   final String? description;
   final bool isAudio;
   final List<FragmentRequestData> fragments;
@@ -21,6 +23,7 @@ class RequestAddPresentation extends IApiRequest {
     required this.pdfFile,
     required this.pdfFileName,
     required this.title,
+    required this.channelId,
     this.description,
     required this.fragments,
     required this.isAudio,
@@ -30,24 +33,34 @@ class RequestAddPresentation extends IApiRequest {
   @override
   Future<FormData>? get formData async {
     List<MultipartFile> audio = [];
+    List<MultipartFile> images = [];
+    List<Map<String, dynamic>> fragmentsBaseData = [];
+
     int index = 0;
     for (final f in fragments) {
+      fragmentsBaseData.add({
+        'title': f.title,
+        'description': f.description,
+        'duration': f.duration,
+        'is_title_over_image': f.image?.isTitleOverImage ?? true
+      });
       if (f.audioBytes != null) {
-        var mime = lookupMimeType('', headerBytes: f.audioBytes);
-        print(extensionFromMime(mime!));
         audio.add(MultipartFile.fromBytes(f.audioBytes!, headers: {
           'index': ['$index'],
-          if (f.duration != null)
-            'duration': [
-              f.duration!.toString(),
-            ],
-          'extension': ['.${extensionFromMime(mime)}'],
-          'is_title_over_image': [f.image.isTitleOverImage.toString()]
+          'extension': [f.audioExtension!],
+        }));
+      }
+      if (f.image != null) {
+        var mime = lookupMimeType('', headerBytes: f.image!.file);
+
+        images.add(MultipartFile.fromBytes(f.image!.file, headers: {
+          'index': ['$index'],
+          'extension': [extensionFromMime(mime!)]
         }));
       }
       index++;
     }
-    print('sending audio ${audio.length} items');
+
     return FormData.fromMap({
       'pdf_file': MultipartFile.fromBytes(pdfFile, headers: {
         'filename': [basename(pdfFileName)]
@@ -56,24 +69,11 @@ class RequestAddPresentation extends IApiRequest {
       'title': title,
       'description': description,
       'images_count': fragments.length,
-      'images': List.generate(
-          fragments.length,
-          (index) => MultipartFile.fromBytes(
-                  fragments.elementAt(index).image.file,
-                  headers: {
-                    'index': [
-                      '$index',
-                    ],
-                    'title': [
-                      fragments.elementAt(index).title,
-                    ],
-                    'description': [fragments.elementAt(index).description],
-                    'is_landscape': [
-                      fragments.elementAt(index).image.isLandscape.toString()
-                    ]
-                  })).toList(),
+      'fragments_data': jsonEncode(fragmentsBaseData),
+      'images': images,
       'audio': audio,
       'duration': duration,
+      'channel_id': channelId,
     });
   }
 }

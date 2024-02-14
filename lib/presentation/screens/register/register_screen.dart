@@ -30,7 +30,9 @@ class RegisterScreen extends StatelessWidget {
                   child: BlocConsumer<RegisterBloc, RegisterState>(
                     listener: (context, state) => state.mapOrNull(
                       requestError: (state) => _onRequestError(
-                          context, state.errorText ?? 'Что-то пошло не так...'),
+                          context,
+                          state.errorText ??
+                              'Произошла ошибка запроса. Попробуйте позже'),
                       requestSuccess: (_) => _onRequestSuccess(context),
                     ),
                     buildWhen: (pr, curr) => curr.maybeMap(
@@ -67,6 +69,7 @@ class RegisterScreen extends StatelessWidget {
                             height: 30,
                           ),
                           CommonElevatedButton(
+                              isPending: state.isPending,
                               onPressed: () {
                                 BlocProvider.of<RegisterBloc>(context).add(
                                     RegisterEvent.register(

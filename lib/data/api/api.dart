@@ -5,16 +5,22 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
+import 'package:moki_tutor/data/api/models/requests/request_add_channel.dart';
+import 'package:moki_tutor/data/api/models/requests/request_add_company.dart';
 import 'package:moki_tutor/data/api/models/requests/request_add_fragment_category.dart';
 import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categories.dart';
 import 'package:moki_tutor/data/api/models/requests/request_recover_password.dart';
 
 import 'package:moki_tutor/data/api/models/requests/request_update_fragment_category.dart';
+import 'package:moki_tutor/data/api/models/responses/channel_dto.dart';
+import 'package:moki_tutor/data/api/models/responses/company_dto.dart';
 import 'package:moki_tutor/data/api/models/responses/fragment_category_dto.dart';
 import 'package:moki_tutor/data/api/models/responses/presentation_dto.dart';
 import 'package:moki_tutor/data/api/models/responses/subject_dto.dart';
 
 import 'package:moki_tutor/domain/interfaces/i_api.dart';
+import 'package:moki_tutor/domain/models/channel.dart';
+import 'package:moki_tutor/domain/models/company.dart';
 import 'package:moki_tutor/domain/models/fragment_category.dart';
 import 'package:moki_tutor/domain/models/responses/paginated_courses.dart';
 import 'package:moki_tutor/domain/models/subject_category.dart';
@@ -22,10 +28,8 @@ import 'package:moki_tutor/domain/models/subject_category.dart';
 import 'package:moki_tutor/domain/models/user.dart';
 import 'package:moki_tutor/domain/models/course.dart';
 
-import '../../domain/interfaces/i_auth_controller.dart';
-import '../../domain/locator/locator.dart';
 import '../../domain/models/fragment.dart';
-import '../../domain/models/image_fragment.dart';
+//import '../../domain/models/image_fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
 
 import '../../domain/models/presentation_with_fragments.dart';
@@ -36,17 +40,20 @@ import 'http_client/http_client.dart';
 import 'mapper/mapper.dart';
 import 'models/requests/fragment_request_data.dart';
 import 'models/requests/register_request.dart';
+import 'models/requests/request_add_company_to_channel.dart';
 import 'models/requests/request_add_course.dart';
 import 'models/requests/request_add_fragment.dart';
 import 'models/requests/request_add_image_presentation.dart';
-import 'models/requests/request_add_image_subject.dart';
-import 'models/requests/request_add_pdf_subject.dart';
+//import 'models/requests/request_add_image_subject.dart';
+//import 'models/requests/request_add_pdf_subject.dart';
 import 'models/requests/request_add_presentation.dart';
 import 'models/requests/request_add_presentation_fragment.dart';
 import 'models/requests/request_add_presentation_password.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
+import 'models/requests/request_check_password.dart';
 import 'models/requests/request_confirmation.dart';
+import 'models/requests/request_delete_company.dart';
 import 'models/requests/request_delete_course.dart';
 import 'models/requests/request_delete_fragment.dart';
 import 'models/requests/request_delete_fragment_category.dart';
@@ -54,11 +61,17 @@ import 'models/requests/request_delete_presentation.dart';
 import 'models/requests/request_delete_presentation_fragment.dart';
 import 'models/requests/request_delete_subject.dart';
 import 'models/requests/request_delete_subject_categories.dart';
+import 'models/requests/request_edit_channel.dart';
+import 'models/requests/request_edit_company.dart';
 import 'models/requests/request_edit_presentation_fragment.dart';
 import 'models/requests/request_edit_subject.dart';
+import 'models/requests/request_get_channels.dart';
+import 'models/requests/request_get_companies.dart';
 import 'models/requests/request_get_presentation.dart';
 import 'models/requests/request_get_presentation_fragments.dart';
 import 'models/requests/request_get_presentations.dart';
+import 'models/requests/request_get_public_presentation.dart';
+import 'models/requests/request_get_public_presentations.dart';
 import 'models/requests/request_get_subject_categories.dart';
 import 'models/requests/request_get_subject_fragments.dart';
 import 'models/requests/request_get_subjects.dart';
@@ -69,12 +82,14 @@ import 'models/requests/request_login.dart';
 import 'models/requests/request_publish_presentation.dart';
 import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_reorder_presentation_fragments.dart';
+import 'models/requests/request_send_password.dart';
 import 'models/requests/request_set_password.dart';
 import 'models/requests/request_update_fragment.dart';
 import 'models/requests/request_update_presentation.dart';
 import 'models/requests/request_update_subject.dart';
 import 'models/requests/request_update_subject_category.dart';
 import 'models/requests/request_update_user.dart';
+import 'models/responses/check_password_dto.dart';
 import 'models/responses/course_dto.dart';
 import 'models/responses/pdf_fragment_dto.dart';
 
@@ -89,8 +104,6 @@ typedef _JsonObject = Map<String, Object?>;
 class Api implements IApi {
   ApiDataMapper mapper = ApiDataMapper();
   DioClient httpClient = DioClient();
-
-  final authController = getIt<IAuthController>();
 
   @override
   Future<void> register({
@@ -189,21 +202,21 @@ class Api implements IApi {
     httpClient.clearTokens();
   }
 
-  @override
-  Future<void> addPdfSubject(
-      {required String pdfFileName,
-      required Uint8List pdfFile,
-      required String title,
-      String? description,
-      required List<FragmentRequestData> fragments,
-      int? duration}) async {
-    await httpClient.request(RequestAddPdfSubject(
-        pdfFile: pdfFile,
-        title: title,
-        pdfFileName: pdfFileName,
-        description: description,
-        fragments: fragments));
-  }
+  // @override
+  // Future<void> addPdfSubject(
+  //     {required String pdfFileName,
+  //     required Uint8List pdfFile,
+  //     required String title,
+  //     String? description,
+  //     required List<FragmentRequestData> fragments,
+  //     int? duration}) async {
+  //   await httpClient.request(RequestAddPdfSubject(
+  //       pdfFile: pdfFile,
+  //       title: title,
+  //       pdfFileName: pdfFileName,
+  //       description: description,
+  //       fragments: fragments));
+  // }
 
   @override
   Future<PaginatedSubjects> getSubjects(
@@ -352,15 +365,15 @@ class Api implements IApi {
     await httpClient.request(RequestDeleteCourse(id: id));
   }
 
-  @override
-  Future<void> addImageSubject(
-      {required String title,
-      String? description,
-      required List<ImageFragment> fragments,
-      int? duration}) async {
-    await httpClient.request(RequestAddImageSubject(
-        title: title, description: description, fragments: fragments));
-  }
+  // @override
+  // Future<void> addImageSubject(
+  //     {required String title,
+  //     String? description,
+  //     required List<ImageFragment> fragments,
+  //     int? duration}) async {
+  //   await httpClient.request(RequestAddImageSubject(
+  //       title: title, description: description, fragments: fragments));
+  // }
 
   @override
   Future<User> getUser() async {
@@ -488,6 +501,7 @@ class Api implements IApi {
   Future<void> addPresentation(
       {required Uint8List pdfFile,
       required String pdfFileName,
+      required String channelId,
       required String title,
       required bool isAudio,
       String? description,
@@ -497,6 +511,7 @@ class Api implements IApi {
         pdfFile: pdfFile,
         pdfFileName: pdfFileName,
         title: title,
+        channelId: channelId,
         description: description,
         fragments: fragments,
         isAudio: isAudio,
@@ -517,14 +532,18 @@ class Api implements IApi {
       Uint8List? imageBytes,
       bool? isLandscape,
       Uint8List? audioBytes,
+      String? audioExtension,
       int? presentationDurationDifference,
       int? duration}) async {
+    print('updating fragment');
+    print(audioBytes != null);
     await httpClient.request(RequestEditPresentationFragment(
         id: id,
         title: title,
         description: description,
         imageBytes: imageBytes,
         audioBytes: audioBytes,
+        audioExtension: audioExtension,
         duration: duration,
         isLandscape: isLandscape,
         isTitleOverImage: isTitleOverImage,
@@ -534,11 +553,13 @@ class Api implements IApi {
   @override
   Future<void> addImagePresentation(
       {required String title,
+      required String channelId,
       String? description,
       required List<FragmentRequestData> fragments,
       int? duration}) async {
     await httpClient.request(RequestAddImagePresentation(
         title: title,
+        channelId: channelId,
         fragments: fragments,
         description: description,
         duration: duration));
@@ -547,7 +568,7 @@ class Api implements IApi {
   @override
   Future<PresentationWithFragments> getPresentation(String id) async {
     final result = await httpClient.request(RequestGetPresentation(id: id));
-
+    print(result?.data);
     return mapper.mapPresentationWithFragments(
         PresentationWithFragmentsDto.fromJson(
             jsonDecode(result!.data as String)));
@@ -576,5 +597,138 @@ class Api implements IApi {
         oldPassword: oldPassword,
         password: password,
         confirmPassword: confirmPassword));
+  }
+
+  @override
+  Future<List<Channel>> getChannels() async {
+    final result = await httpClient.request(RequestGetChannels());
+    return (jsonDecode(result!.data as String) as List)
+        .map((e) => mapper.mapChannel(ChannelDto.fromJson(e)))
+        .toList();
+  }
+
+  @override
+  Future<void> addChannel(
+      {required String title,
+      String? description,
+      String? companyId,
+      required int channelTypeId,
+      required bool isPublic}) async {
+    await httpClient.request(RequestAddChannel(
+        title: title,
+        channelTypeId: channelTypeId,
+        description: description,
+        companyId: companyId,
+        isPublic: isPublic));
+  }
+
+  @override
+  Future<void> editChannel(
+      {required String channelId,
+      required String title,
+      String? description,
+      required int channelTypeId,
+      required bool isPublic}) async {
+    await httpClient.request(RequestEditChannel(
+        channelId: channelId,
+        title: title,
+        channelTypeId: channelTypeId,
+        description: description,
+        isPublic: isPublic));
+  }
+
+  @override
+  Future<void> addCompany(
+      {required String name, String? website, String? description}) async {
+    await httpClient.request(RequestAddCompany(
+      name: name,
+      description: description,
+      website: website,
+    ));
+  }
+
+  @override
+  Future<void> addCompanyToChannel(
+      {String? companyId, required String channelId}) async {
+    await httpClient.request(
+        RequestAddCompanyToChannel(channelId: channelId, companyId: companyId));
+  }
+
+  @override
+  Future<void> changeChannelCompany(
+      {required String companyId, required String channelId}) {
+    // TODO: implement changeChannelCompany
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteCompany({
+    required String companyId,
+  }) async {
+    await httpClient.request(RequestDeleteCompany(companyId: companyId));
+  }
+
+  @override
+  Future<void> editCompany(
+      {required String companyId,
+      required String name,
+      String? website,
+      String? description}) async {
+    await httpClient.request(RequestEditCompany(
+        companyId: companyId,
+        name: name,
+        description: description,
+        website: website));
+  }
+
+  @override
+  Future<void> removeChannelCompany(
+      {required String companyId, required String channelId}) {
+    // TODO: implement removeChannelCompany
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Company>> getCompanies() async {
+    final result = await httpClient.request(RequestGetCompanies());
+    return (jsonDecode(result!.data as String) as List)
+        .map((e) => mapper.mapCompany(CompanyDto.fromJson(e)))
+        .toList();
+  }
+
+  @override
+  Future<PaginatedPresentations> getPublicPresentations(
+      {int? offset, int? limit, int? categoryId}) async {
+    final result = await httpClient.request(RequestGetPublicPresentations(
+        limit: limit, offset: offset, categoryId: categoryId));
+    return PaginatedPresentations(
+      offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
+      count: int.parse(result.headers['X-Total-Count']!.first),
+      presentations: (result.data as List).map(
+        (e) => mapper.mapPresentation(PresentationDto.fromJson(e)),
+      ),
+    );
+  }
+
+  @override
+  Future<bool> checkPresentationPassword(String id) async {
+    final result = await httpClient.request(RequestCheckPassword(id: id));
+    return mapper.mapCheckPassword(
+        CheckPasswordDto.fromJson(jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> sendPassword(
+      {required String id, required String password}) async {
+    await httpClient.request(RequestSendPassword(id: id, password: password));
+  }
+
+  @override
+  Future<PresentationWithFragments> getPublicPresentation(String id) async {
+    final result =
+        await httpClient.request(RequestGetPublicPresentation(id: id));
+    return mapper.mapPresentationWithFragments(
+        PresentationWithFragmentsDto.fromJson(
+            jsonDecode(result!.data as String)));
   }
 }

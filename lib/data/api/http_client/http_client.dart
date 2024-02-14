@@ -15,7 +15,7 @@ import 'request_exception.dart';
 
 class DioClient {
   DioClient({bool useLocaleSettings = false}) {
-    _baseUrl = 'https://studio.introbox.app/api';
+    _baseUrl = 'https://introbox.app/api';
 
     // настройка использования разных языков
     if (useLocaleSettings) {
@@ -232,6 +232,7 @@ class DioClient {
   // ---------------------------------------------------------------------------
   // обновление токена в отдельном клиенте
   Future<Map<String, Object?>?> _requestNewToken() async {
+    print('refreshing token');
     if (_refreshToken?.isEmpty ?? true) {
       return null;
     }
@@ -282,7 +283,7 @@ class DioClient {
 
   // ---------------------------------------------------------------------------
   void setTokens(String access, String refresh) {
-    _initNewDioClient(accessToken: access);
+    _initNewDioClient(accessToken: access, refreshToken: refresh);
     _refreshToken = refresh;
   }
 

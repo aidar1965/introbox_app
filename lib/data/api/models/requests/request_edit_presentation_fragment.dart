@@ -12,6 +12,7 @@ class RequestEditPresentationFragment extends IApiRequest {
   final Uint8List? imageBytes;
   final bool? isLandscape;
   final Uint8List? audioBytes;
+  final String? audioExtension;
   final int? duration;
   final int? presentationDurationDifference;
   final bool isTitleOverImage;
@@ -23,6 +24,7 @@ class RequestEditPresentationFragment extends IApiRequest {
       this.imageBytes,
       this.isLandscape,
       this.audioBytes,
+      this.audioExtension,
       this.duration,
       this.presentationDurationDifference,
       required this.isTitleOverImage})
@@ -45,10 +47,11 @@ class RequestEditPresentationFragment extends IApiRequest {
     };
 
     if (audioBytes != null) {
-      var mime = lookupMimeType('', headerBytes: audioBytes);
       audio = MultipartFile.fromBytes(audioBytes!, headers: {
-        'extension': [extensionFromMime(mime!)]
+        // 'extension': [extensionFromMime(mime!)]
+        'extension': [audioExtension!]
       });
+
       formDataMap['audio'] = audio;
       formDataMap['duration'] = duration!;
     }

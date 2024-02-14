@@ -9,9 +9,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
 
 import 'package:path/path.dart';
 
+import '../../../../domain/models/channel.dart';
+import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
 
 import '../../../../../domain/models/pdf_fragment_sample.dart';
@@ -24,20 +27,88 @@ import '../audio_recording/audio_recording_screen.dart';
 import 'bloc/pdf_create_presentation_bloc.dart';
 
 @RoutePage()
-class PdfCreatePresentationScreen extends StatefulWidget {
+class PdfCreatePresentationScreen extends StatelessWidget {
   const PdfCreatePresentationScreen({Key? key}) : super(key: key);
 
   @override
-  State<PdfCreatePresentationScreen> createState() =>
-      _PdfCreatePresentationScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              context.router.push(const PresentationsRoute());
+            },
+          ),
+          title: const Text(
+            'Новая презентация из PDF файла',
+          )),
+      body: BlocProvider<PdfCreatePresentationBloc>(
+          create: (context) => PdfCreatePresentationBloc(),
+          child: BlocConsumer<PdfCreatePresentationBloc,
+                  PdfCreatePresentationState>(
+              listener: (context, state) => state.mapOrNull(
+                  saveSuccess: (_) {
+                    CommonFunctions.showMessage(
+                        context, 'Презентация создана', Reason.neutral);
+                    context.router.pop(true);
+                    return null;
+                  },
+                  saveError: (state) => CommonFunctions.showMessage(
+                      context,
+                      'Произошла ошибка при сохранении презентации',
+                      Reason.error)),
+              buildWhen: (previous, current) => current.map(
+                  pending: (_) => true,
+                  initialDataNotLoaded: (_) => true,
+                  screenState: (c) => true,
+                  saveSuccess: (c) => false,
+                  saveError: (c) => false),
+              builder: (context, state) => state.maybeMap(
+                  orElse: () => throw UnsupportedError(
+                      'wrong state for PdfCreatePresentationScreen'),
+                  pending: (_) =>
+                      const Center(child: CircularProgressIndicator()),
+                  initialDataNotLoaded: (_) => CommonLoadingErrorWidget(
+                      onPressed: () => BlocProvider.of<
+                              PdfCreatePresentationBloc>(context)
+                          .add(
+                              const PdfCreatePresentationEvent.initialDataRequested())),
+                  screenState: (state) => _ScreenView(
+                        channels: state.channels,
+                        selectedChannel: state.selectedChanel,
+                        isPending: state.isPending,
+                        pdfFragmentList: state.pdfFragmentList,
+                        countFileGenerated: state.countFileGenerated,
+                      )))),
+    );
+  }
 }
 
-class _PdfCreatePresentationScreenState
-    extends State<PdfCreatePresentationScreen> {
+class _ScreenView extends StatefulWidget {
+  const _ScreenView(
+      {super.key,
+      required this.channels,
+      required this.selectedChannel,
+      this.pdfFragmentList,
+      required this.isPending,
+      this.countFileGenerated});
+
+  final List<Channel> channels;
+  final Channel selectedChannel;
+  final List<PdfFragmentSample>? pdfFragmentList;
+  final bool isPending;
+  final int? countFileGenerated;
+
+  @override
+  State<_ScreenView> createState() => _ScreenViewState();
+}
+
+class _ScreenViewState extends State<_ScreenView> {
   Uint8List? pdfFile;
   String? pdfFileName;
   List<Uint8List?> audioBytesList = [];
   List<String?> audioPathList = [];
+  List<String?> extensionList = [];
   List<TextEditingController> recordTitleControllerList = [];
   List<TextEditingController> recordDescriptionControllerList = [];
   List<int?> audioDurationList = [];
@@ -50,149 +121,36 @@ class _PdfCreatePresentationScreenState
 
   @override
   void initState() {
+    super.initState();
     title = titleController.text;
     titleController.addListener(() {
       title = titleController.text;
     });
-    super.initState();
+    if (widget.pdfFragmentList != null) {
+      for (var i = 0; i < widget.pdfFragmentList!.length; i++) {
+        recordTitleControllerList.add(TextEditingController());
+        recordDescriptionControllerList.add(TextEditingController());
+        audioPathList.add(null);
+        audioBytesList.add(null);
+        audioDurationList.add(null);
+        extensionList.add(null);
+      }
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-        'Новая презентация из PDF файла',
-      )),
-      body: BlocProvider<PdfCreatePresentationBloc>(
-          create: (context) => PdfCreatePresentationBloc(),
-          child: BlocConsumer<PdfCreatePresentationBloc,
-                  PdfCreatePresentationState>(
-              listener: (context, state) => state.mapOrNull(
-                  saveSuccess: (_) {
-                    CommonFunctions.showMessage(
-                        context, 'Презентация создана', Reason.neutral);
-                    context.router.pop(true);
-                    return null;
-                  },
-                  saveError: (_) => CommonFunctions.showMessage(
-                      context,
-                      'Произошла ошибка при сохранении презентации',
-                      Reason.error)),
-              buildWhen: (previous, current) => current.map(
-                  screenState: (c) => true,
-                  saveSuccess: (c) => false,
-                  saveError: (c) => false),
-              builder: (context, state) => state.maybeMap(
-                  orElse: () => throw UnsupportedError(
-                      'wrong state for PdfCreatePresentationScreen'),
-                  screenState: (state) {
-                    if (state.pdfFragmentList != null) {
-                      for (var i = 0; i < state.pdfFragmentList!.length; i++) {
-                        recordTitleControllerList.add(TextEditingController());
-                        recordDescriptionControllerList
-                            .add(TextEditingController());
-                        audioPathList.add(null);
-                        audioBytesList.add(null);
-                        audioDurationList.add(null);
-                      }
-                    }
-
-                    return Row(children: [
-                      const SizedBox(width: 24),
-                      Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 24),
-                            NameAndDescriptionWidget(
-                              titleController: titleController,
-                              descriptionController: descriptionController,
-                            ),
-                            const SizedBox(height: 20),
-                            CommonElevatedButton(
-                              onPressed: () => _onSelectFile(context),
-                              text: 'Выберите PDF файл',
-                            ),
-                            const SizedBox(height: 20),
-                            if (pdfFile != null) ...[
-                              Text(basename(pdfFileName!)),
-                              const SizedBox(height: 20),
-                              CommonElevatedButton(
-                                isPending: state.isPending,
-                                onPressed: () {
-                                  final pdfFragmentList = <PdfFragmentSample>[];
-                                  for (int i = 0;
-                                      i < state.pdfFragmentList!.length;
-                                      i++) {
-                                    pdfFragmentList.add(PdfFragmentSample(
-                                        image: state.pdfFragmentList!
-                                            .elementAt(i)
-                                            .image,
-                                        audioBytes: audioBytesList[i],
-                                        title: recordTitleControllerList
-                                            .elementAt(i)
-                                            .text,
-                                        description:
-                                            recordDescriptionControllerList
-                                                .elementAt(i)
-                                                .text,
-                                        duration: audioDurationList[i],
-                                        isTitleOverImage: isTitleOverImage));
-                                  }
-                                  BlocProvider.of<PdfCreatePresentationBloc>(
-                                          context)
-                                      .add(PdfCreatePresentationEvent
-                                          .savePdfPresentation(
-                                              pdfFile: pdfFile!,
-                                              pdfFileName: pdfFileName!,
-                                              title: titleController.text,
-                                              description:
-                                                  descriptionController.text,
-                                              pdfFragmentList: pdfFragmentList,
-                                              isAudio: isAudio));
-
-                                  /// TODO
-                                },
-                                text: 'Создать тему',
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      if (Responsive.isMobile(context) == false) ...[
-                        Expanded(
-                          flex: 4,
-                          child: state.countFileGenerated != null
-                              ? Center(
-                                  child: Text(
-                                      'Генерация слайдов: ${state.countFileGenerated}'))
-                              : state.isPending
-                                  ? const Center(
-                                      child: CircularProgressIndicator())
-                                  : _FragmentListView(
-                                      isAudio: isAudio,
-                                      pdfFragmentList:
-                                          state.pdfFragmentList ?? [],
-                                      titleControllerList:
-                                          recordTitleControllerList,
-                                      descriptionControllerList:
-                                          recordDescriptionControllerList,
-                                      onPathChanged: (f, p, s, i) {
-                                        audioPathList[i] = p;
-                                        audioBytesList[i] = f;
-                                        audioDurationList[i] = s;
-                                      },
-                                      isTitleOverImage: false,
-                                      title: title),
-                        ),
-                      ],
-                    ]);
-                  }))),
-    );
+  void didUpdateWidget(_ScreenView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.pdfFragmentList != null) {
+      for (var i = 0; i < widget.pdfFragmentList!.length; i++) {
+        recordTitleControllerList.add(TextEditingController());
+        recordDescriptionControllerList.add(TextEditingController());
+        audioPathList.add(null);
+        audioBytesList.add(null);
+        audioDurationList.add(null);
+        extensionList.add(null);
+      }
+    }
   }
 
   Future<void> _onSelectFile(BuildContext context) async {
@@ -218,6 +176,118 @@ class _PdfCreatePresentationScreenState
       // User canceled the picker
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const SizedBox(width: 24),
+      Expanded(
+        flex: 1,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              NameAndDescriptionWidget(
+                titleController: titleController,
+                descriptionController: descriptionController,
+              ),
+              const SizedBox(height: 20),
+              CommonElevatedButton(
+                onPressed: () => _onSelectFile(context),
+                text: 'Выберите PDF файл',
+              ),
+              const SizedBox(height: 20),
+              if (pdfFile != null) ...[
+                Text(basename(pdfFileName!)),
+                const SizedBox(height: 20),
+                Text('Канал'),
+                const SizedBox(height: 20),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.channels.length,
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(
+                      widget.channels.elementAt(index).title,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    leading: Radio(
+                      value: widget.channels.elementAt(index).id,
+                      groupValue: widget.selectedChannel.id,
+                      onChanged: (value) {
+                        BlocProvider.of<PdfCreatePresentationBloc>(context).add(
+                            PdfCreatePresentationEvent.channelSelected(
+                                channel: widget.channels.elementAt(index)));
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                if (widget.pdfFragmentList?.isNotEmpty ?? false)
+                  CommonElevatedButton(
+                    isPending: widget.isPending,
+                    onPressed: () {
+                      final pdfFragmentList = <PdfFragmentSample>[];
+                      for (int i = 0; i < widget.pdfFragmentList!.length; i++) {
+                        pdfFragmentList.add(PdfFragmentSample(
+                            image: widget.pdfFragmentList!.elementAt(i).image,
+                            audioBytes: audioBytesList[i],
+                            title: recordTitleControllerList.elementAt(i).text,
+                            description: recordDescriptionControllerList
+                                .elementAt(i)
+                                .text,
+                            duration: audioDurationList[i],
+                            audioExtension: extensionList[i],
+                            isTitleOverImage: isTitleOverImage));
+                      }
+                      BlocProvider.of<PdfCreatePresentationBloc>(context).add(
+                          PdfCreatePresentationEvent.savePdfPresentation(
+                              pdfFile: pdfFile!,
+                              pdfFileName: pdfFileName!,
+                              title: titleController.text,
+                              description: descriptionController.text,
+                              pdfFragmentList: pdfFragmentList,
+                              isAudio: isAudio));
+
+                      /// TODO
+                    },
+                    text: 'Создать презентацию',
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(
+        width: 12,
+      ),
+      if (Responsive.isMobile(context) == false) ...[
+        Expanded(
+          flex: 4,
+          child: widget.countFileGenerated != null
+              ? Center(
+                  child:
+                      Text('Генерация слайдов: ${widget.countFileGenerated}'))
+              : widget.isPending
+                  ? const Center(child: CircularProgressIndicator())
+                  : _FragmentListView(
+                      isAudio: isAudio,
+                      pdfFragmentList: widget.pdfFragmentList ?? [],
+                      titleControllerList: recordTitleControllerList,
+                      descriptionControllerList:
+                          recordDescriptionControllerList,
+                      onPathChanged: (f, p, s, i, e) {
+                        audioPathList[i] = p;
+                        audioBytesList[i] = f;
+                        audioDurationList[i] = s;
+                        extensionList[i] = e;
+                      },
+                      isTitleOverImage: false,
+                      title: title),
+        ),
+      ],
+    ]);
+  }
 }
 
 class _FragmentListView extends StatelessWidget {
@@ -236,7 +306,7 @@ class _FragmentListView extends StatelessWidget {
 
   final List<TextEditingController> titleControllerList;
   final List<TextEditingController> descriptionControllerList;
-  final Function(Uint8List?, String?, int?, int) onPathChanged;
+  final Function(Uint8List?, String?, int?, int, String?) onPathChanged;
   final bool isAudio;
   final bool isTitleOverImage;
   final String title;
@@ -251,12 +321,8 @@ class _FragmentListView extends StatelessWidget {
           descriptionController: descriptionControllerList.elementAt(index),
           imageData: pdfFragmentList.elementAt(index).image,
           isAudio: isAudio,
-          onPathChanged: (
-            f,
-            p,
-            s,
-          ) {
-            onPathChanged(f, p, s, index);
+          onPathChanged: (f, p, s, e) {
+            onPathChanged(f, p, s, index, e);
           },
           isTitleOverImage: isTitleOverImage,
           title: title,
@@ -285,7 +351,8 @@ class FragmentListItem extends StatefulWidget {
   final bool isTitleOverImage;
   final String title;
 
-  final void Function(Uint8List?, String? path, int? seconds) onPathChanged;
+  final void Function(Uint8List?, String? path, int? seconds, String? extension)
+      onPathChanged;
 
   @override
   State<FragmentListItem> createState() => _FragmentListItemState();
@@ -351,40 +418,58 @@ class _FragmentListItemState extends State<FragmentListItem> {
                             urlSource: audioPath,
                             onDelete: () {
                               setState(() => showPlayer = false);
-                              widget.onPathChanged(null, null, null);
+                              widget.onPathChanged(null, null, null, null);
                             },
                           ),
                         )
-                      : CommonElevatedButton(
-                          onPressed: () async {
-                            final result = await _showRecorder(context,
-                                imageData: widget.imageData);
-                            if (result != null) {
-                              setState(() {
-                                audioPath = result.path;
-                                duration = result.duration;
-                              });
-                              final audioBytes = result.audioBytes;
-                              showPlayer = true;
+                      // : CommonElevatedButton(
+                      //     onPressed: () async {
+                      //       final result = await _showRecorder(context,
+                      //           imageData: widget.imageData);
+                      //       if (result != null) {
+                      //         setState(() {
+                      //           audioPath = result.path;
+                      //           duration = result.duration;
+                      //         });
+                      //         final audioBytes = result.audioBytes;
+                      //         showPlayer = true;
 
-                              final durationInSeconds =
-                                  await getDuration(audioPath!);
-                              print(durationInSeconds);
-                              widget.onPathChanged(
-                                  audioBytes, audioPath, durationInSeconds);
-                            }
-                          },
-                          text: 'Записать аудио'),
+                      //         final durationInSeconds =
+                      //             await getDuration(audioPath!);
+                      //         print(durationInSeconds);
+                      //         widget.onPathChanged(
+                      //             audioBytes, audioPath, durationInSeconds);
+                      //       }
+                      //     },
+                      //     text: 'Записать аудио'),
+                      : const SizedBox(),
                   const SizedBox(height: 32),
                   CommonElevatedButton(
                       onPressed: () async {
                         final result = await FilePicker.platform.pickFiles(
                           type: FileType.custom,
-                          allowedExtensions: ['mp3', 'wav'],
+                          allowedExtensions: [
+                            'mp3',
+                            'aac',
+                            'm4a',
+                            'm4b',
+                            'm4p',
+                            'mp4',
+                            'wav'
+                          ],
                         );
                         if (result != null) {
                           final fileBytes = result.files.first.bytes;
-                          print(result.files.first.name);
+
+                          final extension = result.files.first.extension;
+
+                          if (extension?.toLowerCase() != 'm4a' &&
+                              extension?.toLowerCase() != 'aac' &&
+                              extension?.toLowerCase() != 'mp3' &&
+                              extension?.toLowerCase() != 'm4b' &&
+                              extension?.toLowerCase() != 'm4p' &&
+                              extension?.toLowerCase() != 'wav' &&
+                              extension?.toLowerCase() != 'mp4') return;
 
                           // Преобразование Uint8List в Blob
                           final blob = html.Blob(
@@ -394,7 +479,6 @@ class _FragmentListItemState extends State<FragmentListItem> {
                           // Преобразование Blob в data URL
                           final dataUrl =
                               html.Url.createObjectUrlFromBlob(blob);
-                          print(dataUrl);
 
                           final durationInSeconds = await getDuration(dataUrl);
                           setState(() {
@@ -403,8 +487,8 @@ class _FragmentListItemState extends State<FragmentListItem> {
                           });
                           showPlayer = true;
 
-                          widget.onPathChanged(
-                              fileBytes, audioPath, durationInSeconds);
+                          widget.onPathChanged(fileBytes, audioPath,
+                              durationInSeconds, extension);
                         }
                       },
                       text: 'Прикрепить аудио')

@@ -83,6 +83,162 @@
             loadingIndicator.remove();
         }
     </script>
+    <script>
+        // let audioChunks = [];
+        // let mediaRecorder;
+        // let link;
+
+
+        // function handlerFunction(stream) {
+
+        //     mediaRecorder = new MediaRecorder(stream);
+        //     mediaRecorder.start();
+        //     mediaRecorder.ondataavailable = (e) => {
+        //         audioChunks.push(e.data);
+        //         if (mediaRecorder.state == "inactive") {
+        //             let blob = new Blob(audioChunks, {
+        //                 type: "audio/mp3"
+        //             });
+
+        //             link = URL.createObjectURL(blob);
+        //         }
+        //     };
+        // }
+
+        // function startusingBrowserMicrophone() {
+        //     navigator.getUserMedia({
+        //         audio: true
+        //     }).then((stream) => {
+        //         handlerFunction(stream);
+        //     });
+        // }
+
+
+
+        // function startRecording() {
+
+        //     navigator.mediaDevices.getUserMedia({
+        //             audio: true
+        //         })
+        //         .then(function(stream) {
+        //             mediaRecorder = new MediaRecorder(stream);
+        //             mediaRecorder.start();
+        //             mediaRecorder.ondataavailable = function(e) {
+        //                 if (e.data.size > 0) {
+        //                     audioChunks.push(e.data);
+        //                 }
+        //             }
+        //         });
+        // }
+
+        // function getBlobLink() {
+        //     mediaRecorder.stop();
+        //     audioChunks = [];
+        //     return link;
+        // }
+
+        // function stopRecording() {
+        //     mediaRecorder.stop();
+        //     //   stream.getTracks().forEach(track => track.stop());
+
+        // }
+
+        // function getRecording() {
+        //     return audioChunks;
+        // }
+
+        // function releaseAudioChunks() {
+        //     audioChunks = [];
+        // }
+
+        let rec;
+        let audioLink;
+        let audioChunks;
+        let onStopCallback;
+
+        function startRecording() {
+
+            audioChunks = [];
+            async function getUserMedia(constraints) {
+                if (window.navigator.mediaDevices) {
+                    return window.navigator.mediaDevices.getUserMedia(constraints);
+                }
+                let legacyApi =
+                    navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia;
+                if (legacyApi) {
+                    return new Promise(function(resolve, reject) {
+                        legacyApi.bind(window.navigator)(constraints, resolve, reject);
+                    });
+                } else {
+                    alert("user api not supported");
+                }
+            }
+            //
+
+
+
+            function handlerFunction(stream) {
+
+                const options = {
+                    audioBitsPerSecond: 128000,
+                    mimeType: "audio/mp4",
+                };
+
+                rec = new MediaRecorder(stream, options);
+                rec.start();
+                console.log('recording started');
+                rec.ondataavailable = (e) => {
+                    audioChunks.push(e.data);
+                    // if (rec.state == "inactive") {
+                    //     console.log('inactive rec state');
+                    //     let blob = new Blob(audioChunks, {
+                    //         type: "audio/mp3"
+                    //     });
+                    //     audioLink = URL.createObjectURL(blob);
+                    //     console.log(audioLink);
+                    // }
+                };
+                rec.onstop = () => {
+                    console.log('recording stopped');
+                    let blob = new Blob(audioChunks, {
+                        type: "audio/mp3"
+                    });
+                    audioLink = URL.createObjectURL(blob);
+                    console.log(audioLink);
+                    if (onStopCallback) {
+                        onStopCallback(audioLink);
+                    }
+                };
+
+            }
+
+
+            function startusingBrowserMicrophone(boolean) {
+                getUserMedia({
+                    audio: boolean
+                }).then((stream) => {
+                    handlerFunction(stream);
+                });
+            }
+            startusingBrowserMicrophone(true);
+
+        }
+
+        function stopRecording() {
+
+            rec.stop();
+            return audioLink;
+        }
+
+
+
+        function getBlobLink() {
+            return audioLink;
+        }
+    </script>
 </body>
 
 </html>

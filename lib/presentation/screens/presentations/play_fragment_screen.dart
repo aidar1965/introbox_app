@@ -6,11 +6,16 @@ import '../../common/pdf_player_widget.dart';
 
 class PlayFragmentScreen extends StatefulWidget {
   const PlayFragmentScreen(
-      {super.key, required this.imageBytes, this.audioPath, this.duration});
+      {super.key,
+      this.imageBytes,
+      this.audioPath,
+      this.duration,
+      required this.title});
 
-  final Uint8List imageBytes;
+  final Uint8List? imageBytes;
   final String? audioPath;
   final int? duration;
+  final String title;
 
   @override
   State<PlayFragmentScreen> createState() => _PlayFragmentScreenState();
@@ -42,7 +47,10 @@ class _PlayFragmentScreenState extends State<PlayFragmentScreen> {
               SizedBox(
                   height: height - 40,
                   width: width - 40,
-                  child: Center(child: Image.memory(widget.imageBytes)))
+                  child: Center(
+                      child: widget.imageBytes != null
+                          ? Image.memory(widget.imageBytes!)
+                          : Text(widget.title)))
             ],
           )),
       if (widget.audioPath != null)
@@ -69,7 +77,6 @@ class _PlayFragmentScreenState extends State<PlayFragmentScreen> {
                         fragmentData: (
                           audioPath: widget.audioPath,
                           duration: widget.duration,
-                          imageBytes: widget.imageBytes
                         ),
                       )),
                     ),

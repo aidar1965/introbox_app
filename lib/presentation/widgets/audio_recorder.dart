@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:html' as html;
+import 'dart:js_util';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 
 import '../common/common_duration_widget.dart';
+
+import 'dart:js' as js;
 
 class AudioRecorder extends StatefulWidget {
   const AudioRecorder({Key? key, required this.onStop}) : super(key: key);
@@ -26,9 +30,9 @@ class _AudioRecorderState extends State<AudioRecorder> {
 
   @override
   void initState() {
-    _recordSub = _audioRecorder.onStateChanged().listen((recordState) {
-      setState(() => _recordState = recordState);
-    });
+    // _recordSub = _audioRecorder.onStateChanged().listen((recordState) {
+    //   setState(() => _recordState = recordState);
+    // });
 
     super.initState();
   }
@@ -37,23 +41,62 @@ class _AudioRecorderState extends State<AudioRecorder> {
     try {
       if (await _audioRecorder.hasPermission()) {
         // We don't do anything with this but printing
-        final isSupported = await _audioRecorder.isEncoderSupported(
+        bool isSupported = await _audioRecorder.isEncoderSupported(
           AudioEncoder.aacLc,
         );
         if (kDebugMode) {
           print('${AudioEncoder.aacLc.name} supported: $isSupported');
         }
 
+        isSupported = await _audioRecorder.isEncoderSupported(
+          AudioEncoder.aacEld,
+        );
+        if (kDebugMode) {
+          print('${AudioEncoder.aacEld.name} supported: $isSupported');
+        }
+
+        isSupported = await _audioRecorder.isEncoderSupported(
+          AudioEncoder.aacHe,
+        );
+        if (kDebugMode) {
+          print('${AudioEncoder.aacHe.name} supported: $isSupported');
+        }
+
+        isSupported = await _audioRecorder.isEncoderSupported(
+          AudioEncoder.amrNb,
+        );
+        if (kDebugMode) {
+          print('${AudioEncoder.amrNb.name} supported: $isSupported');
+        }
+
+        isSupported = await _audioRecorder.isEncoderSupported(
+          AudioEncoder.amrWb,
+        );
+        if (kDebugMode) {
+          print('${AudioEncoder.amrWb.name} supported: $isSupported');
+        }
+
+        isSupported = await _audioRecorder.isEncoderSupported(
+          AudioEncoder.opus,
+        );
+        if (kDebugMode) {
+          print('${AudioEncoder.opus.name} supported: $isSupported');
+        }
+
         // final devs = await _audioRecorder.listInputDevices();
         // final isRecording = await _audioRecorder.isRecording();
 
-        await _audioRecorder.start(
-          encoder: AudioEncoder.wav,
-        );
+        // await _audioRecorder.start(
+        //   encoder: AudioEncoder.wav,
+        // );
+        js.context.callMethod('startRecording');
         _recordDuration = 0;
 
         _startTimer();
       }
+      setState(() {
+        _recordState = RecordState.record;
+      });
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -65,13 +108,45 @@ class _AudioRecorderState extends State<AudioRecorder> {
     final duration = _recordDuration;
     _timer?.cancel();
     _recordDuration = 0;
+    late String blobPath;
+    // final path = await _audioRecorder.stop();
+    js.context.callMethod('stopRecording');
+    // final r = await promiseToFuture(js.context.callMethod('stopRecording', [
+    //   allowInterop((audioLink) {
+    //     blobPath = audioLink;
+    //     print('audiorecorder 117');
+    //     print(audioLink);
+    //   })
+    // ]));
+    // print('runType ' + r.runtimeType.toString());
+    // String blobPath = js.context.callMethod('getBlobLink');
 
-    final path = await _audioRecorder.stop();
+    // var audioChunksJsArray = js.context.callMethod('getRecording');
 
-    if (path != null) {
-      print(path);
-      widget.onStop((path: path, duration: duration));
-    }
+    // js.context.callMethod('releaseAudioChunks');
+
+    // // Преобразование JsArray<dynamic> в List<int>
+    // Uint8List audioBytes =
+    //     Uint8List.fromList(List<int>.from(audioChunksJsArray));
+    // print('audiobytes length:');
+    // print(audioBytes.length);
+
+    // final Uint8List? audioBytes =
+    //     Uint8List.fromList(js.context.callMethod('getRecording'));
+    setState(() {
+      _recordState = RecordState.stop;
+    });
+
+    blobPath = js.context.callMethod('getBlobLink');
+
+    widget.onStop((path: blobPath, duration: duration));
+    // if (audioBytes != null) {
+    //   final blob = html.Blob([audioBytes], 'audio/mp3');
+    //   final path = html.Url.createObjectUrlFromBlob(blob);
+    //   print('dataurl ' + path);
+
+    //   widget.onStop((path: path, duration: duration));
+    // }
   }
 
   Future<void> _pause() async {

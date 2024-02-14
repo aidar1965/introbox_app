@@ -19,11 +19,7 @@ class PdfPlayerWidget extends StatefulWidget {
   }) : super(key: key);
 
   final PdfFragment? fragment;
-  final ({
-    Uint8List imageBytes,
-    String? audioPath,
-    int? duration
-  })? fragmentData;
+  final ({String? audioPath, int? duration})? fragmentData;
   final bool? isLast;
 
   final void Function()? onEnd;

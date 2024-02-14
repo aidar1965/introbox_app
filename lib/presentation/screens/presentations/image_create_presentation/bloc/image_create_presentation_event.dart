@@ -2,6 +2,10 @@ part of 'image_create_presentation_bloc.dart';
 
 @freezed
 class ImageCreatePresentationEvent with _$ImageCreatePresentationEvent {
+  const factory ImageCreatePresentationEvent.initialDataRequested() =
+      _EventInitialDataRequested;
+  const factory ImageCreatePresentationEvent.channelSelected(
+      {required Channel channel}) = _EventChannelSelected;
   const factory ImageCreatePresentationEvent.fragmentAdded(
       {required ImageFragment imageFragment}) = _EventFragmentAdded;
   const factory ImageCreatePresentationEvent.saveImageSubject({

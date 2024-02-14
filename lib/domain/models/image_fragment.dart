@@ -4,14 +4,14 @@ import 'package:flutter/foundation.dart';
 class ImageFragment {
   final String title;
   final String? description;
-  final Uint8List imageBytes;
+  final Uint8List? imageBytes;
   final bool isLandscape;
   final Uint8List? audioBytes;
   final String? audioPath;
   final int? duration;
   final bool isTitleOverImage;
   const ImageFragment({
-    required this.imageBytes,
+    this.imageBytes,
     required this.isLandscape,
     this.audioBytes,
     this.audioPath,

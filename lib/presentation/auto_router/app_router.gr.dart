@@ -15,24 +15,6 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    HomeEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: HomeEmptyPage(),
-      );
-    },
-    PresentationsEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PresentationsEmptyPage(),
-      );
-    },
-    LoginEmpty.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: LoginEmptyPage(),
-      );
-    },
     ChangePasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -179,49 +161,39 @@ abstract class _$AppRouter extends RootStackRouter {
         child: RegisterScreen(key: args.key),
       );
     },
+    ChannelsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChannelsScreen(),
+      );
+    },
+    CompaniesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CompaniesScreen(),
+      );
+    },
+    MainRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MainScreen(),
+      );
+    },
+    PublicPresentationRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<PublicPresentationRouteArgs>(
+          orElse: () =>
+              PublicPresentationRouteArgs(id: pathParams.optString('id')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PublicPresentationScreen(
+          key: args.key,
+          id: args.id,
+          openedFromApp: args.openedFromApp,
+        ),
+      );
+    },
   };
-}
-
-/// generated route for
-/// [HomeEmptyPage]
-class HomeEmpty extends PageRouteInfo<void> {
-  const HomeEmpty({List<PageRouteInfo>? children})
-      : super(
-          HomeEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'HomeEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [PresentationsEmptyPage]
-class PresentationsEmpty extends PageRouteInfo<void> {
-  const PresentationsEmpty({List<PageRouteInfo>? children})
-      : super(
-          PresentationsEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PresentationsEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [LoginEmptyPage]
-class LoginEmpty extends PageRouteInfo<void> {
-  const LoginEmpty({List<PageRouteInfo>? children})
-      : super(
-          LoginEmpty.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginEmpty';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -698,5 +670,92 @@ class RegisterRouteArgs {
   @override
   String toString() {
     return 'RegisterRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [ChannelsScreen]
+class ChannelsRoute extends PageRouteInfo<void> {
+  const ChannelsRoute({List<PageRouteInfo>? children})
+      : super(
+          ChannelsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChannelsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CompaniesScreen]
+class CompaniesRoute extends PageRouteInfo<void> {
+  const CompaniesRoute({List<PageRouteInfo>? children})
+      : super(
+          CompaniesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CompaniesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PublicPresentationScreen]
+class PublicPresentationRoute
+    extends PageRouteInfo<PublicPresentationRouteArgs> {
+  PublicPresentationRoute({
+    Key? key,
+    String? id,
+    bool? openedFromApp,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PublicPresentationRoute.name,
+          args: PublicPresentationRouteArgs(
+            key: key,
+            id: id,
+            openedFromApp: openedFromApp,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'PublicPresentationRoute';
+
+  static const PageInfo<PublicPresentationRouteArgs> page =
+      PageInfo<PublicPresentationRouteArgs>(name);
+}
+
+class PublicPresentationRouteArgs {
+  const PublicPresentationRouteArgs({
+    this.key,
+    this.id,
+    this.openedFromApp,
+  });
+
+  final Key? key;
+
+  final String? id;
+
+  final bool? openedFromApp;
+
+  @override
+  String toString() {
+    return 'PublicPresentationRouteArgs{key: $key, id: $id, openedFromApp: $openedFromApp}';
   }
 }

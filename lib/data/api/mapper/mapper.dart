@@ -1,5 +1,9 @@
 import 'dart:ui';
 
+import 'package:moki_tutor/data/api/models/responses/company_dto.dart';
+
+import '../../../domain/models/channel.dart';
+import '../../../domain/models/company.dart';
 import '../../../domain/models/course.dart';
 import '../../../domain/models/course_category.dart';
 import '../../../domain/models/fragment_category.dart';
@@ -11,6 +15,8 @@ import '../../../domain/models/subject_category.dart';
 import '../../../domain/models/token_pair.dart';
 import '../../../domain/models/user.dart';
 import '../../../domain/models/user_with_tokens.dart';
+import '../models/responses/channel_dto.dart';
+import '../models/responses/check_password_dto.dart';
 import '../models/responses/course_category_dto.dart';
 import '../models/responses/course_dto.dart';
 import '../models/responses/fragment_category_dto.dart';
@@ -108,7 +114,8 @@ class ApiDataMapper {
         createdAt: DateTime.parse(dto.createdAt),
         pdfFile: dto.pdfFile,
         links: dto.links,
-        isPublished: dto.isPublished);
+        isPublished: dto.isPublished,
+        channel: mapChannel(dto.channelDto));
   }
 
   PresentationWithFragments mapPresentationWithFragments(
@@ -125,7 +132,48 @@ class ApiDataMapper {
             freeMode: true,
             createdAt: DateTime.parse(dto.createdAt),
             isPublished: true,
-            description: dto.description),
+            description: dto.description,
+            channel: mapChannel(dto.channelDto)),
         fragments: dto.fragmentDtoList.map((e) => mapPdfFragment(e)).toList());
+  }
+
+  Company mapCompany(CompanyDto dto) {
+    return Company(
+        id: dto.id,
+        name: dto.name,
+        website: dto.website,
+        description: dto.description,
+        isConfirmed: dto.isConfirmed);
+  }
+
+  Channel mapChannel(ChannelDto dto) {
+    ChannelType getChannelType(int value) {
+      switch (value) {
+        case 1:
+          return ChannelType.private;
+        case 2:
+          return ChannelType.commercial;
+        case 3:
+          return ChannelType.education;
+        case 4:
+          return ChannelType.government;
+
+        default:
+          return ChannelType.private;
+      }
+    }
+
+    return Channel(
+      id: dto.id,
+      title: dto.title,
+      description: dto.description,
+      company: dto.companyDto != null ? mapCompany(dto.companyDto!) : null,
+      channelType: getChannelType(dto.channelType),
+      isPublic: dto.isPublic,
+    );
+  }
+
+  bool mapCheckPassword(CheckPasswordDto dto) {
+    return dto.hasPassword;
   }
 }

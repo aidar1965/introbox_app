@@ -23,7 +23,7 @@ class AudioRecordingScreen extends StatefulWidget {
 class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
   String? _path;
   int? _duration;
-  Uint8List? _audioBytes;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +34,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
         leading: BackButton(
           onPressed: () {
             if (_path != null && _duration != null) {
-              context.router.pop(
-                  (audioBytes: _audioBytes, path: _path, duration: _duration));
+              context.router.pop((path: _path, duration: _duration));
             } else {
               print('returning null');
               context.router.pop();
@@ -74,8 +73,6 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                               _path = pathWithDuration.path;
                               _duration = pathWithDuration.duration;
                             });
-                            final response = await http.get(Uri.parse(_path!));
-                            _audioBytes = response.bodyBytes;
                           },
                         ),
                       ),

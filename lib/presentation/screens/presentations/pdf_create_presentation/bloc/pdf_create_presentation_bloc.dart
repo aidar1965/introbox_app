@@ -7,6 +7,7 @@ import 'package:printing/printing.dart';
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
 import '../../../../../../domain/models/pdf_fragment_sample.dart';
+import '../../../../../domain/models/channel.dart';
 
 part 'pdf_create_presentation_state.dart';
 part 'pdf_create_presentation_event.dart';
@@ -15,11 +16,14 @@ part 'pdf_create_presentation_bloc.freezed.dart';
 class PdfCreatePresentationBloc
     extends Bloc<PdfCreatePresentationEvent, PdfCreatePresentationState> {
   PdfCreatePresentationBloc()
-      : super(const PdfCreatePresentationState.screenState()) {
+      : super(const PdfCreatePresentationState.pending()) {
     on<PdfCreatePresentationEvent>((event, emitter) => event.map(
+        channelSelected: (event) => _onChanneSelected(event, emitter),
+        initialDataRequested: (_) => _initialDataRequested(emitter),
         convertPdf: (event) => _convertPdf(event, emitter),
         savePdfPresentation: (event) => _savePdfPresentation(event, emitter)));
-    _screenState = const _ScreenState();
+
+    add(const PdfCreatePresentationEvent.initialDataRequested());
   }
 
   final api = getIt<IApi>();
@@ -74,12 +78,14 @@ class PdfCreatePresentationBloc
               ///TODO: Убрать
             ),
             audioBytes: f.audioBytes,
+            audioExtension: f.audioExtension,
             duration: f.duration),
       );
       index++;
     }
     try {
       await api.addPresentation(
+          channelId: _screenState.selectedChanel.id,
           pdfFile: event.pdfFile,
           pdfFileName: event.pdfFileName,
           title: event.title,
@@ -95,5 +101,24 @@ class PdfCreatePresentationBloc
       emitter(_screenState);
       emitter(const PdfCreatePresentationState.saveError());
     }
+  }
+
+  Future<void> _initialDataRequested(
+      Emitter<PdfCreatePresentationState> emitter) async {
+    try {
+      final channels = await api.getChannels();
+      _screenState =
+          _ScreenState(channels: channels, selectedChanel: channels.first);
+      emitter(_screenState);
+    } on Object {
+      emitter(const PdfCreatePresentationState.initialDataNotLoaded());
+      rethrow;
+    }
+  }
+
+  void _onChanneSelected(_EventChannelSelected event,
+      Emitter<PdfCreatePresentationState> emitter) {
+    _screenState = _screenState.copyWith(selectedChanel: event.channel);
+    emitter(_screenState);
   }
 }

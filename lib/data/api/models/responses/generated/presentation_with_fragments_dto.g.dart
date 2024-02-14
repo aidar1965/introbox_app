@@ -17,6 +17,7 @@ PresentationWithFragmentsDto _$PresentationWithFragmentsDtoFromJson(
       fragmentDtoList: (json['fragments'] as List<dynamic>)
           .map((e) => PdfFragmentDto.fromJson(e as Map<String, dynamic>))
           .toList(),
+      channelDto: ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PresentationWithFragmentsDtoToJson(
@@ -27,5 +28,6 @@ Map<String, dynamic> _$PresentationWithFragmentsDtoToJson(
       'description': instance.description,
       'created_at': instance.createdAt,
       'pdf_file': instance.pdfFile,
+      'channel': instance.channelDto,
       'fragments': instance.fragmentDtoList,
     };

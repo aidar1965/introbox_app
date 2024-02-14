@@ -5,8 +5,9 @@ class FragmentRequestData {
   const FragmentRequestData({
     required this.title,
     required this.description,
-    required this.image,
+    this.image,
     this.audioBytes,
+    this.audioExtension,
     this.duration,
   });
   final String title;
@@ -16,7 +17,8 @@ class FragmentRequestData {
     String fileName,
     bool isLandscape,
     bool isTitleOverImage,
-  }) image;
+  })? image;
   final Uint8List? audioBytes;
+  final String? audioExtension;
   final int? duration;
 }

@@ -8,6 +8,7 @@ class EditPresentationEvent with _$EditPresentationEvent {
       {required PdfFragment fragment}) = _EventFragmentSelected;
   const factory EditPresentationEvent.audioAdded(
       {required PdfFragment fragment,
+      required String extension,
       required Uint8List audioBytes,
       required String audioPath,
       required int duration}) = _EventAudioAdded;

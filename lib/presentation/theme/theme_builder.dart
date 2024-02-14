@@ -131,6 +131,10 @@ class ThemeBuilder {
               side: BorderSide(color: palette.accent),
               borderRadius: BorderRadius.circular(4)),
         ),
+
+        radioTheme: RadioThemeData(
+            fillColor:
+                MaterialStateColor.resolveWith((states) => palette.accent)),
         //
         //
         dialogTheme: DialogTheme(
@@ -361,6 +365,10 @@ class ThemeBuilder {
           type: BottomNavigationBarType.fixed,
           enableFeedback: false,
         ),
+
+        radioTheme: RadioThemeData(
+            fillColor:
+                MaterialStateColor.resolveWith((states) => palette.accent)),
 
         //
         //

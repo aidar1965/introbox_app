@@ -18,45 +18,64 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ImageCreatePresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ImageFragment> fragments) screenState,
+    required TResult Function() pending,
+    required TResult Function(List<ImageFragment> fragments,
+            List<Channel> channels, Channel selectedChanel, bool isPending)
+        screenState,
     required TResult Function() saveSuccess,
-    required TResult Function() saveError,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<ImageFragment> fragments)? screenState,
+    TResult? Function()? pending,
+    TResult? Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult? Function()? saveSuccess,
-    TResult? Function()? saveError,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ImageFragment> fragments)? screenState,
+    TResult Function()? pending,
+    TResult Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult Function()? saveSuccess,
-    TResult Function()? saveError,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -84,12 +103,143 @@ class _$ImageCreatePresentationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
+abstract class _$$_StatePendingCopyWith<$Res> {
+  factory _$$_StatePendingCopyWith(
+          _$_StatePending value, $Res Function(_$_StatePending) then) =
+      __$$_StatePendingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StatePendingCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationStateCopyWithImpl<$Res, _$_StatePending>
+    implements _$$_StatePendingCopyWith<$Res> {
+  __$$_StatePendingCopyWithImpl(
+      _$_StatePending _value, $Res Function(_$_StatePending) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StatePending implements _StatePending {
+  const _$_StatePending();
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationState.pending()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StatePending);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(List<ImageFragment> fragments,
+            List<Channel> channels, Channel selectedChanel, bool isPending)
+        screenState,
+    required TResult Function() saveSuccess,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
+  }) {
+    return pending();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
+    TResult? Function()? saveSuccess,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
+  }) {
+    return pending?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
+    TResult Function()? saveSuccess,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (pending != null) {
+      return pending();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSaveSuccess value) saveSuccess,
+    required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
+  }) {
+    return pending(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSaveSuccess value)? saveSuccess,
+    TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+  }) {
+    return pending?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSaveSuccess value)? saveSuccess,
+    TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (pending != null) {
+      return pending(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StatePending implements ImageCreatePresentationState {
+  const factory _StatePending() = _$_StatePending;
+}
+
+/// @nodoc
 abstract class _$$_ScreenStateCopyWith<$Res> {
   factory _$$_ScreenStateCopyWith(
           _$_ScreenState value, $Res Function(_$_ScreenState) then) =
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ImageFragment> fragments});
+  $Res call(
+      {List<ImageFragment> fragments,
+      List<Channel> channels,
+      Channel selectedChanel,
+      bool isPending});
 }
 
 /// @nodoc
@@ -104,12 +254,27 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? fragments = null,
+    Object? channels = null,
+    Object? selectedChanel = null,
+    Object? isPending = null,
   }) {
     return _then(_$_ScreenState(
       fragments: null == fragments
           ? _value._fragments
           : fragments // ignore: cast_nullable_to_non_nullable
               as List<ImageFragment>,
+      channels: null == channels
+          ? _value._channels
+          : channels // ignore: cast_nullable_to_non_nullable
+              as List<Channel>,
+      selectedChanel: null == selectedChanel
+          ? _value.selectedChanel
+          : selectedChanel // ignore: cast_nullable_to_non_nullable
+              as Channel,
+      isPending: null == isPending
+          ? _value.isPending
+          : isPending // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -117,8 +282,13 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ScreenState implements _ScreenState {
-  const _$_ScreenState({required final List<ImageFragment> fragments})
-      : _fragments = fragments;
+  const _$_ScreenState(
+      {required final List<ImageFragment> fragments,
+      required final List<Channel> channels,
+      required this.selectedChanel,
+      this.isPending = false})
+      : _fragments = fragments,
+        _channels = channels;
 
   final List<ImageFragment> _fragments;
   @override
@@ -128,9 +298,23 @@ class _$_ScreenState implements _ScreenState {
     return EqualUnmodifiableListView(_fragments);
   }
 
+  final List<Channel> _channels;
+  @override
+  List<Channel> get channels {
+    if (_channels is EqualUnmodifiableListView) return _channels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_channels);
+  }
+
+  @override
+  final Channel selectedChanel;
+  @override
+  @JsonKey()
+  final bool isPending;
+
   @override
   String toString() {
-    return 'ImageCreatePresentationState.screenState(fragments: $fragments)';
+    return 'ImageCreatePresentationState.screenState(fragments: $fragments, channels: $channels, selectedChanel: $selectedChanel, isPending: $isPending)';
   }
 
   @override
@@ -139,12 +323,21 @@ class _$_ScreenState implements _ScreenState {
         (other.runtimeType == runtimeType &&
             other is _$_ScreenState &&
             const DeepCollectionEquality()
-                .equals(other._fragments, _fragments));
+                .equals(other._fragments, _fragments) &&
+            const DeepCollectionEquality().equals(other._channels, _channels) &&
+            (identical(other.selectedChanel, selectedChanel) ||
+                other.selectedChanel == selectedChanel) &&
+            (identical(other.isPending, isPending) ||
+                other.isPending == isPending));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_fragments));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_fragments),
+      const DeepCollectionEquality().hash(_channels),
+      selectedChanel,
+      isPending);
 
   @JsonKey(ignore: true)
   @override
@@ -155,33 +348,45 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ImageFragment> fragments) screenState,
+    required TResult Function() pending,
+    required TResult Function(List<ImageFragment> fragments,
+            List<Channel> channels, Channel selectedChanel, bool isPending)
+        screenState,
     required TResult Function() saveSuccess,
-    required TResult Function() saveError,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
   }) {
-    return screenState(fragments);
+    return screenState(fragments, channels, selectedChanel, isPending);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<ImageFragment> fragments)? screenState,
+    TResult? Function()? pending,
+    TResult? Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult? Function()? saveSuccess,
-    TResult? Function()? saveError,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) {
-    return screenState?.call(fragments);
+    return screenState?.call(fragments, channels, selectedChanel, isPending);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ImageFragment> fragments)? screenState,
+    TResult Function()? pending,
+    TResult Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult Function()? saveSuccess,
-    TResult Function()? saveError,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(fragments);
+      return screenState(fragments, channels, selectedChanel, isPending);
     }
     return orElse();
   }
@@ -189,9 +394,12 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) {
     return screenState(this);
   }
@@ -199,9 +407,11 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) {
     return screenState?.call(this);
   }
@@ -209,9 +419,11 @@ class _$_ScreenState implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (screenState != null) {
@@ -222,10 +434,16 @@ class _$_ScreenState implements _ScreenState {
 }
 
 abstract class _ScreenState implements ImageCreatePresentationState {
-  const factory _ScreenState({required final List<ImageFragment> fragments}) =
-      _$_ScreenState;
+  const factory _ScreenState(
+      {required final List<ImageFragment> fragments,
+      required final List<Channel> channels,
+      required final Channel selectedChanel,
+      final bool isPending}) = _$_ScreenState;
 
   List<ImageFragment> get fragments;
+  List<Channel> get channels;
+  Channel get selectedChanel;
+  bool get isPending;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -269,9 +487,13 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ImageFragment> fragments) screenState,
+    required TResult Function() pending,
+    required TResult Function(List<ImageFragment> fragments,
+            List<Channel> channels, Channel selectedChanel, bool isPending)
+        screenState,
     required TResult Function() saveSuccess,
-    required TResult Function() saveError,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
   }) {
     return saveSuccess();
   }
@@ -279,9 +501,13 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<ImageFragment> fragments)? screenState,
+    TResult? Function()? pending,
+    TResult? Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult? Function()? saveSuccess,
-    TResult? Function()? saveError,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) {
     return saveSuccess?.call();
   }
@@ -289,9 +515,13 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ImageFragment> fragments)? screenState,
+    TResult Function()? pending,
+    TResult Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult Function()? saveSuccess,
-    TResult Function()? saveError,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveSuccess != null) {
@@ -303,9 +533,12 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) {
     return saveSuccess(this);
   }
@@ -313,9 +546,11 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) {
     return saveSuccess?.call(this);
   }
@@ -323,9 +558,11 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveSuccess != null) {
@@ -344,6 +581,8 @@ abstract class _$$_StateSaveErrorCopyWith<$Res> {
   factory _$$_StateSaveErrorCopyWith(
           _$_StateSaveError value, $Res Function(_$_StateSaveError) then) =
       __$$_StateSaveErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? errorText});
 }
 
 /// @nodoc
@@ -353,57 +592,94 @@ class __$$_StateSaveErrorCopyWithImpl<$Res>
   __$$_StateSaveErrorCopyWithImpl(
       _$_StateSaveError _value, $Res Function(_$_StateSaveError) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorText = freezed,
+  }) {
+    return _then(_$_StateSaveError(
+      errorText: freezed == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_StateSaveError implements _StateSaveError {
-  const _$_StateSaveError();
+  const _$_StateSaveError({this.errorText});
+
+  @override
+  final String? errorText;
 
   @override
   String toString() {
-    return 'ImageCreatePresentationState.saveError()';
+    return 'ImageCreatePresentationState.saveError(errorText: $errorText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_StateSaveError);
+        (other.runtimeType == runtimeType &&
+            other is _$_StateSaveError &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, errorText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateSaveErrorCopyWith<_$_StateSaveError> get copyWith =>
+      __$$_StateSaveErrorCopyWithImpl<_$_StateSaveError>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<ImageFragment> fragments) screenState,
+    required TResult Function() pending,
+    required TResult Function(List<ImageFragment> fragments,
+            List<Channel> channels, Channel selectedChanel, bool isPending)
+        screenState,
     required TResult Function() saveSuccess,
-    required TResult Function() saveError,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
   }) {
-    return saveError();
+    return saveError(errorText);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<ImageFragment> fragments)? screenState,
+    TResult? Function()? pending,
+    TResult? Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult? Function()? saveSuccess,
-    TResult? Function()? saveError,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) {
-    return saveError?.call();
+    return saveError?.call(errorText);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<ImageFragment> fragments)? screenState,
+    TResult Function()? pending,
+    TResult Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
     TResult Function()? saveSuccess,
-    TResult Function()? saveError,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveError != null) {
-      return saveError();
+      return saveError(errorText);
     }
     return orElse();
   }
@@ -411,9 +687,12 @@ class _$_StateSaveError implements _StateSaveError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) {
     return saveError(this);
   }
@@ -421,9 +700,11 @@ class _$_StateSaveError implements _StateSaveError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) {
     return saveError?.call(this);
   }
@@ -431,9 +712,11 @@ class _$_StateSaveError implements _StateSaveError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveError != null) {
@@ -444,13 +727,152 @@ class _$_StateSaveError implements _StateSaveError {
 }
 
 abstract class _StateSaveError implements ImageCreatePresentationState {
-  const factory _StateSaveError() = _$_StateSaveError;
+  const factory _StateSaveError({final String? errorText}) = _$_StateSaveError;
+
+  String? get errorText;
+  @JsonKey(ignore: true)
+  _$$_StateSaveErrorCopyWith<_$_StateSaveError> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateInitialDataNotLoadedCopyWith<$Res> {
+  factory _$$_StateInitialDataNotLoadedCopyWith(
+          _$_StateInitialDataNotLoaded value,
+          $Res Function(_$_StateInitialDataNotLoaded) then) =
+      __$$_StateInitialDataNotLoadedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StateInitialDataNotLoadedCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationStateCopyWithImpl<$Res,
+        _$_StateInitialDataNotLoaded>
+    implements _$$_StateInitialDataNotLoadedCopyWith<$Res> {
+  __$$_StateInitialDataNotLoadedCopyWithImpl(
+      _$_StateInitialDataNotLoaded _value,
+      $Res Function(_$_StateInitialDataNotLoaded) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
+  const _$_StateInitialDataNotLoaded();
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationState.initialDataNotLoaded()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateInitialDataNotLoaded);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(List<ImageFragment> fragments,
+            List<Channel> channels, Channel selectedChanel, bool isPending)
+        screenState,
+    required TResult Function() saveSuccess,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
+    TResult? Function()? saveSuccess,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(List<ImageFragment> fragments, List<Channel> channels,
+            Channel selectedChanel, bool isPending)?
+        screenState,
+    TResult Function()? saveSuccess,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (initialDataNotLoaded != null) {
+      return initialDataNotLoaded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSaveSuccess value) saveSuccess,
+    required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSaveSuccess value)? saveSuccess,
+    TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSaveSuccess value)? saveSuccess,
+    TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (initialDataNotLoaded != null) {
+      return initialDataNotLoaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateInitialDataNotLoaded
+    implements ImageCreatePresentationState {
+  const factory _StateInitialDataNotLoaded() = _$_StateInitialDataNotLoaded;
 }
 
 /// @nodoc
 mixin _$ImageCreatePresentationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(ImageFragment imageFragment) fragmentAdded,
     required TResult Function(String title, String description)
         saveImageSubject,
@@ -460,6 +882,8 @@ mixin _$ImageCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(ImageFragment imageFragment)? fragmentAdded,
     TResult? Function(String title, String description)? saveImageSubject,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -468,6 +892,8 @@ mixin _$ImageCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(ImageFragment imageFragment)? fragmentAdded,
     TResult Function(String title, String description)? saveImageSubject,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -477,6 +903,9 @@ mixin _$ImageCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventFragmentAdded value) fragmentAdded,
     required TResult Function(_EventSaveImageSubject value) saveImageSubject,
     required TResult Function(_EventOnReorderFragments value)
@@ -486,6 +915,8 @@ mixin _$ImageCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventFragmentAdded value)? fragmentAdded,
     TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -494,6 +925,8 @@ mixin _$ImageCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventFragmentAdded value)? fragmentAdded,
     TResult Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -522,6 +955,303 @@ class _$ImageCreatePresentationEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
+  factory _$$_EventInitialDataRequestedCopyWith(
+          _$_EventInitialDataRequested value,
+          $Res Function(_$_EventInitialDataRequested) then) =
+      __$$_EventInitialDataRequestedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationEventCopyWithImpl<$Res,
+        _$_EventInitialDataRequested>
+    implements _$$_EventInitialDataRequestedCopyWith<$Res> {
+  __$$_EventInitialDataRequestedCopyWithImpl(
+      _$_EventInitialDataRequested _value,
+      $Res Function(_$_EventInitialDataRequested) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_EventInitialDataRequested implements _EventInitialDataRequested {
+  const _$_EventInitialDataRequested();
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationEvent.initialDataRequested()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventInitialDataRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(ImageFragment imageFragment) fragmentAdded,
+    required TResult Function(String title, String description)
+        saveImageSubject,
+    required TResult Function(List<ImageFragment> fragments) onReorderFragments,
+    required TResult Function(int index) onDeleteFragment,
+  }) {
+    return initialDataRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(ImageFragment imageFragment)? fragmentAdded,
+    TResult? Function(String title, String description)? saveImageSubject,
+    TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult? Function(int index)? onDeleteFragment,
+  }) {
+    return initialDataRequested?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(ImageFragment imageFragment)? fragmentAdded,
+    TResult Function(String title, String description)? saveImageSubject,
+    TResult Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult Function(int index)? onDeleteFragment,
+    required TResult orElse(),
+  }) {
+    if (initialDataRequested != null) {
+      return initialDataRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventFragmentAdded value) fragmentAdded,
+    required TResult Function(_EventSaveImageSubject value) saveImageSubject,
+    required TResult Function(_EventOnReorderFragments value)
+        onReorderFragments,
+    required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+  }) {
+    return initialDataRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
+    TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+  }) {
+    return initialDataRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult Function(_EventSaveImageSubject value)? saveImageSubject,
+    TResult Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    required TResult orElse(),
+  }) {
+    if (initialDataRequested != null) {
+      return initialDataRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventInitialDataRequested
+    implements ImageCreatePresentationEvent {
+  const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
+}
+
+/// @nodoc
+abstract class _$$_EventChannelSelectedCopyWith<$Res> {
+  factory _$$_EventChannelSelectedCopyWith(_$_EventChannelSelected value,
+          $Res Function(_$_EventChannelSelected) then) =
+      __$$_EventChannelSelectedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Channel channel});
+}
+
+/// @nodoc
+class __$$_EventChannelSelectedCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationEventCopyWithImpl<$Res,
+        _$_EventChannelSelected>
+    implements _$$_EventChannelSelectedCopyWith<$Res> {
+  __$$_EventChannelSelectedCopyWithImpl(_$_EventChannelSelected _value,
+      $Res Function(_$_EventChannelSelected) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? channel = null,
+  }) {
+    return _then(_$_EventChannelSelected(
+      channel: null == channel
+          ? _value.channel
+          : channel // ignore: cast_nullable_to_non_nullable
+              as Channel,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventChannelSelected implements _EventChannelSelected {
+  const _$_EventChannelSelected({required this.channel});
+
+  @override
+  final Channel channel;
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationEvent.channelSelected(channel: $channel)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventChannelSelected &&
+            (identical(other.channel, channel) || other.channel == channel));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, channel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventChannelSelectedCopyWith<_$_EventChannelSelected> get copyWith =>
+      __$$_EventChannelSelectedCopyWithImpl<_$_EventChannelSelected>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(ImageFragment imageFragment) fragmentAdded,
+    required TResult Function(String title, String description)
+        saveImageSubject,
+    required TResult Function(List<ImageFragment> fragments) onReorderFragments,
+    required TResult Function(int index) onDeleteFragment,
+  }) {
+    return channelSelected(channel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(ImageFragment imageFragment)? fragmentAdded,
+    TResult? Function(String title, String description)? saveImageSubject,
+    TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult? Function(int index)? onDeleteFragment,
+  }) {
+    return channelSelected?.call(channel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(ImageFragment imageFragment)? fragmentAdded,
+    TResult Function(String title, String description)? saveImageSubject,
+    TResult Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult Function(int index)? onDeleteFragment,
+    required TResult orElse(),
+  }) {
+    if (channelSelected != null) {
+      return channelSelected(channel);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventFragmentAdded value) fragmentAdded,
+    required TResult Function(_EventSaveImageSubject value) saveImageSubject,
+    required TResult Function(_EventOnReorderFragments value)
+        onReorderFragments,
+    required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+  }) {
+    return channelSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
+    TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+  }) {
+    return channelSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult Function(_EventSaveImageSubject value)? saveImageSubject,
+    TResult Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    required TResult orElse(),
+  }) {
+    if (channelSelected != null) {
+      return channelSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventChannelSelected implements ImageCreatePresentationEvent {
+  const factory _EventChannelSelected({required final Channel channel}) =
+      _$_EventChannelSelected;
+
+  Channel get channel;
+  @JsonKey(ignore: true)
+  _$$_EventChannelSelectedCopyWith<_$_EventChannelSelected> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -590,6 +1320,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(ImageFragment imageFragment) fragmentAdded,
     required TResult Function(String title, String description)
         saveImageSubject,
@@ -602,6 +1334,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(ImageFragment imageFragment)? fragmentAdded,
     TResult? Function(String title, String description)? saveImageSubject,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -613,6 +1347,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(ImageFragment imageFragment)? fragmentAdded,
     TResult Function(String title, String description)? saveImageSubject,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -628,6 +1364,9 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventFragmentAdded value) fragmentAdded,
     required TResult Function(_EventSaveImageSubject value) saveImageSubject,
     required TResult Function(_EventOnReorderFragments value)
@@ -640,6 +1379,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventFragmentAdded value)? fragmentAdded,
     TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -651,6 +1392,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventFragmentAdded value)? fragmentAdded,
     TResult Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -750,6 +1493,8 @@ class _$_EventSaveImageSubject implements _EventSaveImageSubject {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(ImageFragment imageFragment) fragmentAdded,
     required TResult Function(String title, String description)
         saveImageSubject,
@@ -762,6 +1507,8 @@ class _$_EventSaveImageSubject implements _EventSaveImageSubject {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(ImageFragment imageFragment)? fragmentAdded,
     TResult? Function(String title, String description)? saveImageSubject,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -773,6 +1520,8 @@ class _$_EventSaveImageSubject implements _EventSaveImageSubject {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(ImageFragment imageFragment)? fragmentAdded,
     TResult Function(String title, String description)? saveImageSubject,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -788,6 +1537,9 @@ class _$_EventSaveImageSubject implements _EventSaveImageSubject {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventFragmentAdded value) fragmentAdded,
     required TResult Function(_EventSaveImageSubject value) saveImageSubject,
     required TResult Function(_EventOnReorderFragments value)
@@ -800,6 +1552,8 @@ class _$_EventSaveImageSubject implements _EventSaveImageSubject {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventFragmentAdded value)? fragmentAdded,
     TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -811,6 +1565,8 @@ class _$_EventSaveImageSubject implements _EventSaveImageSubject {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventFragmentAdded value)? fragmentAdded,
     TResult Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -912,6 +1668,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(ImageFragment imageFragment) fragmentAdded,
     required TResult Function(String title, String description)
         saveImageSubject,
@@ -924,6 +1682,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(ImageFragment imageFragment)? fragmentAdded,
     TResult? Function(String title, String description)? saveImageSubject,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -935,6 +1695,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(ImageFragment imageFragment)? fragmentAdded,
     TResult Function(String title, String description)? saveImageSubject,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -950,6 +1712,9 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventFragmentAdded value) fragmentAdded,
     required TResult Function(_EventSaveImageSubject value) saveImageSubject,
     required TResult Function(_EventOnReorderFragments value)
@@ -962,6 +1727,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventFragmentAdded value)? fragmentAdded,
     TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -973,6 +1740,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventFragmentAdded value)? fragmentAdded,
     TResult Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -1064,6 +1833,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(ImageFragment imageFragment) fragmentAdded,
     required TResult Function(String title, String description)
         saveImageSubject,
@@ -1076,6 +1847,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(ImageFragment imageFragment)? fragmentAdded,
     TResult? Function(String title, String description)? saveImageSubject,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -1087,6 +1860,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(ImageFragment imageFragment)? fragmentAdded,
     TResult Function(String title, String description)? saveImageSubject,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
@@ -1102,6 +1877,9 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventFragmentAdded value) fragmentAdded,
     required TResult Function(_EventSaveImageSubject value) saveImageSubject,
     required TResult Function(_EventOnReorderFragments value)
@@ -1114,6 +1892,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventFragmentAdded value)? fragmentAdded,
     TResult? Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
@@ -1125,6 +1905,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventFragmentAdded value)? fragmentAdded,
     TResult Function(_EventSaveImageSubject value)? saveImageSubject,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,

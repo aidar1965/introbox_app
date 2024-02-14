@@ -21,8 +21,7 @@ class LoginScreen extends StatelessWidget {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, state) => state.mapOrNull(
               loginError: (state) => _onLoginError(context, state.errorText),
-              loginSuccess: (_) =>
-                  context.router.replace(const PresentationsRoute())),
+              loginSuccess: (_) => context.router.replace(const MainRoute())),
           buildWhen: ((previous, current) =>
               current.maybeMap(orElse: () => false, screenState: (_) => true)),
           builder: (context, state) => state.maybeMap(
@@ -30,6 +29,7 @@ class LoginScreen extends StatelessWidget {
                 throw UnsupportedError('State not supporting nuilding'),
             screenState: (state) {
               return Scaffold(
+                appBar: AppBar(),
                 body: Center(
                   child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 300),

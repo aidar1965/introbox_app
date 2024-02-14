@@ -9,9 +9,12 @@ import '../../domain/models/pdf_fragment.dart';
 import '../../domain/models/presentation.dart';
 
 import '../screens/change_password/change_password_screen.dart';
+import '../screens/channels/channels_screen.dart';
+import '../screens/companies/companies_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/login/login_screen.dart';
 
+import '../screens/main/main_screen.dart';
 import '../screens/presentation/presentation_screen.dart';
 import '../screens/presentations/audio_recording/audio_recording_screen.dart';
 import '../screens/presentations/edit_presentation/edit_presentation_screen.dart';
@@ -24,6 +27,7 @@ import '../screens/presentations/prsentation_player/presentation_player_screen.d
 import '../screens/presentations/prsentations_screen.dart';
 import '../screens/profile/profile_screen.dart';
 
+import '../screens/public_presentation/public_presentation_screen.dart';
 import '../screens/recover_password_screen/recover_password_screen.dart';
 import '../screens/register/confirmation/confirmation_screen.dart';
 import '../screens/register/register_screen.dart';
@@ -48,10 +52,19 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
 
   @override
   List<AutoRoute> get routes => [
+        AutoRoute(path: '/', page: MainRoute.page, initial: true),
         AutoRoute(
-            path: '/presentations',
-            page: PresentationsRoute.page,
-            initial: true),
+          path: '/presentations',
+          page: PresentationsRoute.page,
+        ),
+        AutoRoute(
+          path: '/channels',
+          page: ChannelsRoute.page,
+        ),
+        AutoRoute(
+          path: '/companies',
+          page: CompaniesRoute.page,
+        ),
         AutoRoute(
           path: '/create-presentation-pdf',
           page: PdfCreatePresentationRoute.page,
@@ -61,11 +74,15 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
           page: ImageCreatePresentationRoute.page,
         ),
         CustomRoute(
-            path: '/presentation/:id',
+            path: '/my-presentation/:id',
             page: PresentationRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
-
+        CustomRoute(
+            path: '/presentation/:id',
+            page: PublicPresentationRoute.page,
+            transitionsBuilder: TransitionsBuilders.slideLeft,
+            durationInMilliseconds: 400),
         CustomRoute(
             path: '/edit-presentation/:id',
             page: EditPresentationRoute.page,
@@ -140,9 +157,11 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
     if (isAuthenticated) {
       resolver.next();
     } else if (resolver.route.name == LoginRoute.name ||
+        resolver.route.name == MainRoute.name ||
         resolver.route.name == RegisterRoute.name ||
         resolver.route.name == ConfirmationRoute.name ||
         resolver.route.name == PresentationRoute.name ||
+        resolver.route.name == PublicPresentationRoute.name ||
         resolver.route.name == RecoverPasswordRoute.name) {
       // we continue navigation
       resolver.next();
@@ -153,12 +172,3 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
     }
   }
 }
-
-@RoutePage(name: 'HomeEmpty')
-class HomeEmptyPage extends AutoRouter {}
-
-@RoutePage(name: 'PresentationsEmpty')
-class PresentationsEmptyPage extends AutoRouter {}
-
-@RoutePage(name: 'LoginEmpty')
-class LoginEmptyPage extends AutoRouter {}

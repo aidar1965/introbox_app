@@ -20,7 +20,7 @@ import '../../../values/dynamic_palette.dart';
 import '../../../values/palette.dart';
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/name_and_description.dart';
-import '../audio_recording/audio_recording_screen.dart';
+//import '../audio_recording/audio_recording_screen.dart';
 import 'bloc/edit_presentation_bloc.dart';
 
 @RoutePage()
@@ -199,6 +199,7 @@ class _ScreenViewState extends State<_ScreenView> {
                           ],
                         )
                       : Stack(
+                          alignment: Alignment.center,
                           children: [
                             Image.memory(widget.selectedFragment.imageBytes!,
                                 fit: BoxFit.cover),
@@ -349,45 +350,68 @@ class _ScreenViewState extends State<_ScreenView> {
                                           fragment: widget.selectedFragment)),
                             ),
                           ),
+                        // const SizedBox(
+                        //   height: 12,
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(right: 12.0),
+                        //   child: CommonElevatedButton(
+                        //       text: 'Записать аудио',
+                        //       onPressed: () async {
+                        //         final result = await showDialog(
+                        //             context: context,
+                        //             builder: (context) => Dialog.fullscreen(
+                        //                     child: AudioRecordingScreen(
+                        //                   imageData: widget
+                        //                       .selectedFragment.imageBytes,
+                        //                   imagePath:
+                        //                       widget.selectedFragment.imagePath,
+                        //                 )));
+                        //         if (result != null && context.mounted) {
+                        //           BlocProvider.of<EditPresentationBloc>(context)
+                        //               .add(EditPresentationEvent.audioAdded(
+                        //                   fragment: widget.selectedFragment,
+                        //                   extension: 'mp3',
+                        //                   audioPath: result.path!,
+                        //                   audioBytes: result.audioBytes!,
+                        //                   duration: result.duration!));
+                        //         }
+                        //       }),
+                        // ),
                         const SizedBox(
                           height: 12,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
-                              text: 'Записать аудио',
-                              onPressed: () async {
-                                final result = await showDialog(
-                                    context: context,
-                                    builder: (context) => Dialog.fullscreen(
-                                        child: AudioRecordingScreen(
-                                            imageData: widget
-                                                .selectedFragment.imageBytes)));
-                                if (result != null && context.mounted) {
-                                  BlocProvider.of<EditPresentationBloc>(context)
-                                      .add(EditPresentationEvent.audioAdded(
-                                          fragment: widget.selectedFragment,
-                                          audioPath: result.path!,
-                                          audioBytes: result.audioBytes!,
-                                          duration: result.duration!));
-                                }
-                              }),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: CommonElevatedButton(
-                              text: 'Добавить аудио из файла',
+                              text: 'Добавить аудио',
                               onPressed: () async {
                                 final result =
                                     await FilePicker.platform.pickFiles(
                                   type: FileType.custom,
-                                  allowedExtensions: ['mp3', 'wav'],
+                                  allowedExtensions: [
+                                    'mp3',
+                                    'aac',
+                                    'm4a',
+                                    'm4b',
+                                    'm4p',
+                                    'mp4',
+                                    'wav'
+                                  ],
                                 );
                                 if (result != null) {
                                   final fileBytes = result.files.first.bytes;
+
+                                  final extension =
+                                      result.files.first.extension;
+
+                                  if (extension?.toLowerCase() != 'm4a' &&
+                                      extension?.toLowerCase() != 'aac' &&
+                                      extension?.toLowerCase() != 'mp3' &&
+                                      extension?.toLowerCase() != 'm4b' &&
+                                      extension?.toLowerCase() != 'm4p' &&
+                                      extension?.toLowerCase() != 'wav' &&
+                                      extension?.toLowerCase() != 'mp4') return;
 
                                   // Преобразование Uint8List в Blob
                                   final blob = html.Blob(
@@ -405,6 +429,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                             context)
                                         .add(EditPresentationEvent.audioAdded(
                                             fragment: widget.selectedFragment,
+                                            extension: extension!,
                                             audioBytes: fileBytes!,
                                             audioPath: dataUrl,
                                             duration: durationInSeconds));
@@ -535,14 +560,15 @@ class _ScreenViewState extends State<_ScreenView> {
     }
   }
 
-  Future<({Uint8List? audioBytes, String? path, int? duration})?>?
-      _showRecorder(BuildContext context, {required String imagePath}) async {
-    final result = await showDialog(
-        context: context,
-        builder: (context) => Dialog.fullscreen(
-            child: AudioRecordingScreen(imagePath: imagePath)));
-    return result as ({Uint8List? audioBytes, String path, int duration})?;
-  }
+  // Future<({Uint8List? audioBytes, String? path, int? duration})?>?
+  //     _showRecorder(BuildContext context, {required String imagePath}) async {
+  //   final result = await showDialog(
+  //       context: context,
+  //       builder: (context) => Dialog.fullscreen(
+  //           child: AudioRecordingScreen(imagePath: imagePath)));
+
+  //   return result as ({Uint8List? audioBytes, String path, int duration})?;
+  // }
 
   Future<int> getDuration(String? audioPath) async {
     Duration? duration;

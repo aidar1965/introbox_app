@@ -43,8 +43,6 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   @override
   void initState() {
-    print('duation received by AudioPlayerWidget');
-    print(widget.duration);
     _playerStateChangedSubscription =
         _audioPlayer.onPlayerComplete.listen((state) async {
       await stop();
@@ -173,14 +171,14 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
 
   Future<void> play() async {
     if (widget.urlSource != null) {
-      return _audioPlayer.play(ap.UrlSource(widget.urlSource!));
+      _audioPlayer.play(ap.UrlSource(widget.urlSource!));
     } else {
       String? mimeType = lookupMimeType('', headerBytes: widget.fileBites!);
       ap.UrlSource urlSourceFromBytes(
         Uint8List bytes,
       ) {
         return ap.UrlSource(
-            Uri.dataFromBytes(bytes, mimeType: mimeType ?? 'audio/wav')
+            Uri.dataFromBytes(bytes, mimeType: mimeType ?? 'audio/mpeg')
                 .toString());
       }
 

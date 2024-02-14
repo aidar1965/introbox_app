@@ -18,51 +18,76 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PdfCreatePresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
-            bool isPending, int? countFileGenerated)
+    required TResult Function() pending,
+    required TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
+    required TResult Function() initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult? Function()? pending,
+    TResult? Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult Function()? pending,
+    TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -89,6 +114,152 @@ class _$PdfCreatePresentationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
+abstract class _$$_StatePendingCopyWith<$Res> {
+  factory _$$_StatePendingCopyWith(
+          _$_StatePending value, $Res Function(_$_StatePending) then) =
+      __$$_StatePendingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StatePendingCopyWithImpl<$Res>
+    extends _$PdfCreatePresentationStateCopyWithImpl<$Res, _$_StatePending>
+    implements _$$_StatePendingCopyWith<$Res> {
+  __$$_StatePendingCopyWithImpl(
+      _$_StatePending _value, $Res Function(_$_StatePending) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
+  const _$_StatePending();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PdfCreatePresentationState.pending()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'PdfCreatePresentationState.pending'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_StatePending);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)
+        screenState,
+    required TResult Function() saveSuccess,
+    required TResult Function() saveError,
+    required TResult Function() initialDataNotLoaded,
+  }) {
+    return pending();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)?
+        screenState,
+    TResult? Function()? saveSuccess,
+    TResult? Function()? saveError,
+    TResult? Function()? initialDataNotLoaded,
+  }) {
+    return pending?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)?
+        screenState,
+    TResult Function()? saveSuccess,
+    TResult Function()? saveError,
+    TResult Function()? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (pending != null) {
+      return pending();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSaveSuccess value) saveSuccess,
+    required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
+  }) {
+    return pending(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSaveSuccess value)? saveSuccess,
+    TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+  }) {
+    return pending?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSaveSuccess value)? saveSuccess,
+    TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (pending != null) {
+      return pending(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StatePending implements PdfCreatePresentationState {
+  const factory _StatePending() = _$_StatePending;
+}
+
+/// @nodoc
 abstract class _$$_ScreenStateCopyWith<$Res> {
   factory _$$_ScreenStateCopyWith(
           _$_ScreenState value, $Res Function(_$_ScreenState) then) =
@@ -96,6 +267,8 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<PdfFragmentSample>? pdfFragmentList,
+      List<Channel> channels,
+      Channel selectedChanel,
       bool isPending,
       int? countFileGenerated});
 }
@@ -112,6 +285,8 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? pdfFragmentList = freezed,
+    Object? channels = null,
+    Object? selectedChanel = null,
     Object? isPending = null,
     Object? countFileGenerated = freezed,
   }) {
@@ -120,6 +295,14 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value._pdfFragmentList
           : pdfFragmentList // ignore: cast_nullable_to_non_nullable
               as List<PdfFragmentSample>?,
+      channels: null == channels
+          ? _value._channels
+          : channels // ignore: cast_nullable_to_non_nullable
+              as List<Channel>,
+      selectedChanel: null == selectedChanel
+          ? _value.selectedChanel
+          : selectedChanel // ignore: cast_nullable_to_non_nullable
+              as Channel,
       isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
@@ -137,9 +320,12 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   const _$_ScreenState(
       {final List<PdfFragmentSample>? pdfFragmentList,
+      required final List<Channel> channels,
+      required this.selectedChanel,
       this.isPending = false,
       this.countFileGenerated})
-      : _pdfFragmentList = pdfFragmentList;
+      : _pdfFragmentList = pdfFragmentList,
+        _channels = channels;
 
   final List<PdfFragmentSample>? _pdfFragmentList;
   @override
@@ -151,6 +337,16 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<Channel> _channels;
+  @override
+  List<Channel> get channels {
+    if (_channels is EqualUnmodifiableListView) return _channels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_channels);
+  }
+
+  @override
+  final Channel selectedChanel;
   @override
   @JsonKey()
   final bool isPending;
@@ -159,7 +355,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PdfCreatePresentationState.screenState(pdfFragmentList: $pdfFragmentList, isPending: $isPending, countFileGenerated: $countFileGenerated)';
+    return 'PdfCreatePresentationState.screenState(pdfFragmentList: $pdfFragmentList, channels: $channels, selectedChanel: $selectedChanel, isPending: $isPending, countFileGenerated: $countFileGenerated)';
   }
 
   @override
@@ -169,6 +365,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       ..add(
           DiagnosticsProperty('type', 'PdfCreatePresentationState.screenState'))
       ..add(DiagnosticsProperty('pdfFragmentList', pdfFragmentList))
+      ..add(DiagnosticsProperty('channels', channels))
+      ..add(DiagnosticsProperty('selectedChanel', selectedChanel))
       ..add(DiagnosticsProperty('isPending', isPending))
       ..add(DiagnosticsProperty('countFileGenerated', countFileGenerated));
   }
@@ -180,6 +378,9 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             other is _$_ScreenState &&
             const DeepCollectionEquality()
                 .equals(other._pdfFragmentList, _pdfFragmentList) &&
+            const DeepCollectionEquality().equals(other._channels, _channels) &&
+            (identical(other.selectedChanel, selectedChanel) ||
+                other.selectedChanel == selectedChanel) &&
             (identical(other.isPending, isPending) ||
                 other.isPending == isPending) &&
             (identical(other.countFileGenerated, countFileGenerated) ||
@@ -190,6 +391,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_pdfFragmentList),
+      const DeepCollectionEquality().hash(_channels),
+      selectedChanel,
       isPending,
       countFileGenerated);
 
@@ -202,39 +405,60 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
-            bool isPending, int? countFileGenerated)
+    required TResult Function() pending,
+    required TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
+    required TResult Function() initialDataNotLoaded,
   }) {
-    return screenState(pdfFragmentList, isPending, countFileGenerated);
+    return screenState(pdfFragmentList, channels, selectedChanel, isPending,
+        countFileGenerated);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult? Function()? pending,
+    TResult? Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) {
-    return screenState?.call(pdfFragmentList, isPending, countFileGenerated);
+    return screenState?.call(pdfFragmentList, channels, selectedChanel,
+        isPending, countFileGenerated);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult Function()? pending,
+    TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(pdfFragmentList, isPending, countFileGenerated);
+      return screenState(pdfFragmentList, channels, selectedChanel, isPending,
+          countFileGenerated);
     }
     return orElse();
   }
@@ -242,9 +466,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) {
     return screenState(this);
   }
@@ -252,9 +479,11 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) {
     return screenState?.call(this);
   }
@@ -262,9 +491,11 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (screenState != null) {
@@ -277,10 +508,14 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 abstract class _ScreenState implements PdfCreatePresentationState {
   const factory _ScreenState(
       {final List<PdfFragmentSample>? pdfFragmentList,
+      required final List<Channel> channels,
+      required final Channel selectedChanel,
       final bool isPending,
       final int? countFileGenerated}) = _$_ScreenState;
 
   List<PdfFragmentSample>? get pdfFragmentList;
+  List<Channel> get channels;
+  Channel get selectedChanel;
   bool get isPending;
   int? get countFileGenerated;
   @JsonKey(ignore: true)
@@ -335,11 +570,17 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
-            bool isPending, int? countFileGenerated)
+    required TResult Function() pending,
+    required TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
+    required TResult Function() initialDataNotLoaded,
   }) {
     return saveSuccess();
   }
@@ -347,11 +588,17 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult? Function()? pending,
+    TResult? Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) {
     return saveSuccess?.call();
   }
@@ -359,11 +606,17 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult Function()? pending,
+    TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveSuccess != null) {
@@ -375,9 +628,12 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) {
     return saveSuccess(this);
   }
@@ -385,9 +641,11 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) {
     return saveSuccess?.call(this);
   }
@@ -395,9 +653,11 @@ class _$_StateSaveSuccess
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveSuccess != null) {
@@ -458,11 +718,17 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<PdfFragmentSample>? pdfFragmentList,
-            bool isPending, int? countFileGenerated)
+    required TResult Function() pending,
+    required TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function() saveSuccess,
     required TResult Function() saveError,
+    required TResult Function() initialDataNotLoaded,
   }) {
     return saveError();
   }
@@ -470,11 +736,17 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult? Function()? pending,
+    TResult? Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult? Function()? saveSuccess,
     TResult? Function()? saveError,
+    TResult? Function()? initialDataNotLoaded,
   }) {
     return saveError?.call();
   }
@@ -482,11 +754,17 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<PdfFragmentSample>? pdfFragmentList, bool isPending,
+    TResult Function()? pending,
+    TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
             int? countFileGenerated)?
         screenState,
     TResult Function()? saveSuccess,
     TResult Function()? saveError,
+    TResult Function()? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveError != null) {
@@ -498,9 +776,12 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
   }) {
     return saveError(this);
   }
@@ -508,9 +789,11 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
   }) {
     return saveError?.call(this);
   }
@@ -518,9 +801,11 @@ class _$_StateSaveError
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
     required TResult orElse(),
   }) {
     if (saveError != null) {
@@ -535,10 +820,164 @@ abstract class _StateSaveError implements PdfCreatePresentationState {
 }
 
 /// @nodoc
-mixin _$PdfCreatePresentationEvent {
-  Uint8List get pdfFile => throw _privateConstructorUsedError;
+abstract class _$$_StateInitialDataNotLoadedCopyWith<$Res> {
+  factory _$$_StateInitialDataNotLoadedCopyWith(
+          _$_StateInitialDataNotLoaded value,
+          $Res Function(_$_StateInitialDataNotLoaded) then) =
+      __$$_StateInitialDataNotLoadedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_StateInitialDataNotLoadedCopyWithImpl<$Res>
+    extends _$PdfCreatePresentationStateCopyWithImpl<$Res,
+        _$_StateInitialDataNotLoaded>
+    implements _$$_StateInitialDataNotLoadedCopyWith<$Res> {
+  __$$_StateInitialDataNotLoadedCopyWithImpl(
+      _$_StateInitialDataNotLoaded _value,
+      $Res Function(_$_StateInitialDataNotLoaded) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_StateInitialDataNotLoaded
+    with DiagnosticableTreeMixin
+    implements _StateInitialDataNotLoaded {
+  const _$_StateInitialDataNotLoaded();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PdfCreatePresentationState.initialDataNotLoaded()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'PdfCreatePresentationState.initialDataNotLoaded'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateInitialDataNotLoaded);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)
+        screenState,
+    required TResult Function() saveSuccess,
+    required TResult Function() saveError,
+    required TResult Function() initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)?
+        screenState,
+    TResult? Function()? saveSuccess,
+    TResult? Function()? saveError,
+    TResult? Function()? initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(
+            List<PdfFragmentSample>? pdfFragmentList,
+            List<Channel> channels,
+            Channel selectedChanel,
+            bool isPending,
+            int? countFileGenerated)?
+        screenState,
+    TResult Function()? saveSuccess,
+    TResult Function()? saveError,
+    TResult Function()? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (initialDataNotLoaded != null) {
+      return initialDataNotLoaded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSaveSuccess value) saveSuccess,
+    required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSaveSuccess value)? saveSuccess,
+    TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+  }) {
+    return initialDataNotLoaded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSaveSuccess value)? saveSuccess,
+    TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (initialDataNotLoaded != null) {
+      return initialDataNotLoaded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateInitialDataNotLoaded
+    implements PdfCreatePresentationState {
+  const factory _StateInitialDataNotLoaded() = _$_StateInitialDataNotLoaded;
+}
+
+/// @nodoc
+mixin _$PdfCreatePresentationEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
     required TResult Function(
             String title,
@@ -552,6 +991,8 @@ mixin _$PdfCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
     TResult? Function(
             String title,
@@ -565,6 +1006,8 @@ mixin _$PdfCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
     TResult Function(
             String title,
@@ -579,6 +1022,9 @@ mixin _$PdfCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
@@ -586,21 +1032,21 @@ mixin _$PdfCreatePresentationEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $PdfCreatePresentationEventCopyWith<PdfCreatePresentationEvent>
-      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -609,8 +1055,6 @@ abstract class $PdfCreatePresentationEventCopyWith<$Res> {
           $Res Function(PdfCreatePresentationEvent) then) =
       _$PdfCreatePresentationEventCopyWithImpl<$Res,
           PdfCreatePresentationEvent>;
-  @useResult
-  $Res call({Uint8List pdfFile});
 }
 
 /// @nodoc
@@ -623,28 +1067,346 @@ class _$PdfCreatePresentationEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
+  factory _$$_EventInitialDataRequestedCopyWith(
+          _$_EventInitialDataRequested value,
+          $Res Function(_$_EventInitialDataRequested) then) =
+      __$$_EventInitialDataRequestedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
+    extends _$PdfCreatePresentationEventCopyWithImpl<$Res,
+        _$_EventInitialDataRequested>
+    implements _$$_EventInitialDataRequestedCopyWith<$Res> {
+  __$$_EventInitialDataRequestedCopyWithImpl(
+      _$_EventInitialDataRequested _value,
+      $Res Function(_$_EventInitialDataRequested) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_EventInitialDataRequested
+    with DiagnosticableTreeMixin
+    implements _EventInitialDataRequested {
+  const _$_EventInitialDataRequested();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PdfCreatePresentationEvent.initialDataRequested()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'PdfCreatePresentationEvent.initialDataRequested'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventInitialDataRequested);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
+        savePdfPresentation,
+  }) {
+    return initialDataRequested();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+  }) {
+    return initialDataRequested?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (initialDataRequested != null) {
+      return initialDataRequested();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventSavePdfPresentation value)
+        savePdfPresentation,
+  }) {
+    return initialDataRequested(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
+  }) {
+    return initialDataRequested?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (initialDataRequested != null) {
+      return initialDataRequested(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventInitialDataRequested
+    implements PdfCreatePresentationEvent {
+  const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
+}
+
+/// @nodoc
+abstract class _$$_EventChannelSelectedCopyWith<$Res> {
+  factory _$$_EventChannelSelectedCopyWith(_$_EventChannelSelected value,
+          $Res Function(_$_EventChannelSelected) then) =
+      __$$_EventChannelSelectedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Channel channel});
+}
+
+/// @nodoc
+class __$$_EventChannelSelectedCopyWithImpl<$Res>
+    extends _$PdfCreatePresentationEventCopyWithImpl<$Res,
+        _$_EventChannelSelected>
+    implements _$$_EventChannelSelectedCopyWith<$Res> {
+  __$$_EventChannelSelectedCopyWithImpl(_$_EventChannelSelected _value,
+      $Res Function(_$_EventChannelSelected) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pdfFile = null,
+    Object? channel = null,
   }) {
-    return _then(_value.copyWith(
-      pdfFile: null == pdfFile
-          ? _value.pdfFile
-          : pdfFile // ignore: cast_nullable_to_non_nullable
-              as Uint8List,
-    ) as $Val);
+    return _then(_$_EventChannelSelected(
+      channel: null == channel
+          ? _value.channel
+          : channel // ignore: cast_nullable_to_non_nullable
+              as Channel,
+    ));
   }
 }
 
 /// @nodoc
-abstract class _$$_EventConvertFileCopyWith<$Res>
-    implements $PdfCreatePresentationEventCopyWith<$Res> {
+
+class _$_EventChannelSelected
+    with DiagnosticableTreeMixin
+    implements _EventChannelSelected {
+  const _$_EventChannelSelected({required this.channel});
+
+  @override
+  final Channel channel;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PdfCreatePresentationEvent.channelSelected(channel: $channel)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'PdfCreatePresentationEvent.channelSelected'))
+      ..add(DiagnosticsProperty('channel', channel));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventChannelSelected &&
+            (identical(other.channel, channel) || other.channel == channel));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, channel);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventChannelSelectedCopyWith<_$_EventChannelSelected> get copyWith =>
+      __$$_EventChannelSelectedCopyWithImpl<_$_EventChannelSelected>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
+        savePdfPresentation,
+  }) {
+    return channelSelected(channel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+  }) {
+    return channelSelected?.call(channel);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (channelSelected != null) {
+      return channelSelected(channel);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventSavePdfPresentation value)
+        savePdfPresentation,
+  }) {
+    return channelSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
+  }) {
+    return channelSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (channelSelected != null) {
+      return channelSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventChannelSelected implements PdfCreatePresentationEvent {
+  const factory _EventChannelSelected({required final Channel channel}) =
+      _$_EventChannelSelected;
+
+  Channel get channel;
+  @JsonKey(ignore: true)
+  _$$_EventChannelSelectedCopyWith<_$_EventChannelSelected> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventConvertFileCopyWith<$Res> {
   factory _$$_EventConvertFileCopyWith(
           _$_EventConvertFile value, $Res Function(_$_EventConvertFile) then) =
       __$$_EventConvertFileCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({Uint8List pdfFile});
 }
@@ -716,6 +1478,8 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
     required TResult Function(
             String title,
@@ -732,6 +1496,8 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
     TResult? Function(
             String title,
@@ -748,6 +1514,8 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
     TResult Function(
             String title,
@@ -768,6 +1536,9 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
@@ -778,6 +1549,8 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) {
@@ -787,6 +1560,8 @@ class _$_EventConvertFile
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
@@ -802,22 +1577,18 @@ abstract class _EventConvertFile implements PdfCreatePresentationEvent {
   const factory _EventConvertFile({required final Uint8List pdfFile}) =
       _$_EventConvertFile;
 
-  @override
   Uint8List get pdfFile;
-  @override
   @JsonKey(ignore: true)
   _$$_EventConvertFileCopyWith<_$_EventConvertFile> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_EventSavePdfPresentationCopyWith<$Res>
-    implements $PdfCreatePresentationEventCopyWith<$Res> {
+abstract class _$$_EventSavePdfPresentationCopyWith<$Res> {
   factory _$$_EventSavePdfPresentationCopyWith(
           _$_EventSavePdfPresentation value,
           $Res Function(_$_EventSavePdfPresentation) then) =
       __$$_EventSavePdfPresentationCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call(
       {String title,
@@ -963,6 +1734,8 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
     required TResult Function(
             String title,
@@ -980,6 +1753,8 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
     TResult? Function(
             String title,
@@ -997,6 +1772,8 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
     TResult Function(
             String title,
@@ -1018,6 +1795,9 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
@@ -1028,6 +1808,8 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) {
@@ -1037,6 +1819,8 @@ class _$_EventSavePdfPresentation
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
@@ -1059,13 +1843,11 @@ abstract class _EventSavePdfPresentation implements PdfCreatePresentationEvent {
       _$_EventSavePdfPresentation;
 
   String get title;
-  @override
   Uint8List get pdfFile;
   String get pdfFileName;
   String get description;
   bool get isAudio;
   List<PdfFragmentSample> get pdfFragmentList;
-  @override
   @JsonKey(ignore: true)
   _$$_EventSavePdfPresentationCopyWith<_$_EventSavePdfPresentation>
       get copyWith => throw _privateConstructorUsedError;

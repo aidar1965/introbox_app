@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
 
 import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
 import 'package:moki_tutor/presentation/screens/presentations/play_fragment_screen.dart';
@@ -8,6 +9,7 @@ import 'package:moki_tutor/presentation/screens/presentations/play_fragment_scre
 import '../../../../domain/models/image_fragment.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
+import '../../../common/common_loading_error_widget.dart';
 import '../../../widgets/name_and_description.dart';
 import 'bloc/image_create_presentation_bloc.dart';
 
@@ -25,18 +27,34 @@ class ImageCreatePresentationScreen extends StatelessWidget {
         child: BlocConsumer<ImageCreatePresentationBloc,
                 ImageCreatePresentationState>(
             listener: (context, state) => state.mapOrNull(
-                saveError: (state) => CommonFunctions.showMessage(context,
-                    'Произошла ошибка при выполении запроса', Reason.error),
-                saveSuccess: (state) => context.router.pop(true)),
+                saveError: (state) => CommonFunctions.showMessage(
+                    context,
+                    state.errorText ?? 'Произошла ошибка при выполении запроса',
+                    Reason.error),
+                saveSuccess: (state) =>
+                    context.router.push(const PresentationsRoute())),
             buildWhen: (context, state) => state.maybeMap(
-                  orElse: () => false,
-                  screenState: (_) => true,
-                ),
+                orElse: () => false,
+                screenState: (_) => true,
+                initialDataNotLoaded: (_) => true,
+                pending: (_) => true),
             builder: (context, state) => state.maybeMap(
+                pending: (_) =>
+                    const Center(child: CircularProgressIndicator()),
+                initialDataNotLoaded: (_) => CommonLoadingErrorWidget(
+                    onPressed: () =>
+                        BlocProvider.of<ImageCreatePresentationBloc>(context)
+                            .add(const ImageCreatePresentationEvent
+                                .initialDataRequested())),
                 orElse: () =>
                     throw UnsupportedError('state not supporting build'),
                 screenState: (state) => Scaffold(
                       appBar: AppBar(
+                        leading: BackButton(
+                          onPressed: () {
+                            context.router.push(const PresentationsRoute());
+                          },
+                        ),
                         title: const Text(
                           'Новая презентация',
                         ),
@@ -58,48 +76,91 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                 }
                               },
                               icon: const Icon(Icons.add)),
-                          if (state.fragments.isNotEmpty &&
-                              titleController.text.isNotEmpty)
-                            IconButton(
-                                onPressed: () {
-                                  BlocProvider.of<ImageCreatePresentationBloc>(
-                                          context)
-                                      .add(ImageCreatePresentationEvent
-                                          .saveImageSubject(
-                                              title: titleController.text,
-                                              description:
-                                                  descriptionController.text));
-                                },
-                                icon: const Icon(Icons.save))
                         ],
                       ),
-                      body: Row(children: [
-                        Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: Column(
-                                children: [
-                                  const SizedBox(height: 24),
-                                  NameAndDescriptionWidget(
-                                    titleController: titleController,
-                                    descriptionController:
-                                        descriptionController,
-                                  )
-                                ],
-                              ),
-                            )),
-                        const SizedBox(width: 24),
-                        Expanded(
-                            flex: 3,
-                            child: Padding(
-                              padding: const EdgeInsets.all(24),
-                              child: FragmentList(fragments: state.fragments),
-                            )),
-                        const SizedBox(
-                          width: 52,
-                        )
-                      ]),
+                      body: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        const SizedBox(height: 24),
+                                        NameAndDescriptionWidget(
+                                          titleController: titleController,
+                                          descriptionController:
+                                              descriptionController,
+                                        ),
+                                        const SizedBox(height: 20),
+                                        Text('Канал'),
+                                        ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: state.channels.length,
+                                          itemBuilder: (context, index) =>
+                                              ListTile(
+                                            title: Text(
+                                              state.channels
+                                                  .elementAt(index)
+                                                  .title,
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                            leading: Radio(
+                                              value: state.channels
+                                                  .elementAt(index)
+                                                  .id,
+                                              groupValue:
+                                                  state.selectedChanel.id,
+                                              onChanged: (value) {
+                                                BlocProvider.of<
+                                                            ImageCreatePresentationBloc>(
+                                                        context)
+                                                    .add(ImageCreatePresentationEvent
+                                                        .channelSelected(
+                                                            channel: state
+                                                                .channels
+                                                                .elementAt(
+                                                                    index)));
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 24),
+                                        if (state.fragments.isNotEmpty)
+                                          CommonElevatedButton(
+                                            text: 'Создать презентацию',
+                                            onPressed: () {
+                                              BlocProvider.of<
+                                                          ImageCreatePresentationBloc>(
+                                                      context)
+                                                  .add(ImageCreatePresentationEvent
+                                                      .saveImageSubject(
+                                                          title: titleController
+                                                              .text,
+                                                          description:
+                                                              descriptionController
+                                                                  .text));
+                                            },
+                                          )
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                            const SizedBox(width: 24),
+                            Expanded(
+                                flex: 3,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(24),
+                                  child:
+                                      FragmentList(fragments: state.fragments),
+                                )),
+                            const SizedBox(
+                              width: 52,
+                            )
+                          ]),
                     ))));
   }
 }
@@ -163,7 +224,12 @@ class _FragmentListState extends State<FragmentList> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 100, width: 100, child: Image.memory(f.imageBytes)),
+          SizedBox(
+              height: 100,
+              width: 100,
+              child: f.imageBytes != null
+                  ? Image.memory(f.imageBytes!)
+                  : Center(child: Text(f.title))),
           const SizedBox(width: 24),
           Expanded(
             child: Column(
@@ -193,6 +259,7 @@ class _FragmentListState extends State<FragmentList> {
                           imageBytes: f.imageBytes,
                           audioPath: f.audioPath,
                           duration: f.duration,
+                          title: f.title,
                         )));
               },
               icon: const Icon(Icons.play_circle)),

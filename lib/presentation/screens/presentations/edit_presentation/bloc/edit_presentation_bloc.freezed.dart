@@ -1115,8 +1115,8 @@ mixin _$EditPresentationEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -1134,8 +1134,8 @@ mixin _$EditPresentationEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1150,8 +1150,8 @@ mixin _$EditPresentationEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1279,8 +1279,8 @@ class _$_EventInitialDataRequested
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -1301,8 +1301,8 @@ class _$_EventInitialDataRequested
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1320,8 +1320,8 @@ class _$_EventInitialDataRequested
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1476,8 +1476,8 @@ class _$_EventFragmentSelected
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -1498,8 +1498,8 @@ class _$_EventFragmentSelected
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1517,8 +1517,8 @@ class _$_EventFragmentSelected
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1608,6 +1608,7 @@ abstract class _$$_EventAudioAddedCopyWith<$Res> {
   @useResult
   $Res call(
       {PdfFragment fragment,
+      String extension,
       Uint8List audioBytes,
       String audioPath,
       int duration});
@@ -1625,6 +1626,7 @@ class __$$_EventAudioAddedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? fragment = null,
+    Object? extension = null,
     Object? audioBytes = null,
     Object? audioPath = null,
     Object? duration = null,
@@ -1634,6 +1636,10 @@ class __$$_EventAudioAddedCopyWithImpl<$Res>
           ? _value.fragment
           : fragment // ignore: cast_nullable_to_non_nullable
               as PdfFragment,
+      extension: null == extension
+          ? _value.extension
+          : extension // ignore: cast_nullable_to_non_nullable
+              as String,
       audioBytes: null == audioBytes
           ? _value.audioBytes
           : audioBytes // ignore: cast_nullable_to_non_nullable
@@ -1657,12 +1663,15 @@ class _$_EventAudioAdded
     implements _EventAudioAdded {
   const _$_EventAudioAdded(
       {required this.fragment,
+      required this.extension,
       required this.audioBytes,
       required this.audioPath,
       required this.duration});
 
   @override
   final PdfFragment fragment;
+  @override
+  final String extension;
   @override
   final Uint8List audioBytes;
   @override
@@ -1672,7 +1681,7 @@ class _$_EventAudioAdded
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditPresentationEvent.audioAdded(fragment: $fragment, audioBytes: $audioBytes, audioPath: $audioPath, duration: $duration)';
+    return 'EditPresentationEvent.audioAdded(fragment: $fragment, extension: $extension, audioBytes: $audioBytes, audioPath: $audioPath, duration: $duration)';
   }
 
   @override
@@ -1681,6 +1690,7 @@ class _$_EventAudioAdded
     properties
       ..add(DiagnosticsProperty('type', 'EditPresentationEvent.audioAdded'))
       ..add(DiagnosticsProperty('fragment', fragment))
+      ..add(DiagnosticsProperty('extension', extension))
       ..add(DiagnosticsProperty('audioBytes', audioBytes))
       ..add(DiagnosticsProperty('audioPath', audioPath))
       ..add(DiagnosticsProperty('duration', duration));
@@ -1693,6 +1703,8 @@ class _$_EventAudioAdded
             other is _$_EventAudioAdded &&
             (identical(other.fragment, fragment) ||
                 other.fragment == fragment) &&
+            (identical(other.extension, extension) ||
+                other.extension == extension) &&
             const DeepCollectionEquality()
                 .equals(other.audioBytes, audioBytes) &&
             (identical(other.audioPath, audioPath) ||
@@ -1702,7 +1714,7 @@ class _$_EventAudioAdded
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, fragment,
+  int get hashCode => Object.hash(runtimeType, fragment, extension,
       const DeepCollectionEquality().hash(audioBytes), audioPath, duration);
 
   @JsonKey(ignore: true)
@@ -1716,8 +1728,8 @@ class _$_EventAudioAdded
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -1730,7 +1742,7 @@ class _$_EventAudioAdded
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
-    return audioAdded(fragment, audioBytes, audioPath, duration);
+    return audioAdded(fragment, extension, audioBytes, audioPath, duration);
   }
 
   @override
@@ -1738,8 +1750,8 @@ class _$_EventAudioAdded
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1749,7 +1761,8 @@ class _$_EventAudioAdded
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
-    return audioAdded?.call(fragment, audioBytes, audioPath, duration);
+    return audioAdded?.call(
+        fragment, extension, audioBytes, audioPath, duration);
   }
 
   @override
@@ -1757,8 +1770,8 @@ class _$_EventAudioAdded
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1770,7 +1783,7 @@ class _$_EventAudioAdded
     required TResult orElse(),
   }) {
     if (audioAdded != null) {
-      return audioAdded(fragment, audioBytes, audioPath, duration);
+      return audioAdded(fragment, extension, audioBytes, audioPath, duration);
     }
     return orElse();
   }
@@ -1833,11 +1846,13 @@ class _$_EventAudioAdded
 abstract class _EventAudioAdded implements EditPresentationEvent {
   const factory _EventAudioAdded(
       {required final PdfFragment fragment,
+      required final String extension,
       required final Uint8List audioBytes,
       required final String audioPath,
       required final int duration}) = _$_EventAudioAdded;
 
   PdfFragment get fragment;
+  String get extension;
   Uint8List get audioBytes;
   String get audioPath;
   int get duration;
@@ -1924,8 +1939,8 @@ class _$_EventAudioDeleted
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -1946,8 +1961,8 @@ class _$_EventAudioDeleted
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -1965,8 +1980,8 @@ class _$_EventAudioDeleted
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2136,8 +2151,8 @@ class _$_EventImageAdded
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -2158,8 +2173,8 @@ class _$_EventImageAdded
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2177,8 +2192,8 @@ class _$_EventImageAdded
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2353,8 +2368,8 @@ class _$_EventUpdatePresentation
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -2375,8 +2390,8 @@ class _$_EventUpdatePresentation
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2394,8 +2409,8 @@ class _$_EventUpdatePresentation
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2580,8 +2595,8 @@ class _$_EventUpdateFragment
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -2602,8 +2617,8 @@ class _$_EventUpdateFragment
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2621,8 +2636,8 @@ class _$_EventUpdateFragment
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2757,8 +2772,8 @@ class _$_EventDeleteFragment
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -2779,8 +2794,8 @@ class _$_EventDeleteFragment
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2798,8 +2813,8 @@ class _$_EventDeleteFragment
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -2959,8 +2974,8 @@ class _$_EventReorderFragment
   TResult when<TResult extends Object?>({
     required TResult Function() initialDataRequested,
     required TResult Function(PdfFragment fragment) fragmentSelected,
-    required TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
     required TResult Function(PdfFragment fragment, Uint8List imageBytes)
@@ -2981,8 +2996,8 @@ class _$_EventReorderFragment
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialDataRequested,
     TResult? Function(PdfFragment fragment)? fragmentSelected,
-    TResult? Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
     TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
@@ -3000,8 +3015,8 @@ class _$_EventReorderFragment
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialDataRequested,
     TResult Function(PdfFragment fragment)? fragmentSelected,
-    TResult Function(PdfFragment fragment, Uint8List audioBytes,
-            String audioPath, int duration)?
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
     TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,

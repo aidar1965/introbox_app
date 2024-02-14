@@ -37,8 +37,10 @@ class EditPresentationBloc
   final String id;
   final api = getIt<IApi>();
   late _ScreenState _screenState;
-  late List<PdfFragment> fragments;
+
   late PresentationWithFragments presentationWithfragments;
+  String? audioExtension;
+  PdfFragment? selectedFragment;
 
   Future<void> onInitialDataRequested(
       Emitter<EditPresentationState> emitter) async {
@@ -48,7 +50,8 @@ class EditPresentationBloc
           title: presentationWithfragments.presentation.title,
           description: presentationWithfragments.presentation.description ?? '',
           fragments: presentationWithfragments.fragments,
-          selectedFragment: presentationWithfragments.fragments.first,
+          selectedFragment:
+              selectedFragment ?? presentationWithfragments.fragments.first,
           presentationUpdatePending: false,
           fragmentUpdatePending: false,
           deleteFragmentPending: false);
@@ -62,13 +65,15 @@ class EditPresentationBloc
   void onFragmentSelected(
       _EventFragmentSelected event, Emitter<EditPresentationState> emitter) {
     _screenState = _screenState.copyWith(
-        selectedFragment: event.fragment, fragments: fragments);
+        selectedFragment: event.fragment,
+        fragments: presentationWithfragments.fragments);
     emitter(_screenState);
   }
 
   void onAudioAdded(
       _EventAudioAdded event, Emitter<EditPresentationState> emitter) {
     emitter(const EditPresentationState.pending());
+    audioExtension = event.extension;
     final selectedFragment = PdfFragment(
         id: event.fragment.id,
         title: _screenState.selectedFragment!.title,
@@ -76,8 +81,8 @@ class EditPresentationBloc
         imagePath: event.fragment.imagePath,
         imageBytes: event.fragment.imageBytes,
         isLandscape: _screenState.selectedFragment!.isLandscape,
-        audioPath: event.audioPath,
         audioBytes: event.audioBytes,
+        audioPath: event.audioPath,
         duration: event.duration,
         displayOrder: event.fragment.displayOrder);
 
@@ -142,6 +147,7 @@ class EditPresentationBloc
 
   Future<void> onUpdateFragment(_EventUpdateFragment event,
       Emitter<EditPresentationState> emitter) async {
+    print('edit-presntation-bloc 145');
     _screenState = _screenState.copyWith(
       fragmentUpdatePending: true,
     );
@@ -149,7 +155,7 @@ class EditPresentationBloc
     try {
       final durationDifference =
           (_screenState.selectedFragment!.duration ?? 0) -
-              (fragments
+              (presentationWithfragments.fragments
                       .firstWhere((element) =>
                           element.id == _screenState.selectedFragment!.id)
                       .duration ??
@@ -161,6 +167,7 @@ class EditPresentationBloc
           isTitleOverImage: event.isTitleOverImage,
           description: event.description,
           audioBytes: _screenState.selectedFragment!.audioBytes,
+          audioExtension: audioExtension,
           imageBytes: _screenState.selectedFragment!.imageBytes,
           duration: _screenState.selectedFragment!.duration,
           presentationDurationDifference: durationDifference,
@@ -171,11 +178,13 @@ class EditPresentationBloc
     } on Object {
       _screenState = _screenState.copyWith(fragmentUpdatePending: false);
       emitter(_screenState);
+      rethrow;
     }
   }
 
   Future<void> onUpdatePresentation(_EventUpdatePresentation event,
       Emitter<EditPresentationState> emitter) async {
+    selectedFragment = _screenState.selectedFragment;
     _screenState = _screenState.copyWith(
         presentationUpdatePending: true,
         title: event.title,

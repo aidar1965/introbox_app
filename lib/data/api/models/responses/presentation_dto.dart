@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'channel_dto.dart';
+
 part 'generated/presentation_dto.g.dart';
 
 @JsonSerializable()
@@ -19,6 +21,7 @@ class PresentationDto {
     required this.includePdf,
     required this.freeMode,
     this.links,
+    required this.channelDto,
   });
 
   @JsonKey(name: 'id')
@@ -34,7 +37,7 @@ class PresentationDto {
   final String? pdfFile;
 
   @JsonKey(name: 'first_image')
-  final String firstImage;
+  final String? firstImage;
 
   @JsonKey(name: 'created_at')
   final String createdAt;
@@ -62,6 +65,9 @@ class PresentationDto {
 
   @JsonKey(name: 'links')
   final String? links;
+
+  @JsonKey(name: 'channel')
+  final ChannelDto channelDto;
 
   static PresentationDto fromJson(Object json) =>
       _$PresentationDtoFromJson(json as Map<String, dynamic>);

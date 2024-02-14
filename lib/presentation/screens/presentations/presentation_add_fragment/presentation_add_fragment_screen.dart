@@ -232,27 +232,27 @@ class _ScreenViewState extends State<_ScreenView> {
                                       .add(const PresentationAddFragmentEvent
                                           .deleteAudio())),
                         ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 12.0),
-                        child: CommonElevatedButton(
-                            text: 'Записать аудио',
-                            onPressed: () async {
-                              final result = await _showRecorder(context,
-                                  imageData: widget.image!);
-                              if (result != null && context.mounted) {
-                                BlocProvider.of<PresentationAddFragmentBloc>(
-                                        context)
-                                    .add(
-                                        PresentationAddFragmentEvent.audioAdded(
-                                            audioBytes: result.audioBytes!,
-                                            duration: result.duration!,
-                                            audioPath: result.path!));
-                              }
-                            }),
-                      ),
+                      // const SizedBox(
+                      //   height: 12,
+                      // ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(right: 12.0),
+                      //   child: CommonElevatedButton(
+                      //       text: 'Записать аудио',
+                      //       onPressed: () async {
+                      //         final result = await _showRecorder(context,
+                      //             imageData: widget.image!);
+                      //         if (result != null && context.mounted) {
+                      //           BlocProvider.of<PresentationAddFragmentBloc>(
+                      //                   context)
+                      //               .add(
+                      //                   PresentationAddFragmentEvent.audioAdded(
+                      //                       audioBytes: result.audioBytes!,
+                      //                       duration: result.duration!,
+                      //                       audioPath: result.path!));
+                      //         }
+                      //       }),
+                      // ),
                       const SizedBox(
                         height: 12,
                       ),
@@ -264,10 +264,28 @@ class _ScreenViewState extends State<_ScreenView> {
                               final result =
                                   await FilePicker.platform.pickFiles(
                                 type: FileType.custom,
-                                allowedExtensions: ['mp3', 'wav'],
+                                allowedExtensions: [
+                                  'mp3',
+                                  'aac',
+                                  'm4a',
+                                  'm4b',
+                                  'm4p',
+                                  'mp4',
+                                  'wav'
+                                ],
                               );
                               if (result != null) {
                                 final fileBytes = result.files.first.bytes;
+
+                                final extension = result.files.first.extension;
+
+                                if (extension?.toLowerCase() != 'm4a' &&
+                                    extension?.toLowerCase() != 'aac' &&
+                                    extension?.toLowerCase() != 'mp3' &&
+                                    extension?.toLowerCase() != 'm4b' &&
+                                    extension?.toLowerCase() != 'm4p' &&
+                                    extension?.toLowerCase() != 'wav' &&
+                                    extension?.toLowerCase() != 'mp4') return;
 
                                 // Преобразование Uint8List в Blob
                                 final blob = html.Blob(

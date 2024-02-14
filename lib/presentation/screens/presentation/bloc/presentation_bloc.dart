@@ -44,6 +44,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       emitter(_screenState);
     } on Object {
       emitter(const PresentationState.loadingError());
+      rethrow;
     }
   }
 

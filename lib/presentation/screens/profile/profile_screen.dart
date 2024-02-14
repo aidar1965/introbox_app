@@ -118,9 +118,14 @@ class __ScreenViewState extends State<_ScreenView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          leading: BackButton(
+            onPressed: () {
+              context.router.push(const MainRoute());
+            },
+          ),
           title: Text(
-        'Профиль',
-      )),
+            'Профиль',
+          )),
       body: Stack(children: [
         SingleChildScrollView(
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [

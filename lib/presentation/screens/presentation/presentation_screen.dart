@@ -169,14 +169,24 @@ class _ScreenViewState extends State<_ScreenView> {
                             child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            CachedNetworkImage(
-                              imageUrl: widget.selectedFragment.imagePath!,
-                              progressIndicatorBuilder:
-                                  (context, _, progress) =>
-                                      const CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ),
+                            if (widget.selectedFragment.imagePath != null)
+                              CachedNetworkImage(
+                                imageUrl: widget.selectedFragment.imagePath!,
+                                progressIndicatorBuilder:
+                                    (context, _, progress) =>
+                                        const CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                              )
+                            else
+                              Center(
+                                  child: Text(
+                                widget.selectedFragment.title,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              )),
                             if (isTitleOverImage)
                               Positioned(
                                   bottom: 20,

@@ -5,9 +5,11 @@ import 'dart:ui';
 
 import '../../data/api/models/requests/fragment_request_data.dart';
 
+import '../models/channel.dart';
+import '../models/company.dart';
 import '../models/course.dart';
 import '../models/fragment_category.dart';
-import '../models/image_fragment.dart';
+//import '../models/image_fragment.dart';
 import '../models/pdf_fragment.dart';
 import '../models/presentation_with_fragments.dart';
 import '../models/responses/paginated_courses.dart';
@@ -50,28 +52,29 @@ abstract class IApi {
   Future<UserWithTokens> login(
       {required String email, required String password});
 
-  Future<void> addPdfSubject(
-      {required Uint8List pdfFile,
-      required String pdfFileName,
-      required String title,
-      String? description,
-      required List<FragmentRequestData> fragments,
-      int? duration});
+  // Future<void> addPdfSubject(
+  //     {required Uint8List pdfFile,
+  //     required String pdfFileName,
+  //     required String title,
+  //     String? description,
+  //     required List<FragmentRequestData> fragments,
+  //     int? duration});
 
   Future<void> addPresentation(
       {required Uint8List pdfFile,
       required String pdfFileName,
       required String title,
+      required String channelId,
       required bool isAudio,
       String? description,
       required List<FragmentRequestData> fragments,
       int? duration});
 
-  Future<void> addImageSubject(
-      {required String title,
-      String? description,
-      required List<ImageFragment> fragments,
-      int? duration});
+  // Future<void> addImageSubject(
+  //     {required String title,
+  //     String? description,
+  //     required List<ImageFragment> fragments,
+  //     int? duration});
 
   // ---------------------------------------------------------------------------
   Future<void> clearTokens();
@@ -159,6 +162,9 @@ abstract class IApi {
   Future<PaginatedPresentations> getPresentations(
       {int? offset, int? limit, int? categoryId});
 
+  Future<PaginatedPresentations> getPublicPresentations(
+      {int? offset, int? limit, int? categoryId});
+
   Future<void> deletePresentation({required String id});
 
   Future<List<PdfFragment>> getPresentationFragments({required String id});
@@ -191,6 +197,7 @@ abstract class IApi {
     Uint8List? imageBytes,
     bool? isLandscape,
     Uint8List? audioBytes,
+    String? audioExtension,
     int? presentationDurationDifference,
     int? duration,
     required bool isTitleOverImage,
@@ -198,6 +205,7 @@ abstract class IApi {
 
   Future<void> addImagePresentation(
       {required String title,
+      required String channelId,
       String? description,
       required List<FragmentRequestData> fragments,
       int? duration});
@@ -218,4 +226,56 @@ abstract class IApi {
       {required String oldPassword,
       required String password,
       required String confirmPassword});
+
+  Future<List<Channel>> getChannels();
+
+  Future<List<Company>> getCompanies();
+
+  Future<void> addChannel(
+      {required String title,
+      String? description,
+      String? companyId,
+      required int channelTypeId,
+      required bool isPublic});
+
+  Future<void> editChannel(
+      {required String channelId,
+      required String title,
+      String? description,
+      required int channelTypeId,
+      required bool isPublic});
+
+  Future<void> addCompany({
+    required String name,
+    String? website,
+  });
+
+  Future<void> editCompany({
+    required String companyId,
+    required String name,
+    String? website,
+    String? description,
+  });
+
+  Future<void> addCompanyToChannel({
+    String? companyId,
+    required String channelId,
+  });
+
+  Future<void> changeChannelCompany({
+    required String companyId,
+    required String channelId,
+  });
+
+  Future<void> removeChannelCompany({
+    required String companyId,
+    required String channelId,
+  });
+  Future<void> deleteCompany({
+    required String companyId,
+  });
+
+  Future<bool> checkPresentationPassword(String id);
+  Future<void> sendPassword({required String id, required String password});
+  Future<PresentationWithFragments> getPublicPresentation(String id);
 }

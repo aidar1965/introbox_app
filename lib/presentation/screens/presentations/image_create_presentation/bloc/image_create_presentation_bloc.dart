@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
 import '../../../../../data/api/models/requests/fragment_request_data.dart';
+import '../../../../../domain/models/channel.dart';
 import '../../../../../domain/models/image_fragment.dart';
 
 part 'image_create_presentation_state.dart';
@@ -12,13 +13,16 @@ part 'image_create_presentation_bloc.freezed.dart';
 
 class ImageCreatePresentationBloc
     extends Bloc<ImageCreatePresentationEvent, ImageCreatePresentationState> {
-  ImageCreatePresentationBloc() : super(const _ScreenState(fragments: [])) {
+  ImageCreatePresentationBloc() : super(const _StatePending()) {
     on<ImageCreatePresentationEvent>((event, emitter) => event.map(
+        channelSelected: (event) => _onChanneSelected(event, emitter),
+        initialDataRequested: (_) => _initialDataRequested(emitter),
         fragmentAdded: (event) => onFragmentAdded(event, emitter),
         saveImageSubject: (event) => saveImagePresentation(event, emitter),
         onReorderFragments: (event) => onReorderFragments(event, emitter),
         onDeleteFragment: (event) => onDeleteFragment(event, emitter)));
-    _screenState = const _ScreenState(fragments: []);
+
+    add(const ImageCreatePresentationEvent.initialDataRequested());
   }
 
   late _ScreenState _screenState;
@@ -47,21 +51,27 @@ class ImageCreatePresentationBloc
 
   Future<void> saveImagePresentation(_EventSaveImageSubject event,
       Emitter<ImageCreatePresentationState> emitter) async {
-    print(_screenState.fragments.first.isTitleOverImage);
+    if (event.title.isEmpty) {
+      emitter(const ImageCreatePresentationState.saveError(
+          errorText: 'Название должно быть заполнено'));
+    }
     try {
       await api.addImagePresentation(
+          channelId: _screenState.selectedChanel.id,
           title: event.title,
           description: event.description,
           fragments: _screenState.fragments
               .map((e) => FragmentRequestData(
                   title: e.title,
                   description: e.description ?? '',
-                  image: (
-                    file: e.imageBytes,
-                    isLandscape: true,
-                    fileName: '',
-                    isTitleOverImage: e.isTitleOverImage
-                  ),
+                  image: e.imageBytes != null
+                      ? (
+                          file: e.imageBytes!,
+                          isLandscape: true,
+                          fileName: '',
+                          isTitleOverImage: e.isTitleOverImage
+                        )
+                      : null,
                   audioBytes: e.audioBytes,
                   duration: e.duration))
               .toList());
@@ -82,6 +92,25 @@ class ImageCreatePresentationBloc
     final updatedList = _screenState.fragments.map((e) => e).toList();
     updatedList.removeAt(event.index);
     _screenState = _screenState.copyWith(fragments: updatedList);
+    emitter(_screenState);
+  }
+
+  Future<void> _initialDataRequested(
+      Emitter<ImageCreatePresentationState> emitter) async {
+    try {
+      final channels = await api.getChannels();
+      _screenState = _ScreenState(
+          channels: channels, selectedChanel: channels.first, fragments: []);
+      emitter(_screenState);
+    } on Object {
+      emitter(const ImageCreatePresentationState.initialDataNotLoaded());
+      rethrow;
+    }
+  }
+
+  void _onChanneSelected(_EventChannelSelected event,
+      Emitter<ImageCreatePresentationState> emitter) {
+    _screenState = _screenState.copyWith(selectedChanel: event.channel);
     emitter(_screenState);
   }
 }

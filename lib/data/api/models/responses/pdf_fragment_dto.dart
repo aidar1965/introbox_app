@@ -8,7 +8,7 @@ class PdfFragmentDto {
     required this.id,
     required this.title,
     required this.description,
-    required this.imagePath,
+    this.imagePath,
     required this.isLandscape,
     this.audioPath,
     this.duration,
@@ -29,7 +29,7 @@ class PdfFragmentDto {
   final int? duration;
 
   @JsonKey(name: 'image_path')
-  final String imagePath;
+  final String? imagePath;
 
   @JsonKey(name: 'is_landscape')
   final bool isLandscape;
