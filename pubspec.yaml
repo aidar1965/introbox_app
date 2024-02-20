@@ -65,7 +65,7 @@ dependencies:
   file: ^6.0.0
   record: ^4.4.4
   easy_sidemenu: ^0.5.0
-  just_audio: ^0.9.36
+  decimal: ^2.3.3
   
   pdf: ^3.10.4
   printing: ^5.11.0

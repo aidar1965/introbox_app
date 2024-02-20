@@ -1,56 +1,55 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'course_category_dto.dart';
-import 'subject_dto.dart';
+import 'package:moki_tutor/data/api/models/responses/channel_dto.dart';
+import 'presentation_dto.dart';
 
 part 'generated/course_dto.g.dart';
 
 @JsonSerializable()
 class CourseDto {
   @JsonKey(name: 'id')
-  final int id;
+  final String id;
 
   @JsonKey(name: 'title')
-  final String? title;
+  final String title;
 
   @JsonKey(name: 'description')
   final String? description;
 
-  @JsonKey(name: 'first_image')
-  final String? firstImage;
+  @JsonKey(name: 'image')
+  final String? image;
 
   @JsonKey(name: 'created_at')
   final String createdAt;
 
-  @JsonKey(name: 'last_update')
-  final String? lastUpdate;
+  @JsonKey(name: 'updated_at')
+  final String? updatedAt;
 
   @JsonKey(name: 'price')
   final double price;
 
   @JsonKey(name: 'lang')
-  final String locale;
+  final String? locale;
 
   @JsonKey(name: 'is_published')
   final bool isPublished;
 
-  @JsonKey(name: 'subjects')
-  final List<SubjectDto>? subjects;
+  @JsonKey(name: 'presentations')
+  final List<PresentationDto>? presentations;
 
-  @JsonKey(name: 'categories')
-  final List<CourseCategoryDto> categories;
+  @JsonKey(name: 'channel')
+  final ChannelDto channel;
   CourseDto({
     required this.id,
     required this.title,
     this.description,
-    this.firstImage,
+    this.image,
     required this.createdAt,
-    this.lastUpdate,
+    this.updatedAt,
     required this.price,
     required this.locale,
     required this.isPublished,
-    this.subjects,
-    required this.categories,
+    this.presentations,
+    required this.channel,
   });
 
   static CourseDto fromJson(Object json) =>

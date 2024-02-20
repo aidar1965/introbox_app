@@ -1,13 +1,13 @@
-import '../../http_client/i_api_request.dart';
+// import '../../http_client/i_api_request.dart';
 
-class RequestGetCourse extends IApiRequest {
-  final int id;
+// class RequestGetCourse extends IApiRequest {
+//   final int id;
 
-  RequestGetCourse({required this.id})
-      : super(methodType: AvailableApiMethods.get, url: '/tutor/course/');
+//   RequestGetCourse({required this.id})
+//       : super(methodType: AvailableApiMethods.get, url: '/tutor/course/');
 
-  @override
-  Map<String, Object?>? get queryParameters => {
-        'id': id,
-      };
-}
+//   @override
+//   Map<String, Object?>? get queryParameters => {
+//         'id': id,
+//       };
+// }

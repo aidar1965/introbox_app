@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 
 import '../../domain/interfaces/i_auth_controller.dart';
 import '../../domain/locator/locator.dart';
+import '../../domain/models/course.dart';
 import '../../domain/models/pdf_fragment.dart';
 import '../../domain/models/presentation.dart';
 
 import '../screens/change_password/change_password_screen.dart';
 import '../screens/channels/channels_screen.dart';
 import '../screens/companies/companies_screen.dart';
+import '../screens/course_screen/course_screen.dart';
+import '../screens/courses/courses_screen.dart';
+import '../screens/my_courses/my_courses_screen.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/login/login_screen.dart';
 
@@ -27,6 +31,7 @@ import '../screens/presentations/prsentation_player/presentation_player_screen.d
 import '../screens/presentations/prsentations_screen.dart';
 import '../screens/profile/profile_screen.dart';
 
+import '../screens/public_course/public_course_screen.dart';
 import '../screens/public_presentation/public_presentation_screen.dart';
 import '../screens/recover_password_screen/recover_password_screen.dart';
 import '../screens/register/confirmation/confirmation_screen.dart';
@@ -58,6 +63,19 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
           page: PresentationsRoute.page,
         ),
         AutoRoute(
+          path: '/my-courses',
+          page: MyCoursesRoute.page,
+        ),
+
+        AutoRoute(
+          path: '/course/:id',
+          page: PublicCourseRoute.page,
+        ),
+        AutoRoute(
+          path: '/courses',
+          page: CoursesRoute.page,
+        ),
+        AutoRoute(
           path: '/channels',
           page: ChannelsRoute.page,
         ),
@@ -81,6 +99,11 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         CustomRoute(
             path: '/presentation/:id',
             page: PublicPresentationRoute.page,
+            transitionsBuilder: TransitionsBuilders.slideLeft,
+            durationInMilliseconds: 400),
+        CustomRoute(
+            path: '/my-course/:id',
+            page: CourseRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
         CustomRoute(
@@ -162,7 +185,9 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
         resolver.route.name == ConfirmationRoute.name ||
         resolver.route.name == PresentationRoute.name ||
         resolver.route.name == PublicPresentationRoute.name ||
-        resolver.route.name == RecoverPasswordRoute.name) {
+        resolver.route.name == RecoverPasswordRoute.name ||
+        resolver.route.name == CoursesRoute.name ||
+        resolver.route.name == PublicCourseRoute.name) {
       // we continue navigation
       resolver.next();
     } else {

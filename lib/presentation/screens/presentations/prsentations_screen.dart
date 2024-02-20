@@ -10,7 +10,9 @@ import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
 
 import '../../../../domain/models/presentation.dart';
 
+import '../../../domain/models/course.dart';
 import '../../auto_router/app_router.dart';
+import '../../common/common_elevated_button.dart';
 import '../../common/common_functions.dart';
 
 ///import '../../common/common_navigation_drawer.dart';
@@ -85,6 +87,13 @@ class PresentationsScreen extends StatelessWidget {
                           child: Text(
                             'Компании',
                             style: TextStyle(color: Colors.white),
+                          )),
+                      TextButton(
+                          onPressed: () =>
+                              context.router.push(MyCoursesRoute()),
+                          child: Text(
+                            'Курсы',
+                            style: TextStyle(color: Colors.white),
                           ))
                     ] else
                       PopupMenuButton(
@@ -105,6 +114,14 @@ class PresentationsScreen extends StatelessWidget {
                               ),
                               onTap: () =>
                                   context.router.push(const CompaniesRoute()),
+                            ),
+                            PopupMenuItem(
+                              child: Text(
+                                'Курсы',
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              onTap: () =>
+                                  context.router.push(const MyCoursesRoute()),
                             ),
                           ];
                         },
@@ -163,7 +180,8 @@ class PresentationsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: _PresentationList(presentations: state.presentations)),
+              body: _PresentationList(
+                  presentations: state.presentations, courses: state.courses)),
           loadingError: (_) => Scaffold(
               appBar: AppBar(
                 leading: BackButton(onPressed: () {
@@ -181,9 +199,11 @@ class PresentationsScreen extends StatelessWidget {
 }
 
 class _PresentationList extends StatelessWidget {
-  const _PresentationList({super.key, required this.presentations});
+  const _PresentationList(
+      {super.key, required this.presentations, required this.courses});
 
   final List<Presentation> presentations;
+  final List<Course> courses;
 
   @override
   Widget build(BuildContext context) {
@@ -197,6 +217,7 @@ class _PresentationList extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return PresentationItem(
                 presentation: presentations.elementAt(index),
+                courses: courses,
                 onDeleteConfirm: () =>
                     BlocProvider.of<PresentationsBloc>(context).add(
                         PresentationsEvent.deletePresentation(
@@ -212,10 +233,14 @@ class _PresentationList extends StatelessWidget {
 
 class PresentationItem extends StatelessWidget {
   const PresentationItem(
-      {super.key, required this.presentation, required this.onDeleteConfirm});
+      {super.key,
+      required this.presentation,
+      required this.onDeleteConfirm,
+      required this.courses});
 
   final Presentation presentation;
   final Function() onDeleteConfirm;
+  final List<Course> courses;
 
   @override
   Widget build(BuildContext context) {
@@ -246,6 +271,7 @@ class PresentationItem extends StatelessWidget {
                   width: 12,
                 ),
                 Expanded(
+                    flex: 3,
                     child: SizedBox(
                         height: 100,
                         child: Column(
@@ -279,144 +305,156 @@ class PresentationItem extends StatelessWidget {
                 const SizedBox(
                   width: 12,
                 ),
-                // if (Responsive.isMobile(context) == false) ...[
-                //   Expanded(child: Text(presentation.description ?? '')),
-                //   const SizedBox(
-                //     width: 12,
-                //   ),
-                //   Text(presentation.channel.title),
-                //   const SizedBox(
-                //     width: 12,
-                //   ),
-                //   Text(
-                //     DateFormat('dd.MM.yyy kk:mm')
-                //         .format(presentation.createdAt),
-                //     style: context.style12w400$text3Grey,
-                //   ),
-                //   const SizedBox(
-                //     width: 12,
-                //   )
-                // ],
-                IconButton(
-                  tooltip: 'Воспроизвести',
-                  onPressed: () => context.router
-                      .push(PresentationRoute(id: presentation.id)),
-                  icon: const Icon(Icons.play_arrow_rounded),
+                Expanded(
+                  child: Text(
+                    presentation.channel?.title ?? '',
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-                IconButton(
-                  tooltip: 'Редактировать',
-                  onPressed: () async {
-                    final result = await context.router
-                        .push(EditPresentationRoute(id: presentation.id));
-                    if (context.mounted) {
-                      if (result == true) {
-                        BlocProvider.of<PresentationsBloc>(context).add(
-                            const PresentationsEvent.initialDataRequested());
-                      }
-                    }
-                  },
-                  icon: const Icon(Icons.edit),
+                const SizedBox(
+                  width: 12,
                 ),
-                IconButton(
-                  tooltip: 'Удалить',
-                  onPressed: () => _showDeleteConfirmDialog(
-                      context, presentation.id, onDeleteConfirm),
-                  icon: const Icon(Icons.delete),
-                ),
-                IconButton(
-                    tooltip: presentation.isPublished
-                        ? 'Снять публикацию'
-                        : 'Опубликовать',
-                    onPressed: () {
-                      BlocProvider.of<PresentationsBloc>(context).add(
-                          PresentationsEvent.publishPresentation(
-                              presentation.id));
-                    },
-                    icon: Icon(Icons.public,
-                        color: presentation.isPublished
-                            ? Colors.green
-                            : Colors.grey)),
-                IconButton(
-                    tooltip: 'Ссылки',
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => Dialog.fullscreen(
-                                child:
-                                    _LinkView(presentationId: presentation.id),
-                              ));
-                    },
-                    icon: const Icon(Icons.share)),
-                IconButton(
-                    tooltip: presentation.hasPassword
-                        ? 'Защищено паролем'
-                        : 'Без пароля',
+                if (Responsive.isMobile(context) == false) ...[
+                  IconButton(
+                    tooltip: 'Добавить в курс',
+                    onPressed: () =>
+                        onAddToCourseClicked(context, presentation.id, courses),
+                    icon: const Icon(Icons.add_rounded),
+                  ),
+                  IconButton(
+                    tooltip: 'Воспроизвести',
+                    onPressed: () => context.router
+                        .push(PresentationRoute(id: presentation.id)),
+                    icon: const Icon(Icons.play_arrow_rounded),
+                  ),
+                  IconButton(
+                    tooltip: 'Редактировать',
                     onPressed: () async {
-                      final passwordController = TextEditingController();
-                      final confirmPasswordController = TextEditingController();
-                      final result = await showDialog(
-                          context: context,
-                          builder: (context) => SizedBox(
-                                child: SimpleDialog(
-                                  contentPadding: EdgeInsets.all(
-                                      Responsive.isMobile(context) ? 12 : 24),
-                                  children: [
-                                    const SizedBox(
-                                      width: 200,
-                                      child: Text(
-                                          'При вводе пароля просмотр презентации при публикации будет защищен паролем'),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    CommonTextField(
-                                        controller: passwordController,
-                                        obscureText: true,
-                                        labelText: 'Пароль'),
-                                    const SizedBox(height: 12),
-                                    CommonTextField(
-                                        controller: confirmPasswordController,
-                                        obscureText: true,
-                                        labelText: 'Повторите пароль'),
-                                    const SizedBox(height: 12),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        TextButton(
-                                            onPressed: () =>
-                                                context.router.pop(),
-                                            child: const Text('Отмена')),
-                                        TextButton(
-                                            onPressed: () {
-                                              context.router.pop((
-                                                password:
-                                                    passwordController.text,
-                                                confirmPassword:
-                                                    confirmPasswordController
-                                                        .text
-                                              ));
-                                            },
-                                            child: const Text('Сохранить')),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ));
-                      if (result != null &&
-                          result is ({
-                            String password,
-                            String confirmPassword
-                          })) {
-                        if (context.mounted) {
+                      final result = await context.router
+                          .push(EditPresentationRoute(id: presentation.id));
+                      if (context.mounted) {
+                        if (result == true) {
                           BlocProvider.of<PresentationsBloc>(context).add(
-                              PresentationsEvent.onPasswordChanged(
-                                  presentation.id, result));
+                              const PresentationsEvent.initialDataRequested());
                         }
                       }
                     },
-                    icon: Icon(Icons.lock,
-                        color: presentation.hasPassword
-                            ? Colors.green
-                            : Colors.grey)),
+                    icon: const Icon(Icons.edit),
+                  ),
+                  IconButton(
+                    tooltip: 'Удалить',
+                    onPressed: () => _showDeleteConfirmDialog(
+                        context, presentation.id, onDeleteConfirm),
+                    icon: const Icon(Icons.delete),
+                  ),
+                  IconButton(
+                      tooltip: presentation.isPublished
+                          ? 'Снять публикацию'
+                          : 'Опубликовать',
+                      onPressed: () {
+                        BlocProvider.of<PresentationsBloc>(context).add(
+                            PresentationsEvent.publishPresentation(
+                                presentation.id));
+                      },
+                      icon: Icon(Icons.public,
+                          color: presentation.isPublished
+                              ? Colors.green
+                              : Colors.grey)),
+                  IconButton(
+                      tooltip: 'Ссылки',
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => Dialog.fullscreen(
+                                  child: _LinkView(
+                                      presentationId: presentation.id),
+                                ));
+                      },
+                      icon: const Icon(Icons.share)),
+                  IconButton(
+                      tooltip: presentation.hasPassword
+                          ? 'Защищено паролем'
+                          : 'Без пароля',
+                      onPressed: () async {
+                        final passwordController = TextEditingController();
+                        final confirmPasswordController =
+                            TextEditingController();
+                        final result = await showDialog(
+                            context: context,
+                            builder: (context) => SizedBox(
+                                  child: SimpleDialog(
+                                    contentPadding: EdgeInsets.all(
+                                        Responsive.isMobile(context) ? 12 : 24),
+                                    children: [
+                                      const SizedBox(
+                                        width: 200,
+                                        child: Text(
+                                            'При вводе пароля просмотр презентации при публикации будет защищен паролем'),
+                                      ),
+                                      const SizedBox(height: 12),
+                                      CommonTextField(
+                                          controller: passwordController,
+                                          obscureText: true,
+                                          labelText: 'Пароль'),
+                                      const SizedBox(height: 12),
+                                      CommonTextField(
+                                          controller: confirmPasswordController,
+                                          obscureText: true,
+                                          labelText: 'Повторите пароль'),
+                                      const SizedBox(height: 12),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          TextButton(
+                                              onPressed: () =>
+                                                  context.router.pop(),
+                                              child: const Text('Отмена')),
+                                          TextButton(
+                                              onPressed: () {
+                                                context.router.pop((
+                                                  password:
+                                                      passwordController.text,
+                                                  confirmPassword:
+                                                      confirmPasswordController
+                                                          .text
+                                                ));
+                                              },
+                                              child: const Text('Сохранить')),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ));
+                        if (result != null &&
+                            result is ({
+                              String password,
+                              String confirmPassword
+                            })) {
+                          if (context.mounted) {
+                            BlocProvider.of<PresentationsBloc>(context).add(
+                                PresentationsEvent.onPasswordChanged(
+                                    presentation.id, result));
+                          }
+                        }
+                      },
+                      icon: Icon(Icons.lock,
+                          color: presentation.hasPassword
+                              ? Colors.green
+                              : Colors.grey))
+                ] else
+                  PopupMenuButton(itemBuilder: (BuildContext bc) {
+                    return [
+                      PopupMenuItem(
+                        child: Text(
+                          'Воспроизвести',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onTap: () => context.router
+                            .push(PresentationRoute(id: presentation.id)),
+                      ),
+                    ];
+                  })
               ],
             )));
   }
@@ -449,6 +487,111 @@ class PresentationItem extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Future<void> onAddToCourseClicked(
+      BuildContext context, String presentationId, List<Course> courses) async {
+    String selectedCourseId = courses.first.id;
+    final result = await showModalBottomSheet(
+        context: context,
+        builder: (context) => DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text('Добавление к курсу'),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      CourseSelectWidget(
+                          selectedId: courses.first.id,
+                          courses: courses,
+                          onCourseSelect: (v) {
+                            selectedCourseId = v;
+                          }),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      CommonElevatedButton(
+                          text: 'Выбрать',
+                          onPressed: () {
+                            context.router.pop(selectedCourseId);
+                          }),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      TextButton(
+                          onPressed: () => context.router.pop(),
+                          child: const Text('Отмена'))
+                    ],
+                  ),
+                ),
+              ),
+            ));
+    print(result);
+    if (result is String) {
+      if (context.mounted) {
+        BlocProvider.of<PresentationsBloc>(context).add(
+            PresentationsEvent.addPresentationToCourse(
+                presentationId: presentationId, courseId: result));
+      }
+    }
+  }
+}
+
+class CourseSelectWidget extends StatefulWidget {
+  const CourseSelectWidget(
+      {super.key,
+      required this.courses,
+      required this.onCourseSelect,
+      this.selectedId});
+
+  final List<Course> courses;
+  final Function(String) onCourseSelect;
+  final String? selectedId;
+
+  @override
+  State<CourseSelectWidget> createState() => _CourseSelectWidgetState();
+}
+
+class _CourseSelectWidgetState extends State<CourseSelectWidget> {
+  late String selectedCourseId;
+  late List<Widget> courseSelectWidgets;
+
+  @override
+  void initState() {
+    super.initState();
+
+    selectedCourseId = widget.selectedId ?? widget.courses.first.id;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    courseSelectWidgets = widget.courses
+        .map((channel) => ListTile(
+              title: Text(
+                channel.title,
+                style: const TextStyle(color: Colors.black),
+              ),
+              leading: Radio(
+                value: channel.id,
+                groupValue: selectedCourseId,
+                onChanged: (value) {
+                  setState(() {
+                    selectedCourseId = value!;
+                  });
+                  widget.onCourseSelect(value!);
+                },
+              ),
+            ))
+        .toList();
+    return Column(
+      children: [...courseSelectWidgets],
     );
   }
 }

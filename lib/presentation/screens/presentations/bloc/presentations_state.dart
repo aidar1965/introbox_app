@@ -4,7 +4,8 @@ part of 'presentations_bloc.dart';
 class PresentationsState with _$PresentationsState {
   const factory PresentationsState.pending() = _StatePending;
   const factory PresentationsState.screenState(
-      {required List<Presentation> presentations}) = _ScreenState;
+      {required List<Presentation> presentations,
+      required List<Course> courses}) = _ScreenState;
   const factory PresentationsState.requestError({String? errorText}) =
       _StateRequestError;
   const factory PresentationsState.requestSuccess({String? message}) =

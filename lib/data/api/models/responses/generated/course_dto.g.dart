@@ -7,33 +7,31 @@ part of '../course_dto.dart';
 // **************************************************************************
 
 CourseDto _$CourseDtoFromJson(Map<String, dynamic> json) => CourseDto(
-      id: json['id'] as int,
-      title: json['title'] as String?,
+      id: json['id'] as String,
+      title: json['title'] as String,
       description: json['description'] as String?,
-      firstImage: json['first_image'] as String?,
+      image: json['image'] as String?,
       createdAt: json['created_at'] as String,
-      lastUpdate: json['last_update'] as String?,
+      updatedAt: json['updated_at'] as String?,
       price: (json['price'] as num).toDouble(),
-      locale: json['lang'] as String,
+      locale: json['lang'] as String?,
       isPublished: json['is_published'] as bool,
-      subjects: (json['subjects'] as List<dynamic>?)
-          ?.map((e) => SubjectDto.fromJson(e as Map<String, dynamic>))
+      presentations: (json['presentations'] as List<dynamic>?)
+          ?.map((e) => PresentationDto.fromJson(e as Map<String, dynamic>))
           .toList(),
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => CourseCategoryDto.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      channel: ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$CourseDtoToJson(CourseDto instance) => <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'first_image': instance.firstImage,
+      'image': instance.image,
       'created_at': instance.createdAt,
-      'last_update': instance.lastUpdate,
+      'updated_at': instance.updatedAt,
       'price': instance.price,
       'lang': instance.locale,
       'is_published': instance.isPublished,
-      'subjects': instance.subjects,
-      'categories': instance.categories,
+      'presentations': instance.presentations,
+      'channel': instance.channel,
     };

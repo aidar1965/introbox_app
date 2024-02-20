@@ -1,6 +1,6 @@
-import 'dart:ui';
+import 'package:decimal/decimal.dart';
 
-import 'package:moki_tutor/data/api/models/responses/company_dto.dart';
+import '../models/responses/company_dto.dart';
 
 import '../../../domain/models/channel.dart';
 import '../../../domain/models/company.dart';
@@ -71,21 +71,17 @@ class ApiDataMapper {
 
   Course mapCourse(CourseDto dto) {
     return Course(
-      title: dto.title ?? 'Без названия',
-      description: dto.description,
-      firstImage: dto.firstImage,
-      price: dto.price,
-      isPublished: dto.isPublished,
-      id: dto.id,
-      lastUpdate:
-          dto.lastUpdate != null ? DateTime.parse(dto.lastUpdate!) : null,
-      date: DateTime.parse(dto.createdAt),
-      locale: Locale.fromSubtags(languageCode: dto.locale),
-      subjects: dto.subjects?.map(mapSubject).toList(),
-      courseCategories: (dto.categories)
-          .map((e) => mapCourseCategory(CourseCategoryDto.fromJson(e)))
-          .toList(),
-    );
+        title: dto.title,
+        description: dto.description,
+        image: dto.image,
+        price: Decimal.parse(dto.price.toString()),
+        isPublished: dto.isPublished,
+        id: dto.id,
+        updatedAt:
+            dto.updatedAt != null ? DateTime.parse(dto.updatedAt!) : null,
+        createdAt: DateTime.parse(dto.createdAt),
+        presentations: dto.presentations?.map(mapPresentation).toList(),
+        channel: mapChannel(dto.channel));
   }
 
   CourseCategory mapCourseCategory(CourseCategoryDto dto) {
@@ -115,7 +111,7 @@ class ApiDataMapper {
         pdfFile: dto.pdfFile,
         links: dto.links,
         isPublished: dto.isPublished,
-        channel: mapChannel(dto.channelDto));
+        channel: dto.channelDto != null ? mapChannel(dto.channelDto!) : null);
   }
 
   PresentationWithFragments mapPresentationWithFragments(

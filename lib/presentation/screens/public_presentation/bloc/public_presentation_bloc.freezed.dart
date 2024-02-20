@@ -985,7 +985,7 @@ mixin _$PublicPresentationState {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1006,7 +1006,7 @@ mixin _$PublicPresentationState {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1027,7 +1027,7 @@ mixin _$PublicPresentationState {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1112,7 +1112,7 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       String? presentationDescription,
       String? pdfFile,
       List<PdfFragment> fragments,
-      Channel channel});
+      Channel? channel});
 }
 
 /// @nodoc
@@ -1133,7 +1133,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
     Object? presentationDescription = freezed,
     Object? pdfFile = freezed,
     Object? fragments = null,
-    Object? channel = null,
+    Object? channel = freezed,
   }) {
     return _then(_$_ScreenState(
       selectedFragment: null == selectedFragment
@@ -1164,10 +1164,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value._fragments
           : fragments // ignore: cast_nullable_to_non_nullable
               as List<PdfFragment>,
-      channel: null == channel
+      channel: freezed == channel
           ? _value.channel
           : channel // ignore: cast_nullable_to_non_nullable
-              as Channel,
+              as Channel?,
     ));
   }
 }
@@ -1207,7 +1207,7 @@ class _$_ScreenState implements _ScreenState {
   }
 
   @override
-  final Channel channel;
+  final Channel? channel;
 
   @override
   String toString() {
@@ -1263,7 +1263,7 @@ class _$_ScreenState implements _ScreenState {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1288,7 +1288,7 @@ class _$_ScreenState implements _ScreenState {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1320,7 +1320,7 @@ class _$_ScreenState implements _ScreenState {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1398,7 +1398,7 @@ abstract class _ScreenState implements PublicPresentationState {
       final String? presentationDescription,
       final String? pdfFile,
       required final List<PdfFragment> fragments,
-      required final Channel channel}) = _$_ScreenState;
+      required final Channel? channel}) = _$_ScreenState;
 
   PdfFragment get selectedFragment;
   bool get isLast;
@@ -1407,7 +1407,7 @@ abstract class _ScreenState implements PublicPresentationState {
   String? get presentationDescription;
   String? get pdfFile;
   List<PdfFragment> get fragments;
-  Channel get channel;
+  Channel? get channel;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1488,7 +1488,7 @@ class _$_StatePasswordForm implements _StatePasswordForm {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1512,7 +1512,7 @@ class _$_StatePasswordForm implements _StatePasswordForm {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1536,7 +1536,7 @@ class _$_StatePasswordForm implements _StatePasswordForm {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1689,7 +1689,7 @@ class _$_StateLoadingError implements _StateLoadingError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1713,7 +1713,7 @@ class _$_StateLoadingError implements _StateLoadingError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1737,7 +1737,7 @@ class _$_StateLoadingError implements _StateLoadingError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1893,7 +1893,7 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1917,7 +1917,7 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1941,7 +1941,7 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2065,7 +2065,7 @@ class _$_StatePending implements _StatePending {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2089,7 +2089,7 @@ class _$_StatePending implements _StatePending {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2113,7 +2113,7 @@ class _$_StatePending implements _StatePending {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2231,7 +2231,7 @@ class _$_StateIdNotSpecified implements _StateIdNotSpecified {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2255,7 +2255,7 @@ class _$_StateIdNotSpecified implements _StateIdNotSpecified {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2279,7 +2279,7 @@ class _$_StateIdNotSpecified implements _StateIdNotSpecified {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2425,7 +2425,7 @@ class _$_StateRequestError implements _StateRequestError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2449,7 +2449,7 @@ class _$_StateRequestError implements _StateRequestError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2473,7 +2473,7 @@ class _$_StateRequestError implements _StateRequestError {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2597,7 +2597,7 @@ class _$_StateNotFound implements _StateNotFound {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)
+            Channel? channel)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2621,7 +2621,7 @@ class _$_StateNotFound implements _StateNotFound {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2645,7 +2645,7 @@ class _$_StateNotFound implements _StateNotFound {
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel channel)?
+            Channel? channel)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,

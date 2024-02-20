@@ -245,6 +245,7 @@ class DioClient {
     try {
       final Response<String> response =
           await Dio(_dioOptions).post<String>(url, data: jsonEncode(body));
+      print(response.data);
 
       if (debugMode) {
         _logger(url, response, body: body);

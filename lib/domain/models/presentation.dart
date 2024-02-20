@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'channel.dart';
+import 'course.dart';
 
 @immutable
 class Presentation {
@@ -19,6 +20,7 @@ class Presentation {
     required this.createdAt,
     required this.isPublished,
     required this.channel,
+    this.course,
   });
 
   final String id;
@@ -34,5 +36,6 @@ class Presentation {
   final bool freeMode;
   final String? links;
   final DateTime createdAt;
-  final Channel channel;
+  final Channel? channel;
+  final Course? course;
 }

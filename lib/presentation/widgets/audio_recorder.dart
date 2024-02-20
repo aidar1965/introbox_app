@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:html' as html;
-import 'dart:js_util';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

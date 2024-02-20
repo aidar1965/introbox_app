@@ -22,7 +22,9 @@ PresentationDto _$PresentationDtoFromJson(Map<String, dynamic> json) =>
       includePdf: json['include_pdf'] as bool,
       freeMode: json['free_mode'] as bool,
       links: json['links'] as String?,
-      channelDto: ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),
+      channelDto: json['channel'] == null
+          ? null
+          : ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$PresentationDtoToJson(PresentationDto instance) =>

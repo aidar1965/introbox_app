@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:core';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:moki_tutor/data/api/models/requests/request_add_channel.dart';
 import 'package:moki_tutor/data/api/models/requests/request_add_company.dart';
 import 'package:moki_tutor/data/api/models/requests/request_add_fragment_category.dart';
+import 'package:moki_tutor/data/api/models/requests/request_add_presentation_to_course.dart';
 import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categories.dart';
 import 'package:moki_tutor/data/api/models/requests/request_recover_password.dart';
 
@@ -64,26 +64,32 @@ import 'models/requests/request_delete_subject_categories.dart';
 import 'models/requests/request_edit_channel.dart';
 import 'models/requests/request_edit_company.dart';
 import 'models/requests/request_edit_presentation_fragment.dart';
-import 'models/requests/request_edit_subject.dart';
 import 'models/requests/request_get_channels.dart';
 import 'models/requests/request_get_companies.dart';
+import 'models/requests/request_get_course.dart';
+import 'models/requests/request_get_courses.dart';
 import 'models/requests/request_get_presentation.dart';
 import 'models/requests/request_get_presentation_fragments.dart';
 import 'models/requests/request_get_presentations.dart';
+import 'models/requests/request_get_public_course.dart';
+import 'models/requests/request_get_public_courses.dart';
 import 'models/requests/request_get_public_presentation.dart';
 import 'models/requests/request_get_public_presentations.dart';
 import 'models/requests/request_get_subject_categories.dart';
 import 'models/requests/request_get_subject_fragments.dart';
 import 'models/requests/request_get_subjects.dart';
-import 'models/requests/request_get_tutor_course.dart';
-import 'models/requests/request_get_tutor_courses.dart';
+
 import 'models/requests/request_get_user.dart';
 import 'models/requests/request_login.dart';
+import 'models/requests/request_publish_course.dart';
 import 'models/requests/request_publish_presentation.dart';
+import 'models/requests/request_remove_presentation_from_course.dart';
 import 'models/requests/request_reorder_fragments.dart';
 import 'models/requests/request_reorder_presentation_fragments.dart';
+import 'models/requests/request_reorder_presentations.dart';
 import 'models/requests/request_send_password.dart';
 import 'models/requests/request_set_password.dart';
+import 'models/requests/request_update_course.dart';
 import 'models/requests/request_update_fragment.dart';
 import 'models/requests/request_update_presentation.dart';
 import 'models/requests/request_update_subject.dart';
@@ -315,7 +321,7 @@ class Api implements IApi {
   @override
   Future<PaginatedCourses> getCourses({int limit = 50, int offset = 0}) async {
     final result = await httpClient
-        .request(RequestGetTutorCourses(limit: limit, offset: offset));
+        .request(RequestGetCourses(limit: limit, offset: offset));
     return PaginatedCourses(
       offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
       count: int.parse(result.headers['X-Total-Count']!.first),
@@ -326,42 +332,62 @@ class Api implements IApi {
   }
 
   @override
-  Future<void> addCourse(
-      {required String title,
-      required String description,
-      required List<int> subjectsIds,
-      required Locale locale}) async {
-    await httpClient.request(RequestAddCourse(
-        title: title,
-        description: description,
-        subjectsIds: subjectsIds,
-        locale: locale));
+  Future<PaginatedCourses> getPublicCourses(
+      {int limit = 50, int offset = 0}) async {
+    final result = await httpClient
+        .request(RequestGetPublicCourses(limit: limit, offset: offset));
+    return PaginatedCourses(
+      offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
+      count: int.parse(result.headers['X-Total-Count']!.first),
+      courses: (result.data as List).map(
+        (e) => mapper.mapCourse(CourseDto.fromJson(e)),
+      ),
+    );
   }
 
   @override
-  Future<Course> getCourse({required int id}) async {
+  Future<void> addCourse({
+    required String title,
+    String? description,
+    required String channelId,
+    String? price,
+    Uint8List? imageBytes,
+  }) async {
+    await httpClient.request(RequestAddCourse(
+        title: title,
+        description: description,
+        channelId: channelId,
+        price: double.tryParse(price ?? ''),
+        imageBytes: imageBytes));
+  }
+
+  @override
+  Future<Course> getCourse({required String id}) async {
     final result = await httpClient.request(RequestGetCourse(id: id));
     return mapper
         .mapCourse(CourseDto.fromJson(jsonDecode(result!.data as String)));
   }
 
   @override
-  Future<void> updateCourse(
-      {required int id,
-      required String title,
-      required String description,
-      required List<int> subjectsIds,
-      required Locale locale}) async {
-    await httpClient.request(RequestEditCourse(
+  Future<void> updateCourse({
+    required String id,
+    required String title,
+    String? description,
+    required String channelId,
+    String? price,
+    Uint8List? imageBytes,
+  }) async {
+    await httpClient.request(RequestUpdateCourse(
         id: id,
         title: title,
         description: description,
-        subjectsIds: subjectsIds,
-        locale: locale));
+        channelId: channelId,
+        price: double.tryParse(price ?? ''),
+        imageBytes: imageBytes));
   }
 
   @override
-  Future<void> deleteCourse({required int id}) async {
+  Future<void> deleteCourse({required String id}) async {
     await httpClient.request(RequestDeleteCourse(id: id));
   }
 
@@ -730,5 +756,38 @@ class Api implements IApi {
     return mapper.mapPresentationWithFragments(
         PresentationWithFragmentsDto.fromJson(
             jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> addPresentationToCourse(
+      {required String presentationId, required String courseId}) async {
+    await httpClient.request(RequestAddPresentationToCourse(
+        presentationId: presentationId, courseId: courseId));
+  }
+
+  @override
+  Future<void> reorderPresentations(
+      {required List<String> presentationsIds}) async {
+    await httpClient.request(
+        RequestReorderPresentations(presentationsIds: presentationsIds));
+  }
+
+  @override
+  Future<void> removePresentationFromCourse(
+      {required String presentationId}) async {
+    await httpClient
+        .request(RequestRemovePresentationFromCourse(id: presentationId));
+  }
+
+  @override
+  Future<void> publishCourse({required String id}) async {
+    await httpClient.request(RequestPublishCourse(id: id));
+  }
+
+  @override
+  Future<Course> getPublicCourse({required String id}) async {
+    final result = await httpClient.request(RequestGetPublicCourse(id: id));
+    return mapper
+        .mapCourse(CourseDto.fromJson(jsonDecode(result!.data as String)));
   }
 }

@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:html' as html;
 import 'package:path/path.dart' as p;
 
+import '../../../domain/models/course.dart';
 import '../../../domain/models/pdf_fragment.dart';
 
 import '../../common/common_elevated_button.dart';
@@ -19,10 +20,11 @@ import 'public_audio_player.dart';
 @RoutePage()
 class PublicPresentationScreen extends StatelessWidget {
   const PublicPresentationScreen(
-      {super.key, @pathParam this.id, this.openedFromApp});
+      {super.key, @pathParam this.id, this.openedFromApp, this.course});
 
   final String? id;
   final bool? openedFromApp;
+  final Course? course;
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +49,17 @@ class PublicPresentationScreen extends StatelessWidget {
                 passwordForm: (_) => const _PasswordForm(),
                 notFound: (_) => const _NotFoundView(),
                 screenState: (state) => _ScreenView(
-                      isFirst: state.isFirst,
-                      isLast: state.isLast,
-                      presentationTitle: state.presentationTitle,
-                      presentationDescription: state.presentationDescription,
-                      pdfFile: state.pdfFile,
-                      fragments: state.fragments,
-                      selectedFragment: state.selectedFragment,
-                      channelTitle: state.channel.title,
-                      channelWebsite: state.channel.company?.website,
-                      openedFromApp: openedFromApp == true,
-                    ),
+                    isFirst: state.isFirst,
+                    isLast: state.isLast,
+                    presentationTitle: state.presentationTitle,
+                    presentationDescription: state.presentationDescription,
+                    pdfFile: state.pdfFile,
+                    fragments: state.fragments,
+                    selectedFragment: state.selectedFragment,
+                    channelTitle: state.channel?.title ?? '',
+                    channelWebsite: state.channel?.company?.website,
+                    openedFromApp: openedFromApp == true,
+                    course: course),
                 loadingError: (state) => _LoadingErrorView(
                       isPending: state.isPending,
                     ),
@@ -69,19 +71,19 @@ class PublicPresentationScreen extends StatelessWidget {
 }
 
 class _ScreenView extends StatefulWidget {
-  const _ScreenView({
-    super.key,
-    required this.isFirst,
-    required this.isLast,
-    required this.selectedFragment,
-    required this.presentationTitle,
-    this.presentationDescription,
-    this.pdfFile,
-    required this.fragments,
-    required this.channelTitle,
-    this.channelWebsite,
-    required this.openedFromApp,
-  });
+  const _ScreenView(
+      {super.key,
+      required this.isFirst,
+      required this.isLast,
+      required this.selectedFragment,
+      required this.presentationTitle,
+      this.presentationDescription,
+      this.pdfFile,
+      required this.fragments,
+      required this.channelTitle,
+      this.channelWebsite,
+      required this.openedFromApp,
+      this.course});
 
   final bool isFirst;
   final bool isLast;
@@ -94,6 +96,7 @@ class _ScreenView extends StatefulWidget {
   final String channelTitle;
   final String? channelWebsite;
   final bool openedFromApp;
+  final Course? course;
 
   @override
   State<_ScreenView> createState() => _ScreenViewState();
@@ -389,15 +392,16 @@ class _ScreenViewState extends State<_ScreenView> {
                               builder: (context) => Dialog.fullscreen(
                                     backgroundColor: Colors.black,
                                     child: InfoView(
-                                      fragments: widget.fragments,
-                                      selectedFragment: widget.selectedFragment,
-                                      title: widget.presentationTitle,
-                                      description:
-                                          widget.presentationDescription,
-                                      pdfFile: widget.pdfFile,
-                                      channelTitle: widget.channelTitle,
-                                      channelWebsite: widget.channelWebsite,
-                                    ),
+                                        fragments: widget.fragments,
+                                        selectedFragment:
+                                            widget.selectedFragment,
+                                        title: widget.presentationTitle,
+                                        description:
+                                            widget.presentationDescription,
+                                        pdfFile: widget.pdfFile,
+                                        channelTitle: widget.channelTitle,
+                                        channelWebsite: widget.channelWebsite,
+                                        course: widget.course),
                                   ));
                           if (result is int) {
                             if (context.mounted) {
@@ -560,6 +564,7 @@ class InfoView extends StatelessWidget {
     this.pdfFile,
     required this.channelTitle,
     this.channelWebsite,
+    this.course,
   });
 
   final List<PdfFragment> fragments;
@@ -569,6 +574,7 @@ class InfoView extends StatelessWidget {
   final String? pdfFile;
   final String channelTitle;
   final String? channelWebsite;
+  final Course? course;
 
   void downloadFile(String url) {
     html.AnchorElement anchorElement = html.AnchorElement(href: url);
@@ -609,7 +615,9 @@ class InfoView extends StatelessWidget {
                   ),
                 const SizedBox(height: 24),
                 Text(
-                  'Канал $channelTitle',
+                  course == null
+                      ? 'Канал $channelTitle'
+                      : 'Курс ${course!.title}',
                   style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

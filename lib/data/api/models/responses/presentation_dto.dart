@@ -67,7 +67,7 @@ class PresentationDto {
   final String? links;
 
   @JsonKey(name: 'channel')
-  final ChannelDto channelDto;
+  final ChannelDto? channelDto;
 
   static PresentationDto fromJson(Object json) =>
       _$PresentationDtoFromJson(json as Map<String, dynamic>);

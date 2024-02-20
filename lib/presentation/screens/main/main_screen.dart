@@ -30,14 +30,32 @@ class MainScreen extends StatelessWidget {
                   throw UnsupportedError('state not supporting building'),
               initialLoadingError: (_) => Scaffold(
                   appBar: AppBar(
-                      leading: const SizedBox(), title: const Text('IntroBox')),
+                      leading: const SizedBox(),
+                      title: const Text('Презентации')),
                   body: CommonLoadingErrorWidget(
                       onPressed: () => BlocProvider.of<MainBloc>(context)
                           .add(const MainEvent.initialDataRequested()))),
               screenState: (state) => Scaffold(
                   appBar: AppBar(
                     leading: const SizedBox(),
-                    title: const Text('IntroBox'),
+                    title: Row(
+                      children: [
+                        const Text('Презентации'),
+                        TextButton(
+                          onPressed: () {
+                            context.router.replace(const CoursesRoute());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 2, left: 12),
+                            child: Text('Курсы',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14)),
+                          ),
+                        )
+                      ],
+                    ),
                     actions: [
                       IconButton(
                           onPressed: () {

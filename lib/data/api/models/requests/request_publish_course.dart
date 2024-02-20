@@ -1,7 +1,7 @@
 import '../../http_client/i_api_request.dart';
 
 class RequestPublishCourse extends IApiRequest {
-  final int id;
+  final String id;
 
   RequestPublishCourse({
     required this.id,

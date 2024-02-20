@@ -21,6 +21,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ChangePasswordScreen(),
       );
     },
+    ChannelsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ChannelsScreen(),
+      );
+    },
+    CompaniesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CompaniesScreen(),
+      );
+    },
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -31,6 +43,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const LoginScreen(),
+      );
+    },
+    MainRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MainScreen(),
       );
     },
     PresentationRoute.name: (routeData) {
@@ -137,6 +155,21 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProfileScreen(),
       );
     },
+    PublicPresentationRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<PublicPresentationRouteArgs>(
+          orElse: () =>
+              PublicPresentationRouteArgs(id: pathParams.optString('id')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PublicPresentationScreen(
+          key: args.key,
+          id: args.id,
+          openedFromApp: args.openedFromApp,
+          course: args.course,
+        ),
+      );
+    },
     RecoverPasswordRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -161,35 +194,39 @@ abstract class _$AppRouter extends RootStackRouter {
         child: RegisterScreen(key: args.key),
       );
     },
-    ChannelsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ChannelsScreen(),
-      );
-    },
-    CompaniesRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const CompaniesScreen(),
-      );
-    },
-    MainRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const MainScreen(),
-      );
-    },
-    PublicPresentationRoute.name: (routeData) {
+    CourseRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<PublicPresentationRouteArgs>(
-          orElse: () =>
-              PublicPresentationRouteArgs(id: pathParams.optString('id')));
+      final args = routeData.argsAs<CourseRouteArgs>(
+          orElse: () => CourseRouteArgs(id: pathParams.getString('id')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: PublicPresentationScreen(
+        child: CourseScreen(
           key: args.key,
           id: args.id,
-          openedFromApp: args.openedFromApp,
+        ),
+      );
+    },
+    MyCoursesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MyCoursesScreen(),
+      );
+    },
+    CoursesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CoursesScreen(),
+      );
+    },
+    PublicCourseRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<PublicCourseRouteArgs>(
+          orElse: () => PublicCourseRouteArgs(id: pathParams.getString('id')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PublicCourseScreen(
+          key: args.key,
+          id: args.id,
         ),
       );
     },
@@ -206,6 +243,34 @@ class ChangePasswordRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'ChangePasswordRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ChannelsScreen]
+class ChannelsRoute extends PageRouteInfo<void> {
+  const ChannelsRoute({List<PageRouteInfo>? children})
+      : super(
+          ChannelsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ChannelsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CompaniesScreen]
+class CompaniesRoute extends PageRouteInfo<void> {
+  const CompaniesRoute({List<PageRouteInfo>? children})
+      : super(
+          CompaniesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CompaniesRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -234,6 +299,20 @@ class LoginRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MainScreen]
+class MainRoute extends PageRouteInfo<void> {
+  const MainRoute({List<PageRouteInfo>? children})
+      : super(
+          MainRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MainRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -593,6 +672,56 @@ class ProfileRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PublicPresentationScreen]
+class PublicPresentationRoute
+    extends PageRouteInfo<PublicPresentationRouteArgs> {
+  PublicPresentationRoute({
+    Key? key,
+    String? id,
+    bool? openedFromApp,
+    Course? course,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PublicPresentationRoute.name,
+          args: PublicPresentationRouteArgs(
+            key: key,
+            id: id,
+            openedFromApp: openedFromApp,
+            course: course,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'PublicPresentationRoute';
+
+  static const PageInfo<PublicPresentationRouteArgs> page =
+      PageInfo<PublicPresentationRouteArgs>(name);
+}
+
+class PublicPresentationRouteArgs {
+  const PublicPresentationRouteArgs({
+    this.key,
+    this.id,
+    this.openedFromApp,
+    this.course,
+  });
+
+  final Key? key;
+
+  final String? id;
+
+  final bool? openedFromApp;
+
+  final Course? course;
+
+  @override
+  String toString() {
+    return 'PublicPresentationRouteArgs{key: $key, id: $id, openedFromApp: $openedFromApp, course: $course}';
+  }
+}
+
+/// generated route for
 /// [RecoverPasswordScreen]
 class RecoverPasswordRoute extends PageRouteInfo<void> {
   const RecoverPasswordRoute({List<PageRouteInfo>? children})
@@ -674,88 +803,106 @@ class RegisterRouteArgs {
 }
 
 /// generated route for
-/// [ChannelsScreen]
-class ChannelsRoute extends PageRouteInfo<void> {
-  const ChannelsRoute({List<PageRouteInfo>? children})
-      : super(
-          ChannelsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ChannelsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [CompaniesScreen]
-class CompaniesRoute extends PageRouteInfo<void> {
-  const CompaniesRoute({List<PageRouteInfo>? children})
-      : super(
-          CompaniesRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'CompaniesRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [MainScreen]
-class MainRoute extends PageRouteInfo<void> {
-  const MainRoute({List<PageRouteInfo>? children})
-      : super(
-          MainRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'MainRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [PublicPresentationScreen]
-class PublicPresentationRoute
-    extends PageRouteInfo<PublicPresentationRouteArgs> {
-  PublicPresentationRoute({
+/// [CourseScreen]
+class CourseRoute extends PageRouteInfo<CourseRouteArgs> {
+  CourseRoute({
     Key? key,
-    String? id,
-    bool? openedFromApp,
+    required String id,
     List<PageRouteInfo>? children,
   }) : super(
-          PublicPresentationRoute.name,
-          args: PublicPresentationRouteArgs(
+          CourseRoute.name,
+          args: CourseRouteArgs(
             key: key,
             id: id,
-            openedFromApp: openedFromApp,
           ),
           rawPathParams: {'id': id},
           initialChildren: children,
         );
 
-  static const String name = 'PublicPresentationRoute';
+  static const String name = 'CourseRoute';
 
-  static const PageInfo<PublicPresentationRouteArgs> page =
-      PageInfo<PublicPresentationRouteArgs>(name);
+  static const PageInfo<CourseRouteArgs> page = PageInfo<CourseRouteArgs>(name);
 }
 
-class PublicPresentationRouteArgs {
-  const PublicPresentationRouteArgs({
+class CourseRouteArgs {
+  const CourseRouteArgs({
     this.key,
-    this.id,
-    this.openedFromApp,
+    required this.id,
   });
 
   final Key? key;
 
-  final String? id;
-
-  final bool? openedFromApp;
+  final String id;
 
   @override
   String toString() {
-    return 'PublicPresentationRouteArgs{key: $key, id: $id, openedFromApp: $openedFromApp}';
+    return 'CourseRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [MyCoursesScreen]
+class MyCoursesRoute extends PageRouteInfo<void> {
+  const MyCoursesRoute({List<PageRouteInfo>? children})
+      : super(
+          MyCoursesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MyCoursesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CoursesScreen]
+class CoursesRoute extends PageRouteInfo<void> {
+  const CoursesRoute({List<PageRouteInfo>? children})
+      : super(
+          CoursesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CoursesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PublicCourseScreen]
+class PublicCourseRoute extends PageRouteInfo<PublicCourseRouteArgs> {
+  PublicCourseRoute({
+    Key? key,
+    required String id,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PublicCourseRoute.name,
+          args: PublicCourseRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'PublicCourseRoute';
+
+  static const PageInfo<PublicCourseRouteArgs> page =
+      PageInfo<PublicCourseRouteArgs>(name);
+}
+
+class PublicCourseRouteArgs {
+  const PublicCourseRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final String id;
+
+  @override
+  String toString() {
+    return 'PublicCourseRouteArgs{key: $key, id: $id}';
   }
 }

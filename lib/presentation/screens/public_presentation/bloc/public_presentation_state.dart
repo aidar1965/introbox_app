@@ -10,7 +10,7 @@ class PublicPresentationState with _$PublicPresentationState {
     String? presentationDescription,
     String? pdfFile,
     required List<PdfFragment> fragments,
-    required Channel channel,
+    required Channel? channel,
   }) = _ScreenState;
   const factory PublicPresentationState.passwordForm(
       {@Default(false) bool isPending}) = _StatePasswordForm;

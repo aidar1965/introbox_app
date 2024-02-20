@@ -1,11 +1,11 @@
 import '../../http_client/i_api_request.dart';
 
 class RequestDeleteCourse extends IApiRequest {
-  final int id;
+  final String id;
 
   RequestDeleteCourse({
     required this.id,
-  }) : super(methodType: AvailableApiMethods.delete, url: '/course/delete/');
+  }) : super(methodType: AvailableApiMethods.delete, url: '/course/');
 
   @override
   Object? get body => {

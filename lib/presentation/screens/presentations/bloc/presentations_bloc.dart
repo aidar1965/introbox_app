@@ -4,6 +4,7 @@ import 'package:moki_tutor/domain/interfaces/i_api.dart';
 
 import '../../../../../domain/locator/locator.dart';
 import '../../../../../domain/models/presentation.dart';
+import '../../../../domain/models/course.dart';
 
 part 'presentations_event.dart';
 part 'presentations_state.dart';
@@ -17,12 +18,13 @@ class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
           initialDataRequested: (_) => onInitialDataRequested(emitter),
           publishPresentation: (event) => onPublishPresentation(event, emitter),
           reloadData: (_) => reloadData(),
-          loadMore: (_) => loadMore(),
-          onPasswordChanged: (event) => onPasswordChanged(event, emitter)),
+          onPasswordChanged: (event) => onPasswordChanged(event, emitter),
+          addPresentationToCourse: (event) =>
+              onAddPresentationToCourse(event, emitter)),
     );
 
     add(const PresentationsEvent.initialDataRequested());
-    _screenState = const _ScreenState(presentations: []);
+    _screenState = const _ScreenState(presentations: [], courses: []);
   }
 
   final api = getIt<IApi>();
@@ -62,7 +64,10 @@ class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
       oldPresentations.addAll(paginatedPresentations.presentations);
       offset = paginatedPresentations.offset;
       total = paginatedPresentations.count;
-      _screenState = _screenState.copyWith(presentations: oldPresentations);
+      final paginatedCourses = await api.getCourses();
+      _screenState = _screenState.copyWith(
+          presentations: oldPresentations,
+          courses: paginatedCourses.courses.toList());
       emitter(_screenState);
     } on Object {
       emitter(const PresentationsState.loadingError());
@@ -73,11 +78,10 @@ class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
   void reloadData() {
     offset = 0;
     total = null;
-    _screenState = _screenState.copyWith(presentations: []);
+    _screenState = _screenState.copyWith(presentations: [], courses: []);
+    print('reload');
     add(const PresentationsEvent.initialDataRequested());
   }
-
-  loadMore() {}
 
   Future<void> onPublishPresentation(_EventPublishPresentation event,
       Emitter<PresentationsState> emitter) async {
@@ -107,6 +111,19 @@ class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
       );
       emitter(const PresentationsState.requestSuccess(
           message: 'Данные успешно сохранены'));
+      add(const PresentationsEvent.reloadData());
+    } on Object {
+      emitter(const PresentationsState.requestError());
+      rethrow;
+    }
+  }
+
+  Future<void> onAddPresentationToCourse(_EventAddPresentationToCourse event,
+      Emitter<PresentationsState> emitter) async {
+    try {
+      await api.addPresentationToCourse(
+          presentationId: event.presentationId, courseId: event.courseId);
+
       add(const PresentationsEvent.reloadData());
     } on Object {
       emitter(const PresentationsState.requestError());

@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import '../../data/api/models/requests/fragment_request_data.dart';
 
@@ -122,21 +121,25 @@ abstract class IApi {
       {required int subjectId, required List<int> fragmentsIds});
 
   Future<PaginatedCourses> getCourses({int limit = 50, int offset = 0});
+  Future<PaginatedCourses> getPublicCourses({int limit = 50, int offset = 0});
 
-  Future<void> addCourse(
-      {required String title,
-      required String description,
-      required List<int> subjectsIds,
-      required Locale locale});
+  Future<void> addCourse({
+    required String title,
+    String? description,
+    String? price,
+    required String channelId,
+    Uint8List? imageBytes,
+  });
 
-  Future<Course> getCourse({required int id});
+  Future<Course> getCourse({required String id});
 
   Future<void> updateCourse({
-    required int id,
+    required String id,
     required String title,
-    required String description,
-    required List<int> subjectsIds,
-    required Locale locale,
+    String? description,
+    required String channelId,
+    String? price,
+    Uint8List? imageBytes,
   });
 
   Future<void> publishPresentation({
@@ -144,7 +147,7 @@ abstract class IApi {
   });
 
   Future<void> deleteCourse({
-    required int id,
+    required String id,
   });
 
   Future<User> getUser();
@@ -278,4 +281,16 @@ abstract class IApi {
   Future<bool> checkPresentationPassword(String id);
   Future<void> sendPassword({required String id, required String password});
   Future<PresentationWithFragments> getPublicPresentation(String id);
+  Future<void> addPresentationToCourse(
+      {required String presentationId, required String courseId});
+
+  Future<void> reorderPresentations({required List<String> presentationsIds});
+
+  Future<void> removePresentationFromCourse({required String presentationId});
+
+  Future<void> publishCourse({
+    required String id,
+  });
+
+  Future<Course> getPublicCourse({required String id});
 }
