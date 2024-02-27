@@ -1,4 +1,4 @@
-import 'package:moki_tutor/domain/models/subject.dart';
+import 'package:introbox/domain/models/subject.dart';
 
 import '../models/course.dart';
 import '../models/course_category.dart';

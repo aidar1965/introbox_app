@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/data/api/models/responses/channel_dto.dart';
+import 'package:introbox/data/api/models/responses/channel_dto.dart';
 import 'presentation_dto.dart';
 
 part 'generated/course_dto.g.dart';

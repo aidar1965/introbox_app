@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 
 import 'dart:html' as html;
 import 'package:path/path.dart' as p;
@@ -11,6 +13,7 @@ import 'package:path/path.dart' as p;
 import '../../../domain/models/course.dart';
 import '../../../domain/models/pdf_fragment.dart';
 
+import '../../../generated/locale_keys.g.dart';
 import '../../common/common_elevated_button.dart';
 import '../../common/common_functions.dart';
 import '../../common/common_text_field.dart';
@@ -34,8 +37,7 @@ class PublicPresentationScreen extends StatelessWidget {
             listener: (context, state) => state.mapOrNull(
                   requestError: (state) => CommonFunctions.showMessage(
                       context,
-                      state.errorText ??
-                          'Произошла ошибка в запрсе. Повторите попытку',
+                      state.errorText ?? LocaleKeys.commonRequestError.tr(),
                       Reason.error),
                 ),
             buildWhen: (previous, current) => current.maybeMap(
@@ -60,13 +62,18 @@ class PublicPresentationScreen extends StatelessWidget {
                     channelWebsite: state.channel?.company?.website,
                     openedFromApp: openedFromApp == true,
                     course: course),
-                loadingError: (state) => _LoadingErrorView(
-                      isPending: state.isPending,
-                    ),
+                loadingError: (state) =>
+                    CommonLoadingErrorWidget(onPressed: () {
+                      BlocProvider.of<PublicPresentationBloc>(context).add(
+                          const PublicPresentationEvent.initialDataRequested());
+                    }),
                 pending: (_) => const _PendingView(),
-                checkHasPasswordError: (state) => _CheckHasPasswordError(
-                      isPending: state.isPending,
-                    ))));
+                checkHasPasswordError: (state) =>
+                    CommonLoadingErrorWidget(onPressed: () {
+                      BlocProvider.of<PublicPresentationBloc>(context).add(
+                          const PublicPresentationEvent
+                              .checkPresentationHasPassword());
+                    }))));
   }
 }
 
@@ -220,7 +227,7 @@ class _ScreenViewState extends State<_ScreenView> {
                               Center(
                                   child: Text(
                                 widget.selectedFragment.title,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
@@ -417,7 +424,7 @@ class _ScreenViewState extends State<_ScreenView> {
                           onPressed: () {
                             context.router.pop();
                           },
-                          icon: Icon(Icons.close),
+                          icon: const Icon(Icons.close),
                           color: Colors.white)
                   ],
                 ))
@@ -431,79 +438,8 @@ class _NotFoundView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Material(
-      child: Center(child: Text('Презентация не найдена')),
-    );
-  }
-}
-
-class _LoadingErrorView extends StatelessWidget {
-  const _LoadingErrorView({super.key, required this.isPending});
-
-  final bool isPending;
-
-  @override
-  Widget build(BuildContext context) {
     return Material(
-      child: Center(
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Не удалось загрузить данные. Проверьте Интернет соединение и попробуйте еще раз',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              CommonElevatedButton(
-                isPending: isPending,
-                text: 'Повторить',
-                onPressed: () {
-                  BlocProvider.of<PublicPresentationBloc>(context).add(
-                      const PublicPresentationEvent.initialDataRequested());
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CheckHasPasswordError extends StatelessWidget {
-  const _CheckHasPasswordError({super.key, required this.isPending});
-
-  final bool isPending;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Не удалось загрузить данные. Проверьте Интернет соединение и попробуйте еще раз',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              CommonElevatedButton(
-                isPending: isPending,
-                text: 'Повторить',
-                onPressed: () {
-                  BlocProvider.of<PublicPresentationBloc>(context).add(
-                      const PublicPresentationEvent
-                          .checkPresentationHasPassword());
-                },
-              )
-            ],
-          ),
-        ),
-      ),
+      child: Center(child: Text(LocaleKeys.presentationsNotFound.tr())),
     );
   }
 }
@@ -534,12 +470,12 @@ class _PasswordForm extends StatelessWidget {
             children: [
               CommonTextField(
                 controller: controller,
-                labelText: 'Пароль',
+                labelText: LocaleKeys.password.tr(),
                 obscureText: true,
               ),
               const SizedBox(height: 12),
               CommonElevatedButton(
-                text: 'Отправить',
+                text: LocaleKeys.buttonSend.tr(),
                 onPressed: () {
                   BlocProvider.of<PublicPresentationBloc>(context).add(
                       PublicPresentationEvent.sendPassword(
@@ -616,8 +552,8 @@ class InfoView extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text(
                   course == null
-                      ? 'Канал $channelTitle'
-                      : 'Курс ${course!.title}',
+                      ? '${LocaleKeys.channel.tr()} $channelTitle'
+                      : '${LocaleKeys.course.tr()} ${course!.title}',
                   style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -626,7 +562,7 @@ class InfoView extends StatelessWidget {
                 if (channelWebsite != null) ...[
                   const SizedBox(height: 12),
                   Text(
-                    'Канал $channelTitle',
+                    '${LocaleKeys.channel.tr()} $channelTitle',
                     style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -652,7 +588,8 @@ class InfoView extends StatelessWidget {
                   ),
                 ],
                 const SizedBox(height: 32),
-                ListView.builder(
+                ListView.separated(
+                    separatorBuilder: (context, index) => const SizedBox(),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: fragments.length,

@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:moki_tutor/domain/locator/locator.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/locator/locator.dart';
 
+import '../../../../domain/interfaces/i_auth_controller.dart';
 import '../../../../domain/models/course.dart';
 
 part 'courses_state.dart';
@@ -19,11 +20,13 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
     );
     add(const CoursesEvent.initialDataRequested());
     _screenState = const _ScreenState(
+      isAuthorized: false,
       courses: [],
     );
   }
 
   final api = getIt<IApi>();
+  final authController = getIt<IAuthController>();
   late _ScreenState _screenState;
   final int limit = 20;
   int offset = 0;
@@ -48,11 +51,13 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
       ];
       total = paginatedCourses.count;
       offset = paginatedCourses.offset;
-      _screenState = _screenState.copyWith(courses: courses);
+      _screenState = _screenState.copyWith(
+          courses: courses, isAuthorized: authController.isAuthenticated);
       emitter(_screenState);
     } on Object {
       if (offset == 0) {
-        emitter(const CoursesState.loadingError());
+        emitter(CoursesState.loadingError(
+            isAuthorized: authController.isAuthenticated));
       } else {
         emitter(const CoursesState.loadMoreError());
       }

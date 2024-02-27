@@ -293,4 +293,6 @@ abstract class IApi {
   });
 
   Future<Course> getPublicCourse({required String id});
+
+  Future<void> deleteChannel({required String id});
 }

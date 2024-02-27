@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
 
+import '../../../generated/locale_keys.g.dart';
 import '../../common/common_elevated_button.dart';
 import '../../common/common_text_field.dart';
 import 'package:auto_route/auto_route.dart';
@@ -31,7 +33,7 @@ class ChangePasswordScreen extends StatelessWidget {
             orElse: () =>
                 throw UnsupportedError('State not supported for building'),
             screenState: (state) => Scaffold(
-                  appBar: AppBar(title: Text('Изменение пароля')),
+                  appBar: AppBar(title: Text(LocaleKeys.changePassword.tr())),
                   body: Center(
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
@@ -44,21 +46,21 @@ class ChangePasswordScreen extends StatelessWidget {
                               CommonTextField(
                                   obscureText: true,
                                   controller: oldPasswordController,
-                                  labelText: 'Действующий пароль'),
+                                  labelText: LocaleKeys.currentPassword.tr()),
                               const SizedBox(
                                 height: 24,
                               ),
                               CommonTextField(
                                   obscureText: true,
                                   controller: passwordController,
-                                  labelText: 'Новый пароль'),
+                                  labelText: LocaleKeys.newPassword.tr()),
                               const SizedBox(
                                 height: 24,
                               ),
                               CommonTextField(
                                   obscureText: true,
                                   controller: confirmPasswordController,
-                                  labelText: 'Повтор пароля'),
+                                  labelText: LocaleKeys.repeatPassword.tr()),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -79,7 +81,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                       ));
                                     }
                                   },
-                                  text: 'Изменить'),
+                                  text: LocaleKeys.apply.tr()),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -94,8 +96,6 @@ class ChangePasswordScreen extends StatelessWidget {
 
   void _onChangePasswordError(BuildContext context, String? errorText) {
     CommonFunctions.showMessage(
-        context,
-        errorText ?? 'Произошла ошибка запроса, попробуйте позже',
-        Reason.error);
+        context, errorText ?? LocaleKeys.commonRequestError.tr(), Reason.error);
   }
 }

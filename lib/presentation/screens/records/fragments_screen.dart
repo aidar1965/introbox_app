@@ -116,7 +116,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 //     return categories != null
-//         ? ListView.builder(
+//         ? ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //             controller: firstListController,
 //             shrinkWrap: true,
 //             scrollDirection: Axis.vertical,
@@ -183,7 +183,7 @@
 //   Widget build(BuildContext context) {
 //     return SizedBox(
 //         width: 540,
-//         child: ListView.builder(
+//         child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //             itemCount: records.length,
 //             itemBuilder: (context, index) {
 //               var record = records.elementAt(index);

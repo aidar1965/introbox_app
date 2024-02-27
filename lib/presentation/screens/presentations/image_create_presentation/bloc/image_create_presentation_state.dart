@@ -7,6 +7,8 @@ class ImageCreatePresentationState with _$ImageCreatePresentationState {
     required List<ImageFragment> fragments,
     required List<Channel> channels,
     required Channel selectedChanel,
+    String? title,
+    String? description,
     @Default(false) bool isPending,
   }) = _ScreenState;
   const factory ImageCreatePresentationState.saveSuccess() = _StateSaveSuccess;

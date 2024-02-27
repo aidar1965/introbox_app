@@ -17,7 +17,8 @@ class ImagesList extends StatelessWidget {
     return SizedBox(
       height: 150,
       child: imagesMap != null
-          ? ListView.builder(
+          ? ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(),
               scrollDirection: Axis.horizontal,
               itemCount: imagesMap!.length,
               itemBuilder: (context, index) {

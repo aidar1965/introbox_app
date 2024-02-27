@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moki_tutor/domain/models/fragment_category.dart';
+import 'package:introbox/domain/models/fragment_category.dart';
 
 class AddCategoryForm extends StatelessWidget {
   const AddCategoryForm({Key? key, this.category}) : super(key: key);

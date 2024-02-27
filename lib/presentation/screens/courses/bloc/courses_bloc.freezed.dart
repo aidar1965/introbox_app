@@ -19,25 +19,26 @@ mixin _$CoursesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function() loadingError,
+    required TResult Function(bool isAuthorized) loadingError,
     required TResult Function() loadMoreError,
-    required TResult Function(List<Course> courses) screenState,
+    required TResult Function(List<Course> courses, bool isAuthorized)
+        screenState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function()? loadingError,
+    TResult? Function(bool isAuthorized)? loadingError,
     TResult? Function()? loadMoreError,
-    TResult? Function(List<Course> courses)? screenState,
+    TResult? Function(List<Course> courses, bool isAuthorized)? screenState,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function()? loadingError,
+    TResult Function(bool isAuthorized)? loadingError,
     TResult Function()? loadMoreError,
-    TResult Function(List<Course> courses)? screenState,
+    TResult Function(List<Course> courses, bool isAuthorized)? screenState,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -125,9 +126,10 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function() loadingError,
+    required TResult Function(bool isAuthorized) loadingError,
     required TResult Function() loadMoreError,
-    required TResult Function(List<Course> courses) screenState,
+    required TResult Function(List<Course> courses, bool isAuthorized)
+        screenState,
   }) {
     return pending();
   }
@@ -136,9 +138,9 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function()? loadingError,
+    TResult? Function(bool isAuthorized)? loadingError,
     TResult? Function()? loadMoreError,
-    TResult? Function(List<Course> courses)? screenState,
+    TResult? Function(List<Course> courses, bool isAuthorized)? screenState,
   }) {
     return pending?.call();
   }
@@ -147,9 +149,9 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function()? loadingError,
+    TResult Function(bool isAuthorized)? loadingError,
     TResult Function()? loadMoreError,
-    TResult Function(List<Course> courses)? screenState,
+    TResult Function(List<Course> courses, bool isAuthorized)? screenState,
     required TResult orElse(),
   }) {
     if (pending != null) {
@@ -205,6 +207,8 @@ abstract class _$$_StateLoadingErrorCopyWith<$Res> {
   factory _$$_StateLoadingErrorCopyWith(_$_StateLoadingError value,
           $Res Function(_$_StateLoadingError) then) =
       __$$_StateLoadingErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({bool isAuthorized});
 }
 
 /// @nodoc
@@ -214,60 +218,87 @@ class __$$_StateLoadingErrorCopyWithImpl<$Res>
   __$$_StateLoadingErrorCopyWithImpl(
       _$_StateLoadingError _value, $Res Function(_$_StateLoadingError) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? isAuthorized = null,
+  }) {
+    return _then(_$_StateLoadingError(
+      isAuthorized: null == isAuthorized
+          ? _value.isAuthorized
+          : isAuthorized // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_StateLoadingError implements _StateLoadingError {
-  const _$_StateLoadingError();
+  const _$_StateLoadingError({required this.isAuthorized});
+
+  @override
+  final bool isAuthorized;
 
   @override
   String toString() {
-    return 'CoursesState.loadingError()';
+    return 'CoursesState.loadingError(isAuthorized: $isAuthorized)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_StateLoadingError);
+        (other.runtimeType == runtimeType &&
+            other is _$_StateLoadingError &&
+            (identical(other.isAuthorized, isAuthorized) ||
+                other.isAuthorized == isAuthorized));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isAuthorized);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateLoadingErrorCopyWith<_$_StateLoadingError> get copyWith =>
+      __$$_StateLoadingErrorCopyWithImpl<_$_StateLoadingError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function() loadingError,
+    required TResult Function(bool isAuthorized) loadingError,
     required TResult Function() loadMoreError,
-    required TResult Function(List<Course> courses) screenState,
+    required TResult Function(List<Course> courses, bool isAuthorized)
+        screenState,
   }) {
-    return loadingError();
+    return loadingError(isAuthorized);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function()? loadingError,
+    TResult? Function(bool isAuthorized)? loadingError,
     TResult? Function()? loadMoreError,
-    TResult? Function(List<Course> courses)? screenState,
+    TResult? Function(List<Course> courses, bool isAuthorized)? screenState,
   }) {
-    return loadingError?.call();
+    return loadingError?.call(isAuthorized);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function()? loadingError,
+    TResult Function(bool isAuthorized)? loadingError,
     TResult Function()? loadMoreError,
-    TResult Function(List<Course> courses)? screenState,
+    TResult Function(List<Course> courses, bool isAuthorized)? screenState,
     required TResult orElse(),
   }) {
     if (loadingError != null) {
-      return loadingError();
+      return loadingError(isAuthorized);
     }
     return orElse();
   }
@@ -311,7 +342,13 @@ class _$_StateLoadingError implements _StateLoadingError {
 }
 
 abstract class _StateLoadingError implements CoursesState {
-  const factory _StateLoadingError() = _$_StateLoadingError;
+  const factory _StateLoadingError({required final bool isAuthorized}) =
+      _$_StateLoadingError;
+
+  bool get isAuthorized;
+  @JsonKey(ignore: true)
+  _$$_StateLoadingErrorCopyWith<_$_StateLoadingError> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -353,9 +390,10 @@ class _$_StateLoadMoreError implements _StateLoadMoreError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function() loadingError,
+    required TResult Function(bool isAuthorized) loadingError,
     required TResult Function() loadMoreError,
-    required TResult Function(List<Course> courses) screenState,
+    required TResult Function(List<Course> courses, bool isAuthorized)
+        screenState,
   }) {
     return loadMoreError();
   }
@@ -364,9 +402,9 @@ class _$_StateLoadMoreError implements _StateLoadMoreError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function()? loadingError,
+    TResult? Function(bool isAuthorized)? loadingError,
     TResult? Function()? loadMoreError,
-    TResult? Function(List<Course> courses)? screenState,
+    TResult? Function(List<Course> courses, bool isAuthorized)? screenState,
   }) {
     return loadMoreError?.call();
   }
@@ -375,9 +413,9 @@ class _$_StateLoadMoreError implements _StateLoadMoreError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function()? loadingError,
+    TResult Function(bool isAuthorized)? loadingError,
     TResult Function()? loadMoreError,
-    TResult Function(List<Course> courses)? screenState,
+    TResult Function(List<Course> courses, bool isAuthorized)? screenState,
     required TResult orElse(),
   }) {
     if (loadMoreError != null) {
@@ -434,7 +472,7 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
           _$_ScreenState value, $Res Function(_$_ScreenState) then) =
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Course> courses});
+  $Res call({List<Course> courses, bool isAuthorized});
 }
 
 /// @nodoc
@@ -449,12 +487,17 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? courses = null,
+    Object? isAuthorized = null,
   }) {
     return _then(_$_ScreenState(
       courses: null == courses
           ? _value._courses
           : courses // ignore: cast_nullable_to_non_nullable
               as List<Course>,
+      isAuthorized: null == isAuthorized
+          ? _value.isAuthorized
+          : isAuthorized // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -462,7 +505,8 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ScreenState implements _ScreenState {
-  const _$_ScreenState({required final List<Course> courses})
+  const _$_ScreenState(
+      {required final List<Course> courses, required this.isAuthorized})
       : _courses = courses;
 
   final List<Course> _courses;
@@ -474,8 +518,11 @@ class _$_ScreenState implements _ScreenState {
   }
 
   @override
+  final bool isAuthorized;
+
+  @override
   String toString() {
-    return 'CoursesState.screenState(courses: $courses)';
+    return 'CoursesState.screenState(courses: $courses, isAuthorized: $isAuthorized)';
   }
 
   @override
@@ -483,12 +530,14 @@ class _$_ScreenState implements _ScreenState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ScreenState &&
-            const DeepCollectionEquality().equals(other._courses, _courses));
+            const DeepCollectionEquality().equals(other._courses, _courses) &&
+            (identical(other.isAuthorized, isAuthorized) ||
+                other.isAuthorized == isAuthorized));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_courses));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_courses), isAuthorized);
 
   @JsonKey(ignore: true)
   @override
@@ -500,35 +549,36 @@ class _$_ScreenState implements _ScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function() loadingError,
+    required TResult Function(bool isAuthorized) loadingError,
     required TResult Function() loadMoreError,
-    required TResult Function(List<Course> courses) screenState,
+    required TResult Function(List<Course> courses, bool isAuthorized)
+        screenState,
   }) {
-    return screenState(courses);
+    return screenState(courses, isAuthorized);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function()? loadingError,
+    TResult? Function(bool isAuthorized)? loadingError,
     TResult? Function()? loadMoreError,
-    TResult? Function(List<Course> courses)? screenState,
+    TResult? Function(List<Course> courses, bool isAuthorized)? screenState,
   }) {
-    return screenState?.call(courses);
+    return screenState?.call(courses, isAuthorized);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function()? loadingError,
+    TResult Function(bool isAuthorized)? loadingError,
     TResult Function()? loadMoreError,
-    TResult Function(List<Course> courses)? screenState,
+    TResult Function(List<Course> courses, bool isAuthorized)? screenState,
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(courses);
+      return screenState(courses, isAuthorized);
     }
     return orElse();
   }
@@ -572,10 +622,12 @@ class _$_ScreenState implements _ScreenState {
 }
 
 abstract class _ScreenState implements CoursesState {
-  const factory _ScreenState({required final List<Course> courses}) =
-      _$_ScreenState;
+  const factory _ScreenState(
+      {required final List<Course> courses,
+      required final bool isAuthorized}) = _$_ScreenState;
 
   List<Course> get courses;
+  bool get isAuthorized;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:moki_tutor/domain/models/fragment_category.dart';
+import 'package:introbox/domain/models/fragment_category.dart';
 import 'package:path/path.dart';
 
 @immutable

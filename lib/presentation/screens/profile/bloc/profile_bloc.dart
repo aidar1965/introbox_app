@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
 
-import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
+import 'package:introbox/domain/interfaces/i_user_repository.dart';
 
 import '../../../../domain/locator/locator.dart';
 import '../../../../domain/models/user.dart';
@@ -46,12 +44,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emitter(const ProfileState.requestError());
       rethrow;
     }
-  }
-
-  @override
-  Future<void> close() {
-    log('-------------- bloc closed ----------------------------');
-    return super.close();
   }
 
   Future<void> _dataRequested(Emitter<ProfileState> emitter) async {

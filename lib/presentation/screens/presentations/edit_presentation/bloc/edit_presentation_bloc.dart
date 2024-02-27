@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,6 +10,7 @@ import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
 import '../../../../../../domain/models/pdf_fragment.dart';
 import '../../../../../domain/models/presentation_with_fragments.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
 part 'edit_presentation_state.dart';
 part 'edit_presentation_event.dart';
@@ -223,8 +225,8 @@ class EditPresentationBloc
         rethrow;
       }
     } else {
-      emitter(const EditPresentationState.requestError(
-          errorText: 'Вы не можете удалить единственный слайд'));
+      emitter(EditPresentationState.requestError(
+          errorText: LocaleKeys.slideDeleteUnable.tr()));
     }
   }
 

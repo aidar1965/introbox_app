@@ -48,7 +48,7 @@ class PublicPresentationBloc
     }
     try {
       presentationWithFragments = await api.getPublicPresentation(id!);
-      print(presentationWithFragments.fragments.length);
+
       _screenState = _ScreenState(
           selectedFragment: presentationWithFragments.fragments.first,
           isFirst: true,
@@ -59,7 +59,7 @@ class PublicPresentationBloc
           pdfFile: presentationWithFragments.presentation.pdfFile,
           fragments: presentationWithFragments.fragments,
           channel: presentationWithFragments.presentation.channel);
-      print('isFirst: ${_screenState.isFirst}');
+
       emitter(_screenState);
     } on RequestException catch (e) {
       if (e.httpStatusCode == HttpStatus.notFound) {

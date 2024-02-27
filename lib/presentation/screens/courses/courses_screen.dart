@@ -1,13 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:decimal/decimal.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/domain/models/course.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
-import 'package:moki_tutor/presentation/screens/courses/bloc/courses_bloc.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
 
+import '../../../domain/models/course.dart';
+import '../../common/common_functions.dart';
+import '../../common/common_loading_error_widget.dart';
+import '../../values/dynamic_palette.dart';
+import 'bloc/courses_bloc.dart';
 import '../../auto_router/app_router.dart';
 import '../../utils/responsive.dart';
 
@@ -17,76 +21,259 @@ class CoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          leading: const SizedBox(),
-          title: Row(
-            children: [
-              const Text('Курсы'),
-              TextButton(
-                onPressed: () {
-                  context.router.replace(const MainRoute());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2, left: 12),
-                  child: Text('Презентации',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14)),
-                ),
-              )
-            ],
+    return BlocProvider(
+        create: (context) => CoursesBloc(),
+        child: BlocConsumer<CoursesBloc, CoursesState>(
+          listener: (context, state) => state.mapOrNull(
+            loadMoreError: (_) => CommonFunctions.showMessage(
+                context, LocaleKeys.commonLoadingMoreError.tr(), Reason.error),
           ),
-        ),
-        body: BlocProvider(
-            create: (context) => CoursesBloc(),
-            child: BlocConsumer<CoursesBloc, CoursesState>(
-              listener: (context, state) => state.mapOrNull(
-                  loadMoreError: (_) => CommonFunctions.showMessage(
-                      context, 'Не удалось загрузить данные ', Reason.error)),
-              buildWhen: (previous, current) => current.maybeMap(
-                orElse: () => true,
-                loadingError: (_) => false,
-              ),
-              builder: (context, state) => state.maybeMap(
-                  orElse: () =>
-                      throw UnsupportedError('state not supporting building'),
-                  pending: (_) => Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                  loadingError: (_) => CommonLoadingErrorWidget(
+          buildWhen: (previous, current) => current.maybeMap(
+            orElse: () => true,
+            loadingError: (_) => false,
+          ),
+          builder: (context, state) => state.maybeMap(
+              orElse: () =>
+                  throw UnsupportedError('state not supporting building'),
+              pending: (_) => Scaffold(
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    title: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context.router.replace(const MainRoute());
+                          },
+                          icon: const Icon(Icons.home),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(LocaleKeys.courses.tr()),
+                      ],
+                    ),
+                  ),
+                  body: const Center(
+                    child: CircularProgressIndicator(),
+                  )),
+              loadingError: (state) => Scaffold(
+                  appBar: AppBar(
+                    automaticallyImplyLeading: false,
+                    title: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            context.router.replace(const MainRoute());
+                          },
+                          icon: const Icon(Icons.home),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(LocaleKeys.courses.tr()),
+                      ],
+                    ),
+                    actions: [
+                      IconButton(
+                          onPressed: () => showLocaleDialog(context,
+                              EasyLocalization.of(context)?.currentLocale),
+                          icon: Text(
+                            EasyLocalization.of(context)
+                                    ?.currentLocale
+                                    ?.languageCode
+                                    .toUpperCase() ??
+                                'EN',
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                      if (Responsive.isMobile(context) == false)
+                        IconButton(
+                            onPressed: () {
+                              BlocProvider.of<CoursesBloc>(context).add(
+                                  const CoursesEvent.initialDataRequested());
+                            },
+                            icon: const Icon(Icons.refresh_rounded)),
+                      if (state.isAuthorized)
+                        if (Responsive.isMobile(context))
+                          IconButton(
+                              onPressed: () => context.router
+                                  .push(const PresentationsRoute()),
+                              icon:
+                                  const Icon(Icons.cast_for_education_outlined))
+                        else
+                          TextButton(
+                              onPressed: () => context.router
+                                  .push(const PresentationsRoute()),
+                              child: Text(
+                                LocaleKeys.studio.tr(),
+                                style: const TextStyle(color: Colors.white),
+                              )),
+                      if (state.isAuthorized)
+                        IconButton(
+                            onPressed: () {
+                              context.router.push(const ProfileRoute());
+                            },
+                            icon: const Icon(Icons.person_rounded))
+                      else
+                        IconButton(
+                            onPressed: () {
+                              context.router.push(const LoginRoute());
+                            },
+                            icon: const Icon(Icons.login_rounded))
+                    ],
+                  ),
+                  body: CommonLoadingErrorWidget(
                       onPressed: () => BlocProvider.of<CoursesBloc>(context)
-                          .add(const CoursesEvent.initialDataRequested())),
-                  screenState: (state) => _ScreenView(courses: state.courses)),
-            )));
+                          .add(const CoursesEvent.initialDataRequested()))),
+              screenState: (state) => _ScreenView(
+                  courses: state.courses, isAuthorized: state.isAuthorized)),
+        ));
   }
 }
 
 class _ScreenView extends StatelessWidget {
-  const _ScreenView({super.key, required this.courses});
+  const _ScreenView(
+      {super.key, required this.courses, required this.isAuthorized});
 
   final List<Course> courses;
+  final bool isAuthorized;
 
   @override
   Widget build(BuildContext context) {
-    return courses.isNotEmpty
-        ? ListView.separated(
-            itemCount: courses.length,
-            padding: EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 12,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return CourseItem(
-                course: courses.elementAt(index),
-              );
-            },
-          )
-        : const Center(
-            child: Text('Список курсов пуст'),
-          );
+    return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  context.router.replace(const MainRoute());
+                },
+                icon: const Icon(Icons.home),
+              ),
+              const SizedBox(width: 8),
+              Text(LocaleKeys.courses.tr()),
+            ],
+          ),
+          actions: [
+            IconButton(
+                onPressed: () => showLocaleDialog(
+                    context, EasyLocalization.of(context)?.currentLocale),
+                icon: Text(
+                  EasyLocalization.of(context)
+                          ?.currentLocale
+                          ?.languageCode
+                          .toUpperCase() ??
+                      'EN',
+                  style: const TextStyle(color: Colors.white),
+                )),
+            if (Responsive.isMobile(context) == false)
+              IconButton(
+                  onPressed: () {
+                    BlocProvider.of<CoursesBloc>(context)
+                        .add(const CoursesEvent.initialDataRequested());
+                  },
+                  icon: const Icon(Icons.refresh_rounded)),
+            if (isAuthorized)
+              if (Responsive.isMobile(context))
+                IconButton(
+                    onPressed: () =>
+                        context.router.push(const PresentationsRoute()),
+                    icon: const Icon(Icons.cast_for_education_outlined))
+              else
+                TextButton(
+                    onPressed: () =>
+                        context.router.push(const PresentationsRoute()),
+                    child: Text(
+                      LocaleKeys.studio.tr(),
+                      style: const TextStyle(color: Colors.white),
+                    )),
+            if (isAuthorized)
+              IconButton(
+                  onPressed: () {
+                    context.router.push(const ProfileRoute());
+                  },
+                  icon: const Icon(Icons.person_rounded))
+            else
+              IconButton(
+                  onPressed: () {
+                    context.router.push(const LoginRoute());
+                  },
+                  icon: const Icon(Icons.login_rounded))
+          ],
+        ),
+        body: courses.isNotEmpty
+            ? RefreshIndicator(
+                onRefresh: () async => BlocProvider.of<CoursesBloc>(context)
+                    .add(const CoursesEvent.initialDataRequested()),
+                child: ListView.separated(
+                  itemCount: courses.length,
+                  padding:
+                      EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 12,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    return CourseItem(
+                      course: courses.elementAt(index),
+                    );
+                  },
+                ),
+              )
+            : Center(
+                child: Text(LocaleKeys.coursesNotFound.tr()),
+              ));
   }
+}
+
+void showLocaleDialog(BuildContext context, Locale? currentLocale) {
+  showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+            contentPadding: const EdgeInsets.all(24),
+            children: [
+              ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  tileColor: EasyLocalization.of(context)?.currentLocale ==
+                          const Locale('kk', 'KZ')
+                      ? Colors.black54
+                      : DynamicPalette.light().accent,
+                  title: const Text('Қазақша'),
+                  onTap: () {
+                    EasyLocalization.of(context)?.setLocale(
+                      const Locale('kk', 'KZ'),
+                    );
+                  }),
+              const SizedBox(
+                height: 12,
+              ),
+              ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  tileColor: EasyLocalization.of(context)?.currentLocale ==
+                          const Locale('ru', 'RU')
+                      ? Colors.black54
+                      : DynamicPalette.light().accent,
+                  title: const Text('Русский'),
+                  onTap: () {
+                    EasyLocalization.of(context)?.setLocale(
+                      const Locale('ru', 'RU'),
+                    );
+                  }),
+              const SizedBox(
+                height: 12,
+              ),
+              ListTile(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                  tileColor: EasyLocalization.of(context)?.currentLocale ==
+                          const Locale('en', 'US')
+                      ? Colors.black54
+                      : DynamicPalette.light().accent,
+                  title: const Text('English'),
+                  onTap: () {
+                    EasyLocalization.of(context)?.setLocale(
+                      const Locale('en', 'US'),
+                    );
+                  })
+            ],
+          ));
 }
 
 class CourseItem extends StatelessWidget {
@@ -130,32 +317,41 @@ class CourseItem extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Expanded(
-                                    child: Text(course.title,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600))),
-                                Expanded(
-                                  child: Text(
-                                    course.description!,
-                                    maxLines: 3,
+                                Text(course.title,
+                                    maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600)),
+                                Text(
+                                  course.channel.title,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                                Text(course.description ?? '',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.italic),
-                                  ),
-                                ),
+                                        fontStyle: FontStyle.italic)),
+                                const Spacer(),
                                 Text(
-                                  DateFormat('dd.MM.yyy kk:mm')
+                                  DateFormat('dd.MM.yyy')
                                       .format(course.createdAt),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ]))),
+                  if (course.price == Decimal.zero)
+                    Text(LocaleKeys.free.tr())
+                  else
+                    Text(NumberFormat.currency(locale: 'kk_KZ')
+                        .format(course.price.toDouble()))
                 ]))));
   }
 }

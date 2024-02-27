@@ -1,4 +1,4 @@
-import 'package:moki_tutor/domain/models/subject_category.dart';
+import 'package:introbox/domain/models/subject_category.dart';
 
 abstract class ISubjectCategoryRepository {
   List<SubjectCategory> get subjectCategories;

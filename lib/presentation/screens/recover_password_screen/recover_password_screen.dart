@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/extetsions/context_extensions.dart';
 
 import '../../common/common_elevated_button.dart';
 import '../../common/common_text_field.dart';
@@ -23,14 +25,20 @@ class RecoverPasswordScreen extends StatelessWidget {
         listener: (context, state) => state.mapOrNull(
             recoverError: (state) =>
                 _onRecoverPasswordError(context, state.errorText),
-            recoverSuccess: (_) => context.router.pop()),
+            recoverSuccess: (_) async {
+              await CommonFunctions.showStyledDialog(
+                  context: context,
+                  message: LocaleKeys.recoverPasswordMessage.tr(),
+                  positiveButtonText: LocaleKeys.ok.tr());
+              return null;
+            }),
         buildWhen: ((previous, current) =>
             current.maybeMap(orElse: () => false, screenState: (_) => true)),
         builder: (context, state) => state.maybeMap(
             orElse: () =>
                 throw UnsupportedError('State not supported for building'),
             screenState: (state) => Scaffold(
-                  appBar: AppBar(title: Text('Восстановление пароля')),
+                  appBar: AppBar(title: Text(LocaleKeys.passwordRecovery.tr())),
                   body: Center(
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
@@ -41,7 +49,7 @@ class RecoverPasswordScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Восстановление пароля. На Ваш email будет выслана инструкция по восстановлению пароля',
+                                LocaleKeys.passwordRecovery.tr(),
                                 style: context.style18w600$title2,
                                 textAlign: TextAlign.center,
                               ),
@@ -50,7 +58,7 @@ class RecoverPasswordScreen extends StatelessWidget {
                               ),
                               CommonTextField(
                                   controller: emailController,
-                                  labelText: 'Email'),
+                                  labelText: LocaleKeys.email.tr()),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -65,7 +73,7 @@ class RecoverPasswordScreen extends StatelessWidget {
                                       ));
                                     }
                                   },
-                                  text: 'Восстановить'),
+                                  text: LocaleKeys.recover.tr()),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -80,8 +88,6 @@ class RecoverPasswordScreen extends StatelessWidget {
 
   void _onRecoverPasswordError(BuildContext context, String? errorText) {
     CommonFunctions.showMessage(
-        context,
-        errorText ?? 'Произошла ошибка запроса, попробуйте позже',
-        Reason.error);
+        context, errorText ?? LocaleKeys.commonRequestError.tr(), Reason.error);
   }
 }

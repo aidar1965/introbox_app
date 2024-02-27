@@ -4,16 +4,18 @@ import 'dart:html' as html;
 import 'package:audioplayers/audioplayers.dart' as ap;
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 
 import 'package:path/path.dart';
 
 import '../../../../domain/models/channel.dart';
+import '../../../../generated/locale_keys.g.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
 
@@ -39,8 +41,8 @@ class PdfCreatePresentationScreen extends StatelessWidget {
               context.router.push(const PresentationsRoute());
             },
           ),
-          title: const Text(
-            'Новая презентация из PDF файла',
+          title: Text(
+            LocaleKeys.newPresentationFromPdf.tr(),
           )),
       body: BlocProvider<PdfCreatePresentationBloc>(
           create: (context) => PdfCreatePresentationBloc(),
@@ -49,14 +51,14 @@ class PdfCreatePresentationScreen extends StatelessWidget {
               listener: (context, state) => state.mapOrNull(
                   saveSuccess: (_) {
                     CommonFunctions.showMessage(
-                        context, 'Презентация создана', Reason.neutral);
+                        context,
+                        LocaleKeys.createPresentationSuccess.tr(),
+                        Reason.neutral);
                     context.router.pop(true);
                     return null;
                   },
-                  saveError: (state) => CommonFunctions.showMessage(
-                      context,
-                      'Произошла ошибка при сохранении презентации',
-                      Reason.error)),
+                  saveError: (state) => CommonFunctions.showMessage(context,
+                      LocaleKeys.commonRequestError.tr(), Reason.error)),
               buildWhen: (previous, current) => current.map(
                   pending: (_) => true,
                   initialDataNotLoaded: (_) => true,
@@ -69,10 +71,10 @@ class PdfCreatePresentationScreen extends StatelessWidget {
                   pending: (_) =>
                       const Center(child: CircularProgressIndicator()),
                   initialDataNotLoaded: (_) => CommonLoadingErrorWidget(
-                      onPressed: () => BlocProvider.of<
-                              PdfCreatePresentationBloc>(context)
-                          .add(
-                              const PdfCreatePresentationEvent.initialDataRequested())),
+                      onPressed: () =>
+                          BlocProvider.of<PdfCreatePresentationBloc>(context)
+                              .add(const PdfCreatePresentationEvent
+                                  .initialDataRequested())),
                   screenState: (state) => _ScreenView(
                         channels: state.channels,
                         selectedChannel: state.selectedChanel,
@@ -195,21 +197,25 @@ class _ScreenViewState extends State<_ScreenView> {
               const SizedBox(height: 20),
               CommonElevatedButton(
                 onPressed: () => _onSelectFile(context),
-                text: 'Выберите PDF файл',
+                text: LocaleKeys.selectPdfFile.tr(),
               ),
               const SizedBox(height: 20),
               if (pdfFile != null) ...[
                 Text(basename(pdfFileName!)),
                 const SizedBox(height: 20),
-                Text('Канал'),
+                Text(LocaleKeys.channel.tr()),
                 const SizedBox(height: 20),
-                ListView.builder(
+                ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: widget.channels.length,
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 8,
+                  ),
                   itemBuilder: (context, index) => ListTile(
                     title: Text(
                       widget.channels.elementAt(index).title,
-                      style: TextStyle(color: Colors.black),
+                      style: const TextStyle(color: Colors.black),
                     ),
                     leading: Radio(
                       value: widget.channels.elementAt(index).id,
@@ -223,6 +229,33 @@ class _ScreenViewState extends State<_ScreenView> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                if (Responsive.isMobile(context)) ...[
+                  widget.countFileGenerated != null
+                      ? Center(
+                          child: Text(
+                              '${LocaleKeys.slidesGeneration.tr()}${widget.countFileGenerated}'))
+                      : widget.isPending
+                          ? const SizedBox(
+                              height: 100,
+                              child: Center(child: CircularProgressIndicator()))
+                          : _FragmentListView(
+                              isAudio: isAudio,
+                              pdfFragmentList: widget.pdfFragmentList ?? [],
+                              titleControllerList: recordTitleControllerList,
+                              descriptionControllerList:
+                                  recordDescriptionControllerList,
+                              onPathChanged: (f, p, s, i, e) {
+                                audioPathList[i] = p;
+                                audioBytesList[i] = f;
+                                audioDurationList[i] = s;
+                                extensionList[i] = e;
+                              },
+                              isTitleOverImage: false,
+                              title: title)
+                ],
+                const SizedBox(
+                  height: 12,
+                ),
                 if (widget.pdfFragmentList?.isNotEmpty ?? false)
                   CommonElevatedButton(
                     isPending: widget.isPending,
@@ -240,6 +273,12 @@ class _ScreenViewState extends State<_ScreenView> {
                             audioExtension: extensionList[i],
                             isTitleOverImage: isTitleOverImage));
                       }
+                      if (titleController.text.trim().isEmpty) {
+                        CommonFunctions.showMessage(context,
+                            LocaleKeys.noPresentationTitle.tr(), Reason.error);
+                        print(' no presentatio titlr. returning');
+                        return;
+                      }
                       BlocProvider.of<PdfCreatePresentationBloc>(context).add(
                           PdfCreatePresentationEvent.savePdfPresentation(
                               pdfFile: pdfFile!,
@@ -251,8 +290,11 @@ class _ScreenViewState extends State<_ScreenView> {
 
                       /// TODO
                     },
-                    text: 'Создать презентацию',
+                    text: LocaleKeys.buttonSave.tr(),
                   ),
+                const SizedBox(
+                  height: 24,
+                ),
               ],
             ],
           ),
@@ -266,8 +308,8 @@ class _ScreenViewState extends State<_ScreenView> {
           flex: 4,
           child: widget.countFileGenerated != null
               ? Center(
-                  child:
-                      Text('Генерация слайдов: ${widget.countFileGenerated}'))
+                  child: Text(
+                      '${LocaleKeys.slidesGeneration.tr()}${widget.countFileGenerated}'))
               : widget.isPending
                   ? const Center(child: CircularProgressIndicator())
                   : _FragmentListView(
@@ -284,6 +326,9 @@ class _ScreenViewState extends State<_ScreenView> {
                       },
                       isTitleOverImage: false,
                       title: title),
+        ),
+        const SizedBox(
+          width: 12,
         ),
       ],
     ]);
@@ -313,7 +358,12 @@ class _FragmentListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
+      separatorBuilder: (context, index) => const SizedBox(
+        height: 8,
+      ),
+      shrinkWrap: true,
       itemCount: pdfFragmentList.length,
       itemBuilder: (context, index) {
         return FragmentListItem(
@@ -384,120 +434,230 @@ class _FragmentListItemState extends State<FragmentListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-            flex: 3,
-            child: Stack(
-              children: [
-                Image.memory(widget.imageData),
-                if (isTitleOverImage) Positioned(bottom: 0, child: Text(title))
-              ],
-            )),
-        const SizedBox(width: 32),
-        Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 32,
-                    bottom: 32,
-                  ),
-                  child: NameAndDescriptionWidget(
-                      titleController: widget.titleController,
-                      descriptionController: widget.descriptionController),
-                ),
-                if (isAudio) ...[
-                  showPlayer
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 25),
-                          child: AudioPlayerWidget(
-                            duration: duration ?? 0,
-                            urlSource: audioPath,
-                            onDelete: () {
-                              setState(() => showPlayer = false);
-                              widget.onPathChanged(null, null, null, null);
-                            },
-                          ),
-                        )
-                      // : CommonElevatedButton(
-                      //     onPressed: () async {
-                      //       final result = await _showRecorder(context,
-                      //           imageData: widget.imageData);
-                      //       if (result != null) {
-                      //         setState(() {
-                      //           audioPath = result.path;
-                      //           duration = result.duration;
-                      //         });
-                      //         final audioBytes = result.audioBytes;
-                      //         showPlayer = true;
-
-                      //         final durationInSeconds =
-                      //             await getDuration(audioPath!);
-                      //         print(durationInSeconds);
-                      //         widget.onPathChanged(
-                      //             audioBytes, audioPath, durationInSeconds);
-                      //       }
-                      //     },
-                      //     text: 'Записать аудио'),
-                      : const SizedBox(),
-                  const SizedBox(height: 32),
-                  CommonElevatedButton(
-                      onPressed: () async {
-                        final result = await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: [
-                            'mp3',
-                            'aac',
-                            'm4a',
-                            'm4b',
-                            'm4p',
-                            'mp4',
-                            'wav'
-                          ],
-                        );
-                        if (result != null) {
-                          final fileBytes = result.files.first.bytes;
-
-                          final extension = result.files.first.extension;
-
-                          if (extension?.toLowerCase() != 'm4a' &&
-                              extension?.toLowerCase() != 'aac' &&
-                              extension?.toLowerCase() != 'mp3' &&
-                              extension?.toLowerCase() != 'm4b' &&
-                              extension?.toLowerCase() != 'm4p' &&
-                              extension?.toLowerCase() != 'wav' &&
-                              extension?.toLowerCase() != 'mp4') return;
-
-                          // Преобразование Uint8List в Blob
-                          final blob = html.Blob(
-                            [fileBytes],
-                          );
-
-                          // Преобразование Blob в data URL
-                          final dataUrl =
-                              html.Url.createObjectUrlFromBlob(blob);
-
-                          final durationInSeconds = await getDuration(dataUrl);
-                          setState(() {
-                            audioPath = dataUrl;
-                            duration = durationInSeconds;
-                          });
-                          showPlayer = true;
-
-                          widget.onPathChanged(fileBytes, audioPath,
-                              durationInSeconds, extension);
-                        }
-                      },
-                      text: 'Прикрепить аудио')
+    if (Responsive.isMobile(context) == false) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              flex: 3,
+              child: Stack(
+                children: [
+                  Image.memory(widget.imageData),
+                  if (isTitleOverImage)
+                    Positioned(bottom: 0, child: Text(title))
                 ],
-              ],
-            )),
-        const SizedBox(width: 32),
-      ],
-    );
+              )),
+          const SizedBox(width: 32),
+          Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 32,
+                      bottom: 32,
+                    ),
+                    child: NameAndDescriptionWidget(
+                        titleController: widget.titleController,
+                        descriptionController: widget.descriptionController),
+                  ),
+                  if (isAudio) ...[
+                    showPlayer
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: AudioPlayerWidget(
+                              duration: duration ?? 0,
+                              urlSource: audioPath,
+                              onDelete: () {
+                                setState(() => showPlayer = false);
+                                widget.onPathChanged(null, null, null, null);
+                              },
+                            ),
+                          )
+                        // : CommonElevatedButton(
+                        //     onPressed: () async {
+                        //       final result = await _showRecorder(context,
+                        //           imageData: widget.imageData);
+                        //       if (result != null) {
+                        //         setState(() {
+                        //           audioPath = result.path;
+                        //           duration = result.duration;
+                        //         });
+                        //         final audioBytes = result.audioBytes;
+                        //         showPlayer = true;
+
+                        //         final durationInSeconds =
+                        //             await getDuration(audioPath!);
+                        //         print(durationInSeconds);
+                        //         widget.onPathChanged(
+                        //             audioBytes, audioPath, durationInSeconds);
+                        //       }
+                        //     },
+                        //     text: 'Записать аудио'),
+                        : const SizedBox(),
+                    const SizedBox(height: 32),
+                    CommonElevatedButton(
+                        onPressed: () async {
+                          final result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: [
+                              'mp3',
+                              'aac',
+                              'm4a',
+                              'm4b',
+                              'm4p',
+                              'mp4',
+                              'wav'
+                            ],
+                          );
+                          if (result != null) {
+                            final fileBytes = result.files.first.bytes;
+
+                            final extension = result.files.first.extension;
+
+                            if (extension?.toLowerCase() != 'm4a' &&
+                                extension?.toLowerCase() != 'aac' &&
+                                extension?.toLowerCase() != 'mp3' &&
+                                extension?.toLowerCase() != 'm4b' &&
+                                extension?.toLowerCase() != 'm4p' &&
+                                extension?.toLowerCase() != 'wav' &&
+                                extension?.toLowerCase() != 'mp4') return;
+
+                            // Преобразование Uint8List в Blob
+                            final blob = html.Blob(
+                              [fileBytes],
+                            );
+
+                            // Преобразование Blob в data URL
+                            final dataUrl =
+                                html.Url.createObjectUrlFromBlob(blob);
+
+                            final durationInSeconds =
+                                await getDuration(dataUrl);
+                            setState(() {
+                              audioPath = dataUrl;
+                              duration = durationInSeconds;
+                            });
+                            showPlayer = true;
+
+                            widget.onPathChanged(fileBytes, audioPath,
+                                durationInSeconds, extension);
+                          }
+                        },
+                        text: LocaleKeys.addAudioFromFile.tr())
+                  ],
+                ],
+              )),
+          const SizedBox(width: 32),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Stack(
+            children: [
+              Image.memory(widget.imageData),
+              if (isTitleOverImage) Positioned(bottom: 0, child: Text(title))
+            ],
+          ),
+          const SizedBox(
+            height: 12,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 32,
+              bottom: 32,
+            ),
+            child: NameAndDescriptionWidget(
+                titleController: widget.titleController,
+                descriptionController: widget.descriptionController),
+          ),
+          if (isAudio) ...[
+            showPlayer
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: AudioPlayerWidget(
+                      duration: duration ?? 0,
+                      urlSource: audioPath,
+                      onDelete: () {
+                        setState(() => showPlayer = false);
+                        widget.onPathChanged(null, null, null, null);
+                      },
+                    ),
+                  )
+                // : CommonElevatedButton(
+                //     onPressed: () async {
+                //       final result = await _showRecorder(context,
+                //           imageData: widget.imageData);
+                //       if (result != null) {
+                //         setState(() {
+                //           audioPath = result.path;
+                //           duration = result.duration;
+                //         });
+                //         final audioBytes = result.audioBytes;
+                //         showPlayer = true;
+
+                //         final durationInSeconds =
+                //             await getDuration(audioPath!);
+                //         print(durationInSeconds);
+                //         widget.onPathChanged(
+                //             audioBytes, audioPath, durationInSeconds);
+                //       }
+                //     },
+                //     text: 'Записать аудио'),
+                : const SizedBox(),
+            const SizedBox(height: 32),
+            CommonElevatedButton(
+                onPressed: () async {
+                  final result = await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: [
+                      'mp3',
+                      'aac',
+                      'm4a',
+                      'm4b',
+                      'm4p',
+                      'mp4',
+                      'wav'
+                    ],
+                  );
+                  if (result != null) {
+                    final fileBytes = result.files.first.bytes;
+
+                    final extension = result.files.first.extension;
+
+                    if (extension?.toLowerCase() != 'm4a' &&
+                        extension?.toLowerCase() != 'aac' &&
+                        extension?.toLowerCase() != 'mp3' &&
+                        extension?.toLowerCase() != 'm4b' &&
+                        extension?.toLowerCase() != 'm4p' &&
+                        extension?.toLowerCase() != 'wav' &&
+                        extension?.toLowerCase() != 'mp4') return;
+
+                    // Преобразование Uint8List в Blob
+                    final blob = html.Blob(
+                      [fileBytes],
+                    );
+
+                    // Преобразование Blob в data URL
+                    final dataUrl = html.Url.createObjectUrlFromBlob(blob);
+
+                    final durationInSeconds = await getDuration(dataUrl);
+                    setState(() {
+                      audioPath = dataUrl;
+                      duration = durationInSeconds;
+                    });
+                    showPlayer = true;
+
+                    widget.onPathChanged(
+                        fileBytes, audioPath, durationInSeconds, extension);
+                  }
+                },
+                text: LocaleKeys.addAudioFromFile.tr())
+          ],
+        ],
+      );
+    }
   }
 
   Future<({Uint8List? audioBytes, String? path, int? duration})?> _showRecorder(

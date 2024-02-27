@@ -21,4 +21,8 @@ class ChannelsEvent with _$ChannelsEvent {
     String? companyId,
     required String channelId,
   }) = _EventOnAddCompanyToChannel;
+
+  const factory ChannelsEvent.onDeleteChannel({
+    required String id,
+  }) = _EventOnDeleteChannel;
 }

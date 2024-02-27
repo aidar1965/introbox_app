@@ -2,13 +2,15 @@ import 'dart:html' as html;
 
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/screens/presentations/audio_recording/audio_recording_screen.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/screens/presentations/audio_recording/audio_recording_screen.dart';
 
+import '../../../../generated/locale_keys.g.dart';
 import '../../../common/common_elevated_button.dart';
 import '../../../values/dynamic_palette.dart';
 import '../../../widgets/audio_player.dart';
@@ -35,7 +37,7 @@ class PresentationAddFragmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Добавление слайда'),
+          title: Text(LocaleKeys.addSlide.tr()),
         ),
         body: BlocProvider(
             create: (context) => PresentationAddFragmentBloc(
@@ -71,8 +73,8 @@ class PresentationAddFragmentScreen extends StatelessWidget {
   }
 
   void onRequestError(BuildContext context, String? errorText) {
-    CommonFunctions.showMessage(context,
-        errorText ?? 'Произошла ошибка при сохранении данных', Reason.error);
+    CommonFunctions.showMessage(
+        context, errorText ?? LocaleKeys.commonRequestError.tr(), Reason.error);
   }
 }
 
@@ -106,7 +108,7 @@ class _ScreenViewState extends State<_ScreenView> {
   @override
   Widget build(BuildContext context) {
     return widget.isSavePending
-        ? const Center(child: Text('Сохранение данных...'))
+        ? Center(child: Text(LocaleKeys.savingData.tr()))
         : Row(children: [
             Expanded(
                 child: widget.image != null
@@ -149,7 +151,7 @@ class _ScreenViewState extends State<_ScreenView> {
                     const SizedBox(
                       height: 24,
                     ),
-                    Text('Название и описание слайда'),
+                    Text(LocaleKeys.slideNameAndDescription.tr()),
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: NameAndDescriptionWidget(
@@ -165,7 +167,7 @@ class _ScreenViewState extends State<_ScreenView> {
                       child: CheckboxListTile(
                           tileColor: DynamicPalette.light().accent,
                           title: Text(
-                            'Название поверх изображения',
+                            LocaleKeys.titleOverImage.tr(),
                             style: TextStyle(
                                 color: DynamicPalette.light().alwaysWhite),
                           ),
@@ -183,8 +185,8 @@ class _ScreenViewState extends State<_ScreenView> {
                       padding: const EdgeInsets.only(right: 12.0),
                       child: CommonElevatedButton(
                           text: widget.image == null
-                              ? 'Добавить изображение'
-                              : 'Изменить изображение',
+                              ? LocaleKeys.addImage.tr()
+                              : LocaleKeys.changeImage.tr(),
                           onPressed: () async {
                             final result = await FilePicker.platform.pickFiles(
                               type: FileType.custom,
@@ -214,11 +216,11 @@ class _ScreenViewState extends State<_ScreenView> {
                     ),
                     if (widget.image != null) ...[
                       if (widget.audioBytes == null)
-                        const Padding(
-                          padding: EdgeInsets.only(
+                        Padding(
+                          padding: const EdgeInsets.only(
                             bottom: 12,
                           ),
-                          child: Text('Аудио отсутствует'),
+                          child: Text(LocaleKeys.noAudio.tr()),
                         ),
                       if (widget.audioBytes != null)
                         Padding(
@@ -259,7 +261,7 @@ class _ScreenViewState extends State<_ScreenView> {
                       Padding(
                         padding: const EdgeInsets.only(right: 12.0),
                         child: CommonElevatedButton(
-                            text: 'Добавить аудио из файла',
+                            text: LocaleKeys.addAudioFromFile.tr(),
                             onPressed: () async {
                               final result =
                                   await FilePicker.platform.pickFiles(
@@ -295,7 +297,6 @@ class _ScreenViewState extends State<_ScreenView> {
                                 // Преобразование Blob в data URL
                                 final dataUrl =
                                     html.Url.createObjectUrlFromBlob(blob);
-                                print(dataUrl);
 
                                 final durationInSeconds =
                                     await getDuration(dataUrl);
@@ -318,7 +319,7 @@ class _ScreenViewState extends State<_ScreenView> {
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: CommonElevatedButton(
-                          text: 'Сохранить',
+                          text: LocaleKeys.buttonSave.tr(),
                           onPressed: () =>
                               BlocProvider.of<PresentationAddFragmentBloc>(
                                       context)

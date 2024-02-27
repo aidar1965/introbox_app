@@ -8,7 +8,8 @@ class ChannelsState with _$ChannelsState {
   const factory ChannelsState.screenState(
       {required List<Channel> channels,
       required List<Company> companies}) = _ScreenState;
-  const factory ChannelsState.addChannelError({String? errorText}) =
-      _StateAddChennelError;
-  const factory ChannelsState.addChannelSuccess() = _StateAddChannelSuccess;
+
+  const factory ChannelsState.requestSuccess() = _StateRequestSuccess;
+  const factory ChannelsState.requestError({String? errorText}) =
+      _StateRequestError;
 }

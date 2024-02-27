@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
 
 import '../../../widgets/audio_player.dart';
 import '../../../widgets/audio_recorder.dart';
@@ -27,15 +29,14 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Запись аудио',
+        title: Text(
+          LocaleKeys.audioRecording.tr(),
         ),
         leading: BackButton(
           onPressed: () {
             if (_path != null && _duration != null) {
               context.router.pop((path: _path, duration: _duration));
             } else {
-              print('returning null');
               context.router.pop();
             }
           },
@@ -57,7 +58,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                                     child: CircularProgressIndicator()),
                             imageUrl: widget.imagePath!)
                         : Image.file(File(widget.imagePath!))
-                    : Text('Изображение отсутствует'),
+                    : Text(LocaleKeys.noImage.tr()),
           )),
           Positioned(
               bottom: 30,

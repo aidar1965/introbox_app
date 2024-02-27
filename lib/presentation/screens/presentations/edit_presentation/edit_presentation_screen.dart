@@ -2,17 +2,19 @@ import 'dart:html' as html;
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
 
 import '../../../../../domain/models/pdf_fragment.dart';
 
+import '../../../../generated/locale_keys.g.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_loading_error_widget.dart';
 import '../../../utils/responsive.dart';
@@ -34,7 +36,7 @@ class EditPresentationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Редактирование темы'),
+          title: Text(LocaleKeys.editPresentation.tr()),
           leading: IconButton(
               onPressed: () => context.router.replace(PresentationsRoute()),
               icon: const Icon(Icons.arrow_back)),
@@ -45,8 +47,8 @@ class EditPresentationScreen extends StatelessWidget {
               listener: (context, state) => state.mapOrNull(
                   requestError: (state) =>
                       _showMessage(context, state.errorText),
-                  requestSuccess: (_) => CommonFunctions.showMessage(
-                      context, 'Двнные обновлены', Reason.neutral),
+                  requestSuccess: (_) => CommonFunctions.showMessage(context,
+                      LocaleKeys.commonSaveSuccess.tr(), Reason.neutral),
                   loadingError: (_) => CommonLoadingErrorWidget(
                         onPressed: () =>
                             BlocProvider.of<EditPresentationBloc>(context).add(
@@ -76,8 +78,8 @@ class EditPresentationScreen extends StatelessWidget {
   }
 
   void _showMessage(BuildContext context, String? errorText) {
-    CommonFunctions.showMessage(context,
-        errorText ?? 'При выполнении запроса произошла ошибка', Reason.error);
+    CommonFunctions.showMessage(
+        context, errorText ?? LocaleKeys.commonRequestError.tr(), Reason.error);
   }
 }
 
@@ -93,7 +95,7 @@ class _PendingView extends StatelessWidget {
 }
 
 class _ScreenView extends StatefulWidget {
-  _ScreenView({
+  const _ScreenView({
     super.key,
     required this.fragments,
     required this.selectedFragment,
@@ -251,8 +253,9 @@ class _ScreenViewState extends State<_ScreenView> {
                             titleController: presentationTitleController,
                             descriptionController:
                                 presentationDescriptionController,
-                            titleLabelName: 'Название презентации',
-                            descriptionLabelName: 'Описание презентации',
+                            titleLabelName: LocaleKeys.presentationName.tr(),
+                            descriptionLabelName:
+                                LocaleKeys.presentationDescription.tr(),
                           ),
                         ),
                         const SizedBox(
@@ -278,7 +281,7 @@ class _ScreenViewState extends State<_ScreenView> {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
-                              text: 'Изменить порядок',
+                              text: LocaleKeys.buttonChangeOrder.tr(),
                               onPressed: () async {
                                 final result = await context.router.push(
                                     FragmentsReorderRoute(
@@ -297,46 +300,27 @@ class _ScreenViewState extends State<_ScreenView> {
                         const SizedBox(
                           height: 12,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: CheckboxListTile(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8)),
-                              tileColor: DynamicPalette.light().accent,
-                              title: Text(
-                                'Название слайда поверх изображения',
-                                style: TextStyle(
-                                    color: DynamicPalette.light().alwaysWhite),
-                              ),
-                              value: isTitleOverImage,
-                              onChanged: (v) {
-                                setState(() {
-                                  isTitleOverImage = !isTitleOverImage;
-                                });
-                              }),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
+
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: NameAndDescriptionWidget(
                             titleController: selectedFragmentTitleController,
                             descriptionController:
                                 selectedFragmentDescriptionController,
-                            titleLabelName: 'Название слайда',
-                            descriptionLabelName: 'Описание слайда',
+                            titleLabelName: LocaleKeys.slideName.tr(),
+                            descriptionLabelName:
+                                LocaleKeys.slideDescription.tr(),
                           ),
                         ),
                         const SizedBox(
                           height: 12,
                         ),
                         if (widget.selectedFragment.audioPath == null)
-                          const Padding(
-                            padding: EdgeInsets.only(
+                          Padding(
+                            padding: const EdgeInsets.only(
                               bottom: 12,
                             ),
-                            child: Text('Аудио отсутствует'),
+                            child: Text(LocaleKeys.noAudio.tr()),
                           )
                         else
                           Padding(
@@ -384,7 +368,9 @@ class _ScreenViewState extends State<_ScreenView> {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
-                              text: 'Добавить аудио',
+                              text: widget.selectedFragment.audioPath == null
+                                  ? LocaleKeys.addAudio.tr()
+                                  : LocaleKeys.changeAudio.tr(),
                               onPressed: () async {
                                 final result =
                                     await FilePicker.platform.pickFiles(
@@ -443,7 +429,7 @@ class _ScreenViewState extends State<_ScreenView> {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
-                              text: 'Заменить изображение',
+                              text: LocaleKeys.changeImage.tr(),
                               onPressed: () async {
                                 final result =
                                     await FilePicker.platform.pickFiles(
@@ -476,9 +462,31 @@ class _ScreenViewState extends State<_ScreenView> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
+                          child: CheckboxListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8)),
+                              tileColor: DynamicPalette.light().accent,
+                              title: Text(
+                                LocaleKeys.titleOverImage.tr(),
+                                style: TextStyle(
+                                    color: DynamicPalette.light().alwaysWhite),
+                              ),
+                              value: isTitleOverImage,
+                              onChanged: (v) {
+                                setState(() {
+                                  isTitleOverImage = !isTitleOverImage;
+                                });
+                              }),
+                        ),
+
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
                               isPending: widget.fragmentUpdatePending,
-                              text: 'Сохранить',
+                              text: LocaleKeys.buttonSave.tr(),
                               onPressed: () {
                                 BlocProvider.of<EditPresentationBloc>(context)
                                     .add(EditPresentationEvent.updateFragment(
@@ -496,14 +504,17 @@ class _ScreenViewState extends State<_ScreenView> {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton.red(
-                              text: 'Удалить слайд',
+                              text: LocaleKeys.deleteSlide.tr(),
                               onPressed: () {
                                 CommonFunctions.showStyledDialog(
                                     context: context,
-                                    message:
-                                        'Вы действительно хотите удалить слайд?',
-                                    positiveButtonText: 'Удалить',
-                                    negativeButtonText: 'Отмена',
+                                    message: LocaleKeys
+                                        .deleteSlideConfirmationMessage
+                                        .tr(),
+                                    positiveButtonText:
+                                        LocaleKeys.buttonDelete.tr(),
+                                    negativeButtonText:
+                                        LocaleKeys.buttonCancel.tr(),
                                     onPositiveTap: () =>
                                         BlocProvider.of<EditPresentationBloc>(
                                                 context)
@@ -554,8 +565,290 @@ class _ScreenViewState extends State<_ScreenView> {
         ],
       );
     } else {
-      return const Center(
-        child: Text('Мобильная версия в разработке))'),
+      return SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              NameAndDescriptionWidget(
+                titleController: presentationTitleController,
+                descriptionController: presentationDescriptionController,
+                titleLabelName: LocaleKeys.presentationName.tr(),
+                descriptionLabelName: LocaleKeys.presentationDescription.tr(),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              CommonElevatedButton(
+                isPending: widget.presentationUpdatePending,
+                text: LocaleKeys.buttonSave.tr(),
+                onPressed: () => BlocProvider.of<EditPresentationBloc>(context)
+                    .add(EditPresentationEvent.updatePresentation(
+                        title: presentationTitleController.text,
+                        description: presentationDescriptionController.text)),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              CommonElevatedButton(
+                  text: LocaleKeys.buttonChangeOrder.tr(),
+                  onPressed: () async {
+                    final result = await context.router.push(
+                        FragmentsReorderRoute(fragments: widget.fragments));
+                    if (result != null) {
+                      if (context.mounted) {
+                        BlocProvider.of<EditPresentationBloc>(context).add(
+                            EditPresentationEvent.reorderFragments(
+                                ids: result as List<String>));
+                      }
+                    }
+                  }),
+              const SizedBox(
+                height: 12,
+              ),
+              ListView.separated(
+                  padding: const EdgeInsets.only(bottom: 64),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    if (index > 0 && index < widget.fragments.length + 1) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _VerticalFragmentCard(
+                              fragment: widget.fragments.elementAt(index - 1)),
+                          if (widget.fragments.elementAt(index - 1).id ==
+                              widget.selectedFragment.id) ...[
+                            const SizedBox(
+                              height: 12,
+                            ),
+
+                            NameAndDescriptionWidget(
+                              titleController: selectedFragmentTitleController,
+                              descriptionController:
+                                  selectedFragmentDescriptionController,
+                              titleLabelName: LocaleKeys.slideName.tr(),
+                              descriptionLabelName:
+                                  LocaleKeys.slideDescription.tr(),
+                            ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            if (widget.selectedFragment.audioPath == null)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 12,
+                                ),
+                                child: Text(LocaleKeys.noAudio.tr()),
+                              )
+                            else
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25),
+                                child: AudioPlayerWidget(
+                                  urlSource: widget.selectedFragment.audioPath!,
+                                  duration: widget.selectedFragment.duration!,
+                                  onDelete: () => BlocProvider.of<
+                                          EditPresentationBloc>(context)
+                                      .add(EditPresentationEvent.deleteAudio(
+                                          fragment: widget.selectedFragment)),
+                                ),
+                              ),
+                            // const SizedBox(
+                            //   height: 12,
+                            // ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(right: 12.0),
+                            //   child: CommonElevatedButton(
+                            //       text: 'Записать аудио',
+                            //       onPressed: () async {
+                            //         final result = await showDialog(
+                            //             context: context,
+                            //             builder: (context) => Dialog.fullscreen(
+                            //                     child: AudioRecordingScreen(
+                            //                   imageData: widget
+                            //                       .selectedFragment.imageBytes,
+                            //                   imagePath:
+                            //                       widget.selectedFragment.imagePath,
+                            //                 )));
+                            //         if (result != null && context.mounted) {
+                            //           BlocProvider.of<EditPresentationBloc>(context)
+                            //               .add(EditPresentationEvent.audioAdded(
+                            //                   fragment: widget.selectedFragment,
+                            //                   extension: 'mp3',
+                            //                   audioPath: result.path!,
+                            //                   audioBytes: result.audioBytes!,
+                            //                   duration: result.duration!));
+                            //         }
+                            //       }),
+                            // ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            CommonElevatedButton(
+                                text: widget.selectedFragment.audioPath == null
+                                    ? LocaleKeys.addAudio.tr()
+                                    : LocaleKeys.changeAudio.tr(),
+                                onPressed: () async {
+                                  final result =
+                                      await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: [
+                                      'mp3',
+                                      'aac',
+                                      'm4a',
+                                      'm4b',
+                                      'm4p',
+                                      'mp4',
+                                      'wav'
+                                    ],
+                                  );
+                                  if (result != null) {
+                                    final fileBytes = result.files.first.bytes;
+
+                                    final extension =
+                                        result.files.first.extension;
+
+                                    if (extension?.toLowerCase() != 'm4a' &&
+                                        extension?.toLowerCase() != 'aac' &&
+                                        extension?.toLowerCase() != 'mp3' &&
+                                        extension?.toLowerCase() != 'm4b' &&
+                                        extension?.toLowerCase() != 'm4p' &&
+                                        extension?.toLowerCase() != 'wav' &&
+                                        extension?.toLowerCase() != 'mp4')
+                                      return;
+
+                                    // Преобразование Uint8List в Blob
+                                    final blob = html.Blob(
+                                      [fileBytes],
+                                    );
+
+                                    // Преобразование Blob в data URL
+                                    final dataUrl =
+                                        html.Url.createObjectUrlFromBlob(blob);
+
+                                    final durationInSeconds =
+                                        await getDuration(dataUrl);
+                                    if (context.mounted) {
+                                      BlocProvider.of<EditPresentationBloc>(
+                                              context)
+                                          .add(EditPresentationEvent.audioAdded(
+                                              fragment: widget.selectedFragment,
+                                              extension: extension!,
+                                              audioBytes: fileBytes!,
+                                              audioPath: dataUrl,
+                                              duration: durationInSeconds));
+                                    }
+                                  }
+                                }),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            CommonElevatedButton(
+                                text: LocaleKeys.changeImage.tr(),
+                                onPressed: () async {
+                                  final result =
+                                      await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: [
+                                      'pdf',
+                                      'jpg',
+                                      'jpeg',
+                                      'png',
+                                      'webp',
+                                      'gif'
+                                    ],
+                                  );
+                                  if (result != null) {
+                                    final imageBytes = result.files.first.bytes;
+
+                                    if (context.mounted) {
+                                      BlocProvider.of<EditPresentationBloc>(
+                                              context)
+                                          .add(EditPresentationEvent.imageAdded(
+                                        fragment: widget.selectedFragment,
+                                        imageBytes: imageBytes!,
+                                      ));
+                                    }
+                                  }
+                                }),
+
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            CheckboxListTile(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                tileColor: DynamicPalette.light().accent,
+                                title: Text(
+                                  LocaleKeys.titleOverImage.tr(),
+                                  style: TextStyle(
+                                      color:
+                                          DynamicPalette.light().alwaysWhite),
+                                ),
+                                value: isTitleOverImage,
+                                onChanged: (v) {
+                                  setState(() {
+                                    isTitleOverImage = !isTitleOverImage;
+                                  });
+                                }),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            CommonElevatedButton(
+                                isPending: widget.fragmentUpdatePending,
+                                text: LocaleKeys.buttonSave.tr(),
+                                onPressed: () {
+                                  BlocProvider.of<EditPresentationBloc>(context)
+                                      .add(EditPresentationEvent.updateFragment(
+                                          title: selectedFragmentTitleController
+                                              .text,
+                                          description:
+                                              selectedFragmentDescriptionController
+                                                  .text,
+                                          isTitleOverImage: isTitleOverImage));
+                                }),
+                            const SizedBox(
+                              height: 32,
+                            ),
+                            CommonElevatedButton.red(
+                                text: LocaleKeys.deleteSlide.tr(),
+                                onPressed: () {
+                                  CommonFunctions.showStyledDialog(
+                                      context: context,
+                                      message: LocaleKeys
+                                          .deleteSlideConfirmationMessage
+                                          .tr(),
+                                      positiveButtonText:
+                                          LocaleKeys.buttonDelete.tr(),
+                                      negativeButtonText:
+                                          LocaleKeys.buttonCancel.tr(),
+                                      onPositiveTap: () =>
+                                          BlocProvider.of<EditPresentationBloc>(
+                                                  context)
+                                              .add(const EditPresentationEvent
+                                                  .deleteFragment()));
+                                }),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ],
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                  separatorBuilder: (context, index) => AddFragmentButtons(
+                        displayOrder: index,
+                        presentationId: widget.presentationId,
+                        fragmentsIds:
+                            widget.fragments.map((e) => e.id).toList(),
+                      ),
+                  itemCount: widget.fragments.length + 2)
+            ],
+          ),
+        ),
       );
     }
   }
@@ -581,6 +874,33 @@ class _ScreenViewState extends State<_ScreenView> {
   }
 }
 
+class _VerticalFragmentCard extends StatelessWidget {
+  const _VerticalFragmentCard({super.key, required this.fragment});
+
+  final PdfFragment fragment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+            onTap: () {
+              BlocProvider.of<EditPresentationBloc>(context).add(
+                  EditPresentationEvent.fragmentSelected(fragment: fragment));
+            },
+            child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: fragment.imagePath?.contains('http') ?? false
+                    ? CachedNetworkImage(
+                        progressIndicatorBuilder: (context, _, __) =>
+                            const Center(child: CircularProgressIndicator()),
+                        imageUrl: fragment.imagePath!)
+                    : Image.memory(fragment.imageBytes!))),
+      ],
+    );
+  }
+}
+
 class _FragmentCard extends StatelessWidget {
   const _FragmentCard({super.key, required this.fragment});
 
@@ -596,7 +916,7 @@ class _FragmentCard extends StatelessWidget {
             child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: SizedBox(
-                    width: 355,
+                    width: Responsive.isMobile(context) == false ? 355 : null,
                     child: fragment.imagePath?.contains('http') ?? false
                         ? CachedNetworkImage(
                             progressIndicatorBuilder: (context, _, __) =>

@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/extetsions/context_extensions.dart';
 import '../../auto_router/app_router.dart';
 import '../../common/common_elevated_button.dart';
 import '../../common/common_text_field.dart';
@@ -38,18 +40,20 @@ class LoginScreen extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Вход', style: context.style18w600$title2),
+                          Text(LocaleKeys.login.tr(),
+                              style: context.style18w600$title2),
                           const SizedBox(
                             height: 24,
                           ),
                           CommonTextField(
-                              controller: emailController, labelText: 'Email'),
+                              controller: emailController,
+                              labelText: LocaleKeys.email.tr()),
                           const SizedBox(
                             height: 12,
                           ),
                           CommonTextField(
                             controller: passwordController,
-                            labelText: 'Пароль',
+                            labelText: LocaleKeys.password.tr(),
                             obscureText: true,
                           ),
                           const SizedBox(
@@ -63,21 +67,21 @@ class LoginScreen extends StatelessWidget {
                                         email: emailController.text,
                                         password: passwordController.text));
                               },
-                              text: 'Войти'),
+                              text: LocaleKeys.enter.tr()),
                           const SizedBox(
                             height: 30,
                           ),
                           TextButton(
                               onPressed: () =>
                                   context.router.push(RegisterRoute()),
-                              child: Text('Зарегистрироваться')),
+                              child: Text(LocaleKeys.registration.tr())),
                           const SizedBox(
                             height: 24,
                           ),
                           TextButton(
                               onPressed: () => context.router
                                   .push(const RecoverPasswordRoute()),
-                              child: Text('Забыли пароль?'))
+                              child: Text(LocaleKeys.forgotPassword.tr()))
                         ],
                       )),
                 ),
@@ -88,6 +92,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   void _onLoginError(BuildContext context, String? errorText) {
-    CommonFunctions.showMessage(context, errorText ?? 'Ошибка', Reason.error);
+    CommonFunctions.showMessage(
+        context, errorText ?? LocaleKeys.commonRequestError.tr(), Reason.error);
   }
 }

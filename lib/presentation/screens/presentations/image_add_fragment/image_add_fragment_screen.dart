@@ -3,11 +3,14 @@ import 'dart:html' as html;
 import 'package:audioplayers/audioplayers.dart' as ap;
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/values/dynamic_palette.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/auto_router/app_router.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/utils/responsive.dart';
+import 'package:introbox/presentation/values/dynamic_palette.dart';
 
 import '../../../../domain/models/image_fragment.dart';
 
@@ -36,17 +39,6 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
   late String title;
 
   @override
-  void initState() {
-    super.initState();
-    title = widget.titleController.text;
-    widget.titleController.addListener(() {
-      setState(() {
-        title = widget.titleController.text;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -55,235 +47,282 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                 context.router.push(ImageCreatePresentationRoute());
               },
             ),
-            title: Text('Создание слайда')),
+            title: Text(LocaleKeys.addSlide.tr())),
         body: Row(children: [
+          if (Responsive.isMobile(context) == false) ...[
+            Expanded(
+              flex: 3,
+              child: imageBytes != null
+                  ? Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.memory(imageBytes!),
+                        if (isTitleOverImage)
+                          Positioned(
+                              bottom: 20,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Opacity(
+                                    opacity: 0.5,
+                                    child: DecoratedBox(
+                                        decoration: const BoxDecoration(
+                                            color: Colors.black),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Text(
+                                            title,
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          ),
+                                        )),
+                                  ),
+                                ],
+                              ))
+                      ],
+                    )
+                  : const SizedBox(),
+            ),
+            const SizedBox(
+              width: 24,
+            ),
+          ],
           Expanded(
-            child: imageBytes != null
-                ? Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.memory(imageBytes!),
-                      if (isTitleOverImage)
-                        Positioned(
-                            bottom: 20,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Opacity(
-                                  opacity: 0.5,
-                                  child: DecoratedBox(
-                                      decoration:
-                                          BoxDecoration(color: Colors.black),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
-                                          title,
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                      )),
-                                ),
-                              ],
-                            ))
-                    ],
-                  )
-                : const SizedBox(),
-          ),
-          const SizedBox(
-            width: 24,
-          ),
-          SizedBox(
-              width: 300,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Text('Название и описание слайда'),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: NameAndDescriptionWidget(
-                      titleController: widget.titleController,
-                      descriptionController: widget.descriptionController,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 24,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: CheckboxListTile(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        tileColor: DynamicPalette.light().accent,
-                        title: Text(
-                          'Название поверх изображения',
-                          style: TextStyle(
-                              color: DynamicPalette.light().alwaysWhite),
-                        ),
-                        value: isTitleOverImage,
-                        onChanged: (v) {
-                          setState(() {
-                            isTitleOverImage = !isTitleOverImage;
-                          });
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: CommonElevatedButton(
-                        text: imageBytes == null
-                            ? 'Добавить изображение'
-                            : 'Изменить изображение',
-                        onPressed: () async {
-                          final result = await FilePicker.platform.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: [
-                              'jpg',
-                              'jpeg',
-                              'png',
-                              'webp',
-                              'gif'
-                            ],
-                          );
-                          if (result != null) {
-                            setState(() {
-                              imageBytes = result.files.single.bytes!;
-                            });
-                          }
-                        }),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-
-                  if (audioBytes == null)
-                    const Padding(
-                      padding: EdgeInsets.only(
-                        bottom: 12,
-                      ),
-                      child: Text('Аудио отсутствует'),
-                    ),
-                  if (audioBytes != null)
+                    Text(LocaleKeys.slideNameAndDescription.tr()),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25),
-                      child: AudioPlayerWidget(
-                          urlSource: audioPath!,
-                          duration: duration!,
-                          onDelete: () {
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: NameAndDescriptionWidget(
+                        titleController: widget.titleController,
+                        descriptionController: widget.descriptionController,
+                        initialName: widget.titleController.text,
+                        initialDescription: widget.descriptionController.text,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: CheckboxListTile(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          tileColor: DynamicPalette.light().accent,
+                          title: Text(
+                            LocaleKeys.titleOverImage.tr(),
+                            style: TextStyle(
+                                color: DynamicPalette.light().alwaysWhite),
+                          ),
+                          value: isTitleOverImage,
+                          onChanged: (v) {
                             setState(() {
-                              audioBytes = null;
+                              isTitleOverImage = !isTitleOverImage;
                             });
                           }),
                     ),
-                  // const SizedBox(
-                  //   height: 12,
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(right: 12.0),
-                  //   child: CommonElevatedButton(
-                  //       text: 'Записать аудио',
-                  //       onPressed: () async {
-                  //         final result = await _showRecorder(context,
-                  //             imageData: imageBytes!);
-                  //         if (result != null && context.mounted) {
-                  //           setState(() {
-                  //             audioBytes = result.audioBytes;
-                  //             audioPath = result.path;
-                  //             duration = result.duration;
-                  //           });
-                  //         }
-                  //       }),
-                  // ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: CommonElevatedButton(
-                        text: 'Добавить аудио из файла',
-                        onPressed: () async {
-                          final result = await FilePicker.platform.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: [
-                              'mp3',
-                              'aac',
-                              'm4a',
-                              'm4b',
-                              'm4p',
-                              'mp4',
-                              'wav'
-                            ],
-                          );
-                          if (result != null) {
-                            final extension = result.files.first.extension;
-
-                            if (extension?.toLowerCase() != 'm4a' &&
-                                extension?.toLowerCase() != 'aac' &&
-                                extension?.toLowerCase() != 'mp3' &&
-                                extension?.toLowerCase() != 'm4b' &&
-                                extension?.toLowerCase() != 'm4p' &&
-                                extension?.toLowerCase() != 'wav' &&
-                                extension?.toLowerCase() != 'mp4') return;
-                            final fileBytes = result.files.first.bytes;
-
-                            // Преобразование Uint8List в Blob
-                            final blob = html.Blob(
-                              [fileBytes],
-                            );
-
-                            // Преобразование Blob в data URL
-                            final dataUrl =
-                                html.Url.createObjectUrlFromBlob(blob);
-                            print(dataUrl);
-
-                            final durationInSeconds =
-                                await getDuration(dataUrl);
-                            if (context.mounted) {
-                              setState(() {
-                                audioBytes = fileBytes;
-                                audioPath = dataUrl;
-                                duration = durationInSeconds;
-                              });
-                            }
-                          }
-                        }),
-                  ),
-
-                  const SizedBox(
-                    height: 12,
-                  ),
-
-                  Padding(
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    if (Responsive.isMobile(context) && imageBytes != null) ...[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.memory(imageBytes!),
+                            if (isTitleOverImage)
+                              Positioned(
+                                  bottom: 20,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Opacity(
+                                        opacity: 0.5,
+                                        child: DecoratedBox(
+                                            decoration: const BoxDecoration(
+                                                color: Colors.black),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                title,
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            )),
+                                      ),
+                                    ],
+                                  ))
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                    ],
+                    Padding(
                       padding: const EdgeInsets.only(right: 12.0),
                       child: CommonElevatedButton(
-                          text: 'Добавить',
-                          onPressed: () {
-                            if (widget.titleController.text.isNotEmpty) {
-                              context.router.pop(ImageFragment(
-                                  // Потом это значение в блоке пересчитывается
-                                  isLandscape: false,
-                                  imageBytes: imageBytes,
-                                  title: widget.titleController.text,
-                                  audioBytes: audioBytes,
-                                  audioPath: audioPath,
-                                  duration: duration,
-                                  description:
-                                      widget.descriptionController.text,
-                                  isTitleOverImage: isTitleOverImage));
-                            } else {
-                              CommonFunctions.showMessage(
-                                  context,
-                                  'Название слайда не может быть пустым',
-                                  Reason.error);
+                          text: imageBytes == null
+                              ? LocaleKeys.addImage.tr()
+                              : LocaleKeys.changeImage.tr(),
+                          onPressed: () async {
+                            final result = await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: [
+                                'jpg',
+                                'jpeg',
+                                'png',
+                                'webp',
+                                'gif'
+                              ],
+                            );
+                            if (result != null) {
+                              setState(() {
+                                imageBytes = result.files.single.bytes!;
+                              });
                             }
-                          })),
-                  const SizedBox(
-                    width: 24,
-                  )
-                ],
-              ))
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    if (imageBytes != null)
+                      if (audioBytes == null)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            bottom: 12,
+                          ),
+                          child: Text(LocaleKeys.noAudio.tr()),
+                        ),
+                    if (audioBytes != null)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 25),
+                        child: AudioPlayerWidget(
+                            urlSource: audioPath!,
+                            duration: duration!,
+                            onDelete: () {
+                              setState(() {
+                                audioBytes = null;
+                              });
+                            }),
+                      ),
+                    // const SizedBox(
+                    //   height: 12,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(right: 12.0),
+                    //   child: CommonElevatedButton(
+                    //       text: 'Записать аудио',
+                    //       onPressed: () async {
+                    //         final result = await _showRecorder(context,
+                    //             imageData: imageBytes!);
+                    //         if (result != null && context.mounted) {
+                    //           setState(() {
+                    //             audioBytes = result.audioBytes;
+                    //             audioPath = result.path;
+                    //             duration = result.duration;
+                    //           });
+                    //         }
+                    //       }),
+                    // ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: CommonElevatedButton(
+                          text: LocaleKeys.addAudioFromFile.tr(),
+                          onPressed: () async {
+                            final result = await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: [
+                                'mp3',
+                                'aac',
+                                'm4a',
+                                'm4b',
+                                'm4p',
+                                'mp4',
+                                'wav'
+                              ],
+                            );
+                            if (result != null) {
+                              final extension = result.files.first.extension;
+
+                              if (extension?.toLowerCase() != 'm4a' &&
+                                  extension?.toLowerCase() != 'aac' &&
+                                  extension?.toLowerCase() != 'mp3' &&
+                                  extension?.toLowerCase() != 'm4b' &&
+                                  extension?.toLowerCase() != 'm4p' &&
+                                  extension?.toLowerCase() != 'wav' &&
+                                  extension?.toLowerCase() != 'mp4') return;
+                              final fileBytes = result.files.first.bytes;
+
+                              // Преобразование Uint8List в Blob
+                              final blob = html.Blob(
+                                [fileBytes],
+                              );
+
+                              // Преобразование Blob в data URL
+                              final dataUrl =
+                                  html.Url.createObjectUrlFromBlob(blob);
+
+                              final durationInSeconds =
+                                  await getDuration(dataUrl);
+                              if (context.mounted) {
+                                setState(() {
+                                  audioBytes = fileBytes;
+                                  audioPath = dataUrl;
+                                  duration = durationInSeconds;
+                                });
+                              }
+                            }
+                          }),
+                    ),
+
+                    const SizedBox(
+                      height: 12,
+                    ),
+
+                    Padding(
+                        padding: const EdgeInsets.only(right: 12.0, bottom: 64),
+                        child: CommonElevatedButton(
+                            text: LocaleKeys.buttonAdd.tr(),
+                            onPressed: () {
+                              if (widget.titleController.text.isNotEmpty) {
+                                context.router.pop(ImageFragment(
+                                    // Потом это значение в блоке пересчитывается
+                                    isLandscape: false,
+                                    imageBytes: imageBytes,
+                                    title: widget.titleController.text,
+                                    audioBytes: audioBytes,
+                                    audioPath: audioPath,
+                                    duration: duration,
+                                    description:
+                                        widget.descriptionController.text,
+                                    isTitleOverImage: isTitleOverImage));
+                              } else {
+                                CommonFunctions.showMessage(
+                                    context,
+                                    LocaleKeys.slideTitleEmpty.tr(),
+                                    Reason.error);
+                              }
+                            })),
+                    const SizedBox(
+                      width: 24,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          )
         ]));
   }
 

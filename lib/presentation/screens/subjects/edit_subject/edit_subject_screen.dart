@@ -95,7 +95,7 @@
 //                               ElevatedButton(
 //                                   onPressed: () {}, child: Text('PDF')),
 //                               Flexible(
-//                                   child: ListView.builder(
+//                                   child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //                                       itemCount: state.subjectCategories.length,
 //                                       itemBuilder: (context, index) => CheckboxListTile(
 //                                           title: Text(state.subjectCategories
@@ -148,7 +148,7 @@
 //                                           canvasColor: Colors.transparent,
 //                                           shadowColor: Colors.transparent,
 //                                         ),
-//                                         child: ReorderableListView.builder(
+//                                         child: ReorderableListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //                                           itemCount:
 //                                               state.subjectFragments.length,
 //                                           itemBuilder: (context, index) {
@@ -288,7 +288,7 @@
 //                               ),
 //                               state.records!.isNotEmpty
 //                                   ? Expanded(
-//                                       child: ListView.builder(
+//                                       child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //                                           controller: secondListController,
 //                                           itemCount: state.records!.length,
 //                                           itemBuilder: (context, index) {
@@ -383,7 +383,7 @@
 //     return categories != null
 //         ? SizedBox(
 //             //height: 60,
-//             child: ListView.builder(
+//             child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //               controller: firstListController,
 //               shrinkWrap: true,
 //               scrollDirection: Axis.vertical,

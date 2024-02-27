@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:moki_tutor/domain/interfaces/i_category_repository.dart';
-import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
-import 'package:moki_tutor/domain/models/fragment_category.dart';
+import 'package:introbox/domain/interfaces/i_category_repository.dart';
+import 'package:introbox/domain/interfaces/i_local_db.dart';
+import 'package:introbox/domain/models/fragment_category.dart';
 
 class CategoriesRepository extends ChangeNotifier
     implements ICategoryRepository {

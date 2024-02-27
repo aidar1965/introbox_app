@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/domain/models/pdf_fragment.dart';
-import 'package:moki_tutor/domain/models/presentation_with_fragments.dart';
+import 'package:introbox/domain/models/pdf_fragment.dart';
+import 'package:introbox/domain/models/presentation_with_fragments.dart';
 
 import '../../../../domain/interfaces/i_api.dart';
 import '../../../../domain/locator/locator.dart';

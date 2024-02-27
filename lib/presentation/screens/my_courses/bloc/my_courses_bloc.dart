@@ -1,14 +1,16 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/data/api/http_client/request_exception.dart';
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:moki_tutor/domain/locator/locator.dart';
+import 'package:introbox/data/api/http_client/request_exception.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/locator/locator.dart';
 
 import '../../../../domain/models/channel.dart';
 import '../../../../domain/models/course.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 part 'my_courses_state.dart';
 part 'my_courses_event.dart';
@@ -60,12 +62,18 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
       _EventDeleteCourse event, Emitter<MyCoursesState> emitter) async {
     try {
       await api.deleteCourse(id: event.id);
-      _screenState.courses.removeWhere((element) => element.id == event.id);
+
+      final newCourses = <Course>[];
+      _screenState.courses.map((e) {
+        if (e.id != event.id) newCourses.add(e);
+      });
+
+      _screenState = _screenState.copyWith(courses: newCourses);
       emitter(_screenState);
     } on RequestException catch (e) {
       if (e.httpStatusCode == HttpStatus.badRequest) {
-        emitter(const MyCoursesState.requestError(
-            errorText: 'Курс содержит презентации. Вы не можете удалить аго'));
+        emitter(MyCoursesState.requestError(
+            errorText: LocaleKeys.courseDeleteUnable.tr()));
       }
     } on Object {
       emitter(const MyCoursesState.requestError());
@@ -76,8 +84,6 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
   Future<void> onUpdateCourse(
       _EventUpdateCourse event, Emitter<MyCoursesState> emitter) async {
     try {
-      print('bloc says received image : ' +
-          (event.imageBytes != null).toString());
       await api.updateCourse(
           id: event.id,
           title: event.title,

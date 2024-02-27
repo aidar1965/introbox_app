@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:moki_tutor/domain/models/pdf_fragment.dart';
+import 'package:introbox/domain/models/pdf_fragment.dart';
 
 import 'presentation.dart';
 

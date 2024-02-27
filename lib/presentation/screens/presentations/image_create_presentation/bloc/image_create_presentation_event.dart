@@ -7,11 +7,13 @@ class ImageCreatePresentationEvent with _$ImageCreatePresentationEvent {
   const factory ImageCreatePresentationEvent.channelSelected(
       {required Channel channel}) = _EventChannelSelected;
   const factory ImageCreatePresentationEvent.fragmentAdded(
-      {required ImageFragment imageFragment}) = _EventFragmentAdded;
-  const factory ImageCreatePresentationEvent.saveImageSubject({
+      {required ImageFragment imageFragment,
+      String? title,
+      String? description}) = _EventFragmentAdded;
+  const factory ImageCreatePresentationEvent.saveImagePresentation({
     required String title,
     required String description,
-  }) = _EventSaveImageSubject;
+  }) = _EventSaveImagePresentation;
 
   const factory ImageCreatePresentationEvent.onReorderFragments(
       {required List<ImageFragment> fragments}) = _EventOnReorderFragments;

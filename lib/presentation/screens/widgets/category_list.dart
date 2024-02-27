@@ -20,7 +20,8 @@ class CategoryList extends StatelessWidget {
     return categories != null
         ? SizedBox(
             //height: 60,
-            child: ListView.builder(
+            child: ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(),
               controller: firstScrollController,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,

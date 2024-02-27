@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -6,6 +8,7 @@ import '../../../../../../domain/locator/locator.dart';
 import '../../../../../data/api/models/requests/fragment_request_data.dart';
 import '../../../../../domain/models/channel.dart';
 import '../../../../../domain/models/image_fragment.dart';
+import '../../../../../generated/locale_keys.g.dart';
 
 part 'image_create_presentation_state.dart';
 part 'image_create_presentation_event.dart';
@@ -18,7 +21,7 @@ class ImageCreatePresentationBloc
         channelSelected: (event) => _onChanneSelected(event, emitter),
         initialDataRequested: (_) => _initialDataRequested(emitter),
         fragmentAdded: (event) => onFragmentAdded(event, emitter),
-        saveImageSubject: (event) => saveImagePresentation(event, emitter),
+        saveImagePresentation: (event) => saveImagePresentation(event, emitter),
         onReorderFragments: (event) => onReorderFragments(event, emitter),
         onDeleteFragment: (event) => onDeleteFragment(event, emitter)));
 
@@ -45,16 +48,21 @@ class ImageCreatePresentationBloc
       duration: addedFragment.duration,
       isTitleOverImage: addedFragment.isTitleOverImage,
     ));
-    _screenState = _screenState.copyWith(fragments: fragmentsList);
+    _screenState = _screenState.copyWith(
+        fragments: fragmentsList,
+        title: event.title,
+        description: event.description);
     emitter(_screenState);
   }
 
-  Future<void> saveImagePresentation(_EventSaveImageSubject event,
+  Future<void> saveImagePresentation(_EventSaveImagePresentation event,
       Emitter<ImageCreatePresentationState> emitter) async {
     if (event.title.isEmpty) {
-      emitter(const ImageCreatePresentationState.saveError(
-          errorText: 'Название должно быть заполнено'));
+      emitter(ImageCreatePresentationState.saveError(
+          errorText: LocaleKeys.presentationTitleEmpty.tr()));
     }
+    emitter(const ImageCreatePresentationState.pending());
+    print('saving presentation');
     try {
       await api.addImagePresentation(
           channelId: _screenState.selectedChanel.id,

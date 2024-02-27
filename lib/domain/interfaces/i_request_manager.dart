@@ -1,5 +1,5 @@
-import 'package:moki_tutor/domain/models/fragment.dart';
-import 'package:moki_tutor/domain/models/fragment_category.dart';
+import 'package:introbox/domain/models/fragment.dart';
+import 'package:introbox/domain/models/fragment_category.dart';
 
 import '../models/course.dart';
 

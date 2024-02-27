@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:email_validator/email_validator.dart';
@@ -8,6 +9,7 @@ import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/interfaces/i_user_repository.dart';
 
 import '../../../../domain/locator/locator.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 part 'login_bloc.freezed.dart';
 part 'login_event.dart';
@@ -25,14 +27,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Future<void> _login(_EventLogin event, Emitter<LoginState> emitter) async {
     emitter(const LoginState.screenState(isPending: true));
     if (event.email.isEmpty || event.password.isEmpty) {
-      emitter(const LoginState.loginError(
-          errorText: 'Все поля должны быть заполнены'));
+      emitter(LoginState.loginError(errorText: LocaleKeys.notFilledError.tr()));
       emitter(const LoginState.screenState(isPending: false));
       return;
     }
 
     if (EmailValidator.validate(event.email) == false) {
-      emitter(const LoginState.loginError(errorText: 'Неверный формат email'));
+      emitter(
+          LoginState.loginError(errorText: LocaleKeys.emailFormatError.tr()));
       emitter(const LoginState.screenState(isPending: false));
       return;
     }
@@ -43,16 +45,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emitter(const LoginState.loginSuccess());
     } on RequestException catch (e) {
       if (e.httpStatusCode == HttpStatus.notFound) {
-        emitter(
-            const LoginState.loginError(errorText: 'Пользователь не найден'));
+        emitter(LoginState.loginError(errorText: LocaleKeys.userNotFound.tr()));
       } else {
-        emitter(const LoginState.loginError(
-            errorText: 'Произошла ошибка. Повторите запрос позже'));
+        emitter(LoginState.loginError(
+            errorText: LocaleKeys.commonRequestError.tr()));
         rethrow;
       }
     } on Object {
-      emitter(const LoginState.loginError(
-          errorText: 'Произошла ошибка. Повторите запрос позже'));
+      emitter(
+          LoginState.loginError(errorText: LocaleKeys.commonRequestError.tr()));
       rethrow;
     } finally {
       emitter(const LoginState.screenState(isPending: false));

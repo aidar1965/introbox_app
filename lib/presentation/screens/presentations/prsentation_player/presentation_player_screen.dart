@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 
 import '../../../../../domain/models/pdf_fragment.dart';
 import '../../../../../domain/models/presentation.dart';
 
+import '../../../../generated/locale_keys.g.dart';
 import '../../../common/pdf_player_widget.dart';
 import 'bloc/presentation_player_bloc.dart';
 
@@ -58,7 +60,7 @@ class PendingView extends StatelessWidget {
               onPressed: () async {
                 context.router.pop();
               },
-              tooltip: 'Закрыть',
+              tooltip: LocaleKeys.toolTipClose.tr(),
               child: const Icon(
                 Icons.close,
                 color: Colors.white,
@@ -130,7 +132,7 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
   @override
   void initState() {
     super.initState();
-    print('initialization');
+
     numberOfFragments = widget.fragments.length;
     fragment = widget.fragments.first;
     isLast = currentIndex == numberOfFragments - 1;
@@ -350,7 +352,7 @@ class _PresentationPlayerViewState extends State<PresentationPlayerView> {
             onPressed: () async {
               context.router.pop();
             },
-            tooltip: 'Закрыть',
+            tooltip: LocaleKeys.toolTipClose.tr(),
             child: const Icon(
               Icons.close,
               color: Colors.white,

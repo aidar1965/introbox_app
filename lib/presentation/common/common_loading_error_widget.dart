@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class CommonLoadingErrorWidget extends StatelessWidget {
   const CommonLoadingErrorWidget({super.key, required this.onPressed});
@@ -15,12 +18,12 @@ class CommonLoadingErrorWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Не удалось загрузить данные. Проверьте Интернет соединение и попробуйте еще раз',
+              LocaleKeys.commonLoadingError.tr(),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
             CommonElevatedButton(
-              text: 'Повторить',
+              text: LocaleKeys.buttonRepeat.tr(),
               onPressed: onPressed,
             )
           ],

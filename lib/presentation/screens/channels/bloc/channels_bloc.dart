@@ -16,8 +16,8 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
         initialDataRequested: (_) => initialDataRequested(emitter),
         onCreateChannel: (event) => onCreateChannel(event, emitter),
         onEditChannel: (event) => onEditChannel(event, emitter),
-        onAddCompanyToChannel: (event) =>
-            onAddCompanyToChannel(event, emitter)));
+        onAddCompanyToChannel: (event) => onAddCompanyToChannel(event, emitter),
+        onDeleteChannel: (event) => onDeleteChannel(event, emitter)));
 
     add(const ChannelsEvent.initialDataRequested());
   }
@@ -42,7 +42,7 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
   Future<void> onCreateChannel(
       _EventOnCreateChannel event, Emitter<ChannelsState> emitter) async {
     if (event.title.isEmpty) {
-      emitter(const ChannelsState.addChannelError(
+      emitter(const ChannelsState.requestError(
           errorText: 'Поле название должно быть заполнено'));
     }
     try {
@@ -51,10 +51,10 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
           description: event.description,
           channelTypeId: event.channelTypeId,
           isPublic: event.isPublic);
-      emitter(const ChannelsState.addChannelSuccess());
+      emitter(const ChannelsState.requestSuccess());
       add(const ChannelsEvent.initialDataRequested());
     } on Object {
-      emitter(const ChannelsState.addChannelError());
+      emitter(const ChannelsState.requestError());
       rethrow;
     }
   }
@@ -62,7 +62,7 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
   Future<void> onEditChannel(
       _EventOnEditChannel event, Emitter<ChannelsState> emitter) async {
     if (event.title.isEmpty) {
-      emitter(const ChannelsState.addChannelError(
+      emitter(const ChannelsState.requestError(
           errorText: 'Поле название должно быть заполнено'));
     }
     try {
@@ -72,10 +72,10 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
           description: event.description,
           channelTypeId: event.channelTypeId,
           isPublic: event.isPublic);
-      emitter(const ChannelsState.addChannelSuccess());
+      emitter(const ChannelsState.requestSuccess());
       add(const ChannelsEvent.initialDataRequested());
     } on Object {
-      emitter(const ChannelsState.addChannelError());
+      emitter(const ChannelsState.requestError());
       rethrow;
     }
   }
@@ -88,7 +88,20 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
           companyId: event.companyId != 'no_company' ? event.companyId : null);
       add(const ChannelsEvent.initialDataRequested());
     } on Object {
-      emitter(const ChannelsState.addChannelError());
+      emitter(const ChannelsState.requestError());
+      rethrow;
+    }
+  }
+
+  Future<void> onDeleteChannel(
+      _EventOnDeleteChannel event, Emitter<ChannelsState> emitter) async {
+    try {
+      await api.deleteChannel(
+        id: event.id,
+      );
+      add(const ChannelsEvent.initialDataRequested());
+    } on Object {
+      emitter(const ChannelsState.requestError());
       rethrow;
     }
   }

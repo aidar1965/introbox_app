@@ -4,7 +4,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:intl/intl.dart';
-// import 'package:moki_tutor/presentation/common/common_functions.dart';
+// import 'package:introbox/presentation/common/common_functions.dart';
 
 // import '../../../domain/models/fragment.dart';
 // import '../../../domain/models/subject.dart';
@@ -67,7 +67,7 @@
 //             const Text('Категории тем'),
 //             const Divider(),
 //             Expanded(
-//                 child: ListView.builder(
+//                 child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //                     itemCount: categories.length,
 //                     itemBuilder: (context, index) => Tooltip(
 //                           preferBelow: false,
@@ -124,7 +124,7 @@
 //               const Text('Темы'),
 //               const Divider(),
 //               Expanded(
-//                 child: ListView.builder(
+//                 child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //                     itemCount: subjects.length,
 //                     itemBuilder: (context, index) => SubjectView(
 //                           subject: subjects.elementAt(index),
@@ -144,7 +144,7 @@
 //                     const Text('Записи'),
 //                     const Divider(),
 //                     Expanded(
-//                       child: ListView.builder(
+//                       child: ListView.separated(separatorBuilder: (context, index) => const SizedBox(),
 //                           itemCount: selectedSubject!.records?.length,
 //                           itemBuilder: (context, index) => FragmentView(
 //                               record:

@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/utils/responsive.dart';
 
 import '../../../../domain/models/pdf_fragment.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 @RoutePage()
 class FragmentsReorderScreen extends StatefulWidget {
@@ -38,12 +41,12 @@ class _FragmentsReorderScreenState extends State<FragmentsReorderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Изменение порядка слайдов'),
+        title: Text(LocaleKeys.slidesReorder.tr()),
         actions: [
           SizedBox(
               width: 220,
               child: CommonElevatedButton(
-                  text: 'Сохранить',
+                  text: LocaleKeys.buttonSave.tr(),
                   onPressed: () =>
                       context.router.pop(fragments.map((e) => e.id).toList())))
         ],
@@ -70,8 +73,8 @@ class _FragmentsReorderScreenState extends State<FragmentsReorderScreen> {
   }) {
     return Row(key: ValueKey(fragment.id), children: [
       SizedBox(
-        height: 200,
-        width: 200,
+        height: Responsive.isMobile(context) ? 100 : 200,
+        width: Responsive.isMobile(context) ? 100 : 200,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CachedNetworkImage(
@@ -80,7 +83,8 @@ class _FragmentsReorderScreenState extends State<FragmentsReorderScreen> {
           ),
         ),
       ),
-      Text(fragment.title.isNotEmpty ? fragment.title : 'Без названия'),
+      Text(
+          fragment.title.isNotEmpty ? fragment.title : LocaleKeys.noTitle.tr()),
       Text(fragment.description ?? ''),
     ]);
   }

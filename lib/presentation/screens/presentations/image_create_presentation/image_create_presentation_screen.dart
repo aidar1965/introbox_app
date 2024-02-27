@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
 
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
-import 'package:moki_tutor/presentation/screens/presentations/play_fragment_screen.dart';
+import 'package:introbox/presentation/extetsions/context_extensions.dart';
+import 'package:introbox/presentation/screens/presentations/play_fragment_screen.dart';
+import 'package:introbox/presentation/utils/responsive.dart';
 
 import '../../../../domain/models/image_fragment.dart';
+import '../../../../generated/locale_keys.g.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
 import '../../../common/common_loading_error_widget.dart';
@@ -29,7 +32,7 @@ class ImageCreatePresentationScreen extends StatelessWidget {
             listener: (context, state) => state.mapOrNull(
                 saveError: (state) => CommonFunctions.showMessage(
                     context,
-                    state.errorText ?? 'Произошла ошибка при выполении запроса',
+                    state.errorText ?? LocaleKeys.commonRequestError.tr(),
                     Reason.error),
                 saveSuccess: (state) =>
                     context.router.push(const PresentationsRoute())),
@@ -55,8 +58,8 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                             context.router.push(const PresentationsRoute());
                           },
                         ),
-                        title: const Text(
-                          'Новая презентация',
+                        title: Text(
+                          LocaleKeys.newPresentation.tr(),
                         ),
                         actions: [
                           IconButton(
@@ -71,7 +74,11 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                         .add(ImageCreatePresentationEvent
                                             .fragmentAdded(
                                                 imageFragment:
-                                                    result as ImageFragment));
+                                                    result as ImageFragment,
+                                                title: titleController.text,
+                                                description:
+                                                    descriptionController
+                                                        .text));
                                   }
                                 }
                               },
@@ -93,9 +100,11 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                           titleController: titleController,
                                           descriptionController:
                                               descriptionController,
+                                          initialName: state.title,
+                                          initialDescription: state.description,
                                         ),
                                         const SizedBox(height: 20),
-                                        Text('Канал'),
+                                        Text(LocaleKeys.channel.tr()),
                                         ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: state.channels.length,
@@ -105,7 +114,7 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                               state.channels
                                                   .elementAt(index)
                                                   .title,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.black),
                                             ),
                                             leading: Radio(
@@ -128,16 +137,31 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
+                                        if (Responsive.isMobile(context))
+                                          FragmentList(
+                                              fragments: state.fragments),
                                         const SizedBox(width: 24),
                                         if (state.fragments.isNotEmpty)
                                           CommonElevatedButton(
-                                            text: 'Создать презентацию',
+                                            text: LocaleKeys.createPresentation
+                                                .tr(),
                                             onPressed: () {
+                                              if (titleController.text
+                                                  .trim()
+                                                  .isEmpty) {
+                                                CommonFunctions.showMessage(
+                                                    context,
+                                                    LocaleKeys
+                                                        .noPresentationTitle
+                                                        .tr(),
+                                                    Reason.error);
+                                                return;
+                                              }
                                               BlocProvider.of<
                                                           ImageCreatePresentationBloc>(
                                                       context)
                                                   .add(ImageCreatePresentationEvent
-                                                      .saveImageSubject(
+                                                      .saveImagePresentation(
                                                           title: titleController
                                                               .text,
                                                           description:
@@ -149,17 +173,19 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                     ),
                                   ),
                                 )),
-                            const SizedBox(width: 24),
-                            Expanded(
-                                flex: 3,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(24),
-                                  child:
-                                      FragmentList(fragments: state.fragments),
-                                )),
-                            const SizedBox(
-                              width: 52,
-                            )
+                            if (Responsive.isMobile(context) == false) ...[
+                              const SizedBox(width: 24),
+                              Expanded(
+                                  flex: 3,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(24),
+                                    child: FragmentList(
+                                        fragments: state.fragments),
+                                  )),
+                              const SizedBox(
+                                width: 52,
+                              )
+                            ],
                           ]),
                     ))));
   }
@@ -197,6 +223,7 @@ class _FragmentListState extends State<FragmentList> {
         shadowColor: Colors.transparent,
       ),
       child: ReorderableListView.builder(
+          shrinkWrap: true,
           itemBuilder: (context, index) =>
               _fragmentView(context, fragments.elementAt(index), index),
           itemCount: fragments.length,
@@ -220,7 +247,7 @@ class _FragmentListState extends State<FragmentList> {
   Widget _fragmentView(BuildContext context, ImageFragment f, int index) {
     return Padding(
       key: ValueKey(DateTime.now()),
-      padding: const EdgeInsets.only(right: 24.0),
+      padding: const EdgeInsets.only(right: 24.0, top: 12, bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -238,11 +265,15 @@ class _FragmentListState extends State<FragmentList> {
               children: [
                 Text(
                   f.title,
+                  maxLines: 2,
                   style: context.style16w400$text1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   f.description ?? '',
+                  maxLines: 1,
                   style: context.style14w400$text2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -250,8 +281,6 @@ class _FragmentListState extends State<FragmentList> {
           const SizedBox(width: 24),
           IconButton(
               onPressed: () {
-                print('ImageCreatePresentationScreen: audio:');
-                print(f.audioPath);
                 showDialog(
                     context: context,
                     builder: (context) => Dialog.fullscreen(

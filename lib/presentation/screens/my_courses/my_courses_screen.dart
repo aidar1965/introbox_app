@@ -1,18 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
-import 'package:moki_tutor/presentation/common/common_text_field.dart';
-import 'package:moki_tutor/presentation/widgets/name_and_description.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/common/common_text_field.dart';
+import 'package:introbox/presentation/widgets/name_and_description.dart';
 
 import '../../../domain/models/channel.dart';
 import '../../../domain/models/course.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../../auto_router/app_router.dart';
 import '../../common/common_elevated_button.dart';
 import '../../utils/responsive.dart';
@@ -30,8 +32,7 @@ class MyCoursesScreen extends StatelessWidget {
             listener: (context, state) => state.mapOrNull(
                 requestError: (state) => CommonFunctions.showMessage(
                     context,
-                    state.errorText ??
-                        'Произошла ошибка в запросе. Попробуйте позже',
+                    state.errorText ?? LocaleKeys.commonRequestError.tr(),
                     Reason.error)),
             buildWhen: (previous, current) => current.maybeMap(
                 orElse: () => false,
@@ -43,8 +44,8 @@ class MyCoursesScreen extends StatelessWidget {
                       throw UnsupportedError('the state not supporting build'),
                   pending: (_) => Scaffold(
                       appBar: AppBar(
-                        title: const Text(
-                          'Курсы',
+                        title: Text(
+                          LocaleKeys.courses.tr(),
                         ),
                         leading: BackButton(
                           onPressed: () {
@@ -52,13 +53,13 @@ class MyCoursesScreen extends StatelessWidget {
                           },
                         ),
                       ),
-                      body: Center(
+                      body: const Center(
                         child: CircularProgressIndicator(),
                       )),
                   initialLoadingError: (_) => Scaffold(
                       appBar: AppBar(
-                        title: const Text(
-                          'Курсы',
+                        title: Text(
+                          LocaleKeys.courses.tr(),
                         ),
                         leading: BackButton(
                           onPressed: () {
@@ -73,8 +74,8 @@ class MyCoursesScreen extends StatelessWidget {
                                       .initialDataRequested()))),
                   screenState: (state) => Scaffold(
                       appBar: AppBar(
-                        title: const Text(
-                          'Курсы',
+                        title: Text(
+                          LocaleKeys.courses.tr(),
                         ),
                         leading: BackButton(
                           onPressed: () {
@@ -98,7 +99,7 @@ class MyCoursesScreen extends StatelessWidget {
                                   }
                                 }
                               },
-                              icon: Icon(Icons.add_rounded))
+                              icon: const Icon(Icons.add_rounded))
                         ],
                       ),
                       body: _ScreenView(
@@ -118,7 +119,7 @@ class MyCoursesScreen extends StatelessWidget {
     final result = await showDialog(
         context: context,
         builder: (context) => SimpleDialog(
-                title: const Text('Добавление курса'),
+                title: Text(LocaleKeys.addCourse.tr()),
                 contentPadding: const EdgeInsets.all(24),
                 children: [
                   ImageSelectWidget(
@@ -138,7 +139,7 @@ class MyCoursesScreen extends StatelessWidget {
                   ),
                   CommonTextField(
                       controller: priceController,
-                      labelText: 'Стоимость курса'),
+                      labelText: LocaleKeys.coursePrice.tr()),
                   ChannelSelectWidget(
                     channels: channels,
                     onChannelSelect: (c) {
@@ -153,7 +154,7 @@ class MyCoursesScreen extends StatelessWidget {
                       onPressed: () {
                         if (titleController.text.isEmpty) {
                           CommonFunctions.showMessage(
-                              context, 'Введите название', Reason.error);
+                              context, LocaleKeys.addName.tr(), Reason.error);
                         } else {
                           context.router.pop(AddCourseFormData(
                               channelId: selectedChannelId,
@@ -168,7 +169,7 @@ class MyCoursesScreen extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () => context.router.pop(),
-                      child: const Text('Отмена'))
+                      child: Text(LocaleKeys.buttonCancel.tr()))
                 ]));
 
     return result;
@@ -254,7 +255,7 @@ class _ImageSelectWidgetState extends State<ImageSelectWidget> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 300),
+      constraints: const BoxConstraints(maxWidth: 300),
       child: Column(
         children: [
           GestureDetector(
@@ -272,7 +273,7 @@ class _ImageSelectWidgetState extends State<ImageSelectWidget> {
                 }
               },
               child: Padding(
-                padding: EdgeInsets.only(top: 24),
+                padding: const EdgeInsets.only(top: 24),
                 child: Container(
                     decoration: BoxDecoration(
                         border: Border.all(
@@ -284,7 +285,7 @@ class _ImageSelectWidgetState extends State<ImageSelectWidget> {
                         ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: const Icon(
-                              Icons.person_rounded,
+                              Icons.image,
                               size: 300,
                               color: Colors.grey,
                             ))),
@@ -292,7 +293,7 @@ class _ImageSelectWidgetState extends State<ImageSelectWidget> {
           if (image != null || widget.imageUrl != null) ...[
             const SizedBox(height: 12),
             CommonElevatedButton(
-                text: 'Удалить',
+                text: LocaleKeys.buttonDelete.tr(),
                 onPressed: () {
                   setState(() {
                     image = null;
@@ -342,8 +343,8 @@ class _ScreenView extends StatelessWidget {
               );
             },
           )
-        : const Center(
-            child: Text('Список курсов пуст'),
+        : Center(
+            child: Text(LocaleKeys.coursesNotFound.tr()),
           );
   }
 }
@@ -393,7 +394,7 @@ class CourseItem extends StatelessWidget {
                                   child: Text(course.title,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w600))),
                               Expanded(
@@ -401,7 +402,7 @@ class CourseItem extends StatelessWidget {
                                   course.description!,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       fontStyle: FontStyle.italic),
@@ -410,50 +411,141 @@ class CourseItem extends StatelessWidget {
                               Text(
                                 DateFormat('dd.MM.yyy kk:mm')
                                     .format(course.createdAt),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w600),
                               ),
                             ]))),
-                IconButton(
-                    tooltip: course.isPublished
-                        ? 'Снять публикацию'
-                        : 'Опубликовать',
-                    onPressed: () {
-                      BlocProvider.of<MyCoursesBloc>(context)
-                          .add(MyCoursesEvent.onPublishCourse(id: course.id));
-                    },
-                    icon: Icon(Icons.public,
-                        color:
-                            course.isPublished ? Colors.green : Colors.grey)),
-                IconButton(
-                    onPressed: () async {
-                      final result = await _onEditCourse(
-                        context,
-                        course,
-                        channels,
-                      );
-                      if (result is AddCourseFormData) {
-                        if (context.mounted) {
-                          BlocProvider.of<MyCoursesBloc>(context).add(
-                              MyCoursesEvent.onUpdateCourse(
-                                  id: course.id,
-                                  title: result.title,
-                                  description: result.description,
-                                  channelId: result.channelId,
-                                  price: result.price,
-                                  imageBytes: result.imageBytes));
+                if (Responsive.isMobile(context) == false) ...[
+                  IconButton(
+                      tooltip: course.isPublished
+                          ? LocaleKeys.unPublish.tr()
+                          : LocaleKeys.publish.tr(),
+                      onPressed: () {
+                        BlocProvider.of<MyCoursesBloc>(context)
+                            .add(MyCoursesEvent.onPublishCourse(id: course.id));
+                      },
+                      icon: Icon(Icons.public,
+                          color:
+                              course.isPublished ? Colors.green : Colors.grey)),
+                  IconButton(
+                      onPressed: () async {
+                        final result = await _onEditCourse(
+                          context,
+                          course,
+                          channels,
+                        );
+                        if (result is AddCourseFormData) {
+                          if (context.mounted) {
+                            BlocProvider.of<MyCoursesBloc>(context).add(
+                                MyCoursesEvent.onUpdateCourse(
+                                    id: course.id,
+                                    title: result.title,
+                                    description: result.description,
+                                    channelId: result.channelId,
+                                    price: result.price,
+                                    imageBytes: result.imageBytes));
+                          }
                         }
-                      }
-                    },
-                    icon: Icon(Icons.edit_rounded)),
-                IconButton(
-                    onPressed: () {
-                      BlocProvider.of<MyCoursesBloc>(context)
-                          .add(MyCoursesEvent.onDeleteCourse(id: course.id));
-                    },
-                    icon: Icon(Icons.delete_rounded)),
+                      },
+                      icon: Icon(Icons.edit_rounded)),
+                  IconButton(
+                      onPressed: () {
+                        _showDeleteConfirmDialog(
+                            context,
+                            course.id,
+                            () => BlocProvider.of<MyCoursesBloc>(context).add(
+                                MyCoursesEvent.onDeleteCourse(id: course.id)));
+                      },
+                      icon: const Icon(Icons.delete_rounded)),
+                ] else
+                  PopupMenuButton(itemBuilder: (BuildContext bc) {
+                    return [
+                      PopupMenuItem(
+                        child: Text(
+                          course.isPublished
+                              ? LocaleKeys.unPublish.tr()
+                              : LocaleKeys.publish.tr(),
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                        onTap: () {
+                          BlocProvider.of<MyCoursesBloc>(context).add(
+                              MyCoursesEvent.onPublishCourse(id: course.id));
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Text(
+                          LocaleKeys.buttonEdit.tr(),
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onTap: () async {
+                          final result = await _onEditCourse(
+                            context,
+                            course,
+                            channels,
+                          );
+                          if (result is AddCourseFormData) {
+                            if (context.mounted) {
+                              BlocProvider.of<MyCoursesBloc>(context).add(
+                                  MyCoursesEvent.onUpdateCourse(
+                                      id: course.id,
+                                      title: result.title,
+                                      description: result.description,
+                                      channelId: result.channelId,
+                                      price: result.price,
+                                      imageBytes: result.imageBytes));
+                            }
+                          }
+                        },
+                      ),
+                      PopupMenuItem(
+                        child: Text(
+                          LocaleKeys.buttonDelete.tr(),
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                        onTap: () {
+                          _showDeleteConfirmDialog(
+                              context,
+                              course.id,
+                              () => BlocProvider.of<MyCoursesBloc>(context).add(
+                                  MyCoursesEvent.onDeleteCourse(
+                                      id: course.id)));
+                        },
+                      ),
+                    ];
+                  }),
               ]),
             )));
+  }
+
+  Future<void> _showDeleteConfirmDialog(
+      BuildContext context, String id, Function() onDeleteConfirmed) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: Text(LocaleKeys.deleteCourse.tr()),
+          content: Text(LocaleKeys.deleteCourseConfirmationMessage.tr()),
+
+          actions: <Widget>[
+            TextButton(
+              child: Text(LocaleKeys.buttonCancel.tr()),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(LocaleKeys.buttonDelete.tr()),
+              onPressed: () {
+                onDeleteConfirmed();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<AddCourseFormData?> _onEditCourse(
@@ -473,13 +565,12 @@ class CourseItem extends StatelessWidget {
     final result = await showDialog(
         context: context,
         builder: (context) => SimpleDialog(
-                title: const Text('Добавление курса'),
+                title: Text(LocaleKeys.addCourse.tr()),
                 contentPadding: const EdgeInsets.all(24),
                 children: [
                   ImageSelectWidget(
                     imageUrl: course.image,
                     onImageSelected: (v) {
-                      print('image selected');
                       imageBytes = v;
                     },
                   ),
@@ -495,7 +586,7 @@ class CourseItem extends StatelessWidget {
                   ),
                   CommonTextField(
                       controller: priceController,
-                      labelText: 'Стоимость курса'),
+                      labelText: LocaleKeys.coursePrice.tr()),
                   ChannelSelectWidget(
                     selectedId: course.channel.id,
                     channels: channels,
@@ -507,11 +598,11 @@ class CourseItem extends StatelessWidget {
                     height: 12,
                   ),
                   CommonElevatedButton(
-                      text: 'Сохранить',
+                      text: LocaleKeys.buttonSave.tr(),
                       onPressed: () {
                         if (titleController.text.isEmpty) {
                           CommonFunctions.showMessage(
-                              context, 'Введите название', Reason.error);
+                              context, LocaleKeys.addName.tr(), Reason.error);
                         } else {
                           context.router.pop(AddCourseFormData(
                               channelId: selectedChannelId,
@@ -526,7 +617,7 @@ class CourseItem extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () => context.router.pop(),
-                      child: const Text('Отмена'))
+                      child: Text(LocaleKeys.buttonCancel.tr()))
                 ]));
 
     return result;

@@ -2,15 +2,17 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 import 'dart:html' as html;
 import 'package:path/path.dart' as p;
 
 import '../../../domain/models/pdf_fragment.dart';
+
 import '../../common/common_audio_player.dart';
 
-import '../../common/common_elevated_button.dart';
 import 'bloc/presentation_bloc.dart';
 
 @RoutePage()
@@ -34,7 +36,12 @@ class PresentationScreen extends StatelessWidget {
                       fragments: state.fragments,
                       selectedFragment: state.selectedFragment,
                     ),
-                loadingError: (_) => const _LoadingErrorView(),
+                loadingError: (_) => CommonLoadingErrorWidget(
+                      onPressed: () {
+                        BlocProvider.of<PresentationBloc>(context).add(
+                            const PresentationEvent.initialDataRequested());
+                      },
+                    ),
                 pending: (_) => const _PendingView())));
   }
 }
@@ -182,7 +189,7 @@ class _ScreenViewState extends State<_ScreenView> {
                               Center(
                                   child: Text(
                                 widget.selectedFragment.title,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold),
@@ -344,6 +351,7 @@ class _ScreenViewState extends State<_ScreenView> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
+                        color: Colors.white,
                         onPressed: () async {
                           final result = await showDialog(
                               context: context,
@@ -368,43 +376,11 @@ class _ScreenViewState extends State<_ScreenView> {
                         icon: const Icon(Icons.info)),
                     IconButton(
                         onPressed: () => context.router.pop(),
-                        icon: Icon(Icons.close))
+                        icon: const Icon(Icons.close, color: Colors.white))
                   ],
                 ))
           ]),
         ));
-  }
-}
-
-class _LoadingErrorView extends StatelessWidget {
-  const _LoadingErrorView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      child: Center(
-        child: SizedBox(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Не удалось загрузить данные. Проверьте Интернет соединение и попробуйте еще раз',
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 24),
-              CommonElevatedButton(
-                text: 'Повторить',
-                onPressed: () {
-                  BlocProvider.of<PresentationBloc>(context)
-                      .add(const PresentationEvent.initialDataRequested());
-                },
-              )
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
 
@@ -491,7 +467,8 @@ class InfoView extends StatelessWidget {
                   ),
                 ],
                 const SizedBox(height: 32),
-                ListView.builder(
+                ListView.separated(
+                    separatorBuilder: (context, index) => const SizedBox(),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: fragments.length,

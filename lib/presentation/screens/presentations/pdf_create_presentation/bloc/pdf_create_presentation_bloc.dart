@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/data/api/models/requests/fragment_request_data.dart';
+import 'package:introbox/data/api/models/requests/fragment_request_data.dart';
 import 'package:printing/printing.dart';
 
 import '../../../../../../domain/interfaces/i_api.dart';
@@ -67,7 +67,9 @@ class PdfCreatePresentationBloc
     for (final f in event.pdfFragmentList) {
       fragments.add(
         FragmentRequestData(
-            title: f.title ?? '',
+            title: f.title == null || f.title!.trim().isEmpty
+                ? '${index + 1}'
+                : f.title!,
             description: f.description ?? '',
             image: (
               file: f.image,
@@ -93,6 +95,10 @@ class PdfCreatePresentationBloc
           isAudio: event.isAudio,
           fragments: fragments);
 
+      _screenState = _screenState.copyWith(
+        isPending: false,
+      );
+
       emitter(const PdfCreatePresentationState.saveSuccess());
     } on Object {
       _screenState = _screenState.copyWith(
@@ -100,6 +106,7 @@ class PdfCreatePresentationBloc
       );
       emitter(_screenState);
       emitter(const PdfCreatePresentationState.saveError());
+      rethrow;
     }
   }
 

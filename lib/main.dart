@@ -1,8 +1,11 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:introbox/domain/interfaces/i_local_cache.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
 
-import 'package:moki_tutor/presentation/theme/theme_builder.dart';
-import 'package:moki_tutor/presentation/theme/theme_type.dart';
+import 'package:introbox/presentation/theme/theme_builder.dart';
+import 'package:introbox/presentation/theme/theme_type.dart';
 
 //import 'domain/constants.dart';
 import 'domain/locator/locator.dart';
@@ -21,15 +24,21 @@ Future<void> main() async {
 
   await getIt.allReady();
 
+  final localeString = await getIt<ILocalCache>().getLocale();
+  final locale = CommonFunctions.parseStringToLocale(localeString);
+
   runApp(EasyLocalization(
       supportedLocales: const [
         Locale('ru', 'RU'),
-        Locale('kz', 'KZ'),
+        Locale('kk', 'KZ'),
         Locale('en', 'US')
       ],
       path: 'assets/languages',
+      startLocale: locale,
       fallbackLocale: const Locale('ru', 'RU'),
-      child: const Application()));
+      child: Application(
+        isLocaleSet: localeString != null,
+      )));
   setUrlStrategy(PathUrlStrategy());
 }
 
@@ -37,13 +46,17 @@ Future<void> main() async {
 class Application extends StatelessWidget {
   const Application({
     Key? key,
+    required this.isLocaleSet,
   }) : super(key: key);
+
+  final bool isLocaleSet;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      restorationScopeId: "Test", // <-- Add this line
-      routerConfig: AppRouter().config(),
+      scrollBehavior: MyCustomScrollBehavior(),
+      restorationScopeId: "Introbox", // <-- Add this line
+      routerConfig: AppRouter(isLocaleSet).config(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -52,4 +65,14 @@ class Application extends StatelessWidget {
       theme: ThemeBuilder.getTheme(ThemeTypes.light, DynamicPalette.light()),
     );
   }
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.stylus,
+        PointerDeviceKind.unknown,
+      };
 }

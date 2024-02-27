@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
-import 'package:moki_tutor/domain/interfaces/i_subject_category_repository.dart';
-import 'package:moki_tutor/domain/models/subject_category.dart';
+import 'package:introbox/domain/interfaces/i_local_db.dart';
+import 'package:introbox/domain/interfaces/i_subject_category_repository.dart';
+import 'package:introbox/domain/models/subject_category.dart';
 
 class SubjectCategoryRepository extends ChangeNotifier
     implements ISubjectCategoryRepository {

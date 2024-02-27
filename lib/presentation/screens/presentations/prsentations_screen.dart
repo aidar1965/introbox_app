@@ -1,12 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
-import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/extetsions/context_extensions.dart';
+import 'package:introbox/presentation/theme/dynamic_theme.dart';
 
 import '../../../../domain/models/presentation.dart';
 
@@ -32,10 +34,12 @@ class PresentationsScreen extends StatelessWidget {
         listener: (context, state) => state.mapOrNull(
           requestError: (state) => CommonFunctions.showMessage(
               context,
-              state.errorText ?? 'Во время запроса призошла ошибка',
+              state.errorText ?? LocaleKeys.commonRequestError.tr(),
               Reason.error),
-          requestSuccess: (state) => CommonFunctions.showMessage(context,
-              state.message ?? 'Данные успешно сохранены', Reason.neutral),
+          requestSuccess: (state) => CommonFunctions.showMessage(
+              context,
+              state.message ?? LocaleKeys.commonSaveSuccess.tr(),
+              Reason.neutral),
         ),
         buildWhen: ((previous, current) => current.maybeMap(
             orElse: () => false,
@@ -48,8 +52,8 @@ class PresentationsScreen extends StatelessWidget {
           pending: (_) => Scaffold(
               //drawer: const CommonNavigationDrawer(),
               appBar: AppBar(
-                title: const Text(
-                  'Презентации',
+                title: Text(
+                  LocaleKeys.presentations.tr(),
                 ),
                 leading: BackButton(
                   onPressed: () {
@@ -70,30 +74,31 @@ class PresentationsScreen extends StatelessWidget {
                 ),
                 title: Row(
                   children: [
-                    const Text(
-                      'Презентации',
+                    Text(
+                      LocaleKeys.presentations.tr(),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     if (Responsive.isMobile(context) == false) ...[
                       TextButton(
-                          onPressed: () => context.router.push(ChannelsRoute()),
+                          onPressed: () =>
+                              context.router.push(const ChannelsRoute()),
                           child: Text(
-                            'Каналы',
-                            style: TextStyle(color: Colors.white),
+                            LocaleKeys.channels.tr(),
+                            style: const TextStyle(color: Colors.white),
                           )),
                       TextButton(
                           onPressed: () =>
-                              context.router.push(CompaniesRoute()),
+                              context.router.push(const CompaniesRoute()),
                           child: Text(
-                            'Компании',
-                            style: TextStyle(color: Colors.white),
+                            LocaleKeys.companies.tr(),
+                            style: const TextStyle(color: Colors.white),
                           )),
                       TextButton(
                           onPressed: () =>
-                              context.router.push(MyCoursesRoute()),
+                              context.router.push(const MyCoursesRoute()),
                           child: Text(
-                            'Курсы',
-                            style: TextStyle(color: Colors.white),
+                            LocaleKeys.courses.tr(),
+                            style: const TextStyle(color: Colors.white),
                           ))
                     ] else
                       PopupMenuButton(
@@ -101,24 +106,24 @@ class PresentationsScreen extends StatelessWidget {
                           return [
                             PopupMenuItem(
                               child: Text(
-                                'Каналы',
-                                style: TextStyle(color: Colors.black),
+                                LocaleKeys.channels.tr(),
+                                style: const TextStyle(color: Colors.black),
                               ),
                               onTap: () =>
                                   context.router.push(const ChannelsRoute()),
                             ),
                             PopupMenuItem(
                               child: Text(
-                                'Компании',
-                                style: TextStyle(color: Colors.black),
+                                LocaleKeys.companies.tr(),
+                                style: const TextStyle(color: Colors.black),
                               ),
                               onTap: () =>
                                   context.router.push(const CompaniesRoute()),
                             ),
                             PopupMenuItem(
                               child: Text(
-                                'Курсы',
-                                style: TextStyle(color: Colors.black),
+                                LocaleKeys.courses.tr(),
+                                style: const TextStyle(color: Colors.black),
                               ),
                               onTap: () =>
                                   context.router.push(const MyCoursesRoute()),
@@ -129,26 +134,30 @@ class PresentationsScreen extends StatelessWidget {
                   ],
                 ),
                 actions: [
+                  if (Responsive.isMobile(context) == false)
+                    IconButton(
+                      tooltip: LocaleKeys.refreshPage.tr(),
+                      icon: const Icon(Icons.refresh),
+                      style: TextButton.styleFrom(
+                          iconColor:
+                              DynamicTheme.paletteOf(context).alwaysWhite,
+                          foregroundColor:
+                              DynamicTheme.paletteOf(context).alwaysWhite,
+                          textStyle: TextStyle(
+                              color:
+                                  DynamicTheme.paletteOf(context).alwaysWhite)),
+                      onPressed: () {
+                        BlocProvider.of<PresentationsBloc>(context)
+                            .add(const PresentationsEvent.reloadData());
+                      },
+                    ),
                   IconButton(
-                    tooltip: 'Обновить страницу',
-                    icon: const Icon(Icons.refresh),
-                    style: TextButton.styleFrom(
-                        iconColor: DynamicTheme.paletteOf(context).alwaysWhite,
-                        foregroundColor:
-                            DynamicTheme.paletteOf(context).alwaysWhite,
-                        textStyle: TextStyle(
-                            color:
-                                DynamicTheme.paletteOf(context).alwaysWhite)),
-                    onPressed: () {
-                      BlocProvider.of<PresentationsBloc>(context)
-                          .add(const PresentationsEvent.reloadData());
-                    },
-                  ),
-                  IconButton(
-                    tooltip: 'Новая презентация из PDF',
+                    tooltip: LocaleKeys.newPdfPresentation.tr(),
                     icon: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [Icon(Icons.picture_as_pdf), Icon(Icons.add)],
+                      children: [
+                        Icon(Icons.picture_as_pdf),
+                      ],
                     ),
                     onPressed: () async {
                       final result = await context.router
@@ -162,10 +171,12 @@ class PresentationsScreen extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    tooltip: 'Новая презентация из изображений',
+                    tooltip: LocaleKeys.newImagePresentation.tr(),
                     icon: const Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [Icon(Icons.image), Icon(Icons.add)],
+                      children: [
+                        Icon(Icons.image),
+                      ],
                     ),
                     onPressed: () async {
                       final result = await context.router
@@ -180,15 +191,20 @@ class PresentationsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              body: _PresentationList(
-                  presentations: state.presentations, courses: state.courses)),
+              body: RefreshIndicator(
+                onRefresh: () async =>
+                    BlocProvider.of<PresentationsBloc>(context)
+                        .add(const PresentationsEvent.reloadData()),
+                child: _PresentationList(
+                    presentations: state.presentations, courses: state.courses),
+              )),
           loadingError: (_) => Scaffold(
               appBar: AppBar(
                 leading: BackButton(onPressed: () {
                   context.router.push(const MainRoute());
                 }),
-                title: const Text(
-                  'Презентации',
+                title: Text(
+                  LocaleKeys.presentations.tr(),
                 ),
               ),
               body: const _LoadingError()),
@@ -225,8 +241,8 @@ class _PresentationList extends StatelessWidget {
               );
             },
           )
-        : const Center(
-            child: Text('Список презентаций пуст'),
+        : Center(
+            child: Text(LocaleKeys.presentationsNotFound.tr()),
           );
   }
 }
@@ -244,219 +260,281 @@ class PresentationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    spreadRadius: 1,
-                    blurRadius: 15,
-                    offset: const Offset(0, 15)),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                if (presentation.firstImage != null)
-                  SizedBox(
-                      height: 100,
-                      width: 100,
-                      child: CachedNetworkImage(
-                          imageUrl: presentation.firstImage!)),
-                const SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                    flex: 3,
-                    child: SizedBox(
+    return GestureDetector(
+      onTap: () => context.router.push(PresentationRoute(id: presentation.id)),
+      child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey.shade200,
+                      spreadRadius: 1,
+                      blurRadius: 15,
+                      offset: const Offset(0, 15)),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  if (presentation.firstImage != null)
+                    SizedBox(
                         height: 100,
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                  child: Text(presentation.title,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600))),
-                              Expanded(
-                                child: Text(
-                                  presentation.description!,
-                                  maxLines: 3,
+                        width: 100,
+                        child: CachedNetworkImage(
+                            imageUrl: presentation.firstImage!)),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                      flex: 3,
+                      child: SizedBox(
+                          height: 100,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(presentation.title,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600)),
+                                Text(
+                                  presentation.channel!.title,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                                Text(
+                                  presentation.description!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       fontStyle: FontStyle.italic),
                                 ),
-                              ),
-                              Text(
-                                DateFormat('dd.MM.yyy kk:mm')
-                                    .format(presentation.createdAt),
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w600),
-                              ),
-                            ]))),
-                const SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                  child: Text(
-                    presentation.channel?.title ?? '',
-                    overflow: TextOverflow.ellipsis,
+                                const Spacer(),
+                                Text(
+                                  DateFormat('dd.MM.yyy kk:mm')
+                                      .format(presentation.createdAt),
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ]))),
+                  const SizedBox(
+                    width: 12,
                   ),
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                if (Responsive.isMobile(context) == false) ...[
-                  IconButton(
-                    tooltip: 'Добавить в курс',
-                    onPressed: () =>
-                        onAddToCourseClicked(context, presentation.id, courses),
-                    icon: const Icon(Icons.add_rounded),
-                  ),
-                  IconButton(
-                    tooltip: 'Воспроизвести',
-                    onPressed: () => context.router
-                        .push(PresentationRoute(id: presentation.id)),
-                    icon: const Icon(Icons.play_arrow_rounded),
-                  ),
-                  IconButton(
-                    tooltip: 'Редактировать',
-                    onPressed: () async {
-                      final result = await context.router
-                          .push(EditPresentationRoute(id: presentation.id));
-                      if (context.mounted) {
-                        if (result == true) {
-                          BlocProvider.of<PresentationsBloc>(context).add(
-                              const PresentationsEvent.initialDataRequested());
-                        }
-                      }
-                    },
-                    icon: const Icon(Icons.edit),
-                  ),
-                  IconButton(
-                    tooltip: 'Удалить',
-                    onPressed: () => _showDeleteConfirmDialog(
-                        context, presentation.id, onDeleteConfirm),
-                    icon: const Icon(Icons.delete),
-                  ),
-                  IconButton(
-                      tooltip: presentation.isPublished
-                          ? 'Снять публикацию'
-                          : 'Опубликовать',
-                      onPressed: () {
-                        BlocProvider.of<PresentationsBloc>(context).add(
-                            PresentationsEvent.publishPresentation(
-                                presentation.id));
-                      },
-                      icon: Icon(Icons.public,
-                          color: presentation.isPublished
-                              ? Colors.green
-                              : Colors.grey)),
-                  IconButton(
-                      tooltip: 'Ссылки',
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => Dialog.fullscreen(
-                                  child: _LinkView(
-                                      presentationId: presentation.id),
-                                ));
-                      },
-                      icon: const Icon(Icons.share)),
-                  IconButton(
-                      tooltip: presentation.hasPassword
-                          ? 'Защищено паролем'
-                          : 'Без пароля',
+                  if (Responsive.isMobile(context) == false) ...[
+                    IconButton(
+                      tooltip: LocaleKeys.addToCourse.tr(),
+                      onPressed: () => onAddToCourseClicked(
+                          context, presentation.id, courses),
+                      icon: const Icon(Icons.add_rounded),
+                    ),
+                    IconButton(
+                      tooltip: LocaleKeys.buttonEdit.tr(),
                       onPressed: () async {
-                        final passwordController = TextEditingController();
-                        final confirmPasswordController =
-                            TextEditingController();
-                        final result = await showDialog(
-                            context: context,
-                            builder: (context) => SizedBox(
-                                  child: SimpleDialog(
-                                    contentPadding: EdgeInsets.all(
-                                        Responsive.isMobile(context) ? 12 : 24),
-                                    children: [
-                                      const SizedBox(
-                                        width: 200,
-                                        child: Text(
-                                            'При вводе пароля просмотр презентации при публикации будет защищен паролем'),
-                                      ),
-                                      const SizedBox(height: 12),
-                                      CommonTextField(
-                                          controller: passwordController,
-                                          obscureText: true,
-                                          labelText: 'Пароль'),
-                                      const SizedBox(height: 12),
-                                      CommonTextField(
-                                          controller: confirmPasswordController,
-                                          obscureText: true,
-                                          labelText: 'Повторите пароль'),
-                                      const SizedBox(height: 12),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          TextButton(
-                                              onPressed: () =>
-                                                  context.router.pop(),
-                                              child: const Text('Отмена')),
-                                          TextButton(
-                                              onPressed: () {
-                                                context.router.pop((
-                                                  password:
-                                                      passwordController.text,
-                                                  confirmPassword:
-                                                      confirmPasswordController
-                                                          .text
-                                                ));
-                                              },
-                                              child: const Text('Сохранить')),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ));
-                        if (result != null &&
-                            result is ({
-                              String password,
-                              String confirmPassword
-                            })) {
-                          if (context.mounted) {
+                        final result = await context.router
+                            .push(EditPresentationRoute(id: presentation.id));
+                        if (context.mounted) {
+                          if (result == true) {
                             BlocProvider.of<PresentationsBloc>(context).add(
-                                PresentationsEvent.onPasswordChanged(
-                                    presentation.id, result));
+                                const PresentationsEvent
+                                    .initialDataRequested());
                           }
                         }
                       },
-                      icon: Icon(Icons.lock,
-                          color: presentation.hasPassword
-                              ? Colors.green
-                              : Colors.grey))
-                ] else
-                  PopupMenuButton(itemBuilder: (BuildContext bc) {
-                    return [
-                      PopupMenuItem(
-                        child: Text(
-                          'Воспроизвести',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        onTap: () => context.router
-                            .push(PresentationRoute(id: presentation.id)),
-                      ),
-                    ];
-                  })
-              ],
-            )));
+                      icon: const Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      tooltip: LocaleKeys.buttonDelete.tr(),
+                      onPressed: () => _showDeleteConfirmDialog(
+                          context, presentation.id, onDeleteConfirm),
+                      icon: const Icon(Icons.delete),
+                    ),
+                    IconButton(
+                        tooltip: presentation.isPublished
+                            ? LocaleKeys.unPublish.tr()
+                            : LocaleKeys.publish.tr(),
+                        onPressed: () {
+                          BlocProvider.of<PresentationsBloc>(context).add(
+                              PresentationsEvent.publishPresentation(
+                                  presentation.id));
+                        },
+                        icon: Icon(Icons.public,
+                            color: presentation.isPublished
+                                ? Colors.green
+                                : Colors.grey)),
+                    IconButton(
+                        tooltip: LocaleKeys.links.tr(),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => Dialog.fullscreen(
+                                    child: _LinkView(
+                                        presentationId: presentation.id),
+                                  ));
+                        },
+                        icon: const Icon(Icons.share)),
+                    IconButton(
+                        tooltip: presentation.hasPassword
+                            ? LocaleKeys.passwordProtected.tr()
+                            : LocaleKeys.noPassword.tr(),
+                        onPressed: () async {
+                          final passwordController = TextEditingController();
+                          final confirmPasswordController =
+                              TextEditingController();
+                          final result = await showDialog(
+                              context: context,
+                              builder: (context) => SizedBox(
+                                    child: SimpleDialog(
+                                      contentPadding: EdgeInsets.all(
+                                          Responsive.isMobile(context)
+                                              ? 12
+                                              : 24),
+                                      children: [
+                                        SizedBox(
+                                          width: 200,
+                                          child: Text(LocaleKeys
+                                              .addPasswordMessage
+                                              .tr()),
+                                        ),
+                                        const SizedBox(height: 12),
+                                        CommonTextField(
+                                            controller: passwordController,
+                                            obscureText: true,
+                                            labelText:
+                                                LocaleKeys.password.tr()),
+                                        const SizedBox(height: 12),
+                                        CommonTextField(
+                                            controller:
+                                                confirmPasswordController,
+                                            obscureText: true,
+                                            labelText:
+                                                LocaleKeys.repeatPassword.tr()),
+                                        const SizedBox(height: 12),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            TextButton(
+                                                onPressed: () =>
+                                                    context.router.pop(),
+                                                child: Text(LocaleKeys
+                                                    .buttonCancel
+                                                    .tr())),
+                                            TextButton(
+                                                onPressed: () {
+                                                  context.router.pop((
+                                                    password:
+                                                        passwordController.text,
+                                                    confirmPassword:
+                                                        confirmPasswordController
+                                                            .text
+                                                  ));
+                                                },
+                                                child: Text(LocaleKeys
+                                                    .buttonSave
+                                                    .tr())),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                          if (result != null &&
+                              result is ({
+                                String password,
+                                String confirmPassword
+                              })) {
+                            if (context.mounted) {
+                              BlocProvider.of<PresentationsBloc>(context).add(
+                                  PresentationsEvent.onPasswordChanged(
+                                      presentation.id, result));
+                            }
+                          }
+                        },
+                        icon: Icon(Icons.lock,
+                            color: presentation.hasPassword
+                                ? Colors.green
+                                : Colors.grey))
+                  ] else
+                    PopupMenuButton(itemBuilder: (BuildContext bc) {
+                      return [
+                        PopupMenuItem(
+                            child: Text(
+                              LocaleKeys.addToCourse.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () => onAddToCourseClicked(
+                                context, presentation.id, courses)),
+                        PopupMenuItem(
+                            child: Text(
+                              LocaleKeys.buttonEdit.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () async {
+                              final result = await context.router.push(
+                                  EditPresentationRoute(id: presentation.id));
+                              if (context.mounted) {
+                                if (result == true) {
+                                  BlocProvider.of<PresentationsBloc>(context)
+                                      .add(const PresentationsEvent
+                                          .initialDataRequested());
+                                }
+                              }
+                            }),
+                        PopupMenuItem(
+                            child: Text(
+                              LocaleKeys.buttonDelete.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () => _showDeleteConfirmDialog(
+                                context, presentation.id, onDeleteConfirm)),
+                        PopupMenuItem(
+                            child: Text(
+                              presentation.isPublished
+                                  ? LocaleKeys.unPublish.tr()
+                                  : LocaleKeys.publish.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () {
+                              BlocProvider.of<PresentationsBloc>(context).add(
+                                  PresentationsEvent.publishPresentation(
+                                      presentation.id));
+                            }),
+                        PopupMenuItem(
+                            child: Text(
+                              LocaleKeys.links.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () => onAddToCourseClicked(
+                                context, presentation.id, courses)),
+                        PopupMenuItem(
+                            child: Text(
+                              presentation.hasPassword
+                                  ? LocaleKeys.passwordProtected.tr()
+                                  : LocaleKeys.noPassword.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog.fullscreen(
+                                        child: _LinkView(
+                                            presentationId: presentation.id),
+                                      ));
+                            }),
+                      ];
+                    })
+                ],
+              ))),
+    );
   }
 
   Future<void> _showDeleteConfirmDialog(
@@ -467,18 +545,18 @@ class PresentationItem extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           // <-- SEE HERE
-          title: const Text('Удаление презентации'),
-          content: const Text('Вы уверены, что хотите удалить презентацию?'),
+          title: Text(LocaleKeys.deletePresentation.tr()),
+          content: Text(LocaleKeys.deletePresentationConfirmationMessage.tr()),
 
           actions: <Widget>[
             TextButton(
-              child: const Text('Отмена'),
+              child: Text(LocaleKeys.buttonCancel.tr()),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text('Удалить'),
+              child: Text(LocaleKeys.buttonDelete.tr()),
               onPressed: () {
                 onDeleteConfirm();
                 Navigator.of(context).pop();
@@ -492,47 +570,37 @@ class PresentationItem extends StatelessWidget {
 
   Future<void> onAddToCourseClicked(
       BuildContext context, String presentationId, List<Course> courses) async {
-    String selectedCourseId = courses.first.id;
-    final result = await showModalBottomSheet(
-        context: context,
-        builder: (context) => DecoratedBox(
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Text('Добавление к курсу'),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      CourseSelectWidget(
-                          selectedId: courses.first.id,
-                          courses: courses,
-                          onCourseSelect: (v) {
-                            selectedCourseId = v;
-                          }),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      CommonElevatedButton(
-                          text: 'Выбрать',
-                          onPressed: () {
-                            context.router.pop(selectedCourseId);
-                          }),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      TextButton(
-                          onPressed: () => context.router.pop(),
-                          child: const Text('Отмена'))
-                    ],
-                  ),
-                ),
-              ),
-            ));
+    String? selectedCourseId;
+    final result = await showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: Text(LocaleKeys.addToCourse.tr()),
+        contentPadding: const EdgeInsets.all(24),
+        children: [
+          CourseSelectWidget(
+              selectedId: courses.first.id,
+              courses: courses,
+              onCourseSelect: (v) {
+                selectedCourseId = v;
+              }),
+          const SizedBox(
+            height: 12,
+          ),
+          CommonElevatedButton(
+              text: LocaleKeys.buttonSelect.tr(),
+              onPressed: () {
+                context.router.pop(selectedCourseId);
+              }),
+          const SizedBox(
+            height: 12,
+          ),
+          TextButton(
+              onPressed: () => context.router.pop(),
+              child: Text(LocaleKeys.buttonCancel.tr()))
+        ],
+      ),
+    );
+
     print(result);
     if (result is String) {
       if (context.mounted) {
@@ -560,15 +628,8 @@ class CourseSelectWidget extends StatefulWidget {
 }
 
 class _CourseSelectWidgetState extends State<CourseSelectWidget> {
-  late String selectedCourseId;
+  String? selectedCourseId;
   late List<Widget> courseSelectWidgets;
-
-  @override
-  void initState() {
-    super.initState();
-
-    selectedCourseId = widget.selectedId ?? widget.courses.first.id;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -590,9 +651,25 @@ class _CourseSelectWidgetState extends State<CourseSelectWidget> {
               ),
             ))
         .toList();
-    return Column(
-      children: [...courseSelectWidgets],
-    );
+    return Column(children: [
+      ListTile(
+        title: Text(
+          'Отдельная презентация',
+          style: const TextStyle(color: Colors.black),
+        ),
+        leading: Radio(
+          value: null,
+          groupValue: selectedCourseId,
+          onChanged: (value) {
+            setState(() {
+              selectedCourseId = value!;
+            });
+            widget.onCourseSelect(value!);
+          },
+        ),
+      ),
+      ...courseSelectWidgets,
+    ]);
   }
 }
 
@@ -618,7 +695,7 @@ class _LinkView extends StatelessWidget {
     final htmlText = '''<!DOCTYPE html>
       <html>
         <head>
-          <title>Презентация</title> 
+          <title>'${LocaleKeys.presentation.tr()}'</title> 
           <style type="text/css"> 
             html { 
               overflow: auto; 
@@ -657,7 +734,7 @@ class _LinkView extends StatelessWidget {
             children: [
               const SizedBox(height: 24),
               Text(
-                'Ссылка на презентацию',
+                LocaleKeys.presentationLink.tr(),
                 style: context.style18w600$title2,
               ),
               const SizedBox(height: 24),
@@ -690,7 +767,7 @@ class _LinkView extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Код HTML страницы Для Вашего сайта с отображением презентации',
+                LocaleKeys.htmlCode.tr(),
                 style: context.style18w600$title2,
               ),
               const SizedBox(height: 24),

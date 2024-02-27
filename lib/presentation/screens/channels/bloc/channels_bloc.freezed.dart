@@ -22,8 +22,8 @@ mixin _$ChannelsState {
     required TResult Function(bool isPending) initialLoadingError,
     required TResult Function(List<Channel> channels, List<Company> companies)
         screenState,
-    required TResult Function(String? errorText) addChannelError,
-    required TResult Function() addChannelSuccess,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,8 +32,8 @@ mixin _$ChannelsState {
     TResult? Function(bool isPending)? initialLoadingError,
     TResult? Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult? Function(String? errorText)? addChannelError,
-    TResult? Function()? addChannelSuccess,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -42,8 +42,8 @@ mixin _$ChannelsState {
     TResult Function(bool isPending)? initialLoadingError,
     TResult Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult Function(String? errorText)? addChannelError,
-    TResult Function()? addChannelSuccess,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -53,8 +53,8 @@ mixin _$ChannelsState {
     required TResult Function(_StateInitialLoadingError value)
         initialLoadingError,
     required TResult Function(_ScreenState value) screenState,
-    required TResult Function(_StateAddChennelError value) addChannelError,
-    required TResult Function(_StateAddChannelSuccess value) addChannelSuccess,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,8 +62,8 @@ mixin _$ChannelsState {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult? Function(_ScreenState value)? screenState,
-    TResult? Function(_StateAddChennelError value)? addChannelError,
-    TResult? Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,8 +71,8 @@ mixin _$ChannelsState {
     TResult Function(_StatePending value)? pending,
     TResult Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult Function(_ScreenState value)? screenState,
-    TResult Function(_StateAddChennelError value)? addChannelError,
-    TResult Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -138,8 +138,8 @@ class _$_StatePending implements _StatePending {
     required TResult Function(bool isPending) initialLoadingError,
     required TResult Function(List<Channel> channels, List<Company> companies)
         screenState,
-    required TResult Function(String? errorText) addChannelError,
-    required TResult Function() addChannelSuccess,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) requestError,
   }) {
     return pending();
   }
@@ -151,8 +151,8 @@ class _$_StatePending implements _StatePending {
     TResult? Function(bool isPending)? initialLoadingError,
     TResult? Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult? Function(String? errorText)? addChannelError,
-    TResult? Function()? addChannelSuccess,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) {
     return pending?.call();
   }
@@ -164,8 +164,8 @@ class _$_StatePending implements _StatePending {
     TResult Function(bool isPending)? initialLoadingError,
     TResult Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult Function(String? errorText)? addChannelError,
-    TResult Function()? addChannelSuccess,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (pending != null) {
@@ -181,8 +181,8 @@ class _$_StatePending implements _StatePending {
     required TResult Function(_StateInitialLoadingError value)
         initialLoadingError,
     required TResult Function(_ScreenState value) screenState,
-    required TResult Function(_StateAddChennelError value) addChannelError,
-    required TResult Function(_StateAddChannelSuccess value) addChannelSuccess,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return pending(this);
   }
@@ -193,8 +193,8 @@ class _$_StatePending implements _StatePending {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult? Function(_ScreenState value)? screenState,
-    TResult? Function(_StateAddChennelError value)? addChannelError,
-    TResult? Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return pending?.call(this);
   }
@@ -205,8 +205,8 @@ class _$_StatePending implements _StatePending {
     TResult Function(_StatePending value)? pending,
     TResult Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult Function(_ScreenState value)? screenState,
-    TResult Function(_StateAddChennelError value)? addChannelError,
-    TResult Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (pending != null) {
@@ -292,8 +292,8 @@ class _$_StateInitialLoadingError implements _StateInitialLoadingError {
     required TResult Function(bool isPending) initialLoadingError,
     required TResult Function(List<Channel> channels, List<Company> companies)
         screenState,
-    required TResult Function(String? errorText) addChannelError,
-    required TResult Function() addChannelSuccess,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) requestError,
   }) {
     return initialLoadingError(isPending);
   }
@@ -305,8 +305,8 @@ class _$_StateInitialLoadingError implements _StateInitialLoadingError {
     TResult? Function(bool isPending)? initialLoadingError,
     TResult? Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult? Function(String? errorText)? addChannelError,
-    TResult? Function()? addChannelSuccess,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) {
     return initialLoadingError?.call(isPending);
   }
@@ -318,8 +318,8 @@ class _$_StateInitialLoadingError implements _StateInitialLoadingError {
     TResult Function(bool isPending)? initialLoadingError,
     TResult Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult Function(String? errorText)? addChannelError,
-    TResult Function()? addChannelSuccess,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (initialLoadingError != null) {
@@ -335,8 +335,8 @@ class _$_StateInitialLoadingError implements _StateInitialLoadingError {
     required TResult Function(_StateInitialLoadingError value)
         initialLoadingError,
     required TResult Function(_ScreenState value) screenState,
-    required TResult Function(_StateAddChennelError value) addChannelError,
-    required TResult Function(_StateAddChannelSuccess value) addChannelSuccess,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return initialLoadingError(this);
   }
@@ -347,8 +347,8 @@ class _$_StateInitialLoadingError implements _StateInitialLoadingError {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult? Function(_ScreenState value)? screenState,
-    TResult? Function(_StateAddChennelError value)? addChannelError,
-    TResult? Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return initialLoadingError?.call(this);
   }
@@ -359,8 +359,8 @@ class _$_StateInitialLoadingError implements _StateInitialLoadingError {
     TResult Function(_StatePending value)? pending,
     TResult Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult Function(_ScreenState value)? screenState,
-    TResult Function(_StateAddChennelError value)? addChannelError,
-    TResult Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (initialLoadingError != null) {
@@ -475,8 +475,8 @@ class _$_ScreenState implements _ScreenState {
     required TResult Function(bool isPending) initialLoadingError,
     required TResult Function(List<Channel> channels, List<Company> companies)
         screenState,
-    required TResult Function(String? errorText) addChannelError,
-    required TResult Function() addChannelSuccess,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) requestError,
   }) {
     return screenState(channels, companies);
   }
@@ -488,8 +488,8 @@ class _$_ScreenState implements _ScreenState {
     TResult? Function(bool isPending)? initialLoadingError,
     TResult? Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult? Function(String? errorText)? addChannelError,
-    TResult? Function()? addChannelSuccess,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) {
     return screenState?.call(channels, companies);
   }
@@ -501,8 +501,8 @@ class _$_ScreenState implements _ScreenState {
     TResult Function(bool isPending)? initialLoadingError,
     TResult Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult Function(String? errorText)? addChannelError,
-    TResult Function()? addChannelSuccess,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
@@ -518,8 +518,8 @@ class _$_ScreenState implements _ScreenState {
     required TResult Function(_StateInitialLoadingError value)
         initialLoadingError,
     required TResult Function(_ScreenState value) screenState,
-    required TResult Function(_StateAddChennelError value) addChannelError,
-    required TResult Function(_StateAddChannelSuccess value) addChannelSuccess,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
     return screenState(this);
   }
@@ -530,8 +530,8 @@ class _$_ScreenState implements _ScreenState {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult? Function(_ScreenState value)? screenState,
-    TResult? Function(_StateAddChennelError value)? addChannelError,
-    TResult? Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
     return screenState?.call(this);
   }
@@ -542,8 +542,8 @@ class _$_ScreenState implements _ScreenState {
     TResult Function(_StatePending value)? pending,
     TResult Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult Function(_ScreenState value)? screenState,
-    TResult Function(_StateAddChennelError value)? addChannelError,
-    TResult Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
     if (screenState != null) {
@@ -566,194 +566,35 @@ abstract class _ScreenState implements ChannelsState {
 }
 
 /// @nodoc
-abstract class _$$_StateAddChennelErrorCopyWith<$Res> {
-  factory _$$_StateAddChennelErrorCopyWith(_$_StateAddChennelError value,
-          $Res Function(_$_StateAddChennelError) then) =
-      __$$_StateAddChennelErrorCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String? errorText});
+abstract class _$$_StateRequestSuccessCopyWith<$Res> {
+  factory _$$_StateRequestSuccessCopyWith(_$_StateRequestSuccess value,
+          $Res Function(_$_StateRequestSuccess) then) =
+      __$$_StateRequestSuccessCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_StateAddChennelErrorCopyWithImpl<$Res>
-    extends _$ChannelsStateCopyWithImpl<$Res, _$_StateAddChennelError>
-    implements _$$_StateAddChennelErrorCopyWith<$Res> {
-  __$$_StateAddChennelErrorCopyWithImpl(_$_StateAddChennelError _value,
-      $Res Function(_$_StateAddChennelError) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? errorText = freezed,
-  }) {
-    return _then(_$_StateAddChennelError(
-      errorText: freezed == errorText
-          ? _value.errorText
-          : errorText // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_StateAddChennelError implements _StateAddChennelError {
-  const _$_StateAddChennelError({this.errorText});
-
-  @override
-  final String? errorText;
-
-  @override
-  String toString() {
-    return 'ChannelsState.addChannelError(errorText: $errorText)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_StateAddChennelError &&
-            (identical(other.errorText, errorText) ||
-                other.errorText == errorText));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, errorText);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_StateAddChennelErrorCopyWith<_$_StateAddChennelError> get copyWith =>
-      __$$_StateAddChennelErrorCopyWithImpl<_$_StateAddChennelError>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() pending,
-    required TResult Function(bool isPending) initialLoadingError,
-    required TResult Function(List<Channel> channels, List<Company> companies)
-        screenState,
-    required TResult Function(String? errorText) addChannelError,
-    required TResult Function() addChannelSuccess,
-  }) {
-    return addChannelError(errorText);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? pending,
-    TResult? Function(bool isPending)? initialLoadingError,
-    TResult? Function(List<Channel> channels, List<Company> companies)?
-        screenState,
-    TResult? Function(String? errorText)? addChannelError,
-    TResult? Function()? addChannelSuccess,
-  }) {
-    return addChannelError?.call(errorText);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? pending,
-    TResult Function(bool isPending)? initialLoadingError,
-    TResult Function(List<Channel> channels, List<Company> companies)?
-        screenState,
-    TResult Function(String? errorText)? addChannelError,
-    TResult Function()? addChannelSuccess,
-    required TResult orElse(),
-  }) {
-    if (addChannelError != null) {
-      return addChannelError(errorText);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_StatePending value) pending,
-    required TResult Function(_StateInitialLoadingError value)
-        initialLoadingError,
-    required TResult Function(_ScreenState value) screenState,
-    required TResult Function(_StateAddChennelError value) addChannelError,
-    required TResult Function(_StateAddChannelSuccess value) addChannelSuccess,
-  }) {
-    return addChannelError(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_StatePending value)? pending,
-    TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
-    TResult? Function(_ScreenState value)? screenState,
-    TResult? Function(_StateAddChennelError value)? addChannelError,
-    TResult? Function(_StateAddChannelSuccess value)? addChannelSuccess,
-  }) {
-    return addChannelError?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_StatePending value)? pending,
-    TResult Function(_StateInitialLoadingError value)? initialLoadingError,
-    TResult Function(_ScreenState value)? screenState,
-    TResult Function(_StateAddChennelError value)? addChannelError,
-    TResult Function(_StateAddChannelSuccess value)? addChannelSuccess,
-    required TResult orElse(),
-  }) {
-    if (addChannelError != null) {
-      return addChannelError(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _StateAddChennelError implements ChannelsState {
-  const factory _StateAddChennelError({final String? errorText}) =
-      _$_StateAddChennelError;
-
-  String? get errorText;
-  @JsonKey(ignore: true)
-  _$$_StateAddChennelErrorCopyWith<_$_StateAddChennelError> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_StateAddChannelSuccessCopyWith<$Res> {
-  factory _$$_StateAddChannelSuccessCopyWith(_$_StateAddChannelSuccess value,
-          $Res Function(_$_StateAddChannelSuccess) then) =
-      __$$_StateAddChannelSuccessCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_StateAddChannelSuccessCopyWithImpl<$Res>
-    extends _$ChannelsStateCopyWithImpl<$Res, _$_StateAddChannelSuccess>
-    implements _$$_StateAddChannelSuccessCopyWith<$Res> {
-  __$$_StateAddChannelSuccessCopyWithImpl(_$_StateAddChannelSuccess _value,
-      $Res Function(_$_StateAddChannelSuccess) _then)
+class __$$_StateRequestSuccessCopyWithImpl<$Res>
+    extends _$ChannelsStateCopyWithImpl<$Res, _$_StateRequestSuccess>
+    implements _$$_StateRequestSuccessCopyWith<$Res> {
+  __$$_StateRequestSuccessCopyWithImpl(_$_StateRequestSuccess _value,
+      $Res Function(_$_StateRequestSuccess) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
-  const _$_StateAddChannelSuccess();
+class _$_StateRequestSuccess implements _StateRequestSuccess {
+  const _$_StateRequestSuccess();
 
   @override
   String toString() {
-    return 'ChannelsState.addChannelSuccess()';
+    return 'ChannelsState.requestSuccess()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_StateAddChannelSuccess);
+        (other.runtimeType == runtimeType && other is _$_StateRequestSuccess);
   }
 
   @override
@@ -766,10 +607,10 @@ class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
     required TResult Function(bool isPending) initialLoadingError,
     required TResult Function(List<Channel> channels, List<Company> companies)
         screenState,
-    required TResult Function(String? errorText) addChannelError,
-    required TResult Function() addChannelSuccess,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) requestError,
   }) {
-    return addChannelSuccess();
+    return requestSuccess();
   }
 
   @override
@@ -779,10 +620,10 @@ class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
     TResult? Function(bool isPending)? initialLoadingError,
     TResult? Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult? Function(String? errorText)? addChannelError,
-    TResult? Function()? addChannelSuccess,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? requestError,
   }) {
-    return addChannelSuccess?.call();
+    return requestSuccess?.call();
   }
 
   @override
@@ -792,12 +633,12 @@ class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
     TResult Function(bool isPending)? initialLoadingError,
     TResult Function(List<Channel> channels, List<Company> companies)?
         screenState,
-    TResult Function(String? errorText)? addChannelError,
-    TResult Function()? addChannelSuccess,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? requestError,
     required TResult orElse(),
   }) {
-    if (addChannelSuccess != null) {
-      return addChannelSuccess();
+    if (requestSuccess != null) {
+      return requestSuccess();
     }
     return orElse();
   }
@@ -809,10 +650,10 @@ class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
     required TResult Function(_StateInitialLoadingError value)
         initialLoadingError,
     required TResult Function(_ScreenState value) screenState,
-    required TResult Function(_StateAddChennelError value) addChannelError,
-    required TResult Function(_StateAddChannelSuccess value) addChannelSuccess,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateRequestError value) requestError,
   }) {
-    return addChannelSuccess(this);
+    return requestSuccess(this);
   }
 
   @override
@@ -821,10 +662,10 @@ class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult? Function(_ScreenState value)? screenState,
-    TResult? Function(_StateAddChennelError value)? addChannelError,
-    TResult? Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
   }) {
-    return addChannelSuccess?.call(this);
+    return requestSuccess?.call(this);
   }
 
   @override
@@ -833,19 +674,177 @@ class _$_StateAddChannelSuccess implements _StateAddChannelSuccess {
     TResult Function(_StatePending value)? pending,
     TResult Function(_StateInitialLoadingError value)? initialLoadingError,
     TResult Function(_ScreenState value)? screenState,
-    TResult Function(_StateAddChennelError value)? addChannelError,
-    TResult Function(_StateAddChannelSuccess value)? addChannelSuccess,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateRequestError value)? requestError,
     required TResult orElse(),
   }) {
-    if (addChannelSuccess != null) {
-      return addChannelSuccess(this);
+    if (requestSuccess != null) {
+      return requestSuccess(this);
     }
     return orElse();
   }
 }
 
-abstract class _StateAddChannelSuccess implements ChannelsState {
-  const factory _StateAddChannelSuccess() = _$_StateAddChannelSuccess;
+abstract class _StateRequestSuccess implements ChannelsState {
+  const factory _StateRequestSuccess() = _$_StateRequestSuccess;
+}
+
+/// @nodoc
+abstract class _$$_StateRequestErrorCopyWith<$Res> {
+  factory _$$_StateRequestErrorCopyWith(_$_StateRequestError value,
+          $Res Function(_$_StateRequestError) then) =
+      __$$_StateRequestErrorCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? errorText});
+}
+
+/// @nodoc
+class __$$_StateRequestErrorCopyWithImpl<$Res>
+    extends _$ChannelsStateCopyWithImpl<$Res, _$_StateRequestError>
+    implements _$$_StateRequestErrorCopyWith<$Res> {
+  __$$_StateRequestErrorCopyWithImpl(
+      _$_StateRequestError _value, $Res Function(_$_StateRequestError) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? errorText = freezed,
+  }) {
+    return _then(_$_StateRequestError(
+      errorText: freezed == errorText
+          ? _value.errorText
+          : errorText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StateRequestError implements _StateRequestError {
+  const _$_StateRequestError({this.errorText});
+
+  @override
+  final String? errorText;
+
+  @override
+  String toString() {
+    return 'ChannelsState.requestError(errorText: $errorText)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateRequestError &&
+            (identical(other.errorText, errorText) ||
+                other.errorText == errorText));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, errorText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
+      __$$_StateRequestErrorCopyWithImpl<_$_StateRequestError>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(bool isPending) initialLoadingError,
+    required TResult Function(List<Channel> channels, List<Company> companies)
+        screenState,
+    required TResult Function() requestSuccess,
+    required TResult Function(String? errorText) requestError,
+  }) {
+    return requestError(errorText);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(bool isPending)? initialLoadingError,
+    TResult? Function(List<Channel> channels, List<Company> companies)?
+        screenState,
+    TResult? Function()? requestSuccess,
+    TResult? Function(String? errorText)? requestError,
+  }) {
+    return requestError?.call(errorText);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(bool isPending)? initialLoadingError,
+    TResult Function(List<Channel> channels, List<Company> companies)?
+        screenState,
+    TResult Function()? requestSuccess,
+    TResult Function(String? errorText)? requestError,
+    required TResult orElse(),
+  }) {
+    if (requestError != null) {
+      return requestError(errorText);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_StateInitialLoadingError value)
+        initialLoadingError,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateRequestSuccess value) requestSuccess,
+    required TResult Function(_StateRequestError value) requestError,
+  }) {
+    return requestError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_StateInitialLoadingError value)? initialLoadingError,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateRequestSuccess value)? requestSuccess,
+    TResult? Function(_StateRequestError value)? requestError,
+  }) {
+    return requestError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_StateInitialLoadingError value)? initialLoadingError,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateRequestSuccess value)? requestSuccess,
+    TResult Function(_StateRequestError value)? requestError,
+    required TResult orElse(),
+  }) {
+    if (requestError != null) {
+      return requestError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateRequestError implements ChannelsState {
+  const factory _StateRequestError({final String? errorText}) =
+      _$_StateRequestError;
+
+  String? get errorText;
+  @JsonKey(ignore: true)
+  _$$_StateRequestErrorCopyWith<_$_StateRequestError> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -861,6 +860,7 @@ mixin _$ChannelsEvent {
         onEditChannel,
     required TResult Function(String? companyId, String channelId)
         onAddCompanyToChannel,
+    required TResult Function(String id) onDeleteChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -874,6 +874,7 @@ mixin _$ChannelsEvent {
         onEditChannel,
     TResult? Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult? Function(String id)? onDeleteChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -887,6 +888,7 @@ mixin _$ChannelsEvent {
         onEditChannel,
     TResult Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult Function(String id)? onDeleteChannel,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -898,6 +900,7 @@ mixin _$ChannelsEvent {
     required TResult Function(_EventOnEditChannel value) onEditChannel,
     required TResult Function(_EventOnAddCompanyToChannel value)
         onAddCompanyToChannel,
+    required TResult Function(_EventOnDeleteChannel value) onDeleteChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -906,6 +909,7 @@ mixin _$ChannelsEvent {
     TResult? Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult? Function(_EventOnEditChannel value)? onEditChannel,
     TResult? Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult? Function(_EventOnDeleteChannel value)? onDeleteChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -914,6 +918,7 @@ mixin _$ChannelsEvent {
     TResult Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult Function(_EventOnEditChannel value)? onEditChannel,
     TResult Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult Function(_EventOnDeleteChannel value)? onDeleteChannel,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -987,6 +992,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         onEditChannel,
     required TResult Function(String? companyId, String channelId)
         onAddCompanyToChannel,
+    required TResult Function(String id) onDeleteChannel,
   }) {
     return initialDataRequested();
   }
@@ -1003,6 +1009,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         onEditChannel,
     TResult? Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult? Function(String id)? onDeleteChannel,
   }) {
     return initialDataRequested?.call();
   }
@@ -1019,6 +1026,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         onEditChannel,
     TResult Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult Function(String id)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -1036,6 +1044,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     required TResult Function(_EventOnEditChannel value) onEditChannel,
     required TResult Function(_EventOnAddCompanyToChannel value)
         onAddCompanyToChannel,
+    required TResult Function(_EventOnDeleteChannel value) onDeleteChannel,
   }) {
     return initialDataRequested(this);
   }
@@ -1047,6 +1056,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult? Function(_EventOnEditChannel value)? onEditChannel,
     TResult? Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult? Function(_EventOnDeleteChannel value)? onDeleteChannel,
   }) {
     return initialDataRequested?.call(this);
   }
@@ -1058,6 +1068,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult Function(_EventOnEditChannel value)? onEditChannel,
     TResult Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult Function(_EventOnDeleteChannel value)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -1178,6 +1189,7 @@ class _$_EventOnCreateChannel implements _EventOnCreateChannel {
         onEditChannel,
     required TResult Function(String? companyId, String channelId)
         onAddCompanyToChannel,
+    required TResult Function(String id) onDeleteChannel,
   }) {
     return onCreateChannel(title, description, channelTypeId, isPublic);
   }
@@ -1194,6 +1206,7 @@ class _$_EventOnCreateChannel implements _EventOnCreateChannel {
         onEditChannel,
     TResult? Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult? Function(String id)? onDeleteChannel,
   }) {
     return onCreateChannel?.call(title, description, channelTypeId, isPublic);
   }
@@ -1210,6 +1223,7 @@ class _$_EventOnCreateChannel implements _EventOnCreateChannel {
         onEditChannel,
     TResult Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult Function(String id)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (onCreateChannel != null) {
@@ -1227,6 +1241,7 @@ class _$_EventOnCreateChannel implements _EventOnCreateChannel {
     required TResult Function(_EventOnEditChannel value) onEditChannel,
     required TResult Function(_EventOnAddCompanyToChannel value)
         onAddCompanyToChannel,
+    required TResult Function(_EventOnDeleteChannel value) onDeleteChannel,
   }) {
     return onCreateChannel(this);
   }
@@ -1238,6 +1253,7 @@ class _$_EventOnCreateChannel implements _EventOnCreateChannel {
     TResult? Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult? Function(_EventOnEditChannel value)? onEditChannel,
     TResult? Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult? Function(_EventOnDeleteChannel value)? onDeleteChannel,
   }) {
     return onCreateChannel?.call(this);
   }
@@ -1249,6 +1265,7 @@ class _$_EventOnCreateChannel implements _EventOnCreateChannel {
     TResult Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult Function(_EventOnEditChannel value)? onEditChannel,
     TResult Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult Function(_EventOnDeleteChannel value)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (onCreateChannel != null) {
@@ -1395,6 +1412,7 @@ class _$_EventOnEditChannel implements _EventOnEditChannel {
         onEditChannel,
     required TResult Function(String? companyId, String channelId)
         onAddCompanyToChannel,
+    required TResult Function(String id) onDeleteChannel,
   }) {
     return onEditChannel(
         channelId, title, description, channelTypeId, isPublic);
@@ -1412,6 +1430,7 @@ class _$_EventOnEditChannel implements _EventOnEditChannel {
         onEditChannel,
     TResult? Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult? Function(String id)? onDeleteChannel,
   }) {
     return onEditChannel?.call(
         channelId, title, description, channelTypeId, isPublic);
@@ -1429,6 +1448,7 @@ class _$_EventOnEditChannel implements _EventOnEditChannel {
         onEditChannel,
     TResult Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult Function(String id)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (onEditChannel != null) {
@@ -1447,6 +1467,7 @@ class _$_EventOnEditChannel implements _EventOnEditChannel {
     required TResult Function(_EventOnEditChannel value) onEditChannel,
     required TResult Function(_EventOnAddCompanyToChannel value)
         onAddCompanyToChannel,
+    required TResult Function(_EventOnDeleteChannel value) onDeleteChannel,
   }) {
     return onEditChannel(this);
   }
@@ -1458,6 +1479,7 @@ class _$_EventOnEditChannel implements _EventOnEditChannel {
     TResult? Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult? Function(_EventOnEditChannel value)? onEditChannel,
     TResult? Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult? Function(_EventOnDeleteChannel value)? onDeleteChannel,
   }) {
     return onEditChannel?.call(this);
   }
@@ -1469,6 +1491,7 @@ class _$_EventOnEditChannel implements _EventOnEditChannel {
     TResult Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult Function(_EventOnEditChannel value)? onEditChannel,
     TResult Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult Function(_EventOnDeleteChannel value)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (onEditChannel != null) {
@@ -1583,6 +1606,7 @@ class _$_EventOnAddCompanyToChannel implements _EventOnAddCompanyToChannel {
         onEditChannel,
     required TResult Function(String? companyId, String channelId)
         onAddCompanyToChannel,
+    required TResult Function(String id) onDeleteChannel,
   }) {
     return onAddCompanyToChannel(companyId, channelId);
   }
@@ -1599,6 +1623,7 @@ class _$_EventOnAddCompanyToChannel implements _EventOnAddCompanyToChannel {
         onEditChannel,
     TResult? Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult? Function(String id)? onDeleteChannel,
   }) {
     return onAddCompanyToChannel?.call(companyId, channelId);
   }
@@ -1615,6 +1640,7 @@ class _$_EventOnAddCompanyToChannel implements _EventOnAddCompanyToChannel {
         onEditChannel,
     TResult Function(String? companyId, String channelId)?
         onAddCompanyToChannel,
+    TResult Function(String id)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (onAddCompanyToChannel != null) {
@@ -1632,6 +1658,7 @@ class _$_EventOnAddCompanyToChannel implements _EventOnAddCompanyToChannel {
     required TResult Function(_EventOnEditChannel value) onEditChannel,
     required TResult Function(_EventOnAddCompanyToChannel value)
         onAddCompanyToChannel,
+    required TResult Function(_EventOnDeleteChannel value) onDeleteChannel,
   }) {
     return onAddCompanyToChannel(this);
   }
@@ -1643,6 +1670,7 @@ class _$_EventOnAddCompanyToChannel implements _EventOnAddCompanyToChannel {
     TResult? Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult? Function(_EventOnEditChannel value)? onEditChannel,
     TResult? Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult? Function(_EventOnDeleteChannel value)? onDeleteChannel,
   }) {
     return onAddCompanyToChannel?.call(this);
   }
@@ -1654,6 +1682,7 @@ class _$_EventOnAddCompanyToChannel implements _EventOnAddCompanyToChannel {
     TResult Function(_EventOnCreateChannel value)? onCreateChannel,
     TResult Function(_EventOnEditChannel value)? onEditChannel,
     TResult Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult Function(_EventOnDeleteChannel value)? onDeleteChannel,
     required TResult orElse(),
   }) {
     if (onAddCompanyToChannel != null) {
@@ -1673,4 +1702,174 @@ abstract class _EventOnAddCompanyToChannel implements ChannelsEvent {
   @JsonKey(ignore: true)
   _$$_EventOnAddCompanyToChannelCopyWith<_$_EventOnAddCompanyToChannel>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventOnDeleteChannelCopyWith<$Res> {
+  factory _$$_EventOnDeleteChannelCopyWith(_$_EventOnDeleteChannel value,
+          $Res Function(_$_EventOnDeleteChannel) then) =
+      __$$_EventOnDeleteChannelCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$_EventOnDeleteChannelCopyWithImpl<$Res>
+    extends _$ChannelsEventCopyWithImpl<$Res, _$_EventOnDeleteChannel>
+    implements _$$_EventOnDeleteChannelCopyWith<$Res> {
+  __$$_EventOnDeleteChannelCopyWithImpl(_$_EventOnDeleteChannel _value,
+      $Res Function(_$_EventOnDeleteChannel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$_EventOnDeleteChannel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventOnDeleteChannel implements _EventOnDeleteChannel {
+  const _$_EventOnDeleteChannel({required this.id});
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'ChannelsEvent.onDeleteChannel(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventOnDeleteChannel &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventOnDeleteChannelCopyWith<_$_EventOnDeleteChannel> get copyWith =>
+      __$$_EventOnDeleteChannelCopyWithImpl<_$_EventOnDeleteChannel>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(
+            String title, String? description, int channelTypeId, bool isPublic)
+        onCreateChannel,
+    required TResult Function(String channelId, String title,
+            String? description, int channelTypeId, bool isPublic)
+        onEditChannel,
+    required TResult Function(String? companyId, String channelId)
+        onAddCompanyToChannel,
+    required TResult Function(String id) onDeleteChannel,
+  }) {
+    return onDeleteChannel(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(String title, String? description, int channelTypeId,
+            bool isPublic)?
+        onCreateChannel,
+    TResult? Function(String channelId, String title, String? description,
+            int channelTypeId, bool isPublic)?
+        onEditChannel,
+    TResult? Function(String? companyId, String channelId)?
+        onAddCompanyToChannel,
+    TResult? Function(String id)? onDeleteChannel,
+  }) {
+    return onDeleteChannel?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(String title, String? description, int channelTypeId,
+            bool isPublic)?
+        onCreateChannel,
+    TResult Function(String channelId, String title, String? description,
+            int channelTypeId, bool isPublic)?
+        onEditChannel,
+    TResult Function(String? companyId, String channelId)?
+        onAddCompanyToChannel,
+    TResult Function(String id)? onDeleteChannel,
+    required TResult orElse(),
+  }) {
+    if (onDeleteChannel != null) {
+      return onDeleteChannel(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventOnCreateChannel value) onCreateChannel,
+    required TResult Function(_EventOnEditChannel value) onEditChannel,
+    required TResult Function(_EventOnAddCompanyToChannel value)
+        onAddCompanyToChannel,
+    required TResult Function(_EventOnDeleteChannel value) onDeleteChannel,
+  }) {
+    return onDeleteChannel(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventOnCreateChannel value)? onCreateChannel,
+    TResult? Function(_EventOnEditChannel value)? onEditChannel,
+    TResult? Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult? Function(_EventOnDeleteChannel value)? onDeleteChannel,
+  }) {
+    return onDeleteChannel?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventOnCreateChannel value)? onCreateChannel,
+    TResult Function(_EventOnEditChannel value)? onEditChannel,
+    TResult Function(_EventOnAddCompanyToChannel value)? onAddCompanyToChannel,
+    TResult Function(_EventOnDeleteChannel value)? onDeleteChannel,
+    required TResult orElse(),
+  }) {
+    if (onDeleteChannel != null) {
+      return onDeleteChannel(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventOnDeleteChannel implements ChannelsEvent {
+  const factory _EventOnDeleteChannel({required final String id}) =
+      _$_EventOnDeleteChannel;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$_EventOnDeleteChannelCopyWith<_$_EventOnDeleteChannel> get copyWith =>
+      throw _privateConstructorUsedError;
 }

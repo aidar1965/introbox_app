@@ -1,4 +1,4 @@
-import 'package:moki_tutor/domain/models/fragment_category.dart';
+import 'package:introbox/domain/models/fragment_category.dart';
 
 abstract class ICategoryRepository {
   List<FragmentCategory> get categories;

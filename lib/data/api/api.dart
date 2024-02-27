@@ -4,29 +4,29 @@ import 'dart:core';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:moki_tutor/data/api/models/requests/request_add_channel.dart';
-import 'package:moki_tutor/data/api/models/requests/request_add_company.dart';
-import 'package:moki_tutor/data/api/models/requests/request_add_fragment_category.dart';
-import 'package:moki_tutor/data/api/models/requests/request_add_presentation_to_course.dart';
-import 'package:moki_tutor/data/api/models/requests/request_get_fragment_categories.dart';
-import 'package:moki_tutor/data/api/models/requests/request_recover_password.dart';
+import 'package:introbox/data/api/models/requests/request_add_channel.dart';
+import 'package:introbox/data/api/models/requests/request_add_company.dart';
+import 'package:introbox/data/api/models/requests/request_add_fragment_category.dart';
+import 'package:introbox/data/api/models/requests/request_add_presentation_to_course.dart';
+import 'package:introbox/data/api/models/requests/request_get_fragment_categories.dart';
+import 'package:introbox/data/api/models/requests/request_recover_password.dart';
 
-import 'package:moki_tutor/data/api/models/requests/request_update_fragment_category.dart';
-import 'package:moki_tutor/data/api/models/responses/channel_dto.dart';
-import 'package:moki_tutor/data/api/models/responses/company_dto.dart';
-import 'package:moki_tutor/data/api/models/responses/fragment_category_dto.dart';
-import 'package:moki_tutor/data/api/models/responses/presentation_dto.dart';
-import 'package:moki_tutor/data/api/models/responses/subject_dto.dart';
+import 'package:introbox/data/api/models/requests/request_update_fragment_category.dart';
+import 'package:introbox/data/api/models/responses/channel_dto.dart';
+import 'package:introbox/data/api/models/responses/company_dto.dart';
+import 'package:introbox/data/api/models/responses/fragment_category_dto.dart';
+import 'package:introbox/data/api/models/responses/presentation_dto.dart';
+import 'package:introbox/data/api/models/responses/subject_dto.dart';
 
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:moki_tutor/domain/models/channel.dart';
-import 'package:moki_tutor/domain/models/company.dart';
-import 'package:moki_tutor/domain/models/fragment_category.dart';
-import 'package:moki_tutor/domain/models/responses/paginated_courses.dart';
-import 'package:moki_tutor/domain/models/subject_category.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/models/channel.dart';
+import 'package:introbox/domain/models/company.dart';
+import 'package:introbox/domain/models/fragment_category.dart';
+import 'package:introbox/domain/models/responses/paginated_courses.dart';
+import 'package:introbox/domain/models/subject_category.dart';
 
-import 'package:moki_tutor/domain/models/user.dart';
-import 'package:moki_tutor/domain/models/course.dart';
+import 'package:introbox/domain/models/user.dart';
+import 'package:introbox/domain/models/course.dart';
 
 import '../../domain/models/fragment.dart';
 //import '../../domain/models/image_fragment.dart';
@@ -53,6 +53,7 @@ import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
 import 'models/requests/request_check_password.dart';
 import 'models/requests/request_confirmation.dart';
+import 'models/requests/request_delete_channel.dart';
 import 'models/requests/request_delete_company.dart';
 import 'models/requests/request_delete_course.dart';
 import 'models/requests/request_delete_fragment.dart';
@@ -789,5 +790,10 @@ class Api implements IApi {
     final result = await httpClient.request(RequestGetPublicCourse(id: id));
     return mapper
         .mapCourse(CourseDto.fromJson(jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> deleteChannel({required String id}) async {
+    await httpClient.request(RequestDeleteChannel(id: id));
   }
 }

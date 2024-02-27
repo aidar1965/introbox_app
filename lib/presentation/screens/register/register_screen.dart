@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
-import 'package:moki_tutor/presentation/extetsions/context_extensions.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/auto_router/app_router.dart';
+import 'package:introbox/presentation/extetsions/context_extensions.dart';
 
 import '../../common/common_elevated_button.dart';
 import '../../common/common_functions.dart';
@@ -22,6 +24,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
           child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 320),
@@ -32,7 +35,7 @@ class RegisterScreen extends StatelessWidget {
                       requestError: (state) => _onRequestError(
                           context,
                           state.errorText ??
-                              'Произошла ошибка запроса. Попробуйте позже'),
+                              LocaleKeys.commonRequestError.tr()),
                       requestSuccess: (_) => _onRequestSuccess(context),
                     ),
                     buildWhen: (pr, curr) => curr.maybeMap(
@@ -42,29 +45,30 @@ class RegisterScreen extends StatelessWidget {
                       screenState: (state) => Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('Регистрация',
+                          Text(LocaleKeys.registration.tr(),
                               style: context.style18w600$title2),
                           const SizedBox(height: 18),
                           CommonTextField(
                               controller: firstNameController,
-                              labelText: 'Имя'),
+                              labelText: LocaleKeys.firstName.tr()),
                           const SizedBox(height: 12),
                           CommonTextField(
                               controller: lastNameController,
-                              labelText: 'Фамилия'),
+                              labelText: LocaleKeys.lastName.tr()),
                           const SizedBox(height: 12),
                           CommonTextField(
-                              controller: emailController, labelText: 'Email'),
+                              controller: emailController,
+                              labelText: LocaleKeys.email.tr()),
                           const SizedBox(height: 12),
                           CommonTextField(
                               controller: passwordController,
                               obscureText: true,
-                              labelText: 'Пароль'),
+                              labelText: LocaleKeys.password.tr()),
                           const SizedBox(height: 12),
                           CommonTextField(
                               controller: confirmPasswordController,
                               obscureText: true,
-                              labelText: 'Повторите пароль'),
+                              labelText: LocaleKeys.repeatPassword.tr()),
                           const SizedBox(
                             height: 30,
                           ),
@@ -80,13 +84,13 @@ class RegisterScreen extends StatelessWidget {
                                         firstName: firstNameController.text,
                                         lastName: lastNameController.text));
                               },
-                              text: 'Зарегистрироваться'),
+                              text: LocaleKeys.registration.tr()),
                           const SizedBox(
                             height: 30,
                           ),
                           TextButton(
                               onPressed: () => context.router.pop(),
-                              child: const Text('Войти'))
+                              child: Text(LocaleKeys.login.tr()))
                         ],
                       ),
                     ),
@@ -95,11 +99,7 @@ class RegisterScreen extends StatelessWidget {
   }
 
   void _onRequestError(BuildContext context, String message) {
-    CommonFunctions.showStyledDialog(
-      context: context,
-      message: message,
-      positiveButtonText: 'Ok',
-    );
+    CommonFunctions.showMessage(context, message, Reason.error);
   }
 
   Future<void> _onRequestSuccess(
@@ -107,8 +107,8 @@ class RegisterScreen extends StatelessWidget {
   ) async {
     await CommonFunctions.showStyledDialog(
         context: context,
-        message: 'На Ваш email выслан код для подтверждения регистрации',
-        positiveButtonText: 'Ок');
+        message: LocaleKeys.registerMessage.tr(),
+        positiveButtonText: LocaleKeys.ok.tr());
     if (context.mounted) {
       context.router.push(ConfirmationRoute(email: emailController.text));
     }

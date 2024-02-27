@@ -1,16 +1,19 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
+import 'package:introbox/presentation/auto_router/app_router.dart';
 
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/utils/responsive.dart';
 
 import '../../../domain/models/channel.dart';
 
 import '../../../domain/models/company.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../../widgets/name_and_description.dart';
 import 'bloc/channels_bloc.dart';
 
@@ -24,9 +27,9 @@ class ChannelsScreen extends StatelessWidget {
         create: (context) => ChannelsBloc(),
         child: BlocConsumer<ChannelsBloc, ChannelsState>(
           listener: (context, state) => state.mapOrNull(
-              addChannelError: (state) =>
+              requestError: (state) =>
                   onAddChannelError(context, state.errorText),
-              addChannelSuccess: (_) => onAddChannelSuccess(context)),
+              requestSuccess: (_) => onAddChannelSuccess(context)),
           buildWhen: (previous, current) => current.maybeMap(
               orElse: () => false,
               pending: (_) => true,
@@ -39,7 +42,7 @@ class ChannelsScreen extends StatelessWidget {
                   context.router.push(const PresentationsRoute());
                 },
               ),
-              title: const Text('Каналы'),
+              title: Text(LocaleKeys.channels.tr()),
               actions: [
                 IconButton(
                     onPressed: () async {
@@ -84,7 +87,7 @@ class ChannelsScreen extends StatelessWidget {
     final result = await showDialog(
       context: context,
       builder: (context) => SimpleDialog(
-        title: const Text('Создание канала'),
+        title: Text(LocaleKeys.createChannel.tr()),
         contentPadding: const EdgeInsets.all(24),
         children: [
           NameAndDescriptionWidget(
@@ -101,7 +104,7 @@ class ChannelsScreen extends StatelessWidget {
             height: 12,
           ),
           CommonElevatedButton(
-              text: 'Создать канал',
+              text: LocaleKeys.createChannel.tr(),
               onPressed: () {
                 context.router.pop(AddChannelFormData(
                     title: titleController.text,
@@ -114,7 +117,7 @@ class ChannelsScreen extends StatelessWidget {
           ),
           TextButton(
               onPressed: () => context.router.pop(),
-              child: const Text('Отмена'))
+              child: Text(LocaleKeys.buttonCancel.tr()))
         ],
       ),
     );
@@ -123,12 +126,12 @@ class ChannelsScreen extends StatelessWidget {
 
   void onAddChannelError(BuildContext context, String? errorText) {
     CommonFunctions.showMessage(
-        context, errorText ?? 'Ошибка запроса. Попробуйте позже', Reason.error);
+        context, errorText ?? LocaleKeys.commonRequestError.tr(), Reason.error);
   }
 
   void onAddChannelSuccess(BuildContext context) {
     CommonFunctions.showMessage(
-        context, 'Канал успешно добавлен', Reason.neutral);
+        context, LocaleKeys.channelCreateSuccess.tr(), Reason.neutral);
   }
 }
 
@@ -144,9 +147,25 @@ class _ScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return ListView.separated(
+        separatorBuilder: (context, index) => const SizedBox(),
         itemCount: channels.length,
         itemBuilder: (context, index) => ListTile(
+              onTap: () async {
+                final result = await _onEditChannelClicked(
+                    context, channels.elementAt(index));
+                if (result is AddChannelFormData) {
+                  if (context.mounted) {
+                    BlocProvider.of<ChannelsBloc>(context).add(
+                        ChannelsEvent.onEditChannel(
+                            channelId: channels.elementAt(index).id,
+                            title: result.title,
+                            channelTypeId: result.channelTypeId,
+                            description: result.description,
+                            isPublic: result.isPublic));
+                  }
+                }
+              },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -154,7 +173,14 @@ class _ScreenView extends StatelessWidget {
                     channels.elementAt(index).title,
                     style: const TextStyle(color: Colors.black),
                   ),
-                  const SizedBox(width: 24),
+                  SizedBox(width: Responsive.isMobile(context) ? 12 : 24),
+                ],
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(channels.elementAt(index).description ?? '',
+                      style: const TextStyle(color: Colors.black)),
                   if (channels.elementAt(index).channelType !=
                       ChannelType.private)
                     TextButton(
@@ -175,34 +201,53 @@ class _ScreenView extends StatelessWidget {
                           }
                         },
                         child: Text(channels.elementAt(index).company == null
-                            ? 'Добавить комппанию'
+                            ? LocaleKeys.addCompany.tr()
                             : channels.elementAt(index).company!.name))
                 ],
               ),
-              subtitle: Text(channels.elementAt(index).description ?? '',
-                  style: const TextStyle(color: Colors.black)),
               trailing: IconButton(
-                icon: const Icon(
-                  Icons.edit,
-                  color: Colors.black,
-                ),
-                onPressed: () async {
-                  final result = await _onEditChannelClicked(
-                      context, channels.elementAt(index));
-                  if (result is AddChannelFormData) {
-                    if (context.mounted) {
-                      BlocProvider.of<ChannelsBloc>(context).add(
-                          ChannelsEvent.onEditChannel(
-                              channelId: channels.elementAt(index).id,
-                              title: result.title,
-                              channelTypeId: result.channelTypeId,
-                              description: result.description,
-                              isPublic: result.isPublic));
-                    }
-                  }
-                },
-              ),
+                  icon: const Icon(
+                    Icons.delete_rounded,
+                    color: Colors.black,
+                  ),
+                  onPressed: () => _showDeleteConfirmDialog(
+                      context,
+                      channels.elementAt(index).id,
+                      () => BlocProvider.of<ChannelsBloc>(context).add(
+                          ChannelsEvent.onDeleteChannel(
+                              id: channels.elementAt(index).id)))),
             ));
+  }
+
+  Future<void> _showDeleteConfirmDialog(
+      BuildContext context, String id, Function() onDeleteConfirmed) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: Text(LocaleKeys.deletionChannel.tr()),
+          content: Text(LocaleKeys.deleteChannelConfirmationMessage.tr()),
+
+          actions: <Widget>[
+            TextButton(
+              child: Text(LocaleKeys.buttonCancel.tr()),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(LocaleKeys.buttonDelete.tr()),
+              onPressed: () {
+                onDeleteConfirmed();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<String?> _onAddCompanyClicked(BuildContext context,
@@ -211,7 +256,7 @@ class _ScreenView extends StatelessWidget {
     final result = await showDialog(
         context: context,
         builder: (context) => SimpleDialog(
-                title: const Text('Добавление компании'),
+                title: Text(LocaleKeys.addCompany.tr()),
                 contentPadding: const EdgeInsets.all(24),
                 children: [
                   CompanySelect(
@@ -225,9 +270,8 @@ class _ScreenView extends StatelessWidget {
                     height: 12,
                   ),
                   CommonElevatedButton(
-                      text: 'Сохранить',
+                      text: LocaleKeys.buttonSave.tr(),
                       onPressed: () {
-                        print(selectedId);
                         context.router.pop(selectedId);
                       }),
                   const SizedBox(
@@ -235,7 +279,7 @@ class _ScreenView extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () => context.router.pop(),
-                      child: const Text('Отмена'))
+                      child: Text(LocaleKeys.buttonCancel.tr()))
                 ]));
     return result;
   }
@@ -253,7 +297,7 @@ class _ScreenView extends StatelessWidget {
     final result = await showDialog(
       context: context,
       builder: (context) => SimpleDialog(
-        title: const Text('Редактирование канала'),
+        title: Text(LocaleKeys.editChannel.tr()),
         contentPadding: const EdgeInsets.all(24),
         children: [
           NameAndDescriptionWidget(
@@ -270,7 +314,7 @@ class _ScreenView extends StatelessWidget {
             height: 12,
           ),
           CommonElevatedButton(
-              text: 'Сохранить',
+              text: LocaleKeys.buttonSave.tr(),
               onPressed: () {
                 context.router.pop(AddChannelFormData(
                     title: titleController.text,
@@ -283,7 +327,7 @@ class _ScreenView extends StatelessWidget {
           ),
           TextButton(
               onPressed: () => context.router.pop(),
-              child: const Text('Отмена'))
+              child: Text(LocaleKeys.buttonCancel.tr()))
         ],
       ),
     );
@@ -343,8 +387,8 @@ class _CompanySelectState extends State<CompanySelect> {
       children: [
         ListTile(
           title: Text(
-            'Без компании',
-            style: TextStyle(color: Colors.black),
+            LocaleKeys.noCompany.tr(),
+            style: const TextStyle(color: Colors.black),
           ),
           leading: Radio(
             value: 'no_company',
@@ -356,7 +400,7 @@ class _CompanySelectState extends State<CompanySelect> {
             .map((company) => ListTile(
                   title: Text(
                     company.name,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                   leading: Radio(
                     value: company.id,
@@ -389,9 +433,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-            title: const Text(
-              'Личный',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              LocaleKeys.optionPersonal.tr(),
+              style: const TextStyle(color: Colors.black),
             ),
             leading: Radio(
               value: 1,
@@ -404,9 +448,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
               },
             )),
         ListTile(
-            title: const Text(
-              'Компания',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              LocaleKeys.optionCompany.tr(),
+              style: const TextStyle(color: Colors.black),
             ),
             leading: Radio(
               value: 2,
@@ -419,9 +463,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
               },
             )),
         ListTile(
-            title: const Text(
-              'Образовательная организация',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              LocaleKeys.optionEdu.tr(),
+              style: const TextStyle(color: Colors.black),
             ),
             leading: Radio(
               value: 3,
@@ -434,9 +478,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
               },
             )),
         ListTile(
-            title: const Text(
-              'Государственное предприятие',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              LocaleKeys.optionGov.tr(),
+              style: const TextStyle(color: Colors.black),
             ),
             leading: Radio(
               value: 4,
@@ -449,9 +493,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
               },
             )),
         ListTile(
-            title: const Text(
-              'Публичный',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              LocaleKeys.optionPublic.tr(),
+              style: const TextStyle(color: Colors.black),
             ),
             leading: Radio(
               value: true,
@@ -464,9 +508,9 @@ class _ChannelSelectState extends State<ChannelSelect> {
               },
             )),
         ListTile(
-            title: const Text(
-              'Закрытый',
-              style: TextStyle(color: Colors.black),
+            title: Text(
+              LocaleKeys.optionClosed.tr(),
+              style: const TextStyle(color: Colors.black),
             ),
             leading: Radio(
               value: false,

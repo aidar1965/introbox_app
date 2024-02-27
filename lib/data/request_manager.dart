@@ -1,8 +1,8 @@
-// import 'package:moki_tutor/domain/interfaces/i_api.dart';
-// import 'package:moki_tutor/domain/interfaces/i_category_repository.dart';
-// import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
-// import 'package:moki_tutor/domain/interfaces/i_fragments_repository.dart';
-// import 'package:moki_tutor/domain/interfaces/i_request_manager.dart';
+// import 'package:introbox/domain/interfaces/i_api.dart';
+// import 'package:introbox/domain/interfaces/i_category_repository.dart';
+// import 'package:introbox/domain/interfaces/i_local_db.dart';
+// import 'package:introbox/domain/interfaces/i_fragments_repository.dart';
+// import 'package:introbox/domain/interfaces/i_request_manager.dart';
 
 // import '../domain/models/course.dart';
 // import '../domain/models/fragment.dart';

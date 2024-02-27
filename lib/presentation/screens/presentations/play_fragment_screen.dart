@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../../generated/locale_keys.g.dart';
 import '../../common/pdf_player_widget.dart';
 
 class PlayFragmentScreen extends StatefulWidget {
@@ -96,7 +98,7 @@ class _PlayFragmentScreenState extends State<PlayFragmentScreen> {
             onPressed: () async {
               context.router.pop();
             },
-            tooltip: 'Закрыть',
+            tooltip: LocaleKeys.toolTipClose.tr(),
             child: const Icon(
               Icons.close,
               color: Colors.white,

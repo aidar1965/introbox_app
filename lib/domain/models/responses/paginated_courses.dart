@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:moki_tutor/domain/models/course.dart';
+import 'package:introbox/domain/models/course.dart';
 
 @immutable
 class PaginatedCourses {

@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:moki_tutor/domain/interfaces/i_auth_controller.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/interfaces/i_auth_controller.dart';
 
-import 'package:moki_tutor/domain/interfaces/i_user_repository.dart';
-import 'package:moki_tutor/domain/models/user.dart';
+import 'package:introbox/domain/interfaces/i_user_repository.dart';
+import 'package:introbox/domain/models/user.dart';
 
 import '../interfaces/i_local_cache.dart';
 import '../locator/locator.dart';

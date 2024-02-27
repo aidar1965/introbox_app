@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/domain/models/company.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
-import 'package:moki_tutor/presentation/screens/companies/bloc/companies_bloc.dart';
+import 'package:introbox/domain/models/company.dart';
+import 'package:introbox/presentation/auto_router/app_router.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
+import 'package:introbox/presentation/screens/companies/bloc/companies_bloc.dart';
 
+import '../../../generated/locale_keys.g.dart';
 import '../../common/common_elevated_button.dart';
 import '../../common/common_loading_error_widget.dart';
 
@@ -24,8 +26,7 @@ class CompaniesScreen extends StatelessWidget {
           listener: (context, state) => state.mapOrNull(
               requestError: (state) => CommonFunctions.showMessage(
                   context,
-                  state.errorText ??
-                      'Произошла непредвиденная ошибка, повторите запрос',
+                  state.errorText ?? LocaleKeys.commonRequestError.tr(),
                   Reason.error),
               requestSuccess: (_) => BlocProvider.of<CompaniesBloc>(context)
                   .add(const CompaniesEvent.initialDataRequested())),
@@ -36,7 +37,7 @@ class CompaniesScreen extends StatelessWidget {
               orElse: () => false)),
           builder: (context, state) => state.maybeMap(
               orElse: () =>
-                  throw UnsupportedError('tetate not supporting building'),
+                  throw UnsupportedError('state not supporting building'),
               pending: (_) => Scaffold(
                   appBar: AppBar(
                     leading: BackButton(
@@ -44,7 +45,7 @@ class CompaniesScreen extends StatelessWidget {
                         context.router.push(const PresentationsRoute());
                       },
                     ),
-                    title: const Text('Компании'),
+                    title: Text(LocaleKeys.companies.tr()),
                   ),
                   //    drawer: const CommonNavigationDrawer(),
                   body: const Center(child: CircularProgressIndicator())),
@@ -55,7 +56,7 @@ class CompaniesScreen extends StatelessWidget {
                         context.router.push(const PresentationsRoute());
                       },
                     ),
-                    title: const Text('Компании'),
+                    title: Text(LocaleKeys.companies.tr()),
                   ),
                   //       drawer: const CommonNavigationDrawer(),
                   body: CommonLoadingErrorWidget(
@@ -81,7 +82,7 @@ class _ScreenView extends StatelessWidget {
             context.router.push(const PresentationsRoute());
           },
         ),
-        title: const Text('Компании'),
+        title: Text(LocaleKeys.companies.tr()),
         actions: [
           IconButton(
               onPressed: () async {
@@ -101,8 +102,9 @@ class _ScreenView extends StatelessWidget {
       ),
 
       ///  drawer: const CommonNavigationDrawer(),
-      body: companies.length > 0
-          ? ListView.builder(
+      body: companies.isNotEmpty
+          ? ListView.separated(
+              separatorBuilder: (context, index) => const SizedBox(),
               itemCount: companies.length,
               itemBuilder: (context, index) => ListTile(
                     title: Text(
@@ -135,12 +137,13 @@ class _ScreenView extends StatelessWidget {
                           },
                         ),
                         IconButton(
-                            onPressed: () {
-                              BlocProvider.of<CompaniesBloc>(context).add(
-                                  CompaniesEvent.onDeleteCompany(
-                                      id: companies.elementAt(index).id));
-                            },
-                            icon: Icon(
+                            onPressed: () => _showDeleteConfirmDialog(
+                                context,
+                                companies.elementAt(index).id,
+                                () => BlocProvider.of<CompaniesBloc>(context)
+                                    .add(CompaniesEvent.onDeleteCompany(
+                                        id: companies.elementAt(index).id))),
+                            icon: const Icon(
                               Icons.delete_rounded,
                               color: Colors.black,
                             ))
@@ -148,8 +151,39 @@ class _ScreenView extends StatelessWidget {
                     ),
                   ))
           : Center(
-              child: Text('Компании еще не внесены'),
+              child: Text(LocaleKeys.companiesNotFound.tr()),
             ),
+    );
+  }
+
+  Future<void> _showDeleteConfirmDialog(
+      BuildContext context, String id, Function() onDeleteConfirmed) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (context) {
+        return AlertDialog(
+          // <-- SEE HERE
+          title: Text(LocaleKeys.deleteCompany.tr()),
+          content: Text(LocaleKeys.deleteCompanyConfirmationMessage.tr()),
+
+          actions: <Widget>[
+            TextButton(
+              child: Text(LocaleKeys.buttonCancel.tr()),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(LocaleKeys.buttonDelete.tr()),
+              onPressed: () {
+                onDeleteConfirmed();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -160,7 +194,7 @@ class _ScreenView extends StatelessWidget {
     final result = await showDialog(
         context: context,
         builder: (context) => SimpleDialog(
-                title: const Text('Добавление компании'),
+                title: Text(LocaleKeys.addCompany.tr()),
                 contentPadding: const EdgeInsets.all(24),
                 children: [
                   ConstrainedBox(
@@ -168,7 +202,7 @@ class _ScreenView extends StatelessWidget {
                     child: NameAndDescriptionWidget(
                       titleController: titleController,
                       descriptionController: websiteController,
-                      descriptionLabelName: 'Ссылка на вебсайт',
+                      descriptionLabelName: LocaleKeys.websiteLink.tr(),
                     ),
                   ),
                   const SizedBox(
@@ -187,7 +221,7 @@ class _ScreenView extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () => context.router.pop(),
-                      child: const Text('Отмена'))
+                      child: Text(LocaleKeys.buttonCancel.tr()))
                 ]));
     return result;
   }
@@ -204,7 +238,7 @@ class _ScreenView extends StatelessWidget {
     final result = await showDialog(
         context: context,
         builder: (context) => SimpleDialog(
-                title: const Text('Добавление компании'),
+                title: Text(LocaleKeys.addCompany.tr()),
                 contentPadding: const EdgeInsets.all(24),
                 children: [
                   ConstrainedBox(
@@ -212,7 +246,7 @@ class _ScreenView extends StatelessWidget {
                     child: NameAndDescriptionWidget(
                       titleController: titleController,
                       descriptionController: websiteController,
-                      descriptionLabelName: 'Ссылка на вебсайт',
+                      descriptionLabelName: LocaleKeys.websiteLink.tr(),
                     ),
                   ),
                   const SizedBox(
@@ -231,7 +265,7 @@ class _ScreenView extends StatelessWidget {
                   ),
                   TextButton(
                       onPressed: () => context.router.pop(),
-                      child: const Text('Отмена'))
+                      child: Text(LocaleKeys.buttonCancel.tr()))
                 ]));
     return result;
   }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:moki_tutor/domain/models/token_pair.dart';
+import 'package:introbox/domain/models/token_pair.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +11,7 @@ class LocalCache implements ILocalCache {
   final secureStorage = const FlutterSecureStorage();
 
   static const userKey = 'user';
+  static const localeKey = 'locale';
 
   static const String accessTokenKey = 'access_token_key';
   static const String refreshTokenKey = 'refresh_token_key';
@@ -91,5 +92,17 @@ class LocalCache implements ILocalCache {
   Future<void> clearTokenPair() async {
     await secureStorage.delete(key: accessTokenKey);
     await secureStorage.delete(key: refreshTokenKey);
+  }
+
+  @override
+  Future<String?> getLocale() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getString(localeKey);
+  }
+
+  @override
+  Future<void> setLocale({required String locale}) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setString(localeKey, locale);
   }
 }

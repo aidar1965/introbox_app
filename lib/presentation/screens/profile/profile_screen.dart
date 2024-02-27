@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
-import 'package:moki_tutor/presentation/common/common_functions.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_functions.dart';
 import '../../auto_router/app_router.dart';
 import '../../common/common_loading_error_widget.dart';
 import '../../theme/dynamic_theme.dart';
@@ -24,7 +26,7 @@ class ProfileScreen extends StatelessWidget {
           listener: (context, state) => state.mapOrNull(
               logoutSuccess: (_) => context.router.push(const LoginRoute()),
               requestError: (state) => CommonFunctions.showMessage(
-                  context, 'Не удалось обновить данные', Reason.error)),
+                  context, LocaleKeys.commonRequestError.tr(), Reason.error)),
           buildWhen: (previous, current) => current.maybeMap(
             orElse: () => false,
             screenState: (_) => true,
@@ -36,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
             pending: (_) => Scaffold(
               appBar: AppBar(
                   title: Text(
-                'Профиль',
+                LocaleKeys.profile.tr(),
               )),
               body: const Center(
                 child: CircularProgressIndicator(),
@@ -45,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
             loadingError: (_) => Scaffold(
                 appBar: AppBar(
                     title: Text(
-                  'Профиль',
+                  LocaleKeys.profile.tr(),
                 )),
                 body: Stack(children: [
                   CommonLoadingErrorWidget(
@@ -64,7 +66,6 @@ class ProfileScreen extends StatelessWidget {
               return _ScreenView(
                 firstName: state.user.firstName ?? '',
                 lastName: state.user.lastName ?? '',
-                secondName: state.user.secondName,
                 about: state.user.about,
                 imagePath: state.user.imageUrl,
               );
@@ -78,19 +79,16 @@ class _ScreenView extends StatefulWidget {
   _ScreenView(
       {super.key,
       required this.firstName,
-      this.secondName,
       required this.lastName,
       this.about,
       this.imagePath});
 
   final String firstName;
-  final String? secondName;
   final String lastName;
   final String? about;
   final String? imagePath;
 
   final firstnameController = TextEditingController();
-  final secondnameController = TextEditingController();
   final lastnameController = TextEditingController();
   final aboutController = TextEditingController();
 
@@ -109,7 +107,6 @@ class __ScreenViewState extends State<_ScreenView> {
   void initState() {
     super.initState();
     widget.firstnameController.text = widget.firstName;
-    widget.secondnameController.text = widget.secondName ?? '';
     widget.lastnameController.text = widget.lastName;
     widget.aboutController.text = widget.about ?? '';
   }
@@ -124,7 +121,7 @@ class __ScreenViewState extends State<_ScreenView> {
             },
           ),
           title: Text(
-            'Профиль',
+            LocaleKeys.profile.tr(),
           )),
       body: Stack(children: [
         SingleChildScrollView(
@@ -173,9 +170,33 @@ class __ScreenViewState extends State<_ScreenView> {
               SizedBox(
                 width: 300,
                 child: TextField(
+                  controller: widget.firstnameController,
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.firstName.tr(),
+                    labelStyle:
+                        TextStyle(color: DynamicTheme.paletteOf(context).text2),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 1,
+                          color: DynamicTheme.paletteOf(context).accent),
+                      //<-- SEE HERE
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2,
+                          color: DynamicTheme.paletteOf(context).accent),
+                      //<-- SEE HERE
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: 300,
+                child: TextField(
                     controller: widget.lastnameController,
                     decoration: InputDecoration(
-                      labelText: 'Фамилия',
+                      labelText: LocaleKeys.lastName.tr(),
                       labelStyle: TextStyle(
                           color: DynamicTheme.paletteOf(context).text2),
                       enabledBorder: OutlineInputBorder(
@@ -196,59 +217,11 @@ class __ScreenViewState extends State<_ScreenView> {
               SizedBox(
                 width: 300,
                 child: TextField(
-                  controller: widget.firstnameController,
-                  decoration: InputDecoration(
-                    labelText: 'Имя',
-                    labelStyle:
-                        TextStyle(color: DynamicTheme.paletteOf(context).text2),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1,
-                          color: DynamicTheme.paletteOf(context).accent),
-                      //<-- SEE HERE
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2,
-                          color: DynamicTheme.paletteOf(context).accent),
-                      //<-- SEE HERE
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: widget.secondnameController,
-                  decoration: InputDecoration(
-                    labelText: 'Отчество',
-                    labelStyle:
-                        TextStyle(color: DynamicTheme.paletteOf(context).text2),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 1,
-                          color: DynamicTheme.paletteOf(context).accent),
-                      //<-- SEE HERE
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2,
-                          color: DynamicTheme.paletteOf(context).accent),
-                      //<-- SEE HERE
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              SizedBox(
-                width: 300,
-                child: TextField(
                   controller: widget.aboutController,
                   minLines: 4,
                   maxLines: null,
                   decoration: InputDecoration(
-                    labelText: 'Обо мне',
+                    labelText: LocaleKeys.about.tr(),
                     labelStyle:
                         TextStyle(color: DynamicTheme.paletteOf(context).text2),
                     enabledBorder: OutlineInputBorder(
@@ -276,12 +249,11 @@ class __ScreenViewState extends State<_ScreenView> {
                         BlocProvider.of<ProfileBloc>(context).add(
                             ProfileEvent.updateUser(
                                 firstname: widget.firstnameController.text,
-                                secondname: widget.secondnameController.text,
                                 lastname: widget.lastnameController.text,
                                 about: widget.aboutController.text,
                                 imageBytes: imageBytes));
                       },
-                      text: 'Сохранить'))
+                      text: LocaleKeys.buttonSave.tr()))
             ],
           )
         ])),

@@ -1,9 +1,9 @@
 // import 'dart:convert';
 
-// import 'package:moki_tutor/data/dto/course_dto.dart';
-// import 'package:moki_tutor/data/dto/record_dto.dart';
-// import 'package:moki_tutor/data/dto/subject_dto.dart';
-// import 'package:moki_tutor/data/dto/user_dto.dart';
+// import 'package:introbox/data/dto/course_dto.dart';
+// import 'package:introbox/data/dto/record_dto.dart';
+// import 'package:introbox/data/dto/subject_dto.dart';
+// import 'package:introbox/data/dto/user_dto.dart';
 
 // import '../../domain/models/course.dart';
 // import '../../domain/models/fragment.dart';

@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import '../../generated/locale_keys.g.dart';
 
 class AddImageWidget extends StatefulWidget {
   const AddImageWidget({
@@ -59,7 +62,7 @@ class _AddImageWidgetState extends State<AddImageWidget> {
                       });
                     }
                   },
-                  child: const Text('Выбрать изображение'),
+                  child: Text(LocaleKeys.selectImage.tr()),
                 ),
               ),
             ),
@@ -99,7 +102,7 @@ class _AddImageWidgetState extends State<AddImageWidget> {
                                   widget.onAdd(imageMap!);
                                 }
                               },
-                              child: Text('Добавить'))
+                              child: Text(LocaleKeys.buttonAdd.tr()))
                         ],
                       )
                     ],

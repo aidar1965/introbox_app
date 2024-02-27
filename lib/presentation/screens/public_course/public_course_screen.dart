@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/domain/models/course.dart';
+import 'package:introbox/domain/models/course.dart';
 
 import '../../../domain/models/presentation.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../../auto_router/app_router.dart';
 import '../../common/common_loading_error_widget.dart';
 import '../../utils/responsive.dart';
@@ -21,7 +23,7 @@ class PublicCourseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Презентации курса'),
+        title: Text(LocaleKeys.courseDetails.tr()),
         leading: BackButton(
           onPressed: () {
             context.router.push(const CoursesRoute());
@@ -62,8 +64,37 @@ class _ScreenView extends StatelessWidget {
     return SingleChildScrollView(
         child: Padding(
             padding: EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
-            child: Column(children: [
-              Text(course.title),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                course.title,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 12),
+              if (course.description != null &&
+                  course.description!.isNotEmpty) ...[
+                Text(
+                  course.description!,
+                  style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.italic),
+                ),
+                const SizedBox(height: 12),
+              ],
+              Text(
+                course.channel.title,
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.italic),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                LocaleKeys.coursePresentations.tr(),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
               const SizedBox(height: 12),
               ListView.separated(
                   shrinkWrap: true,
@@ -126,7 +157,7 @@ class PresentationListItem extends StatelessWidget {
                                     child: Text(presentation.title,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600))),
                                 Expanded(
@@ -134,7 +165,7 @@ class PresentationListItem extends StatelessWidget {
                                     presentation.description!,
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                         fontStyle: FontStyle.italic),
@@ -143,7 +174,7 @@ class PresentationListItem extends StatelessWidget {
                                 Text(
                                   DateFormat('dd.MM.yyy kk:mm')
                                       .format(presentation.createdAt),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w600),
                                 ),

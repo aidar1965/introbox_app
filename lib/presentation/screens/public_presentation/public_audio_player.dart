@@ -204,7 +204,8 @@ class _PublicAudioPlayerState extends State<PublicAudioPlayer> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: // LinearProgressIndicator(value: progress),
                           ProgressBar(
-                        timeLabelTextStyle: TextStyle(color: Colors.white),
+                        timeLabelTextStyle:
+                            const TextStyle(color: Colors.white),
                         thumbColor: Colors.white,
                         progress: Duration(seconds: progress),
                         buffered: const Duration(seconds: 5),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moki_tutor/presentation/values/dynamic_palette.dart';
+import 'package:introbox/presentation/values/dynamic_palette.dart';
 
 import '../theme/dynamic_theme.dart';
 

@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../generated/locale_keys.g.dart';
 import '../theme/dynamic_theme.dart';
 
 class NameAndDescriptionWidget extends StatelessWidget {
@@ -23,14 +25,19 @@ class NameAndDescriptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (initialName != null) {
+      titleController.text = initialName!;
+    }
+    if (initialDescription != null) {
+      descriptionController.text = initialDescription!;
+    }
     return Column(
       children: [
         TextFormField(
-          initialValue: initialName,
           controller: titleController,
           maxLines: null,
           decoration: InputDecoration(
-            labelText: titleLabelName ?? 'Название',
+            labelText: titleLabelName ?? LocaleKeys.toolTipName.tr(),
             labelStyle: TextStyle(color: DynamicTheme.paletteOf(context).text2),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(
@@ -48,12 +55,12 @@ class NameAndDescriptionWidget extends StatelessWidget {
           height: 12,
         ),
         TextFormField(
-          initialValue: initialDescription,
           controller: descriptionController,
           minLines: 4,
           maxLines: null,
           decoration: InputDecoration(
-            labelText: descriptionLabelName ?? 'Описание',
+            labelText:
+                descriptionLabelName ?? LocaleKeys.toolTipDescription.tr(),
             labelStyle: TextStyle(color: DynamicTheme.paletteOf(context).text2),
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(

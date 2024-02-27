@@ -1,15 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/domain/models/course.dart';
-import 'package:moki_tutor/presentation/common/common_elevated_button.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
-import 'package:moki_tutor/presentation/screens/course_screen/bloc/course_bloc.dart';
-import 'package:moki_tutor/presentation/utils/responsive.dart';
+import 'package:introbox/domain/models/course.dart';
+import 'package:introbox/presentation/common/common_elevated_button.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/screens/course_screen/bloc/course_bloc.dart';
+import 'package:introbox/presentation/utils/responsive.dart';
 
 import '../../../domain/models/presentation.dart';
+import '../../../generated/locale_keys.g.dart';
 import '../../auto_router/app_router.dart';
 import '../../common/common_functions.dart';
 
@@ -23,7 +25,7 @@ class CourseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Презентации курса'),
+        title: Text(LocaleKeys.courseDetails.tr()),
         leading: BackButton(
           onPressed: () {
             context.router.push(const MyCoursesRoute());
@@ -35,9 +37,7 @@ class CourseScreen extends StatelessWidget {
           child: BlocConsumer<CourseBloc, CourseState>(
             listener: (context, state) => state.mapOrNull(
                 requestError: (_) => CommonFunctions.showMessage(
-                    context,
-                    'Произошла ошибка в запросе. Попробуйте позже',
-                    Reason.error)),
+                    context, LocaleKeys.commonRequestError.tr(), Reason.error)),
             buildWhen: (previous, current) => current.maybeMap(
                 orElse: () => false,
                 pending: (_) => true,
@@ -92,8 +92,36 @@ class _ScreenViewState extends State<_ScreenView> {
       child: Padding(
         padding: EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.course.title),
+            Text(
+              widget.course.title,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 12),
+            if (widget.course.description != null &&
+                widget.course.description!.isNotEmpty) ...[
+              Text(
+                widget.course.description!,
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.italic),
+              ),
+              const SizedBox(height: 12),
+            ],
+            Text(
+              widget.course.channel.title,
+              style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.italic),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              LocaleKeys.coursePresentations.tr(),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+            ),
             const SizedBox(height: 12),
             ReorderableListView.builder(
                 shrinkWrap: true,
@@ -106,7 +134,7 @@ class _ScreenViewState extends State<_ScreenView> {
             SizedBox(
                 width: 200,
                 child: CommonElevatedButton(
-                    text: 'Сохранить',
+                    text: LocaleKeys.buttonChangeOrder.tr(),
                     onPressed: () {
                       BlocProvider.of<CourseBloc>(context).add(
                           CourseEvent.reorderPresentations(
@@ -162,7 +190,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                       child: Text(presentation.title,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600))),
                                   Expanded(
@@ -170,7 +198,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                       presentation.description!,
                                       maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
                                           fontStyle: FontStyle.italic),
@@ -179,7 +207,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                   Text(
                                     DateFormat('dd.MM.yyy kk:mm')
                                         .format(presentation.createdAt),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600),
                                   ),
@@ -195,7 +223,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                 CourseEvent.removePresentationFromCourse(
                                     id: presentation.id));
                           },
-                          icon: Icon(Icons.delete_outlined)),
+                          icon: const Icon(Icons.delete_outlined)),
                     )
                   ],
                 )),

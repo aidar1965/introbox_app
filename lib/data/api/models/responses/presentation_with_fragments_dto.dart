@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:moki_tutor/data/api/models/responses/pdf_fragment_dto.dart';
+import 'package:introbox/data/api/models/responses/pdf_fragment_dto.dart';
 
 import 'channel_dto.dart';
 

@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:moki_tutor/presentation/theme/dynamic_theme.dart';
+import 'package:introbox/presentation/theme/dynamic_theme.dart';
 
 import '../values/values.dart';
 
@@ -301,6 +301,8 @@ class CommonFunctions {
       return const Locale('vi', 'VN');
     } else if (localeString.contains('zh')) {
       return const Locale('zh');
+    } else if (localeString.contains('kz')) {
+      return const Locale('kk', 'KZ');
     } else {
       return const Locale('en', 'US');
     }

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
-import 'package:moki_tutor/domain/interfaces/i_courses_repository.dart';
-import 'package:moki_tutor/domain/interfaces/i_subject_repository.dart';
-import 'package:moki_tutor/domain/models/course.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/interfaces/i_courses_repository.dart';
+import 'package:introbox/domain/interfaces/i_subject_repository.dart';
+import 'package:introbox/domain/models/course.dart';
 
 import '../interfaces/i_local_db.dart';
 import '../locator/locator.dart';

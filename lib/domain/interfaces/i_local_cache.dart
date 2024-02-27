@@ -13,4 +13,8 @@ abstract class ILocalCache {
   Future<TokenPair?> getTokenPair();
 
   Future<void> clearTokenPair();
+
+  Future<String?> getLocale();
+
+  Future<void> setLocale({required String locale});
 }

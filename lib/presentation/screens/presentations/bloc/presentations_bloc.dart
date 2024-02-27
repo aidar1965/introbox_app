@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/domain/interfaces/i_api.dart';
+import 'package:introbox/domain/interfaces/i_api.dart';
 
 import '../../../../../domain/locator/locator.dart';
 import '../../../../../domain/models/presentation.dart';

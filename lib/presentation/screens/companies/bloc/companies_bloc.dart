@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:moki_tutor/data/api/http_client/request_exception.dart';
+import 'package:introbox/data/api/http_client/request_exception.dart';
 
 import '../../../../domain/interfaces/i_api.dart';
 import '../../../../domain/locator/locator.dart';

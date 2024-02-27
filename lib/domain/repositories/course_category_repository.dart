@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:moki_tutor/domain/interfaces/i_course_category_repository.dart';
-import 'package:moki_tutor/domain/interfaces/i_local_db.dart';
-import 'package:moki_tutor/domain/models/course_category.dart';
+import 'package:introbox/domain/interfaces/i_course_category_repository.dart';
+import 'package:introbox/domain/interfaces/i_local_db.dart';
+import 'package:introbox/domain/models/course_category.dart';
 
 class CourseCategoryRepository extends ChangeNotifier
     implements ICourseCategoryRepository {

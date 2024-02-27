@@ -41,7 +41,7 @@ part 'app_router.gr.dart';
 
 @AutoRouterConfig()
 class AppRouter extends _$AppRouter implements AutoRouteGuard {
-  AppRouter() {
+  AppRouter(this.isLocaleSet) {
     isAuthenticated = authController.isAuthenticated;
 
     authController.addChangeListener(() {
@@ -51,6 +51,8 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
       }
     });
   }
+
+  final bool isLocaleSet;
 
   final authController = getIt<IAuthController>();
   late bool isAuthenticated;

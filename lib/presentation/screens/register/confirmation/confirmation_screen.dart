@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
 
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
@@ -26,16 +28,19 @@ class ConfirmationScreen extends StatelessWidget {
               child: BlocConsumer<ConfirmationBloc, ConfirmationState>(
                   listener: (context, state) => state.mapOrNull(
                       confirmationSuccess: (state) {
-                        CommonFunctions.showMessage(context,
-                            'Вы успешно зарегистрировались', Reason.neutral);
+                        CommonFunctions.showMessage(
+                            context,
+                            LocaleKeys.confirmationSuccess.tr(),
+                            Reason.neutral);
                         context.router.popAndPush(const LoginRoute());
                         return null;
                       },
                       confirmationError: (state) =>
                           CommonFunctions.showStyledDialog(
                               context: context,
-                              message: state.errorText ?? 'Ошибка!',
-                              positiveButtonText: 'Ok')),
+                              message: state.errorText ??
+                                  LocaleKeys.commonRequestError.tr(),
+                              positiveButtonText: LocaleKeys.ok.tr())),
                   listenWhen: (previous, current) => current.maybeMap(
                         orElse: () => false,
                         confirmationError: (_) => true,
@@ -49,13 +54,13 @@ class ConfirmationScreen extends StatelessWidget {
                       screenState: (state) =>
                           Column(mainAxisSize: MainAxisSize.min, children: [
                             Text(
-                                'Введите код, полученный для ротвержения регистрации на Вашу почту $email'),
+                                '${LocaleKeys.confirmationInsertCode.tr()} $email'),
                             const SizedBox(
                               height: 30,
                             ),
                             CommonTextField(
                                 controller: confirmationCodeController,
-                                labelText: 'Код потверждения'),
+                                labelText: LocaleKeys.confirmationCode.tr()),
                             const SizedBox(
                               height: 30,
                             ),
@@ -67,7 +72,7 @@ class ConfirmationScreen extends StatelessWidget {
                                           code:
                                               confirmationCodeController.text));
                                 },
-                                child: const Text('Отправить')),
+                                child: Text(LocaleKeys.buttonSend.tr())),
                           ])))),
         )));
   }

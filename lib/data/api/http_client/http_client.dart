@@ -3,7 +3,7 @@ import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:moki_tutor/domain/models/token_pair.dart';
+import 'package:introbox/domain/models/token_pair.dart';
 
 import '../../../domain/interfaces/i_auth_controller.dart';
 import '../../../domain/locator/locator.dart';
@@ -72,9 +72,6 @@ class DioClient {
 
     _dioOptions = BaseOptions(
       baseUrl: _baseUrl,
-      connectTimeout: const Duration(milliseconds: 25000),
-      receiveTimeout: const Duration(seconds: 120),
-      sendTimeout: const Duration(seconds: 600),
       headers: headers,
     );
     _dio = Dio(_dioOptions);

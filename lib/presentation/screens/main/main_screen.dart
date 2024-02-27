@@ -1,15 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:moki_tutor/presentation/auto_router/app_router.dart';
-import 'package:moki_tutor/presentation/common/common_loading_error_widget.dart';
-import 'package:moki_tutor/presentation/screens/main/bloc/main_bloc.dart';
-import 'package:moki_tutor/presentation/utils/responsive.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
+import 'package:introbox/presentation/auto_router/app_router.dart';
+import 'package:introbox/presentation/common/common_loading_error_widget.dart';
+import 'package:introbox/presentation/screens/main/bloc/main_bloc.dart';
+import 'package:introbox/presentation/utils/responsive.dart';
 
 import '../../../domain/models/presentation.dart';
+import '../../values/dynamic_palette.dart';
 
 @RoutePage()
 class MainScreen extends StatelessWidget {
@@ -30,25 +33,26 @@ class MainScreen extends StatelessWidget {
                   throw UnsupportedError('state not supporting building'),
               initialLoadingError: (_) => Scaffold(
                   appBar: AppBar(
-                      leading: const SizedBox(),
-                      title: const Text('Презентации')),
+                    automaticallyImplyLeading: false,
+                    //      title: Text(LocaleKeys.presentations.tr())
+                  ),
                   body: CommonLoadingErrorWidget(
                       onPressed: () => BlocProvider.of<MainBloc>(context)
                           .add(const MainEvent.initialDataRequested()))),
               screenState: (state) => Scaffold(
                   appBar: AppBar(
-                    leading: const SizedBox(),
+                    automaticallyImplyLeading: false,
                     title: Row(
                       children: [
-                        const Text('Презентации'),
+                        Text(LocaleKeys.presentations.tr()),
                         TextButton(
                           onPressed: () {
                             context.router.replace(const CoursesRoute());
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(top: 2, left: 12),
-                            child: Text('Курсы',
-                                style: TextStyle(
+                            child: Text(LocaleKeys.courses.tr(),
+                                style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14)),
@@ -58,19 +62,38 @@ class MainScreen extends StatelessWidget {
                     ),
                     actions: [
                       IconButton(
-                          onPressed: () {
-                            BlocProvider.of<MainBloc>(context)
-                                .add(const MainEvent.initialDataRequested());
-                          },
-                          icon: const Icon(Icons.refresh_rounded)),
+                          onPressed: () => showLocaleDialog(context,
+                              EasyLocalization.of(context)?.currentLocale),
+                          icon: Text(
+                            EasyLocalization.of(context)
+                                    ?.currentLocale
+                                    ?.languageCode
+                                    .toUpperCase() ??
+                                'EN',
+                            style: const TextStyle(color: Colors.white),
+                          )),
+                      if (Responsive.isMobile(context) == false)
+                        IconButton(
+                            onPressed: () {
+                              BlocProvider.of<MainBloc>(context)
+                                  .add(const MainEvent.initialDataRequested());
+                            },
+                            icon: const Icon(Icons.refresh_rounded)),
                       if (state.isAuthorized)
-                        TextButton(
-                            onPressed: () =>
-                                context.router.push(const PresentationsRoute()),
-                            child: Text(
-                              'Студия',
-                              style: TextStyle(color: Colors.white),
-                            )),
+                        if (Responsive.isMobile(context))
+                          IconButton(
+                              onPressed: () => context.router
+                                  .push(const PresentationsRoute()),
+                              icon:
+                                  const Icon(Icons.cast_for_education_outlined))
+                        else
+                          TextButton(
+                              onPressed: () => context.router
+                                  .push(const PresentationsRoute()),
+                              child: Text(
+                                LocaleKeys.studio.tr(),
+                                style: const TextStyle(color: Colors.white),
+                              )),
                       if (state.isAuthorized)
                         IconButton(
                             onPressed: () {
@@ -89,26 +112,87 @@ class MainScreen extends StatelessWidget {
                       ? const Center(child: CircularProgressIndicator())
                       : state.presentations.isEmpty
                           ? Center(
-                              child: Text('Презентаций не найдено'),
+                              child:
+                                  Text(LocaleKeys.presentationsNotFound.tr()),
                             )
-                          : ListView.separated(
-                              itemCount: state.presentations.length,
-                              padding: EdgeInsets.all(
-                                  Responsive.isMobile(context) == false
-                                      ? 24
-                                      : 12),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(
-                                height: 12,
+                          : RefreshIndicator(
+                              onRefresh: () async =>
+                                  BlocProvider.of<MainBloc>(context).add(
+                                      const MainEvent.initialDataRequested()),
+                              child: ListView.separated(
+                                itemCount: state.presentations.length,
+                                padding: EdgeInsets.all(
+                                    Responsive.isMobile(context) == false
+                                        ? 24
+                                        : 12),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                  height: 12,
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return PresentationItem(
+                                    presentation:
+                                        state.presentations.elementAt(index),
+                                  );
+                                },
                               ),
-                              itemBuilder: (BuildContext context, int index) {
-                                return PresentationItem(
-                                  presentation:
-                                      state.presentations.elementAt(index),
-                                );
-                              },
                             )))),
         ));
+  }
+
+  showLocaleDialog(BuildContext context, Locale? currentLocale) {
+    showDialog(
+        context: context,
+        builder: (context) => SimpleDialog(
+              contentPadding: const EdgeInsets.all(24),
+              children: [
+                ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    tileColor: EasyLocalization.of(context)?.currentLocale ==
+                            const Locale('kk', 'KZ')
+                        ? Colors.black54
+                        : DynamicPalette.light().accent,
+                    title: const Text('Қазақша'),
+                    onTap: () {
+                      EasyLocalization.of(context)?.setLocale(
+                        const Locale('kk', 'KZ'),
+                      );
+                    }),
+                const SizedBox(
+                  height: 12,
+                ),
+                ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    tileColor: EasyLocalization.of(context)?.currentLocale ==
+                            const Locale('ru', 'RU')
+                        ? Colors.black54
+                        : DynamicPalette.light().accent,
+                    title: const Text('Русский'),
+                    onTap: () {
+                      EasyLocalization.of(context)?.setLocale(
+                        const Locale('ru', 'RU'),
+                      );
+                    }),
+                const SizedBox(
+                  height: 12,
+                ),
+                ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    tileColor: EasyLocalization.of(context)?.currentLocale ==
+                            const Locale('en', 'US')
+                        ? Colors.black54
+                        : DynamicPalette.light().accent,
+                    title: const Text('English'),
+                    onTap: () {
+                      EasyLocalization.of(context)?.setLocale(
+                        const Locale('en', 'US'),
+                      );
+                    })
+              ],
+            ));
   }
 }
 
@@ -161,31 +245,37 @@ class PresentationItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Text(
-                          presentation.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      //     if (presentation.description != null)
-                      Expanded(
-                        child: Text(
-                          presentation.description!,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.italic),
-                        ),
-                      ),
                       Text(
-                        DateFormat('dd.MM.yyy kk:mm')
-                            .format(presentation.createdAt),
-                        style: TextStyle(
+                        presentation.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
+
+                      Text(
+                        presentation.channel!.title,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.italic),
+                      ),
+
+                      //     if (presentation.description != null)
+                      Text(
+                        presentation.description ?? '',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.italic),
+                      ),
+                      const Spacer(),
+                      Text(
+                        DateFormat('dd.MM.yyy').format(presentation.createdAt),
+                        style: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w600),
                       ),
                     ],

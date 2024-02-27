@@ -1,4 +1,4 @@
-package com.example.moki_tutor
+package com.softuna.introbox
 
 import io.flutter.embedding.android.FlutterActivity
 
