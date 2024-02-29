@@ -48,7 +48,7 @@ class _AddImageWidgetState extends State<AddImageWidget> {
                   onPressed: () async {
                     file = await FilePicker.platform.pickFiles(
                       type: FileType.custom,
-                      allowedExtensions: ['jpg', 'jpeg', 'svg', 'png'],
+                      allowedExtensions: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
                     );
                     if (file != null) {
                       var decodedImage = await decodeImageFromList(

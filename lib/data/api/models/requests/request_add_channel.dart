@@ -17,7 +17,7 @@ class RequestAddChannel extends IApiRequest {
 
   @override
   Map<String, Object?>? get body => {
-        'title': title,
+        'title': title.replaceAll(RegExp(r'\s+'), ' '),
         'description': description,
         'company_id': companyId,
         'channel_type_id': channelTypeId,

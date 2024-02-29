@@ -51,6 +51,8 @@ abstract class  LocaleKeys {
   static const optionGov = 'optionGov';
   static const optionPublic = 'optionPublic';
   static const optionClosed = 'optionClosed';
+  static const emptyChannelTitle = 'emptyChannelTitle';
+  static const channelExistsError = 'channelExistsError';
   static const companies_screen = 'companies_screen';
   static const companies = 'companies';
   static const companiesNotFound = 'companiesNotFound';
@@ -121,6 +123,9 @@ abstract class  LocaleKeys {
   static const slideNameAndDescription = 'slideNameAndDescription';
   static const addAudioFromFile = 'addAudioFromFile';
   static const slideTitleEmpty = 'slideTitleEmpty';
+  static const awaitCreationFinished = 'awaitCreationFinished';
+  static const savingPresentation = 'savingPresentation';
+  static const countSlides = 'countSlides';
   static const image_create_presentation_screen = 'image_create_presentation_screen';
   static const newPresentation = 'newPresentation';
   static const createPresentation = 'createPresentation';

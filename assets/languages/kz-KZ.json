@@ -57,6 +57,8 @@
     "optionGov": "Государственное предприятие",
     "optionPublic": "Публичный",
     "optionClosed": "Закрытый",
+    "emptyChannelTitle": "Название канала не может быть пустым",
+    "channelExistsError": "Канал {} уже существует",
 
 
     "companies_screen": "",
@@ -140,6 +142,9 @@
     "slideNameAndDescription": "Название и описание слайда",
     "addAudioFromFile": "Добавить аудио из файла",
     "slideTitleEmpty": "Название слайда не может быть пустым",
+    "awaitCreationFinished": "Пожалуйста, подождите, пока создается презентация",
+    "savingPresentation": "Презентация сохраняется...",
+    "countSlides": "Сохранение {} слайда из {}",
 
     "image_create_presentation_screen": "",
     "newPresentation": "Новая презентация",

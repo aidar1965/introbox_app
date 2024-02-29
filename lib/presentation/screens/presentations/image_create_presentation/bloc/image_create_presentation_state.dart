@@ -11,6 +11,9 @@ class ImageCreatePresentationState with _$ImageCreatePresentationState {
     String? description,
     @Default(false) bool isPending,
   }) = _ScreenState;
+  const factory ImageCreatePresentationState.savingProcess(
+      {required int currentSlide,
+      required int totalSlides}) = _StateSavingProcess;
   const factory ImageCreatePresentationState.saveSuccess() = _StateSaveSuccess;
   const factory ImageCreatePresentationState.saveError({String? errorText}) =
       _StateSaveError;

@@ -7,7 +7,7 @@ import Foundation
 
 import audio_session
 import audioplayers_darwin
-import connectivity_plus_macos
+import connectivity_plus
 import flutter_secure_storage_macos
 import path_provider_foundation
 import printing

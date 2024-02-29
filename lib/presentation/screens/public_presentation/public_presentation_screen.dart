@@ -62,18 +62,21 @@ class PublicPresentationScreen extends StatelessWidget {
                     channelWebsite: state.channel?.company?.website,
                     openedFromApp: openedFromApp == true,
                     course: course),
-                loadingError: (state) =>
-                    CommonLoadingErrorWidget(onPressed: () {
-                      BlocProvider.of<PublicPresentationBloc>(context).add(
-                          const PublicPresentationEvent.initialDataRequested());
-                    }),
-                pending: (_) => const _PendingView(),
-                checkHasPasswordError: (state) =>
-                    CommonLoadingErrorWidget(onPressed: () {
-                      BlocProvider.of<PublicPresentationBloc>(context).add(
-                          const PublicPresentationEvent
-                              .checkPresentationHasPassword());
-                    }))));
+                loadingError: (state) => Material(
+                      child: CommonLoadingErrorWidget(onPressed: () {
+                        BlocProvider.of<PublicPresentationBloc>(context).add(
+                            const PublicPresentationEvent
+                                .initialDataRequested());
+                      }),
+                    ),
+                pending: (_) => Material(child: const _PendingView()),
+                checkHasPasswordError: (state) => Material(
+                      child: CommonLoadingErrorWidget(onPressed: () {
+                        BlocProvider.of<PublicPresentationBloc>(context).add(
+                            const PublicPresentationEvent
+                                .checkPresentationHasPassword());
+                      }),
+                    ))));
   }
 }
 
@@ -419,13 +422,16 @@ class _ScreenViewState extends State<_ScreenView> {
                           }
                         },
                         icon: const Icon(Icons.info, color: Colors.white)),
-                    if (widget.openedFromApp)
-                      IconButton(
-                          onPressed: () {
+                    IconButton(
+                        onPressed: () {
+                          if (widget.openedFromApp)
                             context.router.pop();
-                          },
-                          icon: const Icon(Icons.close),
-                          color: Colors.white)
+                          else
+                            html.window
+                                .open('https://introbox.app', 'Introbox.app');
+                        },
+                        icon: const Icon(Icons.close),
+                        color: Colors.white)
                   ],
                 ))
           ]),

@@ -57,6 +57,7 @@ class PresentationsBloc extends Bloc<PresentationsEvent, PresentationsState> {
     }
     emitter(const PresentationsState.pending());
     try {
+      print('60');
       final paginatedPresentations =
           await api.getPresentations(offset: offset, limit: limit);
       final oldPresentations =

@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
-import '../../../../../data/api/models/requests/fragment_request_data.dart';
+// import '../../../../../data/api/models/requests/fragment_request_data.dart';
 import '../../../../../domain/models/channel.dart';
 import '../../../../../domain/models/image_fragment.dart';
 import '../../../../../generated/locale_keys.g.dart';
@@ -61,31 +61,58 @@ class ImageCreatePresentationBloc
       emitter(ImageCreatePresentationState.saveError(
           errorText: LocaleKeys.presentationTitleEmpty.tr()));
     }
-    emitter(const ImageCreatePresentationState.pending());
+    emitter(ImageCreatePresentationState.savingProcess(
+        currentSlide: 0, totalSlides: _screenState.fragments.length));
     print('saving presentation');
     try {
-      await api.addImagePresentation(
-          channelId: _screenState.selectedChanel.id,
+      final presentationId = await api.addImagePresentationWithoutFragments(
           title: event.title,
-          description: event.description,
-          fragments: _screenState.fragments
-              .map((e) => FragmentRequestData(
-                  title: e.title,
-                  description: e.description ?? '',
-                  image: e.imageBytes != null
-                      ? (
-                          file: e.imageBytes!,
-                          isLandscape: true,
-                          fileName: '',
-                          isTitleOverImage: e.isTitleOverImage
-                        )
-                      : null,
-                  audioBytes: e.audioBytes,
-                  duration: e.duration))
-              .toList());
+          channelId: _screenState.selectedChanel.id,
+          description: event.description);
+
+      int index = 1;
+
+      for (final fragment in _screenState.fragments) {
+        emitter(ImageCreatePresentationState.savingProcess(
+            currentSlide: index, totalSlides: _screenState.fragments.length));
+        await api.addPresentationFragment(
+            presentationId: presentationId,
+            displayOrder: index,
+            title: fragment.title,
+            description: fragment.description ?? '',
+            image: fragment.imageBytes,
+            isLandscape: true,
+            audio: fragment.audioBytes,
+            duration: fragment.duration,
+            isTitleOverImage: fragment.isTitleOverImage,
+            fragmentsIds: []);
+        index++;
+      }
+
+      // await api.addImagePresentation(
+      //     channelId: _screenState.selectedChanel.id,
+      //     title: event.title,
+      //     description: event.description,
+      //     fragments: _screenState.fragments
+      //         .map((e) => FragmentRequestData(
+      //             title: e.title,
+      //             description: e.description ?? '',
+      //             image: e.imageBytes != null
+      //                 ? (
+      //                     file: e.imageBytes!,
+      //                     isLandscape: true,
+      //                     fileName: '',
+      //                     isTitleOverImage: e.isTitleOverImage
+      //                   )
+      //                 : null,
+      //             audioBytes: e.audioBytes,
+      //             duration: e.duration))
+      //         .toList());
       emitter(const ImageCreatePresentationState.saveSuccess());
     } on Object {
       emitter(const ImageCreatePresentationState.saveError());
+      emitter(_screenState);
+      rethrow;
     }
   }
 

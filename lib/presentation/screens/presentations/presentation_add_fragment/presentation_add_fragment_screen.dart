@@ -273,7 +273,6 @@ class _ScreenViewState extends State<_ScreenView> {
                                   'm4b',
                                   'm4p',
                                   'mp4',
-                                  'wav'
                                 ],
                               );
                               if (result != null) {
@@ -286,7 +285,6 @@ class _ScreenViewState extends State<_ScreenView> {
                                     extension?.toLowerCase() != 'mp3' &&
                                     extension?.toLowerCase() != 'm4b' &&
                                     extension?.toLowerCase() != 'm4p' &&
-                                    extension?.toLowerCase() != 'wav' &&
                                     extension?.toLowerCase() != 'mp4') return;
 
                                 // Преобразование Uint8List в Blob

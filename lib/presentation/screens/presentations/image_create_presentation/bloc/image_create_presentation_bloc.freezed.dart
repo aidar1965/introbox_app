@@ -27,6 +27,7 @@ mixin _$ImageCreatePresentationState {
             String? description,
             bool isPending)
         screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
@@ -43,6 +44,7 @@ mixin _$ImageCreatePresentationState {
             String? description,
             bool isPending)?
         screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
@@ -59,6 +61,7 @@ mixin _$ImageCreatePresentationState {
             String? description,
             bool isPending)?
         screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
     TResult Function(String? errorText)? saveError,
     TResult Function()? initialDataNotLoaded,
@@ -69,6 +72,7 @@ mixin _$ImageCreatePresentationState {
   TResult map<TResult extends Object?>({
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
     required TResult Function(_StateInitialDataNotLoaded value)
@@ -79,6 +83,7 @@ mixin _$ImageCreatePresentationState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
     TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -88,6 +93,7 @@ mixin _$ImageCreatePresentationState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
     TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -164,6 +170,7 @@ class _$_StatePending implements _StatePending {
             String? description,
             bool isPending)
         screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
@@ -183,6 +190,7 @@ class _$_StatePending implements _StatePending {
             String? description,
             bool isPending)?
         screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
@@ -202,6 +210,7 @@ class _$_StatePending implements _StatePending {
             String? description,
             bool isPending)?
         screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
     TResult Function(String? errorText)? saveError,
     TResult Function()? initialDataNotLoaded,
@@ -218,6 +227,7 @@ class _$_StatePending implements _StatePending {
   TResult map<TResult extends Object?>({
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
     required TResult Function(_StateInitialDataNotLoaded value)
@@ -231,6 +241,7 @@ class _$_StatePending implements _StatePending {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
     TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -243,6 +254,7 @@ class _$_StatePending implements _StatePending {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
     TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -410,6 +422,7 @@ class _$_ScreenState implements _ScreenState {
             String? description,
             bool isPending)
         screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
@@ -430,6 +443,7 @@ class _$_ScreenState implements _ScreenState {
             String? description,
             bool isPending)?
         screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
@@ -450,6 +464,7 @@ class _$_ScreenState implements _ScreenState {
             String? description,
             bool isPending)?
         screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
     TResult Function(String? errorText)? saveError,
     TResult Function()? initialDataNotLoaded,
@@ -467,6 +482,7 @@ class _$_ScreenState implements _ScreenState {
   TResult map<TResult extends Object?>({
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
     required TResult Function(_StateInitialDataNotLoaded value)
@@ -480,6 +496,7 @@ class _$_ScreenState implements _ScreenState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
     TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -492,6 +509,7 @@ class _$_ScreenState implements _ScreenState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
     TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -521,6 +539,200 @@ abstract class _ScreenState implements ImageCreatePresentationState {
   bool get isPending;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_StateSavingProcessCopyWith<$Res> {
+  factory _$$_StateSavingProcessCopyWith(_$_StateSavingProcess value,
+          $Res Function(_$_StateSavingProcess) then) =
+      __$$_StateSavingProcessCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int currentSlide, int totalSlides});
+}
+
+/// @nodoc
+class __$$_StateSavingProcessCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationStateCopyWithImpl<$Res,
+        _$_StateSavingProcess> implements _$$_StateSavingProcessCopyWith<$Res> {
+  __$$_StateSavingProcessCopyWithImpl(
+      _$_StateSavingProcess _value, $Res Function(_$_StateSavingProcess) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? currentSlide = null,
+    Object? totalSlides = null,
+  }) {
+    return _then(_$_StateSavingProcess(
+      currentSlide: null == currentSlide
+          ? _value.currentSlide
+          : currentSlide // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalSlides: null == totalSlides
+          ? _value.totalSlides
+          : totalSlides // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_StateSavingProcess implements _StateSavingProcess {
+  const _$_StateSavingProcess(
+      {required this.currentSlide, required this.totalSlides});
+
+  @override
+  final int currentSlide;
+  @override
+  final int totalSlides;
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationState.savingProcess(currentSlide: $currentSlide, totalSlides: $totalSlides)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_StateSavingProcess &&
+            (identical(other.currentSlide, currentSlide) ||
+                other.currentSlide == currentSlide) &&
+            (identical(other.totalSlides, totalSlides) ||
+                other.totalSlides == totalSlides));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, currentSlide, totalSlides);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StateSavingProcessCopyWith<_$_StateSavingProcess> get copyWith =>
+      __$$_StateSavingProcessCopyWithImpl<_$_StateSavingProcess>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() pending,
+    required TResult Function(
+            List<ImageFragment> fragments,
+            List<Channel> channels,
+            Channel selectedChanel,
+            String? title,
+            String? description,
+            bool isPending)
+        screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
+    required TResult Function() saveSuccess,
+    required TResult Function(String? errorText) saveError,
+    required TResult Function() initialDataNotLoaded,
+  }) {
+    return savingProcess(currentSlide, totalSlides);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? pending,
+    TResult? Function(
+            List<ImageFragment> fragments,
+            List<Channel> channels,
+            Channel selectedChanel,
+            String? title,
+            String? description,
+            bool isPending)?
+        screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
+    TResult? Function()? saveSuccess,
+    TResult? Function(String? errorText)? saveError,
+    TResult? Function()? initialDataNotLoaded,
+  }) {
+    return savingProcess?.call(currentSlide, totalSlides);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? pending,
+    TResult Function(
+            List<ImageFragment> fragments,
+            List<Channel> channels,
+            Channel selectedChanel,
+            String? title,
+            String? description,
+            bool isPending)?
+        screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
+    TResult Function()? saveSuccess,
+    TResult Function(String? errorText)? saveError,
+    TResult Function()? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (savingProcess != null) {
+      return savingProcess(currentSlide, totalSlides);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_StatePending value) pending,
+    required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
+    required TResult Function(_StateSaveSuccess value) saveSuccess,
+    required TResult Function(_StateSaveError value) saveError,
+    required TResult Function(_StateInitialDataNotLoaded value)
+        initialDataNotLoaded,
+  }) {
+    return savingProcess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_StatePending value)? pending,
+    TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
+    TResult? Function(_StateSaveSuccess value)? saveSuccess,
+    TResult? Function(_StateSaveError value)? saveError,
+    TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+  }) {
+    return savingProcess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_StatePending value)? pending,
+    TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
+    TResult Function(_StateSaveSuccess value)? saveSuccess,
+    TResult Function(_StateSaveError value)? saveError,
+    TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
+    required TResult orElse(),
+  }) {
+    if (savingProcess != null) {
+      return savingProcess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _StateSavingProcess implements ImageCreatePresentationState {
+  const factory _StateSavingProcess(
+      {required final int currentSlide,
+      required final int totalSlides}) = _$_StateSavingProcess;
+
+  int get currentSlide;
+  int get totalSlides;
+  @JsonKey(ignore: true)
+  _$$_StateSavingProcessCopyWith<_$_StateSavingProcess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -571,6 +783,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
             String? description,
             bool isPending)
         screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
@@ -590,6 +803,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
             String? description,
             bool isPending)?
         screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
@@ -609,6 +823,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
             String? description,
             bool isPending)?
         screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
     TResult Function(String? errorText)? saveError,
     TResult Function()? initialDataNotLoaded,
@@ -625,6 +840,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   TResult map<TResult extends Object?>({
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
     required TResult Function(_StateInitialDataNotLoaded value)
@@ -638,6 +854,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
     TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -650,6 +867,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
     TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -740,6 +958,7 @@ class _$_StateSaveError implements _StateSaveError {
             String? description,
             bool isPending)
         screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
@@ -759,6 +978,7 @@ class _$_StateSaveError implements _StateSaveError {
             String? description,
             bool isPending)?
         screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
@@ -778,6 +998,7 @@ class _$_StateSaveError implements _StateSaveError {
             String? description,
             bool isPending)?
         screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
     TResult Function(String? errorText)? saveError,
     TResult Function()? initialDataNotLoaded,
@@ -794,6 +1015,7 @@ class _$_StateSaveError implements _StateSaveError {
   TResult map<TResult extends Object?>({
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
     required TResult Function(_StateInitialDataNotLoaded value)
@@ -807,6 +1029,7 @@ class _$_StateSaveError implements _StateSaveError {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
     TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -819,6 +1042,7 @@ class _$_StateSaveError implements _StateSaveError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
     TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -891,6 +1115,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
             String? description,
             bool isPending)
         screenState,
+    required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
@@ -910,6 +1135,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
             String? description,
             bool isPending)?
         screenState,
+    TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
@@ -929,6 +1155,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
             String? description,
             bool isPending)?
         screenState,
+    TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
     TResult Function(String? errorText)? saveError,
     TResult Function()? initialDataNotLoaded,
@@ -945,6 +1172,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
   TResult map<TResult extends Object?>({
     required TResult Function(_StatePending value) pending,
     required TResult Function(_ScreenState value) screenState,
+    required TResult Function(_StateSavingProcess value) savingProcess,
     required TResult Function(_StateSaveSuccess value) saveSuccess,
     required TResult Function(_StateSaveError value) saveError,
     required TResult Function(_StateInitialDataNotLoaded value)
@@ -958,6 +1186,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_StatePending value)? pending,
     TResult? Function(_ScreenState value)? screenState,
+    TResult? Function(_StateSavingProcess value)? savingProcess,
     TResult? Function(_StateSaveSuccess value)? saveSuccess,
     TResult? Function(_StateSaveError value)? saveError,
     TResult? Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,
@@ -970,6 +1199,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_StatePending value)? pending,
     TResult Function(_ScreenState value)? screenState,
+    TResult Function(_StateSavingProcess value)? savingProcess,
     TResult Function(_StateSaveSuccess value)? saveSuccess,
     TResult Function(_StateSaveError value)? saveError,
     TResult Function(_StateInitialDataNotLoaded value)? initialDataNotLoaded,

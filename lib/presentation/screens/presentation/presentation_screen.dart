@@ -23,6 +23,7 @@ class PresentationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('PresentationScreen');
     return BlocProvider(
         create: (context) => PresentationBloc(id),
         child: BlocBuilder<PresentationBloc, PresentationState>(

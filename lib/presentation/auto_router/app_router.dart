@@ -168,11 +168,6 @@ class AppRouter extends _$AppRouter implements AutoRouteGuard {
             page: PresentationPlayerRoute.page,
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 400),
-        CustomRoute(
-            path: '/presentation/:id',
-            page: PresentationRoute.page,
-            transitionsBuilder: TransitionsBuilders.slideLeft,
-            durationInMilliseconds: 400),
       ];
 
   @override

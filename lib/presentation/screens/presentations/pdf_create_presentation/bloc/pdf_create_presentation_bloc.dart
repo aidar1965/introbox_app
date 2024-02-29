@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:introbox/data/api/models/requests/fragment_request_data.dart';
+
 import 'package:printing/printing.dart';
 
 import '../../../../../../domain/interfaces/i_api.dart';
@@ -58,47 +58,36 @@ class PdfCreatePresentationBloc
 
   Future<void> _savePdfPresentation(_EventSavePdfPresentation event,
       Emitter<PdfCreatePresentationState> emitter) async {
-    _screenState = _screenState.copyWith(
-      isPending: true,
-    );
-    emitter(_screenState);
-    final List<FragmentRequestData> fragments = [];
-    int index = 0;
-    for (final f in event.pdfFragmentList) {
-      fragments.add(
-        FragmentRequestData(
+    emitter(PdfCreatePresentationState.savingProcess(
+        currentSlide: 0, totalSlides: event.pdfFragmentList.length));
+    try {
+      final presentationId = await api.addPdfPresentation(
+        pdfFile: event.pdfFile,
+        pdfFileName: event.pdfFileName,
+        title: event.title,
+        description: event.description,
+        channelId: _screenState.selectedChanel.id,
+      );
+
+      int index = 1;
+      for (final f in event.pdfFragmentList) {
+        emitter(PdfCreatePresentationState.savingProcess(
+            currentSlide: index, totalSlides: event.pdfFragmentList.length));
+        await api.addPresentationFragment(
+            presentationId: presentationId,
+            displayOrder: index,
             title: f.title == null || f.title!.trim().isEmpty
-                ? '${index + 1}'
+                ? '$index'
                 : f.title!,
             description: f.description ?? '',
-            image: (
-              file: f.image,
-              fileName: 'image$index.png',
-              isLandscape: true,
-              isTitleOverImage: f.isTitleOverImage,
-
-              ///TODO: Убрать
-            ),
-            audioBytes: f.audioBytes,
-            audioExtension: f.audioExtension,
-            duration: f.duration),
-      );
-      index++;
-    }
-    try {
-      await api.addPresentation(
-          channelId: _screenState.selectedChanel.id,
-          pdfFile: event.pdfFile,
-          pdfFileName: event.pdfFileName,
-          title: event.title,
-          description: event.description,
-          isAudio: event.isAudio,
-          fragments: fragments);
-
-      _screenState = _screenState.copyWith(
-        isPending: false,
-      );
-
+            isLandscape: true,
+            isTitleOverImage: f.isTitleOverImage,
+            fragmentsIds: [],
+            image: f.image,
+            audio: f.audioBytes,
+            duration: f.duration);
+        index++;
+      }
       emitter(const PdfCreatePresentationState.saveSuccess());
     } on Object {
       _screenState = _screenState.copyWith(

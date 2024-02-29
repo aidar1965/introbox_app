@@ -43,6 +43,7 @@ class CommonFunctions {
 
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        duration: const Duration(seconds: 4),
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.fromLTRB(Values.horizontalPadding, 0,
             Values.horizontalPadding, Values.horizontalPadding),

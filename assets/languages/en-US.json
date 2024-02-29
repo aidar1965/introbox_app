@@ -56,6 +56,8 @@
     "optionGov": "Governmental organization",
     "optionPublic": "Public",
     "optionClosed": "Closed",
+    "emptyChannelTitle": "Channel title can not be empty",
+    "channelExistsError": "Channel {} already exists",
 
 
     "companies_screen": "",
@@ -139,6 +141,9 @@
     "slideNameAndDescription": "Title and description of slide",
     "addAudioFromFile": "Add audio file",
     "slideTitleEmpty": "slide title can not be empty",
+    "awaitCreationFinished": "Please wait until creation of the presentation finished",
+    "savingPresentation": "Saving presentation...",
+    "countSlides": "Saving slide {} of {}",
 
     "image_create_presentation_screen": "",
     "newPresentation": "New presentation",

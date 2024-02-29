@@ -48,6 +48,7 @@ class PublicPresentationBloc
     }
     try {
       presentationWithFragments = await api.getPublicPresentation(id!);
+      print(presentationWithFragments.presentation.pdfFile);
 
       _screenState = _ScreenState(
           selectedFragment: presentationWithFragments.fragments.first,

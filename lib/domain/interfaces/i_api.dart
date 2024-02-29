@@ -183,7 +183,7 @@ abstract class IApi {
     required int displayOrder,
     required String title,
     required String description,
-    required Uint8List image,
+    Uint8List? image,
     required bool isLandscape,
     required bool isTitleOverImage,
     Uint8List? audio,
@@ -295,4 +295,18 @@ abstract class IApi {
   Future<Course> getPublicCourse({required String id});
 
   Future<void> deleteChannel({required String id});
+
+  Future<String> addImagePresentationWithoutFragments({
+    required String title,
+    required String channelId,
+    String? description,
+  });
+
+  Future<String> addPdfPresentation({
+    required Uint8List pdfFile,
+    required String pdfFileName,
+    required String title,
+    String? description,
+    required String channelId,
+  });
 }

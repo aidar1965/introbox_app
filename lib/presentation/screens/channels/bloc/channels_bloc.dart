@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:introbox/data/api/http_client/request_exception.dart';
+import 'package:introbox/generated/locale_keys.g.dart';
 
 import '../../../../domain/interfaces/i_api.dart';
 import '../../../../domain/locator/locator.dart';
@@ -42,9 +47,10 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
   Future<void> onCreateChannel(
       _EventOnCreateChannel event, Emitter<ChannelsState> emitter) async {
     if (event.title.isEmpty) {
-      emitter(const ChannelsState.requestError(
-          errorText: 'Поле название должно быть заполнено'));
+      emitter(ChannelsState.requestError(
+          errorText: LocaleKeys.emptyChannelTitle.tr()));
     }
+
     try {
       await api.addChannel(
           title: event.title,
@@ -53,6 +59,12 @@ class ChannelsBloc extends Bloc<ChannelsEvent, ChannelsState> {
           isPublic: event.isPublic);
       emitter(const ChannelsState.requestSuccess());
       add(const ChannelsEvent.initialDataRequested());
+    } on RequestException catch (e) {
+      if (e.httpStatusCode == HttpStatus.badRequest) {
+        emitter(_screenState);
+        emitter(ChannelsState.requestError(
+            errorText: LocaleKeys.channelExistsError.tr(args: [event.title])));
+      }
     } on Object {
       emitter(const ChannelsState.requestError());
       rethrow;

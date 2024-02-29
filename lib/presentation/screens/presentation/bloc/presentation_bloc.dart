@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:introbox/domain/interfaces/i_auth_controller.dart';
 import 'package:introbox/domain/models/pdf_fragment.dart';
 import 'package:introbox/domain/models/presentation_with_fragments.dart';
 
@@ -23,6 +24,7 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
 
   final String id;
   final api = getIt<IApi>();
+  final authColtroller = getIt<IAuthController>();
   late PresentationWithFragments presentationWithFragments;
 
   late _ScreenState _screenState;

@@ -22,6 +22,7 @@ import '../models/responses/course_dto.dart';
 import '../models/responses/fragment_category_dto.dart';
 import '../models/responses/pdf_fragment_dto.dart';
 import '../models/responses/presentation_dto.dart';
+import '../models/responses/presentation_id_dto.dart';
 import '../models/responses/presentation_with_fragments_dto.dart';
 import '../models/responses/subject_category_dto.dart';
 import '../models/responses/subject_dto.dart';
@@ -128,6 +129,7 @@ class ApiDataMapper {
             freeMode: true,
             createdAt: DateTime.parse(dto.createdAt),
             isPublished: true,
+            pdfFile: dto.pdfFile,
             description: dto.description,
             channel: mapChannel(dto.channelDto)),
         fragments: dto.fragmentDtoList.map((e) => mapPdfFragment(e)).toList());
@@ -171,5 +173,9 @@ class ApiDataMapper {
 
   bool mapCheckPassword(CheckPasswordDto dto) {
     return dto.hasPassword;
+  }
+
+  String mapPresentationId(PresentationIdDto dto) {
+    return dto.id;
   }
 }

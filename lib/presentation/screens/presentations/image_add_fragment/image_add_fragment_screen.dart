@@ -250,7 +250,6 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                 'm4b',
                                 'm4p',
                                 'mp4',
-                                'wav'
                               ],
                             );
                             if (result != null) {
@@ -261,7 +260,6 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                   extension?.toLowerCase() != 'mp3' &&
                                   extension?.toLowerCase() != 'm4b' &&
                                   extension?.toLowerCase() != 'm4p' &&
-                                  extension?.toLowerCase() != 'wav' &&
                                   extension?.toLowerCase() != 'mp4') return;
                               final fileBytes = result.files.first.bytes;
 

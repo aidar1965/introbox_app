@@ -46,9 +46,11 @@ import 'models/requests/request_add_fragment.dart';
 import 'models/requests/request_add_image_presentation.dart';
 //import 'models/requests/request_add_image_subject.dart';
 //import 'models/requests/request_add_pdf_subject.dart';
+import 'models/requests/request_add_pdf_presentation.dart';
 import 'models/requests/request_add_presentation.dart';
 import 'models/requests/request_add_presentation_fragment.dart';
 import 'models/requests/request_add_presentation_password.dart';
+import 'models/requests/request_add_presentation_without_fragmets.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
 import 'models/requests/request_check_password.dart';
@@ -100,6 +102,7 @@ import 'models/responses/check_password_dto.dart';
 import 'models/responses/course_dto.dart';
 import 'models/responses/pdf_fragment_dto.dart';
 
+import 'models/responses/presentation_id_dto.dart';
 import 'models/responses/presentation_with_fragments_dto.dart';
 import 'models/responses/subject_category_dto.dart';
 import 'models/responses/user_dto.dart';
@@ -476,7 +479,7 @@ class Api implements IApi {
       required int displayOrder,
       required String title,
       required String description,
-      required Uint8List image,
+      Uint8List? image,
       required bool isLandscape,
       required bool isTitleOverImage,
       required List<String> fragmentsIds,
@@ -754,6 +757,7 @@ class Api implements IApi {
   Future<PresentationWithFragments> getPublicPresentation(String id) async {
     final result =
         await httpClient.request(RequestGetPublicPresentation(id: id));
+    print(result!.data);
     return mapper.mapPresentationWithFragments(
         PresentationWithFragmentsDto.fromJson(
             jsonDecode(result!.data as String)));
@@ -795,5 +799,35 @@ class Api implements IApi {
   @override
   Future<void> deleteChannel({required String id}) async {
     await httpClient.request(RequestDeleteChannel(id: id));
+  }
+
+  @override
+  Future<String> addImagePresentationWithoutFragments(
+      {required String title,
+      required String channelId,
+      String? description}) async {
+    final result = await httpClient.request(
+        RequestAddPresentationWithoutFragments(
+            title: title, channelId: channelId));
+    return mapper.mapPresentationId(
+        PresentationIdDto.fromJson(jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<String> addPdfPresentation({
+    required Uint8List pdfFile,
+    required String pdfFileName,
+    required String title,
+    required String channelId,
+    String? description,
+  }) async {
+    final result = await httpClient.request(RequestAddPdfPresentation(
+        pdfFile: pdfFile,
+        pdfFileName: pdfFileName,
+        title: title,
+        channelId: channelId,
+        description: description));
+    return mapper.mapPresentationId(
+        PresentationIdDto.fromJson(jsonDecode(result!.data as String)));
   }
 }

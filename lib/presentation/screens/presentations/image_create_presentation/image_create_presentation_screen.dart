@@ -40,7 +40,8 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                 orElse: () => false,
                 screenState: (_) => true,
                 initialDataNotLoaded: (_) => true,
-                pending: (_) => true),
+                pending: (_) => true,
+                savingProcess: (state) => true),
             builder: (context, state) => state.maybeMap(
                 pending: (_) =>
                     const Center(child: CircularProgressIndicator()),
@@ -49,6 +50,8 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                         BlocProvider.of<ImageCreatePresentationBloc>(context)
                             .add(const ImageCreatePresentationEvent
                                 .initialDataRequested())),
+                savingProcess: (state) => _SavingProcessWidget(
+                    current: state.currentSlide, total: state.totalSlides),
                 orElse: () =>
                     throw UnsupportedError('state not supporting build'),
                 screenState: (state) => Scaffold(
@@ -302,6 +305,38 @@ class _FragmentListState extends State<FragmentList> {
               icon: const Icon(Icons.delete)),
           const SizedBox(width: 24),
         ],
+      ),
+    );
+  }
+}
+
+class _SavingProcessWidget extends StatelessWidget {
+  const _SavingProcessWidget(
+      {super.key, required this.current, required this.total});
+
+  final int current;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              LocaleKeys.awaitCreationFinished.tr(),
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            if (current == 0)
+              Text(LocaleKeys.savingPresentation.tr())
+            else
+              Text(LocaleKeys.countSlides.tr(args: ['$current', '$total'])),
+          ],
+        ),
       ),
     );
   }

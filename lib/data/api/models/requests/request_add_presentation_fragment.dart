@@ -10,7 +10,7 @@ class RequestAddPresentationFragment extends IApiRequest {
   final int displayOrder;
   final String title;
   final String? description;
-  final Uint8List imageBytes;
+  Uint8List? imageBytes;
   final bool isLandscape;
   final Uint8List? audioBytes;
   final int? duration;
@@ -22,7 +22,7 @@ class RequestAddPresentationFragment extends IApiRequest {
     required this.displayOrder,
     required this.title,
     this.description,
-    required this.imageBytes,
+    this.imageBytes,
     required this.isLandscape,
     this.audioBytes,
     this.duration,
@@ -56,10 +56,12 @@ class RequestAddPresentationFragment extends IApiRequest {
     }
     var mime = lookupMimeType('', headerBytes: imageBytes);
 
-    image = MultipartFile.fromBytes(imageBytes, headers: {
-      'extension': [extensionFromMime(mime!)],
-    });
-    formDataMap['image'] = image;
+    if (imageBytes != null) {
+      image = MultipartFile.fromBytes(imageBytes!, headers: {
+        'extension': [extensionFromMime(mime!)],
+      });
+      formDataMap['image'] = image;
+    }
 
     return FormData.fromMap(formDataMap);
   }

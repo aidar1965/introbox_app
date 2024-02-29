@@ -54,12 +54,17 @@ class PdfCreatePresentationScreen extends StatelessWidget {
                         context,
                         LocaleKeys.createPresentationSuccess.tr(),
                         Reason.neutral);
-                    context.router.pop(true);
+                    if (context.router.canPop()) {
+                      context.router.pop(true);
+                    } else {
+                      context.router.push(const PresentationsRoute());
+                    }
                     return null;
                   },
                   saveError: (state) => CommonFunctions.showMessage(context,
                       LocaleKeys.commonRequestError.tr(), Reason.error)),
               buildWhen: (previous, current) => current.map(
+                  savingProcess: (state) => true,
                   pending: (_) => true,
                   initialDataNotLoaded: (_) => true,
                   screenState: (c) => true,
@@ -75,6 +80,8 @@ class PdfCreatePresentationScreen extends StatelessWidget {
                           BlocProvider.of<PdfCreatePresentationBloc>(context)
                               .add(const PdfCreatePresentationEvent
                                   .initialDataRequested())),
+                  savingProcess: (state) => _SavingProcessWidget(
+                      current: state.currentSlide, total: state.totalSlides),
                   screenState: (state) => _ScreenView(
                         channels: state.channels,
                         selectedChannel: state.selectedChanel,
@@ -164,6 +171,9 @@ class _ScreenViewState extends State<_ScreenView> {
     );
 
     if (result != null && result.files.isNotEmpty) {
+      final extension = result.files.first.extension;
+
+      if (extension?.toLowerCase() != 'pdf') return;
       final fileBytes = result.files.first.bytes;
       pdfFileName = result.files.first.name;
       setState(() {
@@ -359,7 +369,9 @@ class _FragmentListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: Responsive.isMobile(context)
+          ? const NeverScrollableScrollPhysics()
+          : null,
       separatorBuilder: (context, index) => const SizedBox(
         height: 8,
       ),
@@ -507,7 +519,6 @@ class _FragmentListItemState extends State<FragmentListItem> {
                               'm4b',
                               'm4p',
                               'mp4',
-                              'wav'
                             ],
                           );
                           if (result != null) {
@@ -520,7 +531,6 @@ class _FragmentListItemState extends State<FragmentListItem> {
                                 extension?.toLowerCase() != 'mp3' &&
                                 extension?.toLowerCase() != 'm4b' &&
                                 extension?.toLowerCase() != 'm4p' &&
-                                extension?.toLowerCase() != 'wav' &&
                                 extension?.toLowerCase() != 'mp4') return;
 
                             // Преобразование Uint8List в Blob
@@ -618,7 +628,6 @@ class _FragmentListItemState extends State<FragmentListItem> {
                       'm4b',
                       'm4p',
                       'mp4',
-                      'wav'
                     ],
                   );
                   if (result != null) {
@@ -631,7 +640,6 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         extension?.toLowerCase() != 'mp3' &&
                         extension?.toLowerCase() != 'm4b' &&
                         extension?.toLowerCase() != 'm4p' &&
-                        extension?.toLowerCase() != 'wav' &&
                         extension?.toLowerCase() != 'mp4') return;
 
                     // Преобразование Uint8List в Blob
@@ -678,5 +686,32 @@ class _FragmentListItemState extends State<FragmentListItem> {
 
     duration = await aup.getDuration();
     return duration?.inSeconds ?? 0;
+  }
+}
+
+class _SavingProcessWidget extends StatelessWidget {
+  const _SavingProcessWidget(
+      {super.key, required this.current, required this.total});
+
+  final int current;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            LocaleKeys.awaitCreationFinished.tr(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          if (current == 0)
+            Text(LocaleKeys.savingPresentation.tr())
+          else
+            Text(LocaleKeys.countSlides.tr(args: ['$current', '$total'])),
+        ],
+      ),
+    );
   }
 }
