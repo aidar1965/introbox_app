@@ -596,13 +596,14 @@ mixin _$PresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
@@ -611,13 +612,14 @@ mixin _$PresentationState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
@@ -626,13 +628,14 @@ mixin _$PresentationState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,
@@ -688,13 +691,14 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {PdfFragment selectedFragment,
+      {PdfFragment? selectedFragment,
       bool isLast,
       bool isFirst,
       String presentationTitle,
       String? presentationDescription,
       String? pdfFile,
-      List<PdfFragment> fragments});
+      List<PdfFragment> fragments,
+      List<PresentationLink>? links});
 }
 
 /// @nodoc
@@ -708,19 +712,20 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedFragment = null,
+    Object? selectedFragment = freezed,
     Object? isLast = null,
     Object? isFirst = null,
     Object? presentationTitle = null,
     Object? presentationDescription = freezed,
     Object? pdfFile = freezed,
     Object? fragments = null,
+    Object? links = freezed,
   }) {
     return _then(_$_ScreenState(
-      selectedFragment: null == selectedFragment
+      selectedFragment: freezed == selectedFragment
           ? _value.selectedFragment
           : selectedFragment // ignore: cast_nullable_to_non_nullable
-              as PdfFragment,
+              as PdfFragment?,
       isLast: null == isLast
           ? _value.isLast
           : isLast // ignore: cast_nullable_to_non_nullable
@@ -745,6 +750,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value._fragments
           : fragments // ignore: cast_nullable_to_non_nullable
               as List<PdfFragment>,
+      links: freezed == links
+          ? _value._links
+          : links // ignore: cast_nullable_to_non_nullable
+              as List<PresentationLink>?,
     ));
   }
 }
@@ -753,17 +762,19 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 
 class _$_ScreenState implements _ScreenState {
   const _$_ScreenState(
-      {required this.selectedFragment,
+      {this.selectedFragment,
       required this.isLast,
       required this.isFirst,
       required this.presentationTitle,
       this.presentationDescription,
       this.pdfFile,
-      required final List<PdfFragment> fragments})
-      : _fragments = fragments;
+      required final List<PdfFragment> fragments,
+      final List<PresentationLink>? links})
+      : _fragments = fragments,
+        _links = links;
 
   @override
-  final PdfFragment selectedFragment;
+  final PdfFragment? selectedFragment;
   @override
   final bool isLast;
   @override
@@ -782,9 +793,19 @@ class _$_ScreenState implements _ScreenState {
     return EqualUnmodifiableListView(_fragments);
   }
 
+  final List<PresentationLink>? _links;
+  @override
+  List<PresentationLink>? get links {
+    final value = _links;
+    if (value == null) return null;
+    if (_links is EqualUnmodifiableListView) return _links;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'PresentationState.screenState(selectedFragment: $selectedFragment, isLast: $isLast, isFirst: $isFirst, presentationTitle: $presentationTitle, presentationDescription: $presentationDescription, pdfFile: $pdfFile, fragments: $fragments)';
+    return 'PresentationState.screenState(selectedFragment: $selectedFragment, isLast: $isLast, isFirst: $isFirst, presentationTitle: $presentationTitle, presentationDescription: $presentationDescription, pdfFile: $pdfFile, fragments: $fragments, links: $links)';
   }
 
   @override
@@ -803,7 +824,8 @@ class _$_ScreenState implements _ScreenState {
                 other.presentationDescription == presentationDescription) &&
             (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile) &&
             const DeepCollectionEquality()
-                .equals(other._fragments, _fragments));
+                .equals(other._fragments, _fragments) &&
+            const DeepCollectionEquality().equals(other._links, _links));
   }
 
   @override
@@ -815,7 +837,8 @@ class _$_ScreenState implements _ScreenState {
       presentationTitle,
       presentationDescription,
       pdfFile,
-      const DeepCollectionEquality().hash(_fragments));
+      const DeepCollectionEquality().hash(_fragments),
+      const DeepCollectionEquality().hash(_links));
 
   @JsonKey(ignore: true)
   @override
@@ -827,51 +850,54 @@ class _$_ScreenState implements _ScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
   }) {
     return screenState(selectedFragment, isLast, isFirst, presentationTitle,
-        presentationDescription, pdfFile, fragments);
+        presentationDescription, pdfFile, fragments, links);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
   }) {
     return screenState?.call(selectedFragment, isLast, isFirst,
-        presentationTitle, presentationDescription, pdfFile, fragments);
+        presentationTitle, presentationDescription, pdfFile, fragments, links);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,
@@ -879,7 +905,7 @@ class _$_ScreenState implements _ScreenState {
   }) {
     if (screenState != null) {
       return screenState(selectedFragment, isLast, isFirst, presentationTitle,
-          presentationDescription, pdfFile, fragments);
+          presentationDescription, pdfFile, fragments, links);
     }
     return orElse();
   }
@@ -921,21 +947,23 @@ class _$_ScreenState implements _ScreenState {
 
 abstract class _ScreenState implements PresentationState {
   const factory _ScreenState(
-      {required final PdfFragment selectedFragment,
+      {final PdfFragment? selectedFragment,
       required final bool isLast,
       required final bool isFirst,
       required final String presentationTitle,
       final String? presentationDescription,
       final String? pdfFile,
-      required final List<PdfFragment> fragments}) = _$_ScreenState;
+      required final List<PdfFragment> fragments,
+      final List<PresentationLink>? links}) = _$_ScreenState;
 
-  PdfFragment get selectedFragment;
+  PdfFragment? get selectedFragment;
   bool get isLast;
   bool get isFirst;
   String get presentationTitle;
   String? get presentationDescription;
   String? get pdfFile;
   List<PdfFragment> get fragments;
+  List<PresentationLink>? get links;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -980,13 +1008,14 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
@@ -998,13 +1027,14 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
@@ -1016,13 +1046,14 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,
@@ -1112,13 +1143,14 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function() loadingError,
     required TResult Function() pending,
@@ -1130,13 +1162,14 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function()? loadingError,
     TResult? Function()? pending,
@@ -1148,13 +1181,14 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
-            List<PdfFragment> fragments)?
+            List<PdfFragment> fragments,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function()? loadingError,
     TResult Function()? pending,

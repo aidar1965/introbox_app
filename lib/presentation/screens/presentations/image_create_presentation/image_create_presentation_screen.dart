@@ -9,10 +9,12 @@ import 'package:introbox/presentation/screens/presentations/play_fragment_screen
 import 'package:introbox/presentation/utils/responsive.dart';
 
 import '../../../../domain/models/image_fragment.dart';
+import '../../../../domain/models/presentation_link.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_functions.dart';
 import '../../../common/common_loading_error_widget.dart';
+import '../../../widgets/link_item.dart';
 import '../../../widgets/name_and_description.dart';
 import 'bloc/image_create_presentation_bloc.dart';
 
@@ -35,7 +37,7 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                     state.errorText ?? LocaleKeys.commonRequestError.tr(),
                     Reason.error),
                 saveSuccess: (state) =>
-                    context.router.push(const PresentationsRoute())),
+                    context.router.push(PresentationsRoute())),
             buildWhen: (context, state) => state.maybeMap(
                 orElse: () => false,
                 screenState: (_) => true,
@@ -58,7 +60,7 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                       appBar: AppBar(
                         leading: BackButton(
                           onPressed: () {
-                            context.router.push(const PresentationsRoute());
+                            context.router.push(PresentationsRoute());
                           },
                         ),
                         title: Text(
@@ -143,7 +145,56 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                                         if (Responsive.isMobile(context))
                                           FragmentList(
                                               fragments: state.fragments),
-                                        const SizedBox(width: 24),
+                                        if (state.links?.isNotEmpty ??
+                                            false) ...[
+                                          Text(LocaleKeys.links.tr()),
+                                          ListView.separated(
+                                            itemBuilder: (context, index) =>
+                                                LinkItem(
+                                              link:
+                                                  state.links!.elementAt(index),
+                                              index: index,
+                                              onDelete: (i) => BlocProvider.of<
+                                                          ImageCreatePresentationBloc>(
+                                                      context)
+                                                  .add(
+                                                      ImageCreatePresentationEvent
+                                                          .deleteLink(i)),
+                                            ),
+                                            separatorBuilder:
+                                                (context, index) =>
+                                                    const SizedBox(
+                                              height: 12,
+                                            ),
+                                            itemCount: state.links!.length,
+                                            shrinkWrap: true,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                          ),
+                                        ],
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        CommonElevatedButton(
+                                            text: 'Add link',
+                                            onPressed: () async {
+                                              final result =
+                                                  await _showLinksDialog(
+                                                      context);
+                                              if (result is PresentationLink) {
+                                                if (context.mounted) {
+                                                  BlocProvider.of<
+                                                              ImageCreatePresentationBloc>(
+                                                          context)
+                                                      .add(
+                                                          ImageCreatePresentationEvent
+                                                              .addLink(
+                                                                  link:
+                                                                      result));
+                                                }
+                                              }
+                                            }),
+                                        const SizedBox(height: 24),
                                         if (state.fragments.isNotEmpty)
                                           CommonElevatedButton(
                                             text: LocaleKeys.createPresentation
@@ -191,6 +242,44 @@ class ImageCreatePresentationScreen extends StatelessWidget {
                             ],
                           ]),
                     ))));
+  }
+
+  Future<PresentationLink?>? _showLinksDialog(BuildContext context) async {
+    final linkController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final result = await showDialog(
+        context: context,
+        builder: (context) => SizedBox(
+              width: 500,
+              child: SimpleDialog(
+                  title: Text(LocaleKeys.addLink.tr()),
+                  contentPadding: const EdgeInsets.all(24),
+                  children: [
+                    NameAndDescriptionWidget(
+                        titleLabelName: LocaleKeys.link.tr(),
+                        titleController: linkController,
+                        descriptionController: descriptionController),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    CommonElevatedButton(
+                        text: 'Add link',
+                        onPressed: () {
+                          context.router.pop(PresentationLink(
+                            description: descriptionController.text,
+                            link: linkController.text,
+                          ));
+                        }),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextButton(
+                        onPressed: () => context.router.pop(),
+                        child: Text(LocaleKeys.buttonCancel.tr()))
+                  ]),
+            ));
+
+    return result;
   }
 }
 

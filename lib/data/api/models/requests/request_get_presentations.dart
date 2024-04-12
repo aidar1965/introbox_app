@@ -4,11 +4,13 @@ class RequestGetPresentations extends IApiRequest {
   final int? limit;
   final int? offset;
   final int? categoryId;
+  final String? searchText;
 
   RequestGetPresentations({
     this.limit,
     this.offset,
     this.categoryId,
+    this.searchText,
   }) : super(methodType: AvailableApiMethods.get, url: '/presentations/');
 
   @override
@@ -16,5 +18,6 @@ class RequestGetPresentations extends IApiRequest {
         'limit': limit,
         'offset': offset,
         'category_id': categoryId,
+        'search_text': searchText,
       };
 }

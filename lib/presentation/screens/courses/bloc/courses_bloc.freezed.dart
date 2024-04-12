@@ -635,22 +635,23 @@ abstract class _ScreenState implements CoursesState {
 
 /// @nodoc
 mixin _$CoursesEvent {
+  String? get searchText => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialDataRequested,
-    required TResult Function() loadMore,
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function(String? searchText) loadMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialDataRequested,
-    TResult? Function()? loadMore,
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function(String? searchText)? loadMore,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialDataRequested,
-    TResult Function()? loadMore,
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function(String? searchText)? loadMore,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -674,6 +675,10 @@ mixin _$CoursesEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CoursesEventCopyWith<CoursesEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -681,6 +686,8 @@ abstract class $CoursesEventCopyWith<$Res> {
   factory $CoursesEventCopyWith(
           CoursesEvent value, $Res Function(CoursesEvent) then) =
       _$CoursesEventCopyWithImpl<$Res, CoursesEvent>;
+  @useResult
+  $Res call({String? searchText});
 }
 
 /// @nodoc
@@ -692,14 +699,31 @@ class _$CoursesEventCopyWithImpl<$Res, $Val extends CoursesEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = freezed,
+  }) {
+    return _then(_value.copyWith(
+      searchText: freezed == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
+abstract class _$$_EventInitialDataRequestedCopyWith<$Res>
+    implements $CoursesEventCopyWith<$Res> {
   factory _$$_EventInitialDataRequestedCopyWith(
           _$_EventInitialDataRequested value,
           $Res Function(_$_EventInitialDataRequested) then) =
       __$$_EventInitialDataRequestedCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? searchText});
 }
 
 /// @nodoc
@@ -710,55 +734,80 @@ class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
       _$_EventInitialDataRequested _value,
       $Res Function(_$_EventInitialDataRequested) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = freezed,
+  }) {
+    return _then(_$_EventInitialDataRequested(
+      searchText: freezed == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_EventInitialDataRequested implements _EventInitialDataRequested {
-  const _$_EventInitialDataRequested();
+  const _$_EventInitialDataRequested({this.searchText});
+
+  @override
+  final String? searchText;
 
   @override
   String toString() {
-    return 'CoursesEvent.initialDataRequested()';
+    return 'CoursesEvent.initialDataRequested(searchText: $searchText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventInitialDataRequested);
+            other is _$_EventInitialDataRequested &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, searchText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventInitialDataRequestedCopyWith<_$_EventInitialDataRequested>
+      get copyWith => __$$_EventInitialDataRequestedCopyWithImpl<
+          _$_EventInitialDataRequested>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialDataRequested,
-    required TResult Function() loadMore,
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function(String? searchText) loadMore,
   }) {
-    return initialDataRequested();
+    return initialDataRequested(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialDataRequested,
-    TResult? Function()? loadMore,
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function(String? searchText)? loadMore,
   }) {
-    return initialDataRequested?.call();
+    return initialDataRequested?.call(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialDataRequested,
-    TResult Function()? loadMore,
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function(String? searchText)? loadMore,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
-      return initialDataRequested();
+      return initialDataRequested(searchText);
     }
     return orElse();
   }
@@ -797,14 +846,26 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
 }
 
 abstract class _EventInitialDataRequested implements CoursesEvent {
-  const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
+  const factory _EventInitialDataRequested({final String? searchText}) =
+      _$_EventInitialDataRequested;
+
+  @override
+  String? get searchText;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EventInitialDataRequestedCopyWith<_$_EventInitialDataRequested>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_EventLoadMoreCopyWith<$Res> {
+abstract class _$$_EventLoadMoreCopyWith<$Res>
+    implements $CoursesEventCopyWith<$Res> {
   factory _$$_EventLoadMoreCopyWith(
           _$_EventLoadMore value, $Res Function(_$_EventLoadMore) then) =
       __$$_EventLoadMoreCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? searchText});
 }
 
 /// @nodoc
@@ -814,54 +875,79 @@ class __$$_EventLoadMoreCopyWithImpl<$Res>
   __$$_EventLoadMoreCopyWithImpl(
       _$_EventLoadMore _value, $Res Function(_$_EventLoadMore) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = freezed,
+  }) {
+    return _then(_$_EventLoadMore(
+      searchText: freezed == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_EventLoadMore implements _EventLoadMore {
-  const _$_EventLoadMore();
+  const _$_EventLoadMore({this.searchText});
+
+  @override
+  final String? searchText;
 
   @override
   String toString() {
-    return 'CoursesEvent.loadMore()';
+    return 'CoursesEvent.loadMore(searchText: $searchText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_EventLoadMore);
+        (other.runtimeType == runtimeType &&
+            other is _$_EventLoadMore &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, searchText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventLoadMoreCopyWith<_$_EventLoadMore> get copyWith =>
+      __$$_EventLoadMoreCopyWithImpl<_$_EventLoadMore>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialDataRequested,
-    required TResult Function() loadMore,
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function(String? searchText) loadMore,
   }) {
-    return loadMore();
+    return loadMore(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialDataRequested,
-    TResult? Function()? loadMore,
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function(String? searchText)? loadMore,
   }) {
-    return loadMore?.call();
+    return loadMore?.call(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialDataRequested,
-    TResult Function()? loadMore,
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function(String? searchText)? loadMore,
     required TResult orElse(),
   }) {
     if (loadMore != null) {
-      return loadMore();
+      return loadMore(searchText);
     }
     return orElse();
   }
@@ -900,5 +986,12 @@ class _$_EventLoadMore implements _EventLoadMore {
 }
 
 abstract class _EventLoadMore implements CoursesEvent {
-  const factory _EventLoadMore() = _$_EventLoadMore;
+  const factory _EventLoadMore({final String? searchText}) = _$_EventLoadMore;
+
+  @override
+  String? get searchText;
+  @override
+  @JsonKey(ignore: true)
+  _$$_EventLoadMoreCopyWith<_$_EventLoadMore> get copyWith =>
+      throw _privateConstructorUsedError;
 }

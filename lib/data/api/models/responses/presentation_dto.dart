@@ -1,3 +1,4 @@
+import 'package:introbox/data/api/models/responses/presentation_link_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'channel_dto.dart';
@@ -64,7 +65,7 @@ class PresentationDto {
   final bool freeMode;
 
   @JsonKey(name: 'links')
-  final String? links;
+  final List<PresentationLinkDto>? links;
 
   @JsonKey(name: 'channel')
   final ChannelDto? channelDto;

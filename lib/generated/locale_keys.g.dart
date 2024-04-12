@@ -17,9 +17,11 @@ abstract class  LocaleKeys {
   static const buttonSelect = 'buttonSelect';
   static const buttonAdd = 'buttonAdd';
   static const buttonSend = 'buttonSend';
+  static const buttonRecord = 'buttonRecord';
   static const toolTipClose = 'toolTipClose';
   static const toolTipName = 'toolTipName';
   static const toolTipDescription = 'toolTipDescription';
+  static const hintSearch = 'hintSearch';
   static const main_screen = 'main_screen';
   static const presentations = 'presentations';
   static const courses = 'courses';
@@ -115,6 +117,8 @@ abstract class  LocaleKeys {
   static const deleteSlideConfirmationMessage = 'deleteSlideConfirmationMessage';
   static const noAudio = 'noAudio';
   static const slideDeleteUnable = 'slideDeleteUnable';
+  static const addLink = 'addLink';
+  static const link = 'link';
   static const fragments_reorder_screen = 'fragments_reorder_screen';
   static const slidesReorder = 'slidesReorder';
   static const noTitle = 'noTitle';
@@ -152,6 +156,7 @@ abstract class  LocaleKeys {
   static const register_screen = 'register_screen';
   static const register = 'register';
   static const registerMessage = 'registerMessage';
+  static const passwordConfirmNotFit = 'passwordConfirmNotFit';
   static const confirmation_screen = 'confirmation_screen';
   static const confirmationSuccess = 'confirmationSuccess';
   static const confirmationInsertCode = 'confirmationInsertCode';

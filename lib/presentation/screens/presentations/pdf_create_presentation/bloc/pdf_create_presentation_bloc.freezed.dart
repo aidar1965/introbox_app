@@ -24,7 +24,8 @@ mixin _$PdfCreatePresentationState {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -40,7 +41,8 @@ mixin _$PdfCreatePresentationState {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -56,7 +58,8 @@ mixin _$PdfCreatePresentationState {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -170,7 +173,8 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -189,7 +193,8 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -208,7 +213,8 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -282,7 +288,8 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       List<Channel> channels,
       Channel selectedChanel,
       bool isPending,
-      int? countFileGenerated});
+      int? countFileGenerated,
+      List<PresentationLink>? links});
 }
 
 /// @nodoc
@@ -301,6 +308,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
     Object? selectedChanel = null,
     Object? isPending = null,
     Object? countFileGenerated = freezed,
+    Object? links = freezed,
   }) {
     return _then(_$_ScreenState(
       pdfFragmentList: freezed == pdfFragmentList
@@ -323,6 +331,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.countFileGenerated
           : countFileGenerated // ignore: cast_nullable_to_non_nullable
               as int?,
+      links: freezed == links
+          ? _value._links
+          : links // ignore: cast_nullable_to_non_nullable
+              as List<PresentationLink>?,
     ));
   }
 }
@@ -335,9 +347,11 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       required final List<Channel> channels,
       required this.selectedChanel,
       this.isPending = false,
-      this.countFileGenerated})
+      this.countFileGenerated,
+      final List<PresentationLink>? links})
       : _pdfFragmentList = pdfFragmentList,
-        _channels = channels;
+        _channels = channels,
+        _links = links;
 
   final List<PdfFragmentSample>? _pdfFragmentList;
   @override
@@ -364,10 +378,19 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   final bool isPending;
   @override
   final int? countFileGenerated;
+  final List<PresentationLink>? _links;
+  @override
+  List<PresentationLink>? get links {
+    final value = _links;
+    if (value == null) return null;
+    if (_links is EqualUnmodifiableListView) return _links;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PdfCreatePresentationState.screenState(pdfFragmentList: $pdfFragmentList, channels: $channels, selectedChanel: $selectedChanel, isPending: $isPending, countFileGenerated: $countFileGenerated)';
+    return 'PdfCreatePresentationState.screenState(pdfFragmentList: $pdfFragmentList, channels: $channels, selectedChanel: $selectedChanel, isPending: $isPending, countFileGenerated: $countFileGenerated, links: $links)';
   }
 
   @override
@@ -380,7 +403,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       ..add(DiagnosticsProperty('channels', channels))
       ..add(DiagnosticsProperty('selectedChanel', selectedChanel))
       ..add(DiagnosticsProperty('isPending', isPending))
-      ..add(DiagnosticsProperty('countFileGenerated', countFileGenerated));
+      ..add(DiagnosticsProperty('countFileGenerated', countFileGenerated))
+      ..add(DiagnosticsProperty('links', links));
   }
 
   @override
@@ -396,7 +420,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             (identical(other.isPending, isPending) ||
                 other.isPending == isPending) &&
             (identical(other.countFileGenerated, countFileGenerated) ||
-                other.countFileGenerated == countFileGenerated));
+                other.countFileGenerated == countFileGenerated) &&
+            const DeepCollectionEquality().equals(other._links, _links));
   }
 
   @override
@@ -406,7 +431,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       const DeepCollectionEquality().hash(_channels),
       selectedChanel,
       isPending,
-      countFileGenerated);
+      countFileGenerated,
+      const DeepCollectionEquality().hash(_links));
 
   @JsonKey(ignore: true)
   @override
@@ -423,7 +449,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -431,7 +458,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     required TResult Function() initialDataNotLoaded,
   }) {
     return screenState(pdfFragmentList, channels, selectedChanel, isPending,
-        countFileGenerated);
+        countFileGenerated, links);
   }
 
   @override
@@ -443,7 +470,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -451,7 +479,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     TResult? Function()? initialDataNotLoaded,
   }) {
     return screenState?.call(pdfFragmentList, channels, selectedChanel,
-        isPending, countFileGenerated);
+        isPending, countFileGenerated, links);
   }
 
   @override
@@ -463,7 +491,8 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -473,7 +502,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   }) {
     if (screenState != null) {
       return screenState(pdfFragmentList, channels, selectedChanel, isPending,
-          countFileGenerated);
+          countFileGenerated, links);
     }
     return orElse();
   }
@@ -529,13 +558,15 @@ abstract class _ScreenState implements PdfCreatePresentationState {
       required final List<Channel> channels,
       required final Channel selectedChanel,
       final bool isPending,
-      final int? countFileGenerated}) = _$_ScreenState;
+      final int? countFileGenerated,
+      final List<PresentationLink>? links}) = _$_ScreenState;
 
   List<PdfFragmentSample>? get pdfFragmentList;
   List<Channel> get channels;
   Channel get selectedChanel;
   bool get isPending;
   int? get countFileGenerated;
+  List<PresentationLink>? get links;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -635,7 +666,8 @@ class _$_StateSavingProcess
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -654,7 +686,8 @@ class _$_StateSavingProcess
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -673,7 +706,8 @@ class _$_StateSavingProcess
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -797,7 +831,8 @@ class _$_StateSaveSuccess
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -816,7 +851,8 @@ class _$_StateSaveSuccess
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -835,7 +871,8 @@ class _$_StateSaveSuccess
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -951,7 +988,8 @@ class _$_StateSaveError
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -970,7 +1008,8 @@ class _$_StateSaveError
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -989,7 +1028,8 @@ class _$_StateSaveError
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -1109,7 +1149,8 @@ class _$_StateInitialDataNotLoaded
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)
+            int? countFileGenerated,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
     required TResult Function() saveSuccess,
@@ -1128,7 +1169,8 @@ class _$_StateInitialDataNotLoaded
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
     TResult? Function()? saveSuccess,
@@ -1147,7 +1189,8 @@ class _$_StateInitialDataNotLoaded
             List<Channel> channels,
             Channel selectedChanel,
             bool isPending,
-            int? countFileGenerated)?
+            int? countFileGenerated,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
     TResult Function()? saveSuccess,
@@ -1218,6 +1261,8 @@ mixin _$PdfCreatePresentationEvent {
     required TResult Function() initialDataRequested,
     required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
     required TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1233,6 +1278,8 @@ mixin _$PdfCreatePresentationEvent {
     TResult? Function()? initialDataRequested,
     TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
     TResult? Function(
             String title,
             Uint8List pdfFile,
@@ -1248,6 +1295,8 @@ mixin _$PdfCreatePresentationEvent {
     TResult Function()? initialDataRequested,
     TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1265,6 +1314,8 @@ mixin _$PdfCreatePresentationEvent {
         initialDataRequested,
     required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
   }) =>
@@ -1274,6 +1325,8 @@ mixin _$PdfCreatePresentationEvent {
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) =>
       throw _privateConstructorUsedError;
@@ -1282,6 +1335,8 @@ mixin _$PdfCreatePresentationEvent {
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
   }) =>
@@ -1362,6 +1417,8 @@ class _$_EventInitialDataRequested
     required TResult Function() initialDataRequested,
     required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
     required TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1380,6 +1437,8 @@ class _$_EventInitialDataRequested
     TResult? Function()? initialDataRequested,
     TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
     TResult? Function(
             String title,
             Uint8List pdfFile,
@@ -1398,6 +1457,8 @@ class _$_EventInitialDataRequested
     TResult Function()? initialDataRequested,
     TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1421,6 +1482,8 @@ class _$_EventInitialDataRequested
         initialDataRequested,
     required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
   }) {
@@ -1433,6 +1496,8 @@ class _$_EventInitialDataRequested
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) {
     return initialDataRequested?.call(this);
@@ -1444,6 +1509,8 @@ class _$_EventInitialDataRequested
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
   }) {
@@ -1539,6 +1606,8 @@ class _$_EventChannelSelected
     required TResult Function() initialDataRequested,
     required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
     required TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1557,6 +1626,8 @@ class _$_EventChannelSelected
     TResult? Function()? initialDataRequested,
     TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
     TResult? Function(
             String title,
             Uint8List pdfFile,
@@ -1575,6 +1646,8 @@ class _$_EventChannelSelected
     TResult Function()? initialDataRequested,
     TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1598,6 +1671,8 @@ class _$_EventChannelSelected
         initialDataRequested,
     required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
   }) {
@@ -1610,6 +1685,8 @@ class _$_EventChannelSelected
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) {
     return channelSelected?.call(this);
@@ -1621,6 +1698,8 @@ class _$_EventChannelSelected
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
   }) {
@@ -1720,6 +1799,8 @@ class _$_EventConvertFile
     required TResult Function() initialDataRequested,
     required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
     required TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1738,6 +1819,8 @@ class _$_EventConvertFile
     TResult? Function()? initialDataRequested,
     TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
     TResult? Function(
             String title,
             Uint8List pdfFile,
@@ -1756,6 +1839,8 @@ class _$_EventConvertFile
     TResult Function()? initialDataRequested,
     TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1779,6 +1864,8 @@ class _$_EventConvertFile
         initialDataRequested,
     required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
   }) {
@@ -1791,6 +1878,8 @@ class _$_EventConvertFile
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) {
     return convertPdf?.call(this);
@@ -1802,6 +1891,8 @@ class _$_EventConvertFile
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
   }) {
@@ -1819,6 +1910,386 @@ abstract class _EventConvertFile implements PdfCreatePresentationEvent {
   Uint8List get pdfFile;
   @JsonKey(ignore: true)
   _$$_EventConvertFileCopyWith<_$_EventConvertFile> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventAddLinkCopyWith<$Res> {
+  factory _$$_EventAddLinkCopyWith(
+          _$_EventAddLink value, $Res Function(_$_EventAddLink) then) =
+      __$$_EventAddLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PresentationLink link});
+}
+
+/// @nodoc
+class __$$_EventAddLinkCopyWithImpl<$Res>
+    extends _$PdfCreatePresentationEventCopyWithImpl<$Res, _$_EventAddLink>
+    implements _$$_EventAddLinkCopyWith<$Res> {
+  __$$_EventAddLinkCopyWithImpl(
+      _$_EventAddLink _value, $Res Function(_$_EventAddLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? link = null,
+  }) {
+    return _then(_$_EventAddLink(
+      link: null == link
+          ? _value.link
+          : link // ignore: cast_nullable_to_non_nullable
+              as PresentationLink,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventAddLink with DiagnosticableTreeMixin implements _EventAddLink {
+  const _$_EventAddLink({required this.link});
+
+  @override
+  final PresentationLink link;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PdfCreatePresentationEvent.addLink(link: $link)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PdfCreatePresentationEvent.addLink'))
+      ..add(DiagnosticsProperty('link', link));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventAddLink &&
+            (identical(other.link, link) || other.link == link));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, link);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventAddLinkCopyWith<_$_EventAddLink> get copyWith =>
+      __$$_EventAddLinkCopyWithImpl<_$_EventAddLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
+        savePdfPresentation,
+  }) {
+    return addLink(link);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+  }) {
+    return addLink?.call(link);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (addLink != null) {
+      return addLink(link);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventSavePdfPresentation value)
+        savePdfPresentation,
+  }) {
+    return addLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
+  }) {
+    return addLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (addLink != null) {
+      return addLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventAddLink implements PdfCreatePresentationEvent {
+  const factory _EventAddLink({required final PresentationLink link}) =
+      _$_EventAddLink;
+
+  PresentationLink get link;
+  @JsonKey(ignore: true)
+  _$$_EventAddLinkCopyWith<_$_EventAddLink> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventDeleteLinkCopyWith<$Res> {
+  factory _$$_EventDeleteLinkCopyWith(
+          _$_EventDeleteLink value, $Res Function(_$_EventDeleteLink) then) =
+      __$$_EventDeleteLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$_EventDeleteLinkCopyWithImpl<$Res>
+    extends _$PdfCreatePresentationEventCopyWithImpl<$Res, _$_EventDeleteLink>
+    implements _$$_EventDeleteLinkCopyWith<$Res> {
+  __$$_EventDeleteLinkCopyWithImpl(
+      _$_EventDeleteLink _value, $Res Function(_$_EventDeleteLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$_EventDeleteLink(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventDeleteLink
+    with DiagnosticableTreeMixin
+    implements _EventDeleteLink {
+  const _$_EventDeleteLink(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PdfCreatePresentationEvent.deleteLink(index: $index)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+          DiagnosticsProperty('type', 'PdfCreatePresentationEvent.deleteLink'))
+      ..add(DiagnosticsProperty('index', index));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventDeleteLink &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventDeleteLinkCopyWith<_$_EventDeleteLink> get copyWith =>
+      __$$_EventDeleteLinkCopyWithImpl<_$_EventDeleteLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)
+        savePdfPresentation,
+  }) {
+    return deleteLink(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+  }) {
+    return deleteLink?.call(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
+    TResult Function(
+            String title,
+            Uint8List pdfFile,
+            String pdfFileName,
+            String description,
+            bool isAudio,
+            List<PdfFragmentSample> pdfFragmentList)?
+        savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (deleteLink != null) {
+      return deleteLink(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventSavePdfPresentation value)
+        savePdfPresentation,
+  }) {
+    return deleteLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
+  }) {
+    return deleteLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
+    required TResult orElse(),
+  }) {
+    if (deleteLink != null) {
+      return deleteLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventDeleteLink implements PdfCreatePresentationEvent {
+  const factory _EventDeleteLink(final int index) = _$_EventDeleteLink;
+
+  int get index;
+  @JsonKey(ignore: true)
+  _$$_EventDeleteLinkCopyWith<_$_EventDeleteLink> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1976,6 +2447,8 @@ class _$_EventSavePdfPresentation
     required TResult Function() initialDataRequested,
     required TResult Function(Channel channel) channelSelected,
     required TResult Function(Uint8List pdfFile) convertPdf,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
     required TResult Function(
             String title,
             Uint8List pdfFile,
@@ -1995,6 +2468,8 @@ class _$_EventSavePdfPresentation
     TResult? Function()? initialDataRequested,
     TResult? Function(Channel channel)? channelSelected,
     TResult? Function(Uint8List pdfFile)? convertPdf,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
     TResult? Function(
             String title,
             Uint8List pdfFile,
@@ -2014,6 +2489,8 @@ class _$_EventSavePdfPresentation
     TResult Function()? initialDataRequested,
     TResult Function(Channel channel)? channelSelected,
     TResult Function(Uint8List pdfFile)? convertPdf,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     TResult Function(
             String title,
             Uint8List pdfFile,
@@ -2038,6 +2515,8 @@ class _$_EventSavePdfPresentation
         initialDataRequested,
     required TResult Function(_EventChannelSelected value) channelSelected,
     required TResult Function(_EventConvertFile value) convertPdf,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
     required TResult Function(_EventSavePdfPresentation value)
         savePdfPresentation,
   }) {
@@ -2050,6 +2529,8 @@ class _$_EventSavePdfPresentation
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult? Function(_EventChannelSelected value)? channelSelected,
     TResult? Function(_EventConvertFile value)? convertPdf,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
     TResult? Function(_EventSavePdfPresentation value)? savePdfPresentation,
   }) {
     return savePdfPresentation?.call(this);
@@ -2061,6 +2542,8 @@ class _$_EventSavePdfPresentation
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
     TResult Function(_EventChannelSelected value)? channelSelected,
     TResult Function(_EventConvertFile value)? convertPdf,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     TResult Function(_EventSavePdfPresentation value)? savePdfPresentation,
     required TResult orElse(),
   }) {

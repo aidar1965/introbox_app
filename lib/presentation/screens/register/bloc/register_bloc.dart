@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/interfaces/i_user_repository.dart';
 import '../../../../domain/locator/locator.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';
@@ -34,15 +36,15 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       return;
     }
     if (event.confirmPassword != event.password) {
-      emitter(const RegisterState.requestError(
-          errorText: 'Подтверждение пароля не совпадает с введенным'));
+      emitter(RegisterState.requestError(
+          errorText: LocaleKeys.passwordConfirmNotFit.tr()));
       emitter(const RegisterState.screenState(isPending: false));
       return;
     }
 
     if (EmailValidator.validate(event.email) == false) {
-      emitter(
-          const RegisterState.requestError(errorText: 'Неверный формат email'));
+      emitter(RegisterState.requestError(
+          errorText: LocaleKeys.emailFormatError.tr()));
       emitter(const RegisterState.screenState(isPending: false));
       return;
     }
@@ -57,7 +59,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emitter(const RegisterState.requestSuccess());
     } on RequestException catch (e) {
       if (e.httpStatusCode == HttpStatus.badRequest) {
-        final errorText = e.response?['message'] as String? ?? 'Ошибка';
+        final errorText = e.response?['message'] as String? ??
+            LocaleKeys.commonRequestError.tr();
         emitter(RegisterState.requestError(errorText: errorText));
       } else {
         emitter(const RegisterState.requestError());

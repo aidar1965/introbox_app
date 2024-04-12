@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
 
+import '../../../../domain/models/presentation_link.dart';
 import '../../http_client/i_api_request.dart';
 import 'fragment_request_data.dart';
 
@@ -13,6 +14,7 @@ class RequestAddImagePresentation extends IApiRequest {
   final String channelId;
   final List<FragmentRequestData> fragments;
   final int? duration;
+  final List<PresentationLink>? links;
 
   RequestAddImagePresentation({
     required this.title,
@@ -20,6 +22,7 @@ class RequestAddImagePresentation extends IApiRequest {
     required this.channelId,
     required this.fragments,
     this.duration,
+    this.links,
   }) : super(methodType: AvailableApiMethods.post, url: '/image-presentation/');
 
   @override
@@ -61,7 +64,14 @@ class RequestAddImagePresentation extends IApiRequest {
       'images': images,
       'audio': audio,
       'duration': duration,
-      'is_audio': true
+      'is_audio': true,
+      if (links != null && links!.isNotEmpty) 'links': _convertToString(links!)
     });
+  }
+
+  String _convertToString(List<PresentationLink> list) {
+    final listOfMap = list.map((e) => e.mapLink).toList();
+    print(jsonEncode(listOfMap));
+    return jsonEncode(listOfMap);
   }
 }

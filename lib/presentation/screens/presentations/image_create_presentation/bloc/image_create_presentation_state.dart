@@ -9,6 +9,7 @@ class ImageCreatePresentationState with _$ImageCreatePresentationState {
     required Channel selectedChanel,
     String? title,
     String? description,
+    List<PresentationLink>? links,
     @Default(false) bool isPending,
   }) = _ScreenState;
   const factory ImageCreatePresentationState.savingProcess(

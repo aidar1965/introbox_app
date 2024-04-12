@@ -4,15 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:record/record.dart';
+import 'package:http/http.dart' as http;
 
 import '../common/common_duration_widget.dart';
-
-import 'dart:js' as js;
 
 class AudioRecorder extends StatefulWidget {
   const AudioRecorder({Key? key, required this.onStop}) : super(key: key);
 
-  final void Function(({String path, int duration})) onStop;
+  final void Function(({String path, int duration, Uint8List audioBytes}))
+      onStop;
 
   @override
   State<AudioRecorder> createState() => _AudioRecorderState();
@@ -25,12 +25,14 @@ class _AudioRecorderState extends State<AudioRecorder> {
   StreamSubscription<RecordState>? _recordSub;
   RecordState _recordState = RecordState.stop;
   StreamSubscription<Amplitude>? _amplitudeSub;
+  String? path;
+  String? extension;
 
   @override
   void initState() {
-    // _recordSub = _audioRecorder.onStateChanged().listen((recordState) {
-    //   setState(() => _recordState = recordState);
-    // });
+    _recordSub = _audioRecorder.onStateChanged().listen((recordState) {
+      setState(() => _recordState = recordState);
+    });
 
     super.initState();
   }
@@ -39,55 +41,11 @@ class _AudioRecorderState extends State<AudioRecorder> {
     try {
       if (await _audioRecorder.hasPermission()) {
         // We don't do anything with this but printing
-        bool isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.aacLc,
+
+        await _audioRecorder.start(
+          encoder: AudioEncoder.opus,
         );
-        if (kDebugMode) {
-          print('${AudioEncoder.aacLc.name} supported: $isSupported');
-        }
 
-        isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.aacEld,
-        );
-        if (kDebugMode) {
-          print('${AudioEncoder.aacEld.name} supported: $isSupported');
-        }
-
-        isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.aacHe,
-        );
-        if (kDebugMode) {
-          print('${AudioEncoder.aacHe.name} supported: $isSupported');
-        }
-
-        isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.amrNb,
-        );
-        if (kDebugMode) {
-          print('${AudioEncoder.amrNb.name} supported: $isSupported');
-        }
-
-        isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.amrWb,
-        );
-        if (kDebugMode) {
-          print('${AudioEncoder.amrWb.name} supported: $isSupported');
-        }
-
-        isSupported = await _audioRecorder.isEncoderSupported(
-          AudioEncoder.opus,
-        );
-        if (kDebugMode) {
-          print('${AudioEncoder.opus.name} supported: $isSupported');
-        }
-
-        // final devs = await _audioRecorder.listInputDevices();
-        // final isRecording = await _audioRecorder.isRecording();
-
-        // await _audioRecorder.start(
-        //   encoder: AudioEncoder.wav,
-        // );
-        js.context.callMethod('startRecording');
         _recordDuration = 0;
 
         _startTimer();
@@ -106,9 +64,11 @@ class _AudioRecorderState extends State<AudioRecorder> {
     final duration = _recordDuration;
     _timer?.cancel();
     _recordDuration = 0;
-    late String blobPath;
-    // final path = await _audioRecorder.stop();
-    js.context.callMethod('stopRecording');
+
+    path = await _audioRecorder.stop();
+    final response = await http.get(Uri.parse(path!));
+    final audioBytes = response.bodyBytes;
+
     // final r = await promiseToFuture(js.context.callMethod('stopRecording', [
     //   allowInterop((audioLink) {
     //     blobPath = audioLink;
@@ -135,9 +95,8 @@ class _AudioRecorderState extends State<AudioRecorder> {
       _recordState = RecordState.stop;
     });
 
-    blobPath = js.context.callMethod('getBlobLink');
+    widget.onStop((path: path!, duration: duration, audioBytes: audioBytes));
 
-    widget.onStop((path: blobPath, duration: duration));
     // if (audioBytes != null) {
     //   final blob = html.Blob([audioBytes], 'audio/mp3');
     //   final path = html.Url.createObjectUrlFromBlob(blob);

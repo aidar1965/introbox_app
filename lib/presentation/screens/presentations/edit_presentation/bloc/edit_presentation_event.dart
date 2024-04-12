@@ -18,6 +18,7 @@ class EditPresentationEvent with _$EditPresentationEvent {
   const factory EditPresentationEvent.imageAdded({
     required PdfFragment fragment,
     required Uint8List imageBytes,
+    String? extension,
   }) = _EventImageAdded;
   const factory EditPresentationEvent.updatePresentation(
       {required String title,
@@ -27,6 +28,9 @@ class EditPresentationEvent with _$EditPresentationEvent {
     required String description,
     required bool isTitleOverImage,
   }) = _EventUpdateFragment;
+  const factory EditPresentationEvent.deleteLink(int index) = _EventDeleteLink;
+  const factory EditPresentationEvent.addLink(
+      {required PresentationLink link}) = _EventAddLink;
   const factory EditPresentationEvent.deleteFragment() = _EventDeleteFragment;
   const factory EditPresentationEvent.reorderFragments(
       {required List<String> ids}) = _EventReorderFragment;

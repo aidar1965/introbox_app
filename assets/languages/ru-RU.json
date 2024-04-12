@@ -17,10 +17,12 @@
     "buttonSelect": "Выбрать",
     "buttonAdd": "Добавить",
     "buttonSend": "Отправить",
+    "buttonRecord": "Записать аудио",
 
     "toolTipClose": "Закрыть",
     "toolTipName": "Название",
-    "toolTipDescription": "Презентация",
+    "toolTipDescription": "Описание",
+    "hintSearch": "Поиск...",
 
     "main_screen": "",
     "presentations": "Презентации",
@@ -127,6 +129,8 @@
     "deleteSlideConfirmationMessage": "Вы действительно хотите удалить слайд?",
     "noAudio": "Аудио отсутствует",
     "slideDeleteUnable": "Вы не можете удалить единственный слайд",
+    "addLink": "Добавить ссылку",
+    "link": "Ссылка",
 
     "fragments_reorder_screen": "",
     "slidesReorder": "Изменение порядка слайдов",
@@ -172,6 +176,7 @@
     "register_screen": "",
     "register": "Регистрация",
     "registerMessage": "На Ваш email выслан код для подтверждения регистрации",
+    "passwordConfirmNotFit": "Пароль и повторение пароля не совпадают",
 
     "confirmation_screen": "",
     "confirmationSuccess": "Вы успешно зарегистрировались",

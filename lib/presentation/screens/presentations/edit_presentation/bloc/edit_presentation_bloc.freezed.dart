@@ -21,12 +21,14 @@ mixin _$EditPresentationState {
     required TResult Function() pending,
     required TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)
+            bool deleteFragmentPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() requestSuccess,
@@ -38,12 +40,14 @@ mixin _$EditPresentationState {
     TResult? Function()? pending,
     TResult? Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? requestSuccess,
@@ -55,12 +59,14 @@ mixin _$EditPresentationState {
     TResult Function()? pending,
     TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? requestSuccess,
@@ -165,12 +171,14 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
     required TResult Function() pending,
     required TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)
+            bool deleteFragmentPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() requestSuccess,
@@ -185,12 +193,14 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
     TResult? Function()? pending,
     TResult? Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? requestSuccess,
@@ -205,12 +215,14 @@ class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
     TResult Function()? pending,
     TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? requestSuccess,
@@ -276,12 +288,14 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
   @useResult
   $Res call(
       {String title,
-      String description,
+      String? description,
       List<PdfFragment> fragments,
+      List<PresentationLink>? links,
       PdfFragment? selectedFragment,
       bool presentationUpdatePending,
       bool fragmentUpdatePending,
-      bool deleteFragmentPending});
+      bool deleteFragmentPending,
+      int? countFileGenerated});
 }
 
 /// @nodoc
@@ -296,26 +310,32 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? fragments = null,
+    Object? links = freezed,
     Object? selectedFragment = freezed,
     Object? presentationUpdatePending = null,
     Object? fragmentUpdatePending = null,
     Object? deleteFragmentPending = null,
+    Object? countFileGenerated = freezed,
   }) {
     return _then(_$_ScreenState(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       fragments: null == fragments
           ? _value._fragments
           : fragments // ignore: cast_nullable_to_non_nullable
               as List<PdfFragment>,
+      links: freezed == links
+          ? _value._links
+          : links // ignore: cast_nullable_to_non_nullable
+              as List<PresentationLink>?,
       selectedFragment: freezed == selectedFragment
           ? _value.selectedFragment
           : selectedFragment // ignore: cast_nullable_to_non_nullable
@@ -332,6 +352,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.deleteFragmentPending
           : deleteFragmentPending // ignore: cast_nullable_to_non_nullable
               as bool,
+      countFileGenerated: freezed == countFileGenerated
+          ? _value.countFileGenerated
+          : countFileGenerated // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -341,24 +365,37 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   const _$_ScreenState(
       {required this.title,
-      required this.description,
+      this.description,
       required final List<PdfFragment> fragments,
+      final List<PresentationLink>? links,
       this.selectedFragment,
       this.presentationUpdatePending = false,
       this.fragmentUpdatePending = false,
-      this.deleteFragmentPending = false})
-      : _fragments = fragments;
+      this.deleteFragmentPending = false,
+      this.countFileGenerated})
+      : _fragments = fragments,
+        _links = links;
 
   @override
   final String title;
   @override
-  final String description;
+  final String? description;
   final List<PdfFragment> _fragments;
   @override
   List<PdfFragment> get fragments {
     if (_fragments is EqualUnmodifiableListView) return _fragments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_fragments);
+  }
+
+  final List<PresentationLink>? _links;
+  @override
+  List<PresentationLink>? get links {
+    final value = _links;
+    if (value == null) return null;
+    if (_links is EqualUnmodifiableListView) return _links;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
   }
 
   @override
@@ -372,10 +409,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   @override
   @JsonKey()
   final bool deleteFragmentPending;
+  @override
+  final int? countFileGenerated;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditPresentationState.screenState(title: $title, description: $description, fragments: $fragments, selectedFragment: $selectedFragment, presentationUpdatePending: $presentationUpdatePending, fragmentUpdatePending: $fragmentUpdatePending, deleteFragmentPending: $deleteFragmentPending)';
+    return 'EditPresentationState.screenState(title: $title, description: $description, fragments: $fragments, links: $links, selectedFragment: $selectedFragment, presentationUpdatePending: $presentationUpdatePending, fragmentUpdatePending: $fragmentUpdatePending, deleteFragmentPending: $deleteFragmentPending, countFileGenerated: $countFileGenerated)';
   }
 
   @override
@@ -386,12 +425,13 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('fragments', fragments))
+      ..add(DiagnosticsProperty('links', links))
       ..add(DiagnosticsProperty('selectedFragment', selectedFragment))
       ..add(DiagnosticsProperty(
           'presentationUpdatePending', presentationUpdatePending))
       ..add(DiagnosticsProperty('fragmentUpdatePending', fragmentUpdatePending))
-      ..add(
-          DiagnosticsProperty('deleteFragmentPending', deleteFragmentPending));
+      ..add(DiagnosticsProperty('deleteFragmentPending', deleteFragmentPending))
+      ..add(DiagnosticsProperty('countFileGenerated', countFileGenerated));
   }
 
   @override
@@ -404,6 +444,7 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
                 other.description == description) &&
             const DeepCollectionEquality()
                 .equals(other._fragments, _fragments) &&
+            const DeepCollectionEquality().equals(other._links, _links) &&
             (identical(other.selectedFragment, selectedFragment) ||
                 other.selectedFragment == selectedFragment) &&
             (identical(other.presentationUpdatePending,
@@ -412,7 +453,9 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
             (identical(other.fragmentUpdatePending, fragmentUpdatePending) ||
                 other.fragmentUpdatePending == fragmentUpdatePending) &&
             (identical(other.deleteFragmentPending, deleteFragmentPending) ||
-                other.deleteFragmentPending == deleteFragmentPending));
+                other.deleteFragmentPending == deleteFragmentPending) &&
+            (identical(other.countFileGenerated, countFileGenerated) ||
+                other.countFileGenerated == countFileGenerated));
   }
 
   @override
@@ -421,10 +464,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
       title,
       description,
       const DeepCollectionEquality().hash(_fragments),
+      const DeepCollectionEquality().hash(_links),
       selectedFragment,
       presentationUpdatePending,
       fragmentUpdatePending,
-      deleteFragmentPending);
+      deleteFragmentPending,
+      countFileGenerated);
 
   @JsonKey(ignore: true)
   @override
@@ -438,12 +483,14 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     required TResult Function() pending,
     required TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)
+            bool deleteFragmentPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() requestSuccess,
@@ -453,10 +500,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
         title,
         description,
         fragments,
+        links,
         selectedFragment,
         presentationUpdatePending,
         fragmentUpdatePending,
-        deleteFragmentPending);
+        deleteFragmentPending,
+        countFileGenerated);
   }
 
   @override
@@ -465,12 +514,14 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     TResult? Function()? pending,
     TResult? Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? requestSuccess,
@@ -480,10 +531,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
         title,
         description,
         fragments,
+        links,
         selectedFragment,
         presentationUpdatePending,
         fragmentUpdatePending,
-        deleteFragmentPending);
+        deleteFragmentPending,
+        countFileGenerated);
   }
 
   @override
@@ -492,12 +545,14 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
     TResult Function()? pending,
     TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? requestSuccess,
@@ -509,10 +564,12 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
           title,
           description,
           fragments,
+          links,
           selectedFragment,
           presentationUpdatePending,
           fragmentUpdatePending,
-          deleteFragmentPending);
+          deleteFragmentPending,
+          countFileGenerated);
     }
     return orElse();
   }
@@ -561,20 +618,24 @@ class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
 abstract class _ScreenState implements EditPresentationState {
   const factory _ScreenState(
       {required final String title,
-      required final String description,
+      final String? description,
       required final List<PdfFragment> fragments,
+      final List<PresentationLink>? links,
       final PdfFragment? selectedFragment,
       final bool presentationUpdatePending,
       final bool fragmentUpdatePending,
-      final bool deleteFragmentPending}) = _$_ScreenState;
+      final bool deleteFragmentPending,
+      final int? countFileGenerated}) = _$_ScreenState;
 
   String get title;
-  String get description;
+  String? get description;
   List<PdfFragment> get fragments;
+  List<PresentationLink>? get links;
   PdfFragment? get selectedFragment;
   bool get presentationUpdatePending;
   bool get fragmentUpdatePending;
   bool get deleteFragmentPending;
+  int? get countFileGenerated;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -659,12 +720,14 @@ class _$_StateRequestError
     required TResult Function() pending,
     required TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)
+            bool deleteFragmentPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() requestSuccess,
@@ -679,12 +742,14 @@ class _$_StateRequestError
     TResult? Function()? pending,
     TResult? Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? requestSuccess,
@@ -699,12 +764,14 @@ class _$_StateRequestError
     TResult Function()? pending,
     TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? requestSuccess,
@@ -818,12 +885,14 @@ class _$_StateRequestSuccess
     required TResult Function() pending,
     required TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)
+            bool deleteFragmentPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() requestSuccess,
@@ -838,12 +907,14 @@ class _$_StateRequestSuccess
     TResult? Function()? pending,
     TResult? Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? requestSuccess,
@@ -858,12 +929,14 @@ class _$_StateRequestSuccess
     TResult Function()? pending,
     TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? requestSuccess,
@@ -1000,12 +1073,14 @@ class _$_StateLoadingError
     required TResult Function() pending,
     required TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)
+            bool deleteFragmentPending,
+            int? countFileGenerated)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function() requestSuccess,
@@ -1020,12 +1095,14 @@ class _$_StateLoadingError
     TResult? Function()? pending,
     TResult? Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function()? requestSuccess,
@@ -1040,12 +1117,14 @@ class _$_StateLoadingError
     TResult Function()? pending,
     TResult Function(
             String title,
-            String description,
+            String? description,
             List<PdfFragment> fragments,
+            List<PresentationLink>? links,
             PdfFragment? selectedFragment,
             bool presentationUpdatePending,
             bool fragmentUpdatePending,
-            bool deleteFragmentPending)?
+            bool deleteFragmentPending,
+            int? countFileGenerated)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function()? requestSuccess,
@@ -1119,13 +1198,16 @@ mixin _$EditPresentationEvent {
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) =>
@@ -1138,10 +1220,14 @@ mixin _$EditPresentationEvent {
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) =>
@@ -1154,10 +1240,14 @@ mixin _$EditPresentationEvent {
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1174,6 +1264,8 @@ mixin _$EditPresentationEvent {
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) =>
@@ -1187,6 +1279,8 @@ mixin _$EditPresentationEvent {
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) =>
@@ -1200,6 +1294,8 @@ mixin _$EditPresentationEvent {
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -1283,13 +1379,16 @@ class _$_EventInitialDataRequested
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1305,10 +1404,14 @@ class _$_EventInitialDataRequested
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1324,10 +1427,14 @@ class _$_EventInitialDataRequested
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1350,6 +1457,8 @@ class _$_EventInitialDataRequested
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -1366,6 +1475,8 @@ class _$_EventInitialDataRequested
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -1382,6 +1493,8 @@ class _$_EventInitialDataRequested
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -1480,13 +1593,16 @@ class _$_EventFragmentSelected
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1502,10 +1618,14 @@ class _$_EventFragmentSelected
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1521,10 +1641,14 @@ class _$_EventFragmentSelected
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1547,6 +1671,8 @@ class _$_EventFragmentSelected
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -1563,6 +1689,8 @@ class _$_EventFragmentSelected
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -1579,6 +1707,8 @@ class _$_EventFragmentSelected
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -1732,13 +1862,16 @@ class _$_EventAudioAdded
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1754,10 +1887,14 @@ class _$_EventAudioAdded
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1774,10 +1911,14 @@ class _$_EventAudioAdded
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -1800,6 +1941,8 @@ class _$_EventAudioAdded
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -1816,6 +1959,8 @@ class _$_EventAudioAdded
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -1832,6 +1977,8 @@ class _$_EventAudioAdded
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -1943,13 +2090,16 @@ class _$_EventAudioDeleted
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -1965,10 +2115,14 @@ class _$_EventAudioDeleted
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -1984,10 +2138,14 @@ class _$_EventAudioDeleted
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2010,6 +2168,8 @@ class _$_EventAudioDeleted
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -2026,6 +2186,8 @@ class _$_EventAudioDeleted
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -2042,6 +2204,8 @@ class _$_EventAudioDeleted
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -2069,7 +2233,7 @@ abstract class _$$_EventImageAddedCopyWith<$Res> {
           _$_EventImageAdded value, $Res Function(_$_EventImageAdded) then) =
       __$$_EventImageAddedCopyWithImpl<$Res>;
   @useResult
-  $Res call({PdfFragment fragment, Uint8List imageBytes});
+  $Res call({PdfFragment fragment, Uint8List imageBytes, String? extension});
 }
 
 /// @nodoc
@@ -2085,6 +2249,7 @@ class __$$_EventImageAddedCopyWithImpl<$Res>
   $Res call({
     Object? fragment = null,
     Object? imageBytes = null,
+    Object? extension = freezed,
   }) {
     return _then(_$_EventImageAdded(
       fragment: null == fragment
@@ -2095,6 +2260,10 @@ class __$$_EventImageAddedCopyWithImpl<$Res>
           ? _value.imageBytes
           : imageBytes // ignore: cast_nullable_to_non_nullable
               as Uint8List,
+      extension: freezed == extension
+          ? _value.extension
+          : extension // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -2104,16 +2273,19 @@ class __$$_EventImageAddedCopyWithImpl<$Res>
 class _$_EventImageAdded
     with DiagnosticableTreeMixin
     implements _EventImageAdded {
-  const _$_EventImageAdded({required this.fragment, required this.imageBytes});
+  const _$_EventImageAdded(
+      {required this.fragment, required this.imageBytes, this.extension});
 
   @override
   final PdfFragment fragment;
   @override
   final Uint8List imageBytes;
+  @override
+  final String? extension;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'EditPresentationEvent.imageAdded(fragment: $fragment, imageBytes: $imageBytes)';
+    return 'EditPresentationEvent.imageAdded(fragment: $fragment, imageBytes: $imageBytes, extension: $extension)';
   }
 
   @override
@@ -2122,7 +2294,8 @@ class _$_EventImageAdded
     properties
       ..add(DiagnosticsProperty('type', 'EditPresentationEvent.imageAdded'))
       ..add(DiagnosticsProperty('fragment', fragment))
-      ..add(DiagnosticsProperty('imageBytes', imageBytes));
+      ..add(DiagnosticsProperty('imageBytes', imageBytes))
+      ..add(DiagnosticsProperty('extension', extension));
   }
 
   @override
@@ -2133,12 +2306,14 @@ class _$_EventImageAdded
             (identical(other.fragment, fragment) ||
                 other.fragment == fragment) &&
             const DeepCollectionEquality()
-                .equals(other.imageBytes, imageBytes));
+                .equals(other.imageBytes, imageBytes) &&
+            (identical(other.extension, extension) ||
+                other.extension == extension));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, fragment, const DeepCollectionEquality().hash(imageBytes));
+  int get hashCode => Object.hash(runtimeType, fragment,
+      const DeepCollectionEquality().hash(imageBytes), extension);
 
   @JsonKey(ignore: true)
   @override
@@ -2155,17 +2330,20 @@ class _$_EventImageAdded
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
-    return imageAdded(fragment, imageBytes);
+    return imageAdded(fragment, imageBytes, extension);
   }
 
   @override
@@ -2177,14 +2355,18 @@ class _$_EventImageAdded
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
-    return imageAdded?.call(fragment, imageBytes);
+    return imageAdded?.call(fragment, imageBytes, extension);
   }
 
   @override
@@ -2196,16 +2378,20 @@ class _$_EventImageAdded
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
   }) {
     if (imageAdded != null) {
-      return imageAdded(fragment, imageBytes);
+      return imageAdded(fragment, imageBytes, extension);
     }
     return orElse();
   }
@@ -2222,6 +2408,8 @@ class _$_EventImageAdded
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -2238,6 +2426,8 @@ class _$_EventImageAdded
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -2254,6 +2444,8 @@ class _$_EventImageAdded
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -2268,10 +2460,12 @@ class _$_EventImageAdded
 abstract class _EventImageAdded implements EditPresentationEvent {
   const factory _EventImageAdded(
       {required final PdfFragment fragment,
-      required final Uint8List imageBytes}) = _$_EventImageAdded;
+      required final Uint8List imageBytes,
+      final String? extension}) = _$_EventImageAdded;
 
   PdfFragment get fragment;
   Uint8List get imageBytes;
+  String? get extension;
   @JsonKey(ignore: true)
   _$$_EventImageAddedCopyWith<_$_EventImageAdded> get copyWith =>
       throw _privateConstructorUsedError;
@@ -2372,13 +2566,16 @@ class _$_EventUpdatePresentation
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2394,10 +2591,14 @@ class _$_EventUpdatePresentation
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2413,10 +2614,14 @@ class _$_EventUpdatePresentation
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2439,6 +2644,8 @@ class _$_EventUpdatePresentation
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -2455,6 +2662,8 @@ class _$_EventUpdatePresentation
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -2471,6 +2680,8 @@ class _$_EventUpdatePresentation
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -2599,13 +2810,16 @@ class _$_EventUpdateFragment
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2621,10 +2835,14 @@ class _$_EventUpdateFragment
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2640,10 +2858,14 @@ class _$_EventUpdateFragment
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2666,6 +2888,8 @@ class _$_EventUpdateFragment
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -2682,6 +2906,8 @@ class _$_EventUpdateFragment
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -2698,6 +2924,8 @@ class _$_EventUpdateFragment
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -2720,6 +2948,437 @@ abstract class _EventUpdateFragment implements EditPresentationEvent {
   bool get isTitleOverImage;
   @JsonKey(ignore: true)
   _$$_EventUpdateFragmentCopyWith<_$_EventUpdateFragment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventDeleteLinkCopyWith<$Res> {
+  factory _$$_EventDeleteLinkCopyWith(
+          _$_EventDeleteLink value, $Res Function(_$_EventDeleteLink) then) =
+      __$$_EventDeleteLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$_EventDeleteLinkCopyWithImpl<$Res>
+    extends _$EditPresentationEventCopyWithImpl<$Res, _$_EventDeleteLink>
+    implements _$$_EventDeleteLinkCopyWith<$Res> {
+  __$$_EventDeleteLinkCopyWithImpl(
+      _$_EventDeleteLink _value, $Res Function(_$_EventDeleteLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$_EventDeleteLink(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventDeleteLink
+    with DiagnosticableTreeMixin
+    implements _EventDeleteLink {
+  const _$_EventDeleteLink(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'EditPresentationEvent.deleteLink(index: $index)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'EditPresentationEvent.deleteLink'))
+      ..add(DiagnosticsProperty('index', index));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventDeleteLink &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventDeleteLinkCopyWith<_$_EventDeleteLink> get copyWith =>
+      __$$_EventDeleteLinkCopyWithImpl<_$_EventDeleteLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(PdfFragment fragment) fragmentSelected,
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
+        audioAdded,
+    required TResult Function(PdfFragment fragment) deleteAudio,
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
+        imageAdded,
+    required TResult Function(String title, String description)
+        updatePresentation,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function() deleteFragment,
+    required TResult Function(List<String> ids) reorderFragments,
+  }) {
+    return deleteLink(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(PdfFragment fragment)? fragmentSelected,
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
+        audioAdded,
+    TResult? Function(PdfFragment fragment)? deleteAudio,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
+    TResult? Function(String title, String description)? updatePresentation,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function()? deleteFragment,
+    TResult? Function(List<String> ids)? reorderFragments,
+  }) {
+    return deleteLink?.call(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(PdfFragment fragment)? fragmentSelected,
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
+        audioAdded,
+    TResult Function(PdfFragment fragment)? deleteAudio,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
+    TResult Function(String title, String description)? updatePresentation,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function()? deleteFragment,
+    TResult Function(List<String> ids)? reorderFragments,
+    required TResult orElse(),
+  }) {
+    if (deleteLink != null) {
+      return deleteLink(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventFragmentSelected value) fragmentSelected,
+    required TResult Function(_EventAudioAdded value) audioAdded,
+    required TResult Function(_EventAudioDeleted value) deleteAudio,
+    required TResult Function(_EventImageAdded value) imageAdded,
+    required TResult Function(_EventUpdatePresentation value)
+        updatePresentation,
+    required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteFragment value) deleteFragment,
+    required TResult Function(_EventReorderFragment value) reorderFragments,
+  }) {
+    return deleteLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventFragmentSelected value)? fragmentSelected,
+    TResult? Function(_EventAudioAdded value)? audioAdded,
+    TResult? Function(_EventAudioDeleted value)? deleteAudio,
+    TResult? Function(_EventImageAdded value)? imageAdded,
+    TResult? Function(_EventUpdatePresentation value)? updatePresentation,
+    TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteFragment value)? deleteFragment,
+    TResult? Function(_EventReorderFragment value)? reorderFragments,
+  }) {
+    return deleteLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventFragmentSelected value)? fragmentSelected,
+    TResult Function(_EventAudioAdded value)? audioAdded,
+    TResult Function(_EventAudioDeleted value)? deleteAudio,
+    TResult Function(_EventImageAdded value)? imageAdded,
+    TResult Function(_EventUpdatePresentation value)? updatePresentation,
+    TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteFragment value)? deleteFragment,
+    TResult Function(_EventReorderFragment value)? reorderFragments,
+    required TResult orElse(),
+  }) {
+    if (deleteLink != null) {
+      return deleteLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventDeleteLink implements EditPresentationEvent {
+  const factory _EventDeleteLink(final int index) = _$_EventDeleteLink;
+
+  int get index;
+  @JsonKey(ignore: true)
+  _$$_EventDeleteLinkCopyWith<_$_EventDeleteLink> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventAddLinkCopyWith<$Res> {
+  factory _$$_EventAddLinkCopyWith(
+          _$_EventAddLink value, $Res Function(_$_EventAddLink) then) =
+      __$$_EventAddLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PresentationLink link});
+}
+
+/// @nodoc
+class __$$_EventAddLinkCopyWithImpl<$Res>
+    extends _$EditPresentationEventCopyWithImpl<$Res, _$_EventAddLink>
+    implements _$$_EventAddLinkCopyWith<$Res> {
+  __$$_EventAddLinkCopyWithImpl(
+      _$_EventAddLink _value, $Res Function(_$_EventAddLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? link = null,
+  }) {
+    return _then(_$_EventAddLink(
+      link: null == link
+          ? _value.link
+          : link // ignore: cast_nullable_to_non_nullable
+              as PresentationLink,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventAddLink with DiagnosticableTreeMixin implements _EventAddLink {
+  const _$_EventAddLink({required this.link});
+
+  @override
+  final PresentationLink link;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'EditPresentationEvent.addLink(link: $link)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'EditPresentationEvent.addLink'))
+      ..add(DiagnosticsProperty('link', link));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventAddLink &&
+            (identical(other.link, link) || other.link == link));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, link);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventAddLinkCopyWith<_$_EventAddLink> get copyWith =>
+      __$$_EventAddLinkCopyWithImpl<_$_EventAddLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(PdfFragment fragment) fragmentSelected,
+    required TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)
+        audioAdded,
+    required TResult Function(PdfFragment fragment) deleteAudio,
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
+        imageAdded,
+    required TResult Function(String title, String description)
+        updatePresentation,
+    required TResult Function(
+            String title, String description, bool isTitleOverImage)
+        updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function() deleteFragment,
+    required TResult Function(List<String> ids) reorderFragments,
+  }) {
+    return addLink(link);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(PdfFragment fragment)? fragmentSelected,
+    TResult? Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
+        audioAdded,
+    TResult? Function(PdfFragment fragment)? deleteAudio,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
+    TResult? Function(String title, String description)? updatePresentation,
+    TResult? Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function()? deleteFragment,
+    TResult? Function(List<String> ids)? reorderFragments,
+  }) {
+    return addLink?.call(link);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(PdfFragment fragment)? fragmentSelected,
+    TResult Function(PdfFragment fragment, String extension,
+            Uint8List audioBytes, String audioPath, int duration)?
+        audioAdded,
+    TResult Function(PdfFragment fragment)? deleteAudio,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
+    TResult Function(String title, String description)? updatePresentation,
+    TResult Function(String title, String description, bool isTitleOverImage)?
+        updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function()? deleteFragment,
+    TResult Function(List<String> ids)? reorderFragments,
+    required TResult orElse(),
+  }) {
+    if (addLink != null) {
+      return addLink(link);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventFragmentSelected value) fragmentSelected,
+    required TResult Function(_EventAudioAdded value) audioAdded,
+    required TResult Function(_EventAudioDeleted value) deleteAudio,
+    required TResult Function(_EventImageAdded value) imageAdded,
+    required TResult Function(_EventUpdatePresentation value)
+        updatePresentation,
+    required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteFragment value) deleteFragment,
+    required TResult Function(_EventReorderFragment value) reorderFragments,
+  }) {
+    return addLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventFragmentSelected value)? fragmentSelected,
+    TResult? Function(_EventAudioAdded value)? audioAdded,
+    TResult? Function(_EventAudioDeleted value)? deleteAudio,
+    TResult? Function(_EventImageAdded value)? imageAdded,
+    TResult? Function(_EventUpdatePresentation value)? updatePresentation,
+    TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteFragment value)? deleteFragment,
+    TResult? Function(_EventReorderFragment value)? reorderFragments,
+  }) {
+    return addLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventFragmentSelected value)? fragmentSelected,
+    TResult Function(_EventAudioAdded value)? audioAdded,
+    TResult Function(_EventAudioDeleted value)? deleteAudio,
+    TResult Function(_EventImageAdded value)? imageAdded,
+    TResult Function(_EventUpdatePresentation value)? updatePresentation,
+    TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteFragment value)? deleteFragment,
+    TResult Function(_EventReorderFragment value)? reorderFragments,
+    required TResult orElse(),
+  }) {
+    if (addLink != null) {
+      return addLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventAddLink implements EditPresentationEvent {
+  const factory _EventAddLink({required final PresentationLink link}) =
+      _$_EventAddLink;
+
+  PresentationLink get link;
+  @JsonKey(ignore: true)
+  _$$_EventAddLinkCopyWith<_$_EventAddLink> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -2776,13 +3435,16 @@ class _$_EventDeleteFragment
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -2798,10 +3460,14 @@ class _$_EventDeleteFragment
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -2817,10 +3483,14 @@ class _$_EventDeleteFragment
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -2843,6 +3513,8 @@ class _$_EventDeleteFragment
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -2859,6 +3531,8 @@ class _$_EventDeleteFragment
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -2875,6 +3549,8 @@ class _$_EventDeleteFragment
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),
@@ -2978,13 +3654,16 @@ class _$_EventReorderFragment
             Uint8List audioBytes, String audioPath, int duration)
         audioAdded,
     required TResult Function(PdfFragment fragment) deleteAudio,
-    required TResult Function(PdfFragment fragment, Uint8List imageBytes)
+    required TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)
         imageAdded,
     required TResult Function(String title, String description)
         updatePresentation,
     required TResult Function(
             String title, String description, bool isTitleOverImage)
         updateFragment,
+    required TResult Function(int index) deleteLink,
+    required TResult Function(PresentationLink link) addLink,
     required TResult Function() deleteFragment,
     required TResult Function(List<String> ids) reorderFragments,
   }) {
@@ -3000,10 +3679,14 @@ class _$_EventReorderFragment
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult? Function(PdfFragment fragment)? deleteAudio,
-    TResult? Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult? Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult? Function(String title, String description)? updatePresentation,
     TResult? Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult? Function(int index)? deleteLink,
+    TResult? Function(PresentationLink link)? addLink,
     TResult? Function()? deleteFragment,
     TResult? Function(List<String> ids)? reorderFragments,
   }) {
@@ -3019,10 +3702,14 @@ class _$_EventReorderFragment
             Uint8List audioBytes, String audioPath, int duration)?
         audioAdded,
     TResult Function(PdfFragment fragment)? deleteAudio,
-    TResult Function(PdfFragment fragment, Uint8List imageBytes)? imageAdded,
+    TResult Function(
+            PdfFragment fragment, Uint8List imageBytes, String? extension)?
+        imageAdded,
     TResult Function(String title, String description)? updatePresentation,
     TResult Function(String title, String description, bool isTitleOverImage)?
         updateFragment,
+    TResult Function(int index)? deleteLink,
+    TResult Function(PresentationLink link)? addLink,
     TResult Function()? deleteFragment,
     TResult Function(List<String> ids)? reorderFragments,
     required TResult orElse(),
@@ -3045,6 +3732,8 @@ class _$_EventReorderFragment
     required TResult Function(_EventUpdatePresentation value)
         updatePresentation,
     required TResult Function(_EventUpdateFragment value) updateFragment,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+    required TResult Function(_EventAddLink value) addLink,
     required TResult Function(_EventDeleteFragment value) deleteFragment,
     required TResult Function(_EventReorderFragment value) reorderFragments,
   }) {
@@ -3061,6 +3750,8 @@ class _$_EventReorderFragment
     TResult? Function(_EventImageAdded value)? imageAdded,
     TResult? Function(_EventUpdatePresentation value)? updatePresentation,
     TResult? Function(_EventUpdateFragment value)? updateFragment,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+    TResult? Function(_EventAddLink value)? addLink,
     TResult? Function(_EventDeleteFragment value)? deleteFragment,
     TResult? Function(_EventReorderFragment value)? reorderFragments,
   }) {
@@ -3077,6 +3768,8 @@ class _$_EventReorderFragment
     TResult Function(_EventImageAdded value)? imageAdded,
     TResult Function(_EventUpdatePresentation value)? updatePresentation,
     TResult Function(_EventUpdateFragment value)? updateFragment,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    TResult Function(_EventAddLink value)? addLink,
     TResult Function(_EventDeleteFragment value)? deleteFragment,
     TResult Function(_EventReorderFragment value)? reorderFragments,
     required TResult orElse(),

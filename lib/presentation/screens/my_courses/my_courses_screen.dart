@@ -26,6 +26,7 @@ class MyCoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController();
     return BlocProvider(
         create: (context) => MyCoursesBloc(),
         child: BlocConsumer<MyCoursesBloc, MyCoursesState>(
@@ -49,7 +50,7 @@ class MyCoursesScreen extends StatelessWidget {
                         ),
                         leading: BackButton(
                           onPressed: () {
-                            context.router.push(const PresentationsRoute());
+                            context.router.push(PresentationsRoute());
                           },
                         ),
                       ),
@@ -63,7 +64,7 @@ class MyCoursesScreen extends StatelessWidget {
                         ),
                         leading: BackButton(
                           onPressed: () {
-                            context.router.push(const PresentationsRoute());
+                            context.router.push(PresentationsRoute());
                           },
                         ),
                       ),
@@ -79,7 +80,7 @@ class MyCoursesScreen extends StatelessWidget {
                         ),
                         leading: BackButton(
                           onPressed: () {
-                            context.router.push(const PresentationsRoute());
+                            context.router.push(PresentationsRoute());
                           },
                         ),
                         actions: [
@@ -103,7 +104,10 @@ class MyCoursesScreen extends StatelessWidget {
                         ],
                       ),
                       body: _ScreenView(
-                          channels: state.channels, courses: state.courses)),
+                        channels: state.channels,
+                        courses: state.courses,
+                        controller: controller,
+                      )),
                 )));
   }
 
@@ -150,7 +154,7 @@ class MyCoursesScreen extends StatelessWidget {
                     height: 12,
                   ),
                   CommonElevatedButton(
-                      text: 'Сохранить',
+                      text: LocaleKeys.buttonSave.tr(),
                       onPressed: () {
                         if (titleController.text.isEmpty) {
                           CommonFunctions.showMessage(
@@ -321,27 +325,133 @@ class AddCourseFormData {
       this.imageBytes});
 }
 
-class _ScreenView extends StatelessWidget {
-  const _ScreenView({super.key, required this.channels, required this.courses});
+class _ScreenView extends StatefulWidget {
+  _ScreenView(
+      {super.key,
+      required this.channels,
+      required this.courses,
+      required this.controller});
 
   final List<Channel> channels;
   final List<Course> courses;
+  final TextEditingController controller;
+
+  @override
+  State<_ScreenView> createState() => _ScreenViewState();
+}
+
+class _ScreenViewState extends State<_ScreenView> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      print('end of page');
+      // Загрузка новых данных
+      _loadMoreData();
+    }
+  }
+
+  void _loadMoreData() {
+    BlocProvider.of<MyCoursesBloc>(context)
+        .add(const MyCoursesEvent.loadMore());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return courses.isNotEmpty
-        ? ListView.separated(
-            itemCount: courses.length,
-            padding: EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 12,
-            ),
-            itemBuilder: (BuildContext context, int index) {
-              return CourseItem(
-                course: courses.elementAt(index),
-                channels: channels,
-              );
-            },
+    return widget.courses.isNotEmpty
+        ? CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Responsive.isMobile(context) ? 12 : 150,
+                    vertical: Responsive.isMobile(context) ? 12 : 24,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: SearchBar(
+                          onSubmitted: (_) =>
+                              BlocProvider.of<MyCoursesBloc>(context).add(
+                                  MyCoursesEvent.initialDataRequested(
+                                      searchText: widget.controller.text)),
+                          hintText: LocaleKeys.hintSearch.tr(),
+                          hintStyle: const MaterialStatePropertyAll<TextStyle>(
+                              TextStyle(color: Colors.grey)),
+                          controller: widget.controller,
+                          elevation: const MaterialStatePropertyAll<double>(1),
+                          backgroundColor:
+                              const MaterialStatePropertyAll<Color>(
+                                  Colors.white),
+                          textStyle: const MaterialStatePropertyAll<TextStyle>(
+                              TextStyle(color: Colors.black)),
+                          trailing: [
+                            IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                widget.controller.text = '';
+                                BlocProvider.of<MyCoursesBloc>(context).add(
+                                    const MyCoursesEvent
+                                        .initialDataRequested());
+                              },
+                            )
+                          ],
+                          onChanged: (t) {
+                            if (t.isEmpty) {
+                              BlocProvider.of<MyCoursesBloc>(context).add(
+                                  const MyCoursesEvent.initialDataRequested());
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            BlocProvider.of<MyCoursesBloc>(context).add(
+                                MyCoursesEvent.initialDataRequested(
+                                    searchText: widget.controller.text));
+                          },
+                          icon: const Icon(Icons.search))
+                    ],
+                  ),
+                ),
+              ),
+              SliverList.separated(
+                itemCount: widget.courses.length,
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 12,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Responsive.isMobile(context) ? 12 : 24),
+                    child: CourseItem(
+                      course: widget.courses.elementAt(index),
+                      channels: widget.channels,
+                    ),
+                  );
+                },
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 32),
+              )
+            ],
           )
         : Center(
             child: Text(LocaleKeys.coursesNotFound.tr()),

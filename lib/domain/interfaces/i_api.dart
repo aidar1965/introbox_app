@@ -10,6 +10,7 @@ import '../models/course.dart';
 import '../models/fragment_category.dart';
 //import '../models/image_fragment.dart';
 import '../models/pdf_fragment.dart';
+import '../models/presentation_link.dart';
 import '../models/presentation_with_fragments.dart';
 import '../models/responses/paginated_courses.dart';
 import '../models/responses/paginated_presentations.dart';
@@ -120,8 +121,10 @@ abstract class IApi {
   Future<void> reorderFragments(
       {required int subjectId, required List<int> fragmentsIds});
 
-  Future<PaginatedCourses> getCourses({int limit = 50, int offset = 0});
-  Future<PaginatedCourses> getPublicCourses({int limit = 50, int offset = 0});
+  Future<PaginatedCourses> getCourses(
+      {int limit = 50, int offset = 0, String? searchText});
+  Future<PaginatedCourses> getPublicCourses(
+      {int limit = 50, int offset = 0, String? searchText});
 
   Future<void> addCourse({
     required String title,
@@ -163,17 +166,21 @@ abstract class IApi {
   Future<void> deleteFragmentCategory({required int id});
 
   Future<PaginatedPresentations> getPresentations(
-      {int? offset, int? limit, int? categoryId});
+      {int? offset, int? limit, int? categoryId, String? searchText});
 
   Future<PaginatedPresentations> getPublicPresentations(
-      {int? offset, int? limit, int? categoryId});
+      {int? offset, int? limit, int? categoryId, String? searchText});
 
   Future<void> deletePresentation({required String id});
 
   Future<List<PdfFragment>> getPresentationFragments({required String id});
 
-  Future<void> updatePresentation(
-      {required String id, required String title, String description});
+  Future<void> updatePresentation({
+    required String id,
+    required String title,
+    String description,
+    List<PresentationLink>? links,
+  });
 
   Future<void> reorderPresentationFragments(
       {required List<String> fragmentsIds});
@@ -187,6 +194,8 @@ abstract class IApi {
     required bool isLandscape,
     required bool isTitleOverImage,
     Uint8List? audio,
+    String? audioExtention,
+    String? imageExpension,
     int? duration,
     required List<String> fragmentsIds,
   });
@@ -300,6 +309,7 @@ abstract class IApi {
     required String title,
     required String channelId,
     String? description,
+    List<PresentationLink>? links,
   });
 
   Future<String> addPdfPresentation({
@@ -308,5 +318,12 @@ abstract class IApi {
     required String title,
     String? description,
     required String channelId,
+    List<PresentationLink>? links,
   });
+
+  Future<void> subscribeOrUnsubscribeChannel(
+      {required String channelId, required bool isSubscribed});
+
+  Future<void> changeChannel(
+      {required String channelId, required String presentationId});
 }

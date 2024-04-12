@@ -8,6 +8,10 @@ class PdfCreatePresentationEvent with _$PdfCreatePresentationEvent {
       {required Channel channel}) = _EventChannelSelected;
   const factory PdfCreatePresentationEvent.convertPdf(
       {required Uint8List pdfFile}) = _EventConvertFile;
+  const factory PdfCreatePresentationEvent.addLink(
+      {required PresentationLink link}) = _EventAddLink;
+  const factory PdfCreatePresentationEvent.deleteLink(int index) =
+      _EventDeleteLink;
   const factory PdfCreatePresentationEvent.savePdfPresentation(
           {required String title,
           required Uint8List pdfFile,

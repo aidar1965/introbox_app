@@ -55,6 +55,10 @@ class LoginScreen extends StatelessWidget {
                             controller: passwordController,
                             labelText: LocaleKeys.password.tr(),
                             obscureText: true,
+                            onSubmit: () => BlocProvider.of<LoginBloc>(context)
+                                .add(LoginEvent.login(
+                                    email: emailController.text,
+                                    password: passwordController.text)),
                           ),
                           const SizedBox(
                             height: 30,

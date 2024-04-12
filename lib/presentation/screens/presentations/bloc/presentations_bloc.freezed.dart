@@ -19,7 +19,7 @@ mixin _$PresentationsEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -31,12 +31,14 @@ mixin _$PresentationsEvent {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -48,12 +50,13 @@ mixin _$PresentationsEvent {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -65,6 +68,7 @@ mixin _$PresentationsEvent {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -80,6 +84,7 @@ mixin _$PresentationsEvent {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -91,6 +96,7 @@ mixin _$PresentationsEvent {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -102,6 +108,7 @@ mixin _$PresentationsEvent {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -192,7 +199,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -204,6 +211,8 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) {
     return deletePresentation(id);
   }
@@ -212,7 +221,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -224,6 +233,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) {
     return deletePresentation?.call(id);
   }
@@ -232,7 +242,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -244,6 +254,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) {
     if (deletePresentation != null) {
@@ -265,6 +276,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) {
     return deletePresentation(this);
   }
@@ -279,6 +291,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) {
     return deletePresentation?.call(this);
   }
@@ -293,6 +306,7 @@ class _$_EventDeletePresentation implements _EventDeletePresentation {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) {
     if (deletePresentation != null) {
@@ -318,6 +332,8 @@ abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
           _$_EventInitialDataRequested value,
           $Res Function(_$_EventInitialDataRequested) then) =
       __$$_EventInitialDataRequestedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? searchText});
 }
 
 /// @nodoc
@@ -328,33 +344,58 @@ class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
       _$_EventInitialDataRequested _value,
       $Res Function(_$_EventInitialDataRequested) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = freezed,
+  }) {
+    return _then(_$_EventInitialDataRequested(
+      searchText: freezed == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_EventInitialDataRequested implements _EventInitialDataRequested {
-  const _$_EventInitialDataRequested();
+  const _$_EventInitialDataRequested({this.searchText});
+
+  @override
+  final String? searchText;
 
   @override
   String toString() {
-    return 'PresentationsEvent.initialDataRequested()';
+    return 'PresentationsEvent.initialDataRequested(searchText: $searchText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventInitialDataRequested);
+            other is _$_EventInitialDataRequested &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, searchText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventInitialDataRequestedCopyWith<_$_EventInitialDataRequested>
+      get copyWith => __$$_EventInitialDataRequestedCopyWithImpl<
+          _$_EventInitialDataRequested>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -366,15 +407,17 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) {
-    return initialDataRequested();
+    return initialDataRequested(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -386,15 +429,16 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) {
-    return initialDataRequested?.call();
+    return initialDataRequested?.call(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -406,10 +450,11 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
-      return initialDataRequested();
+      return initialDataRequested(searchText);
     }
     return orElse();
   }
@@ -427,6 +472,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) {
     return initialDataRequested(this);
   }
@@ -441,6 +487,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) {
     return initialDataRequested?.call(this);
   }
@@ -455,6 +502,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -465,7 +513,13 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
 }
 
 abstract class _EventInitialDataRequested implements PresentationsEvent {
-  const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
+  const factory _EventInitialDataRequested({final String? searchText}) =
+      _$_EventInitialDataRequested;
+
+  String? get searchText;
+  @JsonKey(ignore: true)
+  _$$_EventInitialDataRequestedCopyWith<_$_EventInitialDataRequested>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -507,7 +561,7 @@ class _$_EventReloadData implements _EventReloadData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -519,6 +573,8 @@ class _$_EventReloadData implements _EventReloadData {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) {
     return reloadData();
   }
@@ -527,7 +583,7 @@ class _$_EventReloadData implements _EventReloadData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -539,6 +595,7 @@ class _$_EventReloadData implements _EventReloadData {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) {
     return reloadData?.call();
   }
@@ -547,7 +604,7 @@ class _$_EventReloadData implements _EventReloadData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -559,6 +616,7 @@ class _$_EventReloadData implements _EventReloadData {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) {
     if (reloadData != null) {
@@ -580,6 +638,7 @@ class _$_EventReloadData implements _EventReloadData {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) {
     return reloadData(this);
   }
@@ -594,6 +653,7 @@ class _$_EventReloadData implements _EventReloadData {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) {
     return reloadData?.call(this);
   }
@@ -608,6 +668,7 @@ class _$_EventReloadData implements _EventReloadData {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) {
     if (reloadData != null) {
@@ -688,7 +749,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -700,6 +761,8 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) {
     return publishPresentation(id);
   }
@@ -708,7 +771,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -720,6 +783,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) {
     return publishPresentation?.call(id);
   }
@@ -728,7 +792,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -740,6 +804,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) {
     if (publishPresentation != null) {
@@ -761,6 +826,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) {
     return publishPresentation(this);
   }
@@ -775,6 +841,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) {
     return publishPresentation?.call(this);
   }
@@ -789,6 +856,7 @@ class _$_EventPublishPresentation implements _EventPublishPresentation {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) {
     if (publishPresentation != null) {
@@ -886,7 +954,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -898,6 +966,8 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) {
     return onPasswordChanged(id, passwordWithConfirmation);
   }
@@ -906,7 +976,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -918,6 +988,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) {
     return onPasswordChanged?.call(id, passwordWithConfirmation);
   }
@@ -926,7 +997,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -938,6 +1009,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) {
     if (onPasswordChanged != null) {
@@ -959,6 +1031,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) {
     return onPasswordChanged(this);
   }
@@ -973,6 +1046,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) {
     return onPasswordChanged?.call(this);
   }
@@ -987,6 +1061,7 @@ class _$_EventOnPasswordChanged implements _EventOnPasswordChanged {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) {
     if (onPasswordChanged != null) {
@@ -1091,7 +1166,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String id) deletePresentation,
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
     required TResult Function() reloadData,
     required TResult Function(String id) publishPresentation,
     required TResult Function(
@@ -1103,6 +1178,8 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
         onPasswordChanged,
     required TResult Function(String presentationId, String courseId)
         addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
   }) {
     return addPresentationToCourse(presentationId, courseId);
   }
@@ -1111,7 +1188,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String id)? deletePresentation,
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
     TResult? Function()? reloadData,
     TResult? Function(String id)? publishPresentation,
     TResult? Function(
@@ -1123,6 +1200,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
         onPasswordChanged,
     TResult? Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
   }) {
     return addPresentationToCourse?.call(presentationId, courseId);
   }
@@ -1131,7 +1209,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String id)? deletePresentation,
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
     TResult Function()? reloadData,
     TResult Function(String id)? publishPresentation,
     TResult Function(
@@ -1143,6 +1221,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
         onPasswordChanged,
     TResult Function(String presentationId, String courseId)?
         addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
     required TResult orElse(),
   }) {
     if (addPresentationToCourse != null) {
@@ -1164,6 +1243,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
     required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
     required TResult Function(_EventAddPresentationToCourse value)
         addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
   }) {
     return addPresentationToCourse(this);
   }
@@ -1178,6 +1258,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
     TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult? Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
   }) {
     return addPresentationToCourse?.call(this);
   }
@@ -1192,6 +1273,7 @@ class _$_EventAddPresentationToCourse implements _EventAddPresentationToCourse {
     TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
     TResult Function(_EventAddPresentationToCourse value)?
         addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
     required TResult orElse(),
   }) {
     if (addPresentationToCourse != null) {
@@ -1214,12 +1296,218 @@ abstract class _EventAddPresentationToCourse implements PresentationsEvent {
 }
 
 /// @nodoc
+abstract class _$$_EventChangeChannelCopyWith<$Res> {
+  factory _$$_EventChangeChannelCopyWith(_$_EventChangeChannel value,
+          $Res Function(_$_EventChangeChannel) then) =
+      __$$_EventChangeChannelCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String presentationId, String channelId});
+}
+
+/// @nodoc
+class __$$_EventChangeChannelCopyWithImpl<$Res>
+    extends _$PresentationsEventCopyWithImpl<$Res, _$_EventChangeChannel>
+    implements _$$_EventChangeChannelCopyWith<$Res> {
+  __$$_EventChangeChannelCopyWithImpl(
+      _$_EventChangeChannel _value, $Res Function(_$_EventChangeChannel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? presentationId = null,
+    Object? channelId = null,
+  }) {
+    return _then(_$_EventChangeChannel(
+      presentationId: null == presentationId
+          ? _value.presentationId
+          : presentationId // ignore: cast_nullable_to_non_nullable
+              as String,
+      channelId: null == channelId
+          ? _value.channelId
+          : channelId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventChangeChannel implements _EventChangeChannel {
+  const _$_EventChangeChannel(
+      {required this.presentationId, required this.channelId});
+
+  @override
+  final String presentationId;
+  @override
+  final String channelId;
+
+  @override
+  String toString() {
+    return 'PresentationsEvent.changeChannel(presentationId: $presentationId, channelId: $channelId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventChangeChannel &&
+            (identical(other.presentationId, presentationId) ||
+                other.presentationId == presentationId) &&
+            (identical(other.channelId, channelId) ||
+                other.channelId == channelId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, presentationId, channelId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventChangeChannelCopyWith<_$_EventChangeChannel> get copyWith =>
+      __$$_EventChangeChannelCopyWithImpl<_$_EventChangeChannel>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id) deletePresentation,
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function() reloadData,
+    required TResult Function(String id) publishPresentation,
+    required TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)
+        onPasswordChanged,
+    required TResult Function(String presentationId, String courseId)
+        addPresentationToCourse,
+    required TResult Function(String presentationId, String channelId)
+        changeChannel,
+  }) {
+    return changeChannel(presentationId, channelId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id)? deletePresentation,
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function()? reloadData,
+    TResult? Function(String id)? publishPresentation,
+    TResult? Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
+    TResult? Function(String presentationId, String courseId)?
+        addPresentationToCourse,
+    TResult? Function(String presentationId, String channelId)? changeChannel,
+  }) {
+    return changeChannel?.call(presentationId, channelId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id)? deletePresentation,
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function()? reloadData,
+    TResult Function(String id)? publishPresentation,
+    TResult Function(
+            String id,
+            ({
+              String confirmPassword,
+              String password
+            }) passwordWithConfirmation)?
+        onPasswordChanged,
+    TResult Function(String presentationId, String courseId)?
+        addPresentationToCourse,
+    TResult Function(String presentationId, String channelId)? changeChannel,
+    required TResult orElse(),
+  }) {
+    if (changeChannel != null) {
+      return changeChannel(presentationId, channelId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventDeletePresentation value)
+        deletePresentation,
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventReloadData value) reloadData,
+    required TResult Function(_EventPublishPresentation value)
+        publishPresentation,
+    required TResult Function(_EventOnPasswordChanged value) onPasswordChanged,
+    required TResult Function(_EventAddPresentationToCourse value)
+        addPresentationToCourse,
+    required TResult Function(_EventChangeChannel value) changeChannel,
+  }) {
+    return changeChannel(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventDeletePresentation value)? deletePresentation,
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventReloadData value)? reloadData,
+    TResult? Function(_EventPublishPresentation value)? publishPresentation,
+    TResult? Function(_EventOnPasswordChanged value)? onPasswordChanged,
+    TResult? Function(_EventAddPresentationToCourse value)?
+        addPresentationToCourse,
+    TResult? Function(_EventChangeChannel value)? changeChannel,
+  }) {
+    return changeChannel?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventDeletePresentation value)? deletePresentation,
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventReloadData value)? reloadData,
+    TResult Function(_EventPublishPresentation value)? publishPresentation,
+    TResult Function(_EventOnPasswordChanged value)? onPasswordChanged,
+    TResult Function(_EventAddPresentationToCourse value)?
+        addPresentationToCourse,
+    TResult Function(_EventChangeChannel value)? changeChannel,
+    required TResult orElse(),
+  }) {
+    if (changeChannel != null) {
+      return changeChannel(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventChangeChannel implements PresentationsEvent {
+  const factory _EventChangeChannel(
+      {required final String presentationId,
+      required final String channelId}) = _$_EventChangeChannel;
+
+  String get presentationId;
+  String get channelId;
+  @JsonKey(ignore: true)
+  _$$_EventChangeChannelCopyWith<_$_EventChangeChannel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PresentationsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(
-            List<Presentation> presentations, List<Course> courses)
+    required TResult Function(List<Presentation> presentations,
+            List<Course> courses, List<Channel> channels)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function(String? message) requestSuccess,
@@ -1229,7 +1517,8 @@ mixin _$PresentationsState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Presentation> presentations, List<Course> courses)?
+    TResult? Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function(String? message)? requestSuccess,
@@ -1239,7 +1528,8 @@ mixin _$PresentationsState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Presentation> presentations, List<Course> courses)?
+    TResult Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function(String? message)? requestSuccess,
@@ -1334,8 +1624,8 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(
-            List<Presentation> presentations, List<Course> courses)
+    required TResult Function(List<Presentation> presentations,
+            List<Course> courses, List<Channel> channels)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function(String? message) requestSuccess,
@@ -1348,7 +1638,8 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Presentation> presentations, List<Course> courses)?
+    TResult? Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function(String? message)? requestSuccess,
@@ -1361,7 +1652,8 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Presentation> presentations, List<Course> courses)?
+    TResult Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function(String? message)? requestSuccess,
@@ -1425,7 +1717,10 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
           _$_ScreenState value, $Res Function(_$_ScreenState) then) =
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Presentation> presentations, List<Course> courses});
+  $Res call(
+      {List<Presentation> presentations,
+      List<Course> courses,
+      List<Channel> channels});
 }
 
 /// @nodoc
@@ -1441,6 +1736,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   $Res call({
     Object? presentations = null,
     Object? courses = null,
+    Object? channels = null,
   }) {
     return _then(_$_ScreenState(
       presentations: null == presentations
@@ -1451,6 +1747,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value._courses
           : courses // ignore: cast_nullable_to_non_nullable
               as List<Course>,
+      channels: null == channels
+          ? _value._channels
+          : channels // ignore: cast_nullable_to_non_nullable
+              as List<Channel>,
     ));
   }
 }
@@ -1460,9 +1760,11 @@ class __$$_ScreenStateCopyWithImpl<$Res>
 class _$_ScreenState implements _ScreenState {
   const _$_ScreenState(
       {required final List<Presentation> presentations,
-      required final List<Course> courses})
+      required final List<Course> courses,
+      required final List<Channel> channels})
       : _presentations = presentations,
-        _courses = courses;
+        _courses = courses,
+        _channels = channels;
 
   final List<Presentation> _presentations;
   @override
@@ -1480,9 +1782,17 @@ class _$_ScreenState implements _ScreenState {
     return EqualUnmodifiableListView(_courses);
   }
 
+  final List<Channel> _channels;
+  @override
+  List<Channel> get channels {
+    if (_channels is EqualUnmodifiableListView) return _channels;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_channels);
+  }
+
   @override
   String toString() {
-    return 'PresentationsState.screenState(presentations: $presentations, courses: $courses)';
+    return 'PresentationsState.screenState(presentations: $presentations, courses: $courses, channels: $channels)';
   }
 
   @override
@@ -1492,14 +1802,16 @@ class _$_ScreenState implements _ScreenState {
             other is _$_ScreenState &&
             const DeepCollectionEquality()
                 .equals(other._presentations, _presentations) &&
-            const DeepCollectionEquality().equals(other._courses, _courses));
+            const DeepCollectionEquality().equals(other._courses, _courses) &&
+            const DeepCollectionEquality().equals(other._channels, _channels));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_presentations),
-      const DeepCollectionEquality().hash(_courses));
+      const DeepCollectionEquality().hash(_courses),
+      const DeepCollectionEquality().hash(_channels));
 
   @JsonKey(ignore: true)
   @override
@@ -1511,34 +1823,36 @@ class _$_ScreenState implements _ScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(
-            List<Presentation> presentations, List<Course> courses)
+    required TResult Function(List<Presentation> presentations,
+            List<Course> courses, List<Channel> channels)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function(String? message) requestSuccess,
     required TResult Function() loadingError,
   }) {
-    return screenState(presentations, courses);
+    return screenState(presentations, courses, channels);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Presentation> presentations, List<Course> courses)?
+    TResult? Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function(String? message)? requestSuccess,
     TResult? Function()? loadingError,
   }) {
-    return screenState?.call(presentations, courses);
+    return screenState?.call(presentations, courses, channels);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Presentation> presentations, List<Course> courses)?
+    TResult Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function(String? message)? requestSuccess,
@@ -1546,7 +1860,7 @@ class _$_ScreenState implements _ScreenState {
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(presentations, courses);
+      return screenState(presentations, courses, channels);
     }
     return orElse();
   }
@@ -1595,10 +1909,12 @@ class _$_ScreenState implements _ScreenState {
 abstract class _ScreenState implements PresentationsState {
   const factory _ScreenState(
       {required final List<Presentation> presentations,
-      required final List<Course> courses}) = _$_ScreenState;
+      required final List<Course> courses,
+      required final List<Channel> channels}) = _$_ScreenState;
 
   List<Presentation> get presentations;
   List<Course> get courses;
+  List<Channel> get channels;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1671,8 +1987,8 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(
-            List<Presentation> presentations, List<Course> courses)
+    required TResult Function(List<Presentation> presentations,
+            List<Course> courses, List<Channel> channels)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function(String? message) requestSuccess,
@@ -1685,7 +2001,8 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Presentation> presentations, List<Course> courses)?
+    TResult? Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function(String? message)? requestSuccess,
@@ -1698,7 +2015,8 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Presentation> presentations, List<Course> courses)?
+    TResult Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function(String? message)? requestSuccess,
@@ -1828,8 +2146,8 @@ class _$_StateRequestSuccess implements _StateRequestSuccess {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(
-            List<Presentation> presentations, List<Course> courses)
+    required TResult Function(List<Presentation> presentations,
+            List<Course> courses, List<Channel> channels)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function(String? message) requestSuccess,
@@ -1842,7 +2160,8 @@ class _$_StateRequestSuccess implements _StateRequestSuccess {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Presentation> presentations, List<Course> courses)?
+    TResult? Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function(String? message)? requestSuccess,
@@ -1855,7 +2174,8 @@ class _$_StateRequestSuccess implements _StateRequestSuccess {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Presentation> presentations, List<Course> courses)?
+    TResult Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function(String? message)? requestSuccess,
@@ -1958,8 +2278,8 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() pending,
-    required TResult Function(
-            List<Presentation> presentations, List<Course> courses)
+    required TResult Function(List<Presentation> presentations,
+            List<Course> courses, List<Channel> channels)
         screenState,
     required TResult Function(String? errorText) requestError,
     required TResult Function(String? message) requestSuccess,
@@ -1972,7 +2292,8 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? pending,
-    TResult? Function(List<Presentation> presentations, List<Course> courses)?
+    TResult? Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult? Function(String? errorText)? requestError,
     TResult? Function(String? message)? requestSuccess,
@@ -1985,7 +2306,8 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? pending,
-    TResult Function(List<Presentation> presentations, List<Course> courses)?
+    TResult Function(List<Presentation> presentations, List<Course> courses,
+            List<Channel> channels)?
         screenState,
     TResult Function(String? errorText)? requestError,
     TResult Function(String? message)? requestSuccess,

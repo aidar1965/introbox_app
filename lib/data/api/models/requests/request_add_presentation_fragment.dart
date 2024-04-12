@@ -16,6 +16,8 @@ class RequestAddPresentationFragment extends IApiRequest {
   final int? duration;
   final bool isTitleOverImage;
   final List<String> fragmentsIds;
+  final String? audioExtention;
+  final String? imageExtension;
 
   RequestAddPresentationFragment({
     required this.presentationId,
@@ -28,6 +30,8 @@ class RequestAddPresentationFragment extends IApiRequest {
     this.duration,
     required this.isTitleOverImage,
     required this.fragmentsIds,
+    this.audioExtention,
+    this.imageExtension,
   }) : super(
             methodType: AvailableApiMethods.post,
             url: '/presentation/fragment/');
@@ -48,9 +52,16 @@ class RequestAddPresentationFragment extends IApiRequest {
     };
     if (audioBytes != null) {
       var mime = lookupMimeType('', headerBytes: audioBytes);
-      audio = MultipartFile.fromBytes(audioBytes!, headers: {
-        'extension': [extensionFromMime(mime!)],
-      });
+      if (mime != null) {
+        audio = MultipartFile.fromBytes(audioBytes!, headers: {
+          'extension': [extensionFromMime(mime)],
+        });
+      } else {
+        audio = MultipartFile.fromBytes(audioBytes!, headers: {
+          'extension': [audioExtention!],
+        });
+      }
+
       formDataMap['audio'] = audio;
       formDataMap['duration'] = duration!;
     }

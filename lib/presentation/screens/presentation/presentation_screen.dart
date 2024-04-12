@@ -6,11 +6,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introbox/presentation/common/common_loading_error_widget.dart';
-import 'dart:html' as html;
-import 'package:path/path.dart' as p;
+import 'package:introbox/presentation/screens/presentation/info_view.dart';
 
 import '../../../domain/models/pdf_fragment.dart';
 
+import '../../../domain/models/presentation_link.dart';
 import '../../common/common_audio_player.dart';
 
 import 'bloc/presentation_bloc.dart';
@@ -23,7 +23,6 @@ class PresentationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('PresentationScreen');
     return BlocProvider(
         create: (context) => PresentationBloc(id),
         child: BlocBuilder<PresentationBloc, PresentationState>(
@@ -36,6 +35,7 @@ class PresentationScreen extends StatelessWidget {
                       pdfFile: state.pdfFile,
                       fragments: state.fragments,
                       selectedFragment: state.selectedFragment,
+                      links: state.links,
                     ),
                 loadingError: (_) => CommonLoadingErrorWidget(
                       onPressed: () {
@@ -48,25 +48,28 @@ class PresentationScreen extends StatelessWidget {
 }
 
 class _ScreenView extends StatefulWidget {
-  const _ScreenView({
-    super.key,
-    required this.isFirst,
-    required this.isLast,
-    required this.selectedFragment,
-    required this.presentationTitle,
-    this.presentationDescription,
-    this.pdfFile,
-    required this.fragments,
-  });
+  const _ScreenView(
+      {super.key,
+      required this.isFirst,
+      required this.isLast,
+      this.selectedFragment,
+      required this.presentationTitle,
+      this.presentationDescription,
+      this.pdfFile,
+      required this.fragments,
+      this.links,
+      this.showInfo = false});
 
   final bool isFirst;
   final bool isLast;
+  final bool showInfo;
 
   final String presentationTitle;
   final String? presentationDescription;
   final String? pdfFile;
   final List<PdfFragment> fragments;
-  final PdfFragment selectedFragment;
+  final PdfFragment? selectedFragment;
+  final List<PresentationLink>? links;
 
   @override
   State<_ScreenView> createState() => _ScreenViewState();
@@ -82,8 +85,8 @@ class _ScreenViewState extends State<_ScreenView> {
   late double height;
   String? audioUrl;
   bool showControls = false;
-  late bool isFirstAudio;
-  late bool isTitleOverImage;
+  bool? isFirstAudio;
+  bool? isTitleOverImage;
 
   late Stream<bool> clickScreenStream;
 
@@ -93,8 +96,8 @@ class _ScreenViewState extends State<_ScreenView> {
   void initState() {
     super.initState();
 
-    isTitleOverImage = widget.selectedFragment.isTitleOverImage;
-    audioUrl = widget.selectedFragment.audioPath;
+    isTitleOverImage = widget.selectedFragment?.isTitleOverImage;
+    audioUrl = widget.selectedFragment?.audioPath;
     if (audioUrl != null) {
       isFirstAudio = true;
     } else {
@@ -137,8 +140,8 @@ class _ScreenViewState extends State<_ScreenView> {
     opacityLevel = 0;
     leftOpacity = 0;
     rightOpacity = 0;
-    audioUrl = widget.selectedFragment.audioPath;
-    isTitleOverImage = widget.selectedFragment.isTitleOverImage;
+    audioUrl = widget.selectedFragment?.audioPath;
+    isTitleOverImage = widget.selectedFragment?.isTitleOverImage;
     if (showControls) {
       controller.add(showControls);
     }
@@ -168,60 +171,79 @@ class _ScreenViewState extends State<_ScreenView> {
                 height: height,
                 width: width,
                 color: Colors.black,
-                child: Column(
-                  children: [
-                    SizedBox(
-                        height: height,
-                        width: width,
-                        child: Center(
-                            child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            if (widget.selectedFragment.imagePath != null)
-                              CachedNetworkImage(
-                                imageUrl: widget.selectedFragment.imagePath!,
-                                progressIndicatorBuilder:
-                                    (context, _, progress) =>
-                                        const CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              )
-                            else
-                              Center(
-                                  child: Text(
-                                widget.selectedFragment.title,
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold),
-                              )),
-                            if (isTitleOverImage)
-                              Positioned(
-                                  bottom: 20,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Opacity(
-                                        opacity: 0.5,
-                                        child: DecoratedBox(
-                                            decoration: const BoxDecoration(
-                                                color: Colors.black),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
-                                              child: Text(
-                                                widget.selectedFragment.title,
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            )),
-                                      ),
-                                    ],
-                                  ))
-                          ],
-                        )))
-                  ],
-                )),
+                child: widget.selectedFragment != null
+                    ? Column(
+                        children: [
+                          SizedBox(
+                              height: height,
+                              width: width,
+                              child: Center(
+                                  child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  if (widget.selectedFragment!.imagePath !=
+                                      null)
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          widget.selectedFragment!.imagePath!,
+                                      progressIndicatorBuilder:
+                                          (context, imageUrl, progress) {
+                                        return CircularProgressIndicator(
+                                            color: Colors.white,
+                                            value: progress.progress);
+                                      },
+                                    )
+                                  else
+                                    Center(
+                                        child: Text(
+                                      widget.selectedFragment!.title,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                  if (isTitleOverImage != null &&
+                                      isTitleOverImage!)
+                                    Positioned(
+                                        bottom: 20,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Opacity(
+                                              opacity: 0.5,
+                                              child: DecoratedBox(
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color: Colors.black),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16.0),
+                                                    child: Text(
+                                                      widget.selectedFragment!
+                                                          .title,
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ],
+                                        ))
+                                ],
+                              )))
+                        ],
+                      )
+                    : InfoView(
+                        fragments: widget.fragments,
+                        selectedFragment: widget.selectedFragment,
+                        title: widget.presentationTitle,
+                        description: widget.presentationDescription,
+                        pdfFile: widget.pdfFile,
+                        links: widget.links,
+                        onFragmentSelect: (i) =>
+                            BlocProvider.of<PresentationBloc>(context)
+                                .add(PresentationEvent.fragmentClicked(i)))),
             Row(children: [
               const Spacer(),
               AnimatedOpacity(
@@ -242,7 +264,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                 child: CommonAudioPlayer(
                               audioUrl: audioUrl,
                               audioDurationInSeconds:
-                                  widget.selectedFragment.duration,
+                                  widget.selectedFragment?.duration,
                               onEnd: () {
                                 if (widget.isLast != true) {
                                   BlocProvider.of<PresentationBloc>(context)
@@ -351,30 +373,33 @@ class _ScreenViewState extends State<_ScreenView> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    IconButton(
-                        color: Colors.white,
-                        onPressed: () async {
-                          final result = await showDialog(
-                              context: context,
-                              builder: (context) => Dialog.fullscreen(
-                                    backgroundColor: Colors.black,
-                                    child: InfoView(
-                                      fragments: widget.fragments,
-                                      selectedFragment: widget.selectedFragment,
-                                      title: widget.presentationTitle,
-                                      description:
-                                          widget.presentationDescription,
-                                      pdfFile: widget.pdfFile,
-                                    ),
-                                  ));
-                          if (result is int) {
-                            if (context.mounted) {
-                              BlocProvider.of<PresentationBloc>(context).add(
-                                  PresentationEvent.fragmentClicked(result));
+                    if (widget.selectedFragment != null)
+                      IconButton(
+                          color: Colors.white,
+                          onPressed: () async {
+                            final result = await showDialog(
+                                context: context,
+                                builder: (context) => Dialog.fullscreen(
+                                      backgroundColor: Colors.black,
+                                      child: InfoView(
+                                        fragments: widget.fragments,
+                                        selectedFragment:
+                                            widget.selectedFragment,
+                                        title: widget.presentationTitle,
+                                        description:
+                                            widget.presentationDescription,
+                                        pdfFile: widget.pdfFile,
+                                        links: widget.links,
+                                      ),
+                                    ));
+                            if (result is int) {
+                              if (context.mounted) {
+                                BlocProvider.of<PresentationBloc>(context).add(
+                                    PresentationEvent.fragmentClicked(result));
+                              }
                             }
-                          }
-                        },
-                        icon: const Icon(Icons.info)),
+                          },
+                          icon: const Icon(Icons.info)),
                     IconButton(
                         onPressed: () => context.router.pop(),
                         icon: const Icon(Icons.close, color: Colors.white))
@@ -392,124 +417,6 @@ class _PendingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: CircularProgressIndicator(),
-    );
-  }
-}
-
-class InfoView extends StatelessWidget {
-  const InfoView({
-    super.key,
-    required this.fragments,
-    required this.selectedFragment,
-    required this.title,
-    this.description,
-    this.pdfFile,
-  });
-
-  final List<PdfFragment> fragments;
-  final PdfFragment selectedFragment;
-  final String title;
-  final String? description;
-  final String? pdfFile;
-
-  void downloadFile(String url) {
-    html.AnchorElement anchorElement = html.AnchorElement(href: url);
-    anchorElement.download = url;
-    anchorElement.click();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (pdfFile != null)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        p.basename(pdfFile!),
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            decoration: TextDecoration.underline),
-                      ),
-                      const SizedBox(width: 24),
-                      IconButton(
-                          onPressed: () => downloadFile(pdfFile!),
-                          icon: const Icon(
-                            Icons.download,
-                            color: Colors.white,
-                          ))
-                    ],
-                  ),
-                const SizedBox(height: 24),
-                Text(
-                  title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                ),
-                if (description != null) ...[
-                  const SizedBox(height: 24),
-                  Text(
-                    description!,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18),
-                  ),
-                ],
-                const SizedBox(height: 32),
-                ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: fragments.length,
-                    itemBuilder: (context, index) => ListTile(
-                          selected: fragments.elementAt(index).id ==
-                              selectedFragment.id,
-                          selectedTileColor:
-                              const Color.fromARGB(255, 5, 35, 88),
-                          onTap: () {
-                            context.router.pop(index);
-                          },
-                          title: Text(
-                            fragments.elementAt(index).title,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                          ),
-                          subtitle:
-                              fragments.elementAt(index).description != null
-                                  ? Text(
-                                      fragments.elementAt(index).description!,
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14),
-                                    )
-                                  : null,
-                        )),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-            top: 0,
-            right: 0,
-            child: IconButton(
-                onPressed: () => context.router.pop(),
-                icon: const Icon(Icons.close, color: Colors.white)))
-      ],
     );
   }
 }

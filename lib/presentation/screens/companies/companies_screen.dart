@@ -42,7 +42,7 @@ class CompaniesScreen extends StatelessWidget {
                   appBar: AppBar(
                     leading: BackButton(
                       onPressed: () {
-                        context.router.push(const PresentationsRoute());
+                        context.router.push(PresentationsRoute());
                       },
                     ),
                     title: Text(LocaleKeys.companies.tr()),
@@ -53,7 +53,7 @@ class CompaniesScreen extends StatelessWidget {
                   appBar: AppBar(
                     leading: BackButton(
                       onPressed: () {
-                        context.router.push(const PresentationsRoute());
+                        context.router.push(PresentationsRoute());
                       },
                     ),
                     title: Text(LocaleKeys.companies.tr()),
@@ -79,7 +79,7 @@ class _ScreenView extends StatelessWidget {
       appBar: AppBar(
         leading: BackButton(
           onPressed: () {
-            context.router.push(const PresentationsRoute());
+            context.router.push(PresentationsRoute());
           },
         ),
         title: Text(LocaleKeys.companies.tr()),
@@ -209,7 +209,7 @@ class _ScreenView extends StatelessWidget {
                     height: 12,
                   ),
                   CommonElevatedButton(
-                      text: 'Сохранить',
+                      text: LocaleKeys.buttonSave.tr(),
                       onPressed: () {
                         context.router.pop(AddCompanyFormData(
                           name: titleController.text,
@@ -253,7 +253,7 @@ class _ScreenView extends StatelessWidget {
                     height: 12,
                   ),
                   CommonElevatedButton(
-                      text: 'Сохранить',
+                      text: LocaleKeys.buttonSave.tr(),
                       onPressed: () {
                         context.router.pop(AddCompanyFormData(
                           name: titleController.text,

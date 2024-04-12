@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
 
+import '../../../domain/models/presentation_link.dart';
 import '../models/responses/company_dto.dart';
 
 import '../../../domain/models/channel.dart';
@@ -23,6 +26,7 @@ import '../models/responses/fragment_category_dto.dart';
 import '../models/responses/pdf_fragment_dto.dart';
 import '../models/responses/presentation_dto.dart';
 import '../models/responses/presentation_id_dto.dart';
+import '../models/responses/presentation_link_dto.dart';
 import '../models/responses/presentation_with_fragments_dto.dart';
 import '../models/responses/subject_category_dto.dart';
 import '../models/responses/subject_dto.dart';
@@ -110,29 +114,36 @@ class ApiDataMapper {
         hasPassword: dto.hasPassword,
         createdAt: DateTime.parse(dto.createdAt),
         pdfFile: dto.pdfFile,
-        links: dto.links,
+        links: dto.links?.map((e) => mapPresentationLink(e)).toList(),
         isPublished: dto.isPublished,
         channel: dto.channelDto != null ? mapChannel(dto.channelDto!) : null);
+  }
+
+  PresentationLink mapPresentationLink(PresentationLinkDto dto) {
+    return PresentationLink(link: dto.link, description: dto.description);
   }
 
   PresentationWithFragments mapPresentationWithFragments(
       PresentationWithFragmentsDto dto) {
     return PresentationWithFragments(
-        presentation: Presentation(
-            id: dto.id,
-            title: dto.title,
-            firstImage: '',
-            isAudio: true,
-            isPublic: true,
-            includePdf: false,
-            hasPassword: false,
-            freeMode: true,
-            createdAt: DateTime.parse(dto.createdAt),
-            isPublished: true,
-            pdfFile: dto.pdfFile,
-            description: dto.description,
-            channel: mapChannel(dto.channelDto)),
-        fragments: dto.fragmentDtoList.map((e) => mapPdfFragment(e)).toList());
+      presentation: Presentation(
+        id: dto.id,
+        title: dto.title,
+        firstImage: dto.firstImage,
+        isAudio: true,
+        isPublic: true,
+        includePdf: false,
+        hasPassword: false,
+        freeMode: true,
+        createdAt: DateTime.parse(dto.createdAt),
+        isPublished: true,
+        pdfFile: dto.pdfFile,
+        description: dto.description,
+        channel: mapChannel(dto.channelDto),
+        links: dto.links?.map((e) => mapPresentationLink(e)).toList(),
+      ),
+      fragments: dto.fragmentDtoList.map((e) => mapPdfFragment(e)).toList(),
+    );
   }
 
   Company mapCompany(CompanyDto dto) {

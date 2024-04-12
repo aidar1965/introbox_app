@@ -371,17 +371,20 @@ abstract class _StateInitialLoadingError implements MainState {
 mixin _$MainEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function() reloadData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function()? reloadData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function()? reloadData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -389,16 +392,19 @@ mixin _$MainEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
+    required TResult Function(_EventReloadData value) reloadData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventReloadData value)? reloadData,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventReloadData value)? reloadData,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -427,6 +433,8 @@ abstract class _$$_EventInitialDataRequestedCopyWith<$Res> {
           _$_EventInitialDataRequested value,
           $Res Function(_$_EventInitialDataRequested) then) =
       __$$_EventInitialDataRequestedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String? searchText});
 }
 
 /// @nodoc
@@ -437,52 +445,80 @@ class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
       _$_EventInitialDataRequested _value,
       $Res Function(_$_EventInitialDataRequested) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? searchText = freezed,
+  }) {
+    return _then(_$_EventInitialDataRequested(
+      searchText: freezed == searchText
+          ? _value.searchText
+          : searchText // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_EventInitialDataRequested implements _EventInitialDataRequested {
-  const _$_EventInitialDataRequested();
+  const _$_EventInitialDataRequested({this.searchText});
+
+  @override
+  final String? searchText;
 
   @override
   String toString() {
-    return 'MainEvent.initialDataRequested()';
+    return 'MainEvent.initialDataRequested(searchText: $searchText)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventInitialDataRequested);
+            other is _$_EventInitialDataRequested &&
+            (identical(other.searchText, searchText) ||
+                other.searchText == searchText));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, searchText);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventInitialDataRequestedCopyWith<_$_EventInitialDataRequested>
+      get copyWith => __$$_EventInitialDataRequestedCopyWithImpl<
+          _$_EventInitialDataRequested>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialDataRequested,
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function() reloadData,
   }) {
-    return initialDataRequested();
+    return initialDataRequested(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialDataRequested,
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function()? reloadData,
   }) {
-    return initialDataRequested?.call();
+    return initialDataRequested?.call(searchText);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialDataRequested,
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function()? reloadData,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
-      return initialDataRequested();
+      return initialDataRequested(searchText);
     }
     return orElse();
   }
@@ -492,6 +528,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   TResult map<TResult extends Object?>({
     required TResult Function(_EventInitialDataRequested value)
         initialDataRequested,
+    required TResult Function(_EventReloadData value) reloadData,
   }) {
     return initialDataRequested(this);
   }
@@ -500,6 +537,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventReloadData value)? reloadData,
   }) {
     return initialDataRequested?.call(this);
   }
@@ -508,6 +546,7 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventReloadData value)? reloadData,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -518,5 +557,114 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
 }
 
 abstract class _EventInitialDataRequested implements MainEvent {
-  const factory _EventInitialDataRequested() = _$_EventInitialDataRequested;
+  const factory _EventInitialDataRequested({final String? searchText}) =
+      _$_EventInitialDataRequested;
+
+  String? get searchText;
+  @JsonKey(ignore: true)
+  _$$_EventInitialDataRequestedCopyWith<_$_EventInitialDataRequested>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventReloadDataCopyWith<$Res> {
+  factory _$$_EventReloadDataCopyWith(
+          _$_EventReloadData value, $Res Function(_$_EventReloadData) then) =
+      __$$_EventReloadDataCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_EventReloadDataCopyWithImpl<$Res>
+    extends _$MainEventCopyWithImpl<$Res, _$_EventReloadData>
+    implements _$$_EventReloadDataCopyWith<$Res> {
+  __$$_EventReloadDataCopyWithImpl(
+      _$_EventReloadData _value, $Res Function(_$_EventReloadData) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_EventReloadData implements _EventReloadData {
+  const _$_EventReloadData();
+
+  @override
+  String toString() {
+    return 'MainEvent.reloadData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_EventReloadData);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? searchText) initialDataRequested,
+    required TResult Function() reloadData,
+  }) {
+    return reloadData();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? searchText)? initialDataRequested,
+    TResult? Function()? reloadData,
+  }) {
+    return reloadData?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? searchText)? initialDataRequested,
+    TResult Function()? reloadData,
+    required TResult orElse(),
+  }) {
+    if (reloadData != null) {
+      return reloadData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventReloadData value) reloadData,
+  }) {
+    return reloadData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventReloadData value)? reloadData,
+  }) {
+    return reloadData?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventReloadData value)? reloadData,
+    required TResult orElse(),
+  }) {
+    if (reloadData != null) {
+      return reloadData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventReloadData implements MainEvent {
+  const factory _EventReloadData() = _$_EventReloadData;
 }

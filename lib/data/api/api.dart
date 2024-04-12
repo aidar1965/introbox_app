@@ -32,6 +32,7 @@ import '../../domain/models/fragment.dart';
 //import '../../domain/models/image_fragment.dart';
 import '../../domain/models/pdf_fragment.dart';
 
+import '../../domain/models/presentation_link.dart';
 import '../../domain/models/presentation_with_fragments.dart';
 import '../../domain/models/responses/paginated_presentations.dart';
 import '../../domain/models/responses/paginated_subjects.dart';
@@ -53,6 +54,7 @@ import 'models/requests/request_add_presentation_password.dart';
 import 'models/requests/request_add_presentation_without_fragmets.dart';
 import 'models/requests/request_add_subject.dart';
 import 'models/requests/request_add_subject_category.dart';
+import 'models/requests/request_change_channel.dart';
 import 'models/requests/request_check_password.dart';
 import 'models/requests/request_confirmation.dart';
 import 'models/requests/request_delete_channel.dart';
@@ -92,6 +94,7 @@ import 'models/requests/request_reorder_presentation_fragments.dart';
 import 'models/requests/request_reorder_presentations.dart';
 import 'models/requests/request_send_password.dart';
 import 'models/requests/request_set_password.dart';
+import 'models/requests/request_subscribe_or_unsubsceibe_channel.dart';
 import 'models/requests/request_update_course.dart';
 import 'models/requests/request_update_fragment.dart';
 import 'models/requests/request_update_presentation.dart';
@@ -323,9 +326,10 @@ class Api implements IApi {
   }
 
   @override
-  Future<PaginatedCourses> getCourses({int limit = 50, int offset = 0}) async {
-    final result = await httpClient
-        .request(RequestGetCourses(limit: limit, offset: offset));
+  Future<PaginatedCourses> getCourses(
+      {int limit = 50, int offset = 0, String? searchText}) async {
+    final result = await httpClient.request(RequestGetCourses(
+        limit: limit, offset: offset, searchText: searchText));
     return PaginatedCourses(
       offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
       count: int.parse(result.headers['X-Total-Count']!.first),
@@ -337,9 +341,9 @@ class Api implements IApi {
 
   @override
   Future<PaginatedCourses> getPublicCourses(
-      {int limit = 50, int offset = 0}) async {
-    final result = await httpClient
-        .request(RequestGetPublicCourses(limit: limit, offset: offset));
+      {int limit = 50, int offset = 0, String? searchText}) async {
+    final result = await httpClient.request(RequestGetPublicCourses(
+        limit: limit, offset: offset, searchText: searchText));
     return PaginatedCourses(
       offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
       count: int.parse(result.headers['X-Total-Count']!.first),
@@ -460,10 +464,19 @@ class Api implements IApi {
   }
 
   @override
-  Future<PaginatedPresentations> getPresentations(
-      {int? offset, int? limit, int? categoryId}) async {
+  Future<PaginatedPresentations> getPresentations({
+    int? offset,
+    int? limit,
+    int? categoryId,
+    String? searchText,
+  }) async {
     final result = await httpClient.request(RequestGetPresentations(
-        limit: limit, offset: offset, categoryId: categoryId));
+      limit: limit,
+      offset: offset,
+      categoryId: categoryId,
+      searchText: searchText,
+    ));
+    print(result?.data);
     return PaginatedPresentations(
       offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
       count: int.parse(result.headers['X-Total-Count']!.first),
@@ -483,19 +496,24 @@ class Api implements IApi {
       required bool isLandscape,
       required bool isTitleOverImage,
       required List<String> fragmentsIds,
+      String? audioExtention,
+      String? imageExpension,
       Uint8List? audio,
       int? duration}) async {
     await httpClient.request(RequestAddPresentationFragment(
-        presentationId: presentationId,
-        displayOrder: displayOrder,
-        title: title,
-        description: description,
-        audioBytes: audio,
-        duration: duration,
-        imageBytes: image,
-        isLandscape: isLandscape,
-        isTitleOverImage: isTitleOverImage,
-        fragmentsIds: fragmentsIds));
+      presentationId: presentationId,
+      displayOrder: displayOrder,
+      title: title,
+      description: description,
+      audioBytes: audio,
+      duration: duration,
+      imageBytes: image,
+      isLandscape: isLandscape,
+      isTitleOverImage: isTitleOverImage,
+      fragmentsIds: fragmentsIds,
+      imageExtension: imageExpension,
+      audioExtention: audioExtention,
+    ));
   }
 
   @override
@@ -521,10 +539,18 @@ class Api implements IApi {
   }
 
   @override
-  Future<void> updatePresentation(
-      {required String id, required String title, String? description}) async {
+  Future<void> updatePresentation({
+    required String id,
+    required String title,
+    String? description,
+    List<PresentationLink>? links,
+  }) async {
     await httpClient.request(RequestUpdatePresentation(
-        id: id, title: title, description: description));
+      id: id,
+      title: title,
+      description: description,
+      links: links,
+    ));
   }
 
   @override
@@ -728,9 +754,14 @@ class Api implements IApi {
 
   @override
   Future<PaginatedPresentations> getPublicPresentations(
-      {int? offset, int? limit, int? categoryId}) async {
+      {int? offset, int? limit, int? categoryId, String? searchText}) async {
+    print('get public presentations');
     final result = await httpClient.request(RequestGetPublicPresentations(
-        limit: limit, offset: offset, categoryId: categoryId));
+        limit: limit,
+        offset: offset,
+        categoryId: categoryId,
+        searchText: searchText));
+    print(result?.data.toString() ?? 'no data');
     return PaginatedPresentations(
       offset: int.parse(result!.headers['X-Last-Row-Number']!.first),
       count: int.parse(result.headers['X-Total-Count']!.first),
@@ -802,13 +833,15 @@ class Api implements IApi {
   }
 
   @override
-  Future<String> addImagePresentationWithoutFragments(
-      {required String title,
-      required String channelId,
-      String? description}) async {
+  Future<String> addImagePresentationWithoutFragments({
+    required String title,
+    required String channelId,
+    String? description,
+    List<PresentationLink>? links,
+  }) async {
     final result = await httpClient.request(
         RequestAddPresentationWithoutFragments(
-            title: title, channelId: channelId));
+            title: title, channelId: channelId, links: links));
     return mapper.mapPresentationId(
         PresentationIdDto.fromJson(jsonDecode(result!.data as String)));
   }
@@ -820,14 +853,30 @@ class Api implements IApi {
     required String title,
     required String channelId,
     String? description,
+    List<PresentationLink>? links,
   }) async {
     final result = await httpClient.request(RequestAddPdfPresentation(
         pdfFile: pdfFile,
         pdfFileName: pdfFileName,
         title: title,
         channelId: channelId,
-        description: description));
+        description: description,
+        links: links));
     return mapper.mapPresentationId(
         PresentationIdDto.fromJson(jsonDecode(result!.data as String)));
+  }
+
+  @override
+  Future<void> subscribeOrUnsubscribeChannel(
+      {required String channelId, required bool isSubscribed}) async {
+    await httpClient.request(RequestSubscribeOrUnsubscribeChannel(
+        channelId: channelId, isSubscribed: isSubscribed));
+  }
+
+  @override
+  Future<void> changeChannel(
+      {required String channelId, required String presentationId}) async {
+    await httpClient.request(RequestChangeChannel(
+        channelId: channelId, presentationId: presentationId));
   }
 }

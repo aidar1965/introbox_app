@@ -21,6 +21,7 @@ class CoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = TextEditingController();
     return BlocProvider(
         create: (context) => CoursesBloc(),
         child: BlocConsumer<CoursesBloc, CoursesState>(
@@ -91,14 +92,14 @@ class CoursesScreen extends StatelessWidget {
                       if (state.isAuthorized)
                         if (Responsive.isMobile(context))
                           IconButton(
-                              onPressed: () => context.router
-                                  .push(const PresentationsRoute()),
+                              onPressed: () =>
+                                  context.router.push(PresentationsRoute()),
                               icon:
                                   const Icon(Icons.cast_for_education_outlined))
                         else
                           TextButton(
-                              onPressed: () => context.router
-                                  .push(const PresentationsRoute()),
+                              onPressed: () =>
+                                  context.router.push(PresentationsRoute()),
                               child: Text(
                                 LocaleKeys.studio.tr(),
                                 style: const TextStyle(color: Colors.white),
@@ -121,17 +122,56 @@ class CoursesScreen extends StatelessWidget {
                       onPressed: () => BlocProvider.of<CoursesBloc>(context)
                           .add(const CoursesEvent.initialDataRequested()))),
               screenState: (state) => _ScreenView(
-                  courses: state.courses, isAuthorized: state.isAuthorized)),
+                    courses: state.courses,
+                    isAuthorized: state.isAuthorized,
+                    controller: controller,
+                  )),
         ));
   }
 }
 
-class _ScreenView extends StatelessWidget {
-  const _ScreenView(
-      {super.key, required this.courses, required this.isAuthorized});
+class _ScreenView extends StatefulWidget {
+  _ScreenView(
+      {super.key,
+      required this.courses,
+      required this.isAuthorized,
+      required this.controller});
 
   final List<Course> courses;
   final bool isAuthorized;
+  final TextEditingController controller;
+
+  @override
+  State<_ScreenView> createState() => _ScreenViewState();
+}
+
+class _ScreenViewState extends State<_ScreenView> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      print('end of page');
+      // Загрузка новых данных
+      _loadMoreData();
+    }
+  }
+
+  void _loadMoreData() {
+    BlocProvider.of<CoursesBloc>(context)
+        .add(CoursesEvent.loadMore(searchText: widget.controller.text));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,21 +209,19 @@ class _ScreenView extends StatelessWidget {
                         .add(const CoursesEvent.initialDataRequested());
                   },
                   icon: const Icon(Icons.refresh_rounded)),
-            if (isAuthorized)
+            if (widget.isAuthorized)
               if (Responsive.isMobile(context))
                 IconButton(
-                    onPressed: () =>
-                        context.router.push(const PresentationsRoute()),
+                    onPressed: () => context.router.push(PresentationsRoute()),
                     icon: const Icon(Icons.cast_for_education_outlined))
               else
                 TextButton(
-                    onPressed: () =>
-                        context.router.push(const PresentationsRoute()),
+                    onPressed: () => context.router.push(PresentationsRoute()),
                     child: Text(
                       LocaleKeys.studio.tr(),
                       style: const TextStyle(color: Colors.white),
                     )),
-            if (isAuthorized)
+            if (widget.isAuthorized)
               IconButton(
                   onPressed: () {
                     context.router.push(const ProfileRoute());
@@ -197,23 +235,93 @@ class _ScreenView extends StatelessWidget {
                   icon: const Icon(Icons.login_rounded))
           ],
         ),
-        body: courses.isNotEmpty
+        body: widget.courses.isNotEmpty
             ? RefreshIndicator(
                 onRefresh: () async => BlocProvider.of<CoursesBloc>(context)
                     .add(const CoursesEvent.initialDataRequested()),
-                child: ListView.separated(
-                  itemCount: courses.length,
-                  padding:
-                      EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 12,
+                child:
+                    CustomScrollView(controller: _scrollController, slivers: [
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Responsive.isMobile(context) ? 12 : 150,
+                        vertical: Responsive.isMobile(context) ? 12 : 24,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: SearchBar(
+                              onSubmitted: (_) =>
+                                  BlocProvider.of<CoursesBloc>(context).add(
+                                      CoursesEvent.initialDataRequested(
+                                          searchText: widget.controller.text)),
+                              hintText: LocaleKeys.hintSearch.tr(),
+                              hintStyle:
+                                  const MaterialStatePropertyAll<TextStyle>(
+                                      TextStyle(color: Colors.grey)),
+                              controller: widget.controller,
+                              elevation:
+                                  const MaterialStatePropertyAll<double>(1),
+                              backgroundColor:
+                                  const MaterialStatePropertyAll<Color>(
+                                      Colors.white),
+                              textStyle:
+                                  const MaterialStatePropertyAll<TextStyle>(
+                                      TextStyle(color: Colors.black)),
+                              trailing: [
+                                IconButton(
+                                  icon: const Icon(Icons.close),
+                                  onPressed: () {
+                                    widget.controller.text = '';
+                                    BlocProvider.of<CoursesBloc>(context).add(
+                                        const CoursesEvent
+                                            .initialDataRequested());
+                                  },
+                                )
+                              ],
+                              onChanged: (t) {
+                                if (t.isEmpty) {
+                                  BlocProvider.of<CoursesBloc>(context).add(
+                                      const CoursesEvent
+                                          .initialDataRequested());
+                                }
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                BlocProvider.of<CoursesBloc>(context).add(
+                                    CoursesEvent.initialDataRequested(
+                                        searchText: widget.controller.text));
+                              },
+                              icon: const Icon(Icons.search))
+                        ],
+                      ),
+                    ),
                   ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return CourseItem(
-                      course: courses.elementAt(index),
-                    );
-                  },
-                ),
+                  SliverList.separated(
+                    itemCount: widget.courses.length,
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 12,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Responsive.isMobile(context) ? 12 : 24),
+                        child: CourseItem(
+                          course: widget.courses.elementAt(index),
+                        ),
+                      );
+                    },
+                  ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: 32),
+                  )
+                ]),
               )
             : Center(
                 child: Text(LocaleKeys.coursesNotFound.tr()),
@@ -227,22 +335,22 @@ void showLocaleDialog(BuildContext context, Locale? currentLocale) {
       builder: (context) => SimpleDialog(
             contentPadding: const EdgeInsets.all(24),
             children: [
-              ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  tileColor: EasyLocalization.of(context)?.currentLocale ==
-                          const Locale('kk', 'KZ')
-                      ? Colors.black54
-                      : DynamicPalette.light().accent,
-                  title: const Text('Қазақша'),
-                  onTap: () {
-                    EasyLocalization.of(context)?.setLocale(
-                      const Locale('kk', 'KZ'),
-                    );
-                  }),
-              const SizedBox(
-                height: 12,
-              ),
+              // ListTile(
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(8)),
+              //     tileColor: EasyLocalization.of(context)?.currentLocale ==
+              //             const Locale('kk', 'KZ')
+              //         ? Colors.black54
+              //         : DynamicPalette.light().accent,
+              //     title: const Text('Қазақша'),
+              //     onTap: () {
+              //       EasyLocalization.of(context)?.setLocale(
+              //         const Locale('kk', 'KZ'),
+              //       );
+              //     }),
+              // const SizedBox(
+              //   height: 12,
+              // ),
               ListTile(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8)),
@@ -348,10 +456,16 @@ class CourseItem extends StatelessWidget {
                                 ),
                               ]))),
                   if (course.price == Decimal.zero)
-                    Text(LocaleKeys.free.tr())
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Text(LocaleKeys.free.tr()),
+                    )
                   else
-                    Text(NumberFormat.currency(locale: 'kk_KZ')
-                        .format(course.price.toDouble()))
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Text(NumberFormat.currency(locale: 'kk_KZ')
+                          .format(course.price.toDouble())),
+                    )
                 ]))));
   }
 }

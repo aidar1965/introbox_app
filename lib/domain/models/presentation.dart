@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 
 import 'channel.dart';
 import 'course.dart';
+import 'presentation_link.dart';
 
 @immutable
 class Presentation {
@@ -34,7 +35,7 @@ class Presentation {
   final bool hasPassword;
   final bool includePdf;
   final bool freeMode;
-  final String? links;
+  final List<PresentationLink>? links;
   final DateTime createdAt;
   final Channel? channel;
   final Course? course;

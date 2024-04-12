@@ -125,12 +125,21 @@ class __$$_EventInitialDataRequestedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventInitialDataRequested implements _EventInitialDataRequested {
+class _$_EventInitialDataRequested
+    with DiagnosticableTreeMixin
+    implements _EventInitialDataRequested {
   const _$_EventInitialDataRequested();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationEvent.initialDataRequested()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'PublicPresentationEvent.initialDataRequested'));
   }
 
   @override
@@ -261,12 +270,20 @@ class __$$_EventCheckPresentationHasPasswordCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_EventCheckPresentationHasPassword
+    with DiagnosticableTreeMixin
     implements _EventCheckPresentationHasPassword {
   const _$_EventCheckPresentationHasPassword();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationEvent.checkPresentationHasPassword()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'PublicPresentationEvent.checkPresentationHasPassword'));
   }
 
   @override
@@ -410,15 +427,25 @@ class __$$_EventSendPasswordCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventSendPassword implements _EventSendPassword {
+class _$_EventSendPassword
+    with DiagnosticableTreeMixin
+    implements _EventSendPassword {
   const _$_EventSendPassword({required this.password});
 
   @override
   final String password;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationEvent.sendPassword(password: $password)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PublicPresentationEvent.sendPassword'))
+      ..add(DiagnosticsProperty('password', password));
   }
 
   @override
@@ -561,12 +588,21 @@ class __$$_EventNextSlideClickedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventNextSlideClicked implements _EventNextSlideClicked {
+class _$_EventNextSlideClicked
+    with DiagnosticableTreeMixin
+    implements _EventNextSlideClicked {
   const _$_EventNextSlideClicked();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationEvent.nextSlideClicked()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'PublicPresentationEvent.nextSlideClicked'));
   }
 
   @override
@@ -695,12 +731,21 @@ class __$$_EventPreviousSlideClickedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventPreviousSlideClicked implements _EventPreviousSlideClicked {
+class _$_EventPreviousSlideClicked
+    with DiagnosticableTreeMixin
+    implements _EventPreviousSlideClicked {
   const _$_EventPreviousSlideClicked();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationEvent.previousSlideClicked()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty(
+        'type', 'PublicPresentationEvent.previousSlideClicked'));
   }
 
   @override
@@ -842,15 +887,26 @@ class __$$_EventFragmentClickedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventFragmentClicked implements _EventFragmentClicked {
+class _$_EventFragmentClicked
+    with DiagnosticableTreeMixin
+    implements _EventFragmentClicked {
   const _$_EventFragmentClicked(this.index);
 
   @override
   final int index;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationEvent.fragmentClicked(index: $index)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'PublicPresentationEvent.fragmentClicked'))
+      ..add(DiagnosticsProperty('index', index));
   }
 
   @override
@@ -978,14 +1034,17 @@ mixin _$PublicPresentationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -999,14 +1058,17 @@ mixin _$PublicPresentationState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1020,14 +1082,17 @@ mixin _$PublicPresentationState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1105,14 +1170,17 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       __$$_ScreenStateCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {PdfFragment selectedFragment,
+      {PdfFragment? selectedFragment,
       bool isLast,
       bool isFirst,
       String presentationTitle,
       String? presentationDescription,
       String? pdfFile,
       List<PdfFragment> fragments,
-      Channel? channel});
+      Channel? channel,
+      bool isAuthorized,
+      Uint8List? preloadedImage,
+      List<PresentationLink>? links});
 }
 
 /// @nodoc
@@ -1126,7 +1194,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedFragment = null,
+    Object? selectedFragment = freezed,
     Object? isLast = null,
     Object? isFirst = null,
     Object? presentationTitle = null,
@@ -1134,12 +1202,15 @@ class __$$_ScreenStateCopyWithImpl<$Res>
     Object? pdfFile = freezed,
     Object? fragments = null,
     Object? channel = freezed,
+    Object? isAuthorized = null,
+    Object? preloadedImage = freezed,
+    Object? links = freezed,
   }) {
     return _then(_$_ScreenState(
-      selectedFragment: null == selectedFragment
+      selectedFragment: freezed == selectedFragment
           ? _value.selectedFragment
           : selectedFragment // ignore: cast_nullable_to_non_nullable
-              as PdfFragment,
+              as PdfFragment?,
       isLast: null == isLast
           ? _value.isLast
           : isLast // ignore: cast_nullable_to_non_nullable
@@ -1168,26 +1239,42 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.channel
           : channel // ignore: cast_nullable_to_non_nullable
               as Channel?,
+      isAuthorized: null == isAuthorized
+          ? _value.isAuthorized
+          : isAuthorized // ignore: cast_nullable_to_non_nullable
+              as bool,
+      preloadedImage: freezed == preloadedImage
+          ? _value.preloadedImage
+          : preloadedImage // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      links: freezed == links
+          ? _value._links
+          : links // ignore: cast_nullable_to_non_nullable
+              as List<PresentationLink>?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ScreenState implements _ScreenState {
+class _$_ScreenState with DiagnosticableTreeMixin implements _ScreenState {
   const _$_ScreenState(
-      {required this.selectedFragment,
+      {this.selectedFragment,
       required this.isLast,
       required this.isFirst,
       required this.presentationTitle,
       this.presentationDescription,
       this.pdfFile,
       required final List<PdfFragment> fragments,
-      required this.channel})
-      : _fragments = fragments;
+      required this.channel,
+      required this.isAuthorized,
+      this.preloadedImage,
+      final List<PresentationLink>? links})
+      : _fragments = fragments,
+        _links = links;
 
   @override
-  final PdfFragment selectedFragment;
+  final PdfFragment? selectedFragment;
   @override
   final bool isLast;
   @override
@@ -1208,10 +1295,42 @@ class _$_ScreenState implements _ScreenState {
 
   @override
   final Channel? channel;
+  @override
+  final bool isAuthorized;
+  @override
+  final Uint8List? preloadedImage;
+  final List<PresentationLink>? _links;
+  @override
+  List<PresentationLink>? get links {
+    final value = _links;
+    if (value == null) return null;
+    if (_links is EqualUnmodifiableListView) return _links;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
-  String toString() {
-    return 'PublicPresentationState.screenState(selectedFragment: $selectedFragment, isLast: $isLast, isFirst: $isFirst, presentationTitle: $presentationTitle, presentationDescription: $presentationDescription, pdfFile: $pdfFile, fragments: $fragments, channel: $channel)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'PublicPresentationState.screenState(selectedFragment: $selectedFragment, isLast: $isLast, isFirst: $isFirst, presentationTitle: $presentationTitle, presentationDescription: $presentationDescription, pdfFile: $pdfFile, fragments: $fragments, channel: $channel, isAuthorized: $isAuthorized, preloadedImage: $preloadedImage, links: $links)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PublicPresentationState.screenState'))
+      ..add(DiagnosticsProperty('selectedFragment', selectedFragment))
+      ..add(DiagnosticsProperty('isLast', isLast))
+      ..add(DiagnosticsProperty('isFirst', isFirst))
+      ..add(DiagnosticsProperty('presentationTitle', presentationTitle))
+      ..add(DiagnosticsProperty(
+          'presentationDescription', presentationDescription))
+      ..add(DiagnosticsProperty('pdfFile', pdfFile))
+      ..add(DiagnosticsProperty('fragments', fragments))
+      ..add(DiagnosticsProperty('channel', channel))
+      ..add(DiagnosticsProperty('isAuthorized', isAuthorized))
+      ..add(DiagnosticsProperty('preloadedImage', preloadedImage))
+      ..add(DiagnosticsProperty('links', links));
   }
 
   @override
@@ -1231,7 +1350,12 @@ class _$_ScreenState implements _ScreenState {
             (identical(other.pdfFile, pdfFile) || other.pdfFile == pdfFile) &&
             const DeepCollectionEquality()
                 .equals(other._fragments, _fragments) &&
-            (identical(other.channel, channel) || other.channel == channel));
+            (identical(other.channel, channel) || other.channel == channel) &&
+            (identical(other.isAuthorized, isAuthorized) ||
+                other.isAuthorized == isAuthorized) &&
+            const DeepCollectionEquality()
+                .equals(other.preloadedImage, preloadedImage) &&
+            const DeepCollectionEquality().equals(other._links, _links));
   }
 
   @override
@@ -1244,7 +1368,10 @@ class _$_ScreenState implements _ScreenState {
       presentationDescription,
       pdfFile,
       const DeepCollectionEquality().hash(_fragments),
-      channel);
+      channel,
+      isAuthorized,
+      const DeepCollectionEquality().hash(preloadedImage),
+      const DeepCollectionEquality().hash(_links));
 
   @JsonKey(ignore: true)
   @override
@@ -1256,14 +1383,17 @@ class _$_ScreenState implements _ScreenState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1273,22 +1403,35 @@ class _$_ScreenState implements _ScreenState {
     required TResult Function(String? errorText) requestError,
     required TResult Function() notFound,
   }) {
-    return screenState(selectedFragment, isLast, isFirst, presentationTitle,
-        presentationDescription, pdfFile, fragments, channel);
+    return screenState(
+        selectedFragment,
+        isLast,
+        isFirst,
+        presentationTitle,
+        presentationDescription,
+        pdfFile,
+        fragments,
+        channel,
+        isAuthorized,
+        preloadedImage,
+        links);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1306,21 +1449,27 @@ class _$_ScreenState implements _ScreenState {
         presentationDescription,
         pdfFile,
         fragments,
-        channel);
+        channel,
+        isAuthorized,
+        preloadedImage,
+        links);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1332,8 +1481,18 @@ class _$_ScreenState implements _ScreenState {
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(selectedFragment, isLast, isFirst, presentationTitle,
-          presentationDescription, pdfFile, fragments, channel);
+      return screenState(
+          selectedFragment,
+          isLast,
+          isFirst,
+          presentationTitle,
+          presentationDescription,
+          pdfFile,
+          fragments,
+          channel,
+          isAuthorized,
+          preloadedImage,
+          links);
     }
     return orElse();
   }
@@ -1391,16 +1550,19 @@ class _$_ScreenState implements _ScreenState {
 
 abstract class _ScreenState implements PublicPresentationState {
   const factory _ScreenState(
-      {required final PdfFragment selectedFragment,
+      {final PdfFragment? selectedFragment,
       required final bool isLast,
       required final bool isFirst,
       required final String presentationTitle,
       final String? presentationDescription,
       final String? pdfFile,
       required final List<PdfFragment> fragments,
-      required final Channel? channel}) = _$_ScreenState;
+      required final Channel? channel,
+      required final bool isAuthorized,
+      final Uint8List? preloadedImage,
+      final List<PresentationLink>? links}) = _$_ScreenState;
 
-  PdfFragment get selectedFragment;
+  PdfFragment? get selectedFragment;
   bool get isLast;
   bool get isFirst;
   String get presentationTitle;
@@ -1408,6 +1570,9 @@ abstract class _ScreenState implements PublicPresentationState {
   String? get pdfFile;
   List<PdfFragment> get fragments;
   Channel? get channel;
+  bool get isAuthorized;
+  Uint8List? get preloadedImage;
+  List<PresentationLink>? get links;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1446,7 +1611,9 @@ class __$$_StatePasswordFormCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StatePasswordForm implements _StatePasswordForm {
+class _$_StatePasswordForm
+    with DiagnosticableTreeMixin
+    implements _StatePasswordForm {
   const _$_StatePasswordForm({this.isPending = false});
 
   @override
@@ -1454,8 +1621,16 @@ class _$_StatePasswordForm implements _StatePasswordForm {
   final bool isPending;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.passwordForm(isPending: $isPending)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PublicPresentationState.passwordForm'))
+      ..add(DiagnosticsProperty('isPending', isPending));
   }
 
   @override
@@ -1481,14 +1656,17 @@ class _$_StatePasswordForm implements _StatePasswordForm {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1505,14 +1683,17 @@ class _$_StatePasswordForm implements _StatePasswordForm {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1529,14 +1710,17 @@ class _$_StatePasswordForm implements _StatePasswordForm {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1647,7 +1831,9 @@ class __$$_StateLoadingErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateLoadingError implements _StateLoadingError {
+class _$_StateLoadingError
+    with DiagnosticableTreeMixin
+    implements _StateLoadingError {
   const _$_StateLoadingError({this.isPending = false});
 
   @override
@@ -1655,8 +1841,16 @@ class _$_StateLoadingError implements _StateLoadingError {
   final bool isPending;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.loadingError(isPending: $isPending)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PublicPresentationState.loadingError'))
+      ..add(DiagnosticsProperty('isPending', isPending));
   }
 
   @override
@@ -1682,14 +1876,17 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1706,14 +1903,17 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1730,14 +1930,17 @@ class _$_StateLoadingError implements _StateLoadingError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -1851,7 +2054,9 @@ class __$$_StateCheckHasPasswordErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
+class _$_StateCheckHasPasswordError
+    with DiagnosticableTreeMixin
+    implements _StateCheckHasPasswordError {
   const _$_StateCheckHasPasswordError({this.isPending = false});
 
   @override
@@ -1859,8 +2064,17 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
   final bool isPending;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.checkHasPasswordError(isPending: $isPending)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'PublicPresentationState.checkHasPasswordError'))
+      ..add(DiagnosticsProperty('isPending', isPending));
   }
 
   @override
@@ -1886,14 +2100,17 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -1910,14 +2127,17 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -1934,14 +2154,17 @@ class _$_StateCheckHasPasswordError implements _StateCheckHasPasswordError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2037,12 +2260,19 @@ class __$$_StatePendingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StatePending implements _StatePending {
+class _$_StatePending with DiagnosticableTreeMixin implements _StatePending {
   const _$_StatePending();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.pending()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'PublicPresentationState.pending'));
   }
 
   @override
@@ -2058,14 +2288,17 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2082,14 +2315,17 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2106,14 +2342,17 @@ class _$_StatePending implements _StatePending {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2203,12 +2442,21 @@ class __$$_StateIdNotSpecifiedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateIdNotSpecified implements _StateIdNotSpecified {
+class _$_StateIdNotSpecified
+    with DiagnosticableTreeMixin
+    implements _StateIdNotSpecified {
   const _$_StateIdNotSpecified();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.idNotSpecified()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+        DiagnosticsProperty('type', 'PublicPresentationState.idNotSpecified'));
   }
 
   @override
@@ -2224,14 +2472,17 @@ class _$_StateIdNotSpecified implements _StateIdNotSpecified {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2248,14 +2499,17 @@ class _$_StateIdNotSpecified implements _StateIdNotSpecified {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2272,14 +2526,17 @@ class _$_StateIdNotSpecified implements _StateIdNotSpecified {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2384,15 +2641,25 @@ class __$$_StateRequestErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateRequestError implements _StateRequestError {
+class _$_StateRequestError
+    with DiagnosticableTreeMixin
+    implements _StateRequestError {
   const _$_StateRequestError({this.errorText});
 
   @override
   final String? errorText;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.requestError(errorText: $errorText)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PublicPresentationState.requestError'))
+      ..add(DiagnosticsProperty('errorText', errorText));
   }
 
   @override
@@ -2418,14 +2685,17 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2442,14 +2712,17 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2466,14 +2739,17 @@ class _$_StateRequestError implements _StateRequestError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,
@@ -2569,12 +2845,19 @@ class __$$_StateNotFoundCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateNotFound implements _StateNotFound {
+class _$_StateNotFound with DiagnosticableTreeMixin implements _StateNotFound {
   const _$_StateNotFound();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PublicPresentationState.notFound()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty('type', 'PublicPresentationState.notFound'));
   }
 
   @override
@@ -2590,14 +2873,17 @@ class _$_StateNotFound implements _StateNotFound {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)
         screenState,
     required TResult Function(bool isPending) passwordForm,
     required TResult Function(bool isPending) loadingError,
@@ -2614,14 +2900,17 @@ class _$_StateNotFound implements _StateNotFound {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult? Function(bool isPending)? passwordForm,
     TResult? Function(bool isPending)? loadingError,
@@ -2638,14 +2927,17 @@ class _$_StateNotFound implements _StateNotFound {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            PdfFragment selectedFragment,
+            PdfFragment? selectedFragment,
             bool isLast,
             bool isFirst,
             String presentationTitle,
             String? presentationDescription,
             String? pdfFile,
             List<PdfFragment> fragments,
-            Channel? channel)?
+            Channel? channel,
+            bool isAuthorized,
+            Uint8List? preloadedImage,
+            List<PresentationLink>? links)?
         screenState,
     TResult Function(bool isPending)? passwordForm,
     TResult Function(bool isPending)? loadingError,

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:introbox/domain/models/presentation_link.dart';
 
 import 'package:printing/printing.dart';
 
@@ -18,10 +19,12 @@ class PdfCreatePresentationBloc
   PdfCreatePresentationBloc()
       : super(const PdfCreatePresentationState.pending()) {
     on<PdfCreatePresentationEvent>((event, emitter) => event.map(
-        channelSelected: (event) => _onChanneSelected(event, emitter),
+        channelSelected: (event) => _onChannelSelected(event, emitter),
         initialDataRequested: (_) => _initialDataRequested(emitter),
         convertPdf: (event) => _convertPdf(event, emitter),
-        savePdfPresentation: (event) => _savePdfPresentation(event, emitter)));
+        savePdfPresentation: (event) => _savePdfPresentation(event, emitter),
+        addLink: (event) => _onLinkAdded(event, emitter),
+        deleteLink: (event) => _onLinkDeleted(event, emitter)));
 
     add(const PdfCreatePresentationEvent.initialDataRequested());
   }
@@ -62,12 +65,12 @@ class PdfCreatePresentationBloc
         currentSlide: 0, totalSlides: event.pdfFragmentList.length));
     try {
       final presentationId = await api.addPdfPresentation(
-        pdfFile: event.pdfFile,
-        pdfFileName: event.pdfFileName,
-        title: event.title,
-        description: event.description,
-        channelId: _screenState.selectedChanel.id,
-      );
+          pdfFile: event.pdfFile,
+          pdfFileName: event.pdfFileName,
+          title: event.title,
+          description: event.description,
+          channelId: _screenState.selectedChanel.id,
+          links: _screenState.links);
 
       int index = 1;
       for (final f in event.pdfFragmentList) {
@@ -85,7 +88,8 @@ class PdfCreatePresentationBloc
             fragmentsIds: [],
             image: f.image,
             audio: f.audioBytes,
-            duration: f.duration);
+            duration: f.duration,
+            audioExtention: f.audioExtension);
         index++;
       }
       emitter(const PdfCreatePresentationState.saveSuccess());
@@ -112,9 +116,31 @@ class PdfCreatePresentationBloc
     }
   }
 
-  void _onChanneSelected(_EventChannelSelected event,
+  void _onChannelSelected(_EventChannelSelected event,
       Emitter<PdfCreatePresentationState> emitter) {
     _screenState = _screenState.copyWith(selectedChanel: event.channel);
+    emitter(_screenState);
+  }
+
+  void _onLinkAdded(
+      _EventAddLink event, Emitter<PdfCreatePresentationState> emitter) {
+    List<PresentationLink> oldList = _screenState.links ?? [];
+
+    oldList = [...oldList, event.link];
+
+    _screenState = _screenState.copyWith(links: oldList);
+    emitter(_screenState);
+  }
+
+  void _onLinkDeleted(
+      _EventDeleteLink event, Emitter<PdfCreatePresentationState> emitter) {
+    List<PresentationLink> oldList = _screenState.links ?? [];
+
+    List<PresentationLink> newList = oldList.map((e) => e).toList();
+    newList.removeAt(event.index);
+
+    _screenState = _screenState.copyWith(links: newList);
+    print('emitting new state');
     emitter(_screenState);
   }
 }

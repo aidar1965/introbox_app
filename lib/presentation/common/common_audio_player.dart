@@ -95,7 +95,9 @@ class _CommonAudioPlayerState extends State<CommonAudioPlayer> {
 
   Future<void> reStartPlayer() async {
     await stopPlayer();
-    await _startPlay();
+    Future.delayed(const Duration(seconds: 3), () async {
+      await _startPlay();
+    });
   }
 
   @override

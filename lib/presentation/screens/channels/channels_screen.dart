@@ -39,7 +39,7 @@ class ChannelsScreen extends StatelessWidget {
             appBar: AppBar(
               leading: BackButton(
                 onPressed: () {
-                  context.router.push(const PresentationsRoute());
+                  context.router.push(PresentationsRoute());
                 },
               ),
               title: Text(LocaleKeys.channels.tr()),

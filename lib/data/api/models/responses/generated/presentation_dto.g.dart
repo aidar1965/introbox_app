@@ -21,7 +21,9 @@ PresentationDto _$PresentationDtoFromJson(Map<String, dynamic> json) =>
       isPublic: json['is_public'] as bool,
       includePdf: json['include_pdf'] as bool,
       freeMode: json['free_mode'] as bool,
-      links: json['links'] as String?,
+      links: (json['links'] as List<dynamic>?)
+          ?.map((e) => PresentationLinkDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
       channelDto: json['channel'] == null
           ? null
           : ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),

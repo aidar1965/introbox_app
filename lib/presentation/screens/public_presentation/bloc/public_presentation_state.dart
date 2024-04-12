@@ -2,16 +2,18 @@ part of 'public_presentation_bloc.dart';
 
 @freezed
 class PublicPresentationState with _$PublicPresentationState {
-  const factory PublicPresentationState.screenState({
-    required PdfFragment selectedFragment,
-    required bool isLast,
-    required bool isFirst,
-    required String presentationTitle,
-    String? presentationDescription,
-    String? pdfFile,
-    required List<PdfFragment> fragments,
-    required Channel? channel,
-  }) = _ScreenState;
+  const factory PublicPresentationState.screenState(
+      {PdfFragment? selectedFragment,
+      required bool isLast,
+      required bool isFirst,
+      required String presentationTitle,
+      String? presentationDescription,
+      String? pdfFile,
+      required List<PdfFragment> fragments,
+      required Channel? channel,
+      required bool isAuthorized,
+      Uint8List? preloadedImage,
+      List<PresentationLink>? links}) = _ScreenState;
   const factory PublicPresentationState.passwordForm(
       {@Default(false) bool isPending}) = _StatePasswordForm;
   const factory PublicPresentationState.loadingError(

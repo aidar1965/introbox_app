@@ -6,6 +6,7 @@ import 'package:introbox/domain/models/presentation_with_fragments.dart';
 
 import '../../../../domain/interfaces/i_api.dart';
 import '../../../../domain/locator/locator.dart';
+import '../../../../domain/models/presentation_link.dart';
 
 part 'presentation_event.dart';
 part 'presentation_state.dart';
@@ -37,11 +38,12 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
       _screenState = _ScreenState(
           selectedFragment: presentationWithFragments.fragments.first,
           isFirst: presentationWithFragments.fragments.length > 1,
-          isLast: presentationWithFragments.fragments.length == 1,
+          isLast: false,
           presentationTitle: presentationWithFragments.presentation.title,
           presentationDescription:
               presentationWithFragments.presentation.description,
           pdfFile: presentationWithFragments.presentation.pdfFile,
+          links: presentationWithFragments.presentation.links,
           fragments: presentationWithFragments.fragments);
       emitter(_screenState);
     } on Object {
@@ -53,26 +55,40 @@ class PresentationBloc extends Bloc<PresentationEvent, PresentationState> {
   void nextSlideClicked(Emitter<PresentationState> emitter) {
     final currentIndex = presentationWithFragments.fragments.indexOf(
         presentationWithFragments.fragments.firstWhere(
-            (element) => element.id == _screenState.selectedFragment.id));
-
-    _screenState = _screenState.copyWith(
-        selectedFragment:
-            presentationWithFragments.fragments.elementAt(currentIndex + 1),
-        isFirst: false,
-        isLast: currentIndex == presentationWithFragments.fragments.length - 2);
+            (element) => element.id == _screenState.selectedFragment!.id));
+    if (currentIndex != presentationWithFragments.fragments.length - 1) {
+      _screenState = _screenState.copyWith(
+          selectedFragment:
+              presentationWithFragments.fragments.elementAt(currentIndex + 1),
+          isFirst: false,
+          isLast:
+              currentIndex == presentationWithFragments.fragments.length - 1);
+    } else {
+      print('emitting last');
+      _screenState = _screenState.copyWith(
+          selectedFragment: null, isFirst: false, isLast: true);
+    }
     emitter(_screenState);
   }
 
   void previousSlideClicked(Emitter<PresentationState> emitter) {
-    final currentIndex = presentationWithFragments.fragments.indexOf(
-        presentationWithFragments.fragments.firstWhere(
-            (element) => element.id == _screenState.selectedFragment.id));
+    if (_screenState.selectedFragment != null) {
+      final currentIndex = presentationWithFragments.fragments.indexOf(
+          presentationWithFragments.fragments.firstWhere(
+              (element) => element.id == _screenState.selectedFragment!.id));
 
-    _screenState = _screenState.copyWith(
-        selectedFragment:
-            presentationWithFragments.fragments.elementAt(currentIndex - 1),
-        isFirst: currentIndex == 1,
-        isLast: false);
+      _screenState = _screenState.copyWith(
+          selectedFragment:
+              presentationWithFragments.fragments.elementAt(currentIndex - 1),
+          isFirst: currentIndex == 1,
+          isLast: false);
+    } else {
+      _screenState = _screenState.copyWith(
+          selectedFragment: presentationWithFragments.fragments.last,
+          isFirst: presentationWithFragments.fragments.length == 1,
+          isLast: false);
+    }
+
     emitter(_screenState);
   }
 

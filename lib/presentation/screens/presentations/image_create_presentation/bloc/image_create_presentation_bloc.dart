@@ -2,12 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:path/path.dart' as p;
 
 import '../../../../../../domain/interfaces/i_api.dart';
 import '../../../../../../domain/locator/locator.dart';
 // import '../../../../../data/api/models/requests/fragment_request_data.dart';
 import '../../../../../domain/models/channel.dart';
 import '../../../../../domain/models/image_fragment.dart';
+import '../../../../../domain/models/presentation_link.dart';
 import '../../../../../generated/locale_keys.g.dart';
 
 part 'image_create_presentation_state.dart';
@@ -18,12 +20,14 @@ class ImageCreatePresentationBloc
     extends Bloc<ImageCreatePresentationEvent, ImageCreatePresentationState> {
   ImageCreatePresentationBloc() : super(const _StatePending()) {
     on<ImageCreatePresentationEvent>((event, emitter) => event.map(
-        channelSelected: (event) => _onChanneSelected(event, emitter),
+        channelSelected: (event) => _onChannelSelected(event, emitter),
         initialDataRequested: (_) => _initialDataRequested(emitter),
         fragmentAdded: (event) => onFragmentAdded(event, emitter),
         saveImagePresentation: (event) => saveImagePresentation(event, emitter),
         onReorderFragments: (event) => onReorderFragments(event, emitter),
-        onDeleteFragment: (event) => onDeleteFragment(event, emitter)));
+        onDeleteFragment: (event) => onDeleteFragment(event, emitter),
+        addLink: (event) => _onLinkAdded(event, emitter),
+        deleteLink: (event) => _onLinkDeleted(event, emitter)));
 
     add(const ImageCreatePresentationEvent.initialDataRequested());
   }
@@ -68,7 +72,8 @@ class ImageCreatePresentationBloc
       final presentationId = await api.addImagePresentationWithoutFragments(
           title: event.title,
           channelId: _screenState.selectedChanel.id,
-          description: event.description);
+          description: event.description,
+          links: _screenState.links);
 
       int index = 1;
 
@@ -81,6 +86,9 @@ class ImageCreatePresentationBloc
             title: fragment.title,
             description: fragment.description ?? '',
             image: fragment.imageBytes,
+            audioExtention: fragment.audioPath != null
+                ? p.extension(fragment.audioPath!)
+                : null,
             isLandscape: true,
             audio: fragment.audioBytes,
             duration: fragment.duration,
@@ -143,9 +151,31 @@ class ImageCreatePresentationBloc
     }
   }
 
-  void _onChanneSelected(_EventChannelSelected event,
+  void _onChannelSelected(_EventChannelSelected event,
       Emitter<ImageCreatePresentationState> emitter) {
     _screenState = _screenState.copyWith(selectedChanel: event.channel);
+    emitter(_screenState);
+  }
+
+  void _onLinkAdded(
+      _EventAddLink event, Emitter<ImageCreatePresentationState> emitter) {
+    List<PresentationLink> oldList = _screenState.links ?? [];
+
+    oldList = [...oldList, event.link];
+
+    _screenState = _screenState.copyWith(links: oldList);
+    emitter(_screenState);
+  }
+
+  void _onLinkDeleted(
+      _EventDeleteLink event, Emitter<ImageCreatePresentationState> emitter) {
+    List<PresentationLink> oldList = _screenState.links ?? [];
+
+    List<PresentationLink> newList = oldList.map((e) => e).toList();
+    newList.removeAt(event.index);
+
+    _screenState = _screenState.copyWith(links: newList);
+    print('emitting new state');
     emitter(_screenState);
   }
 }

@@ -10,6 +10,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:introbox/domain/models/presentation_link.dart';
 import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 
 import 'package:path/path.dart';
@@ -24,6 +25,7 @@ import '../../../../../domain/models/pdf_fragment_sample.dart';
 import '../../../common/common_elevated_button.dart';
 import '../../../utils/responsive.dart';
 import '../../../widgets/audio_player.dart';
+import '../../../widgets/link_item.dart';
 import '../../../widgets/name_and_description.dart';
 import '../audio_recording/audio_recording_screen.dart';
 import 'bloc/pdf_create_presentation_bloc.dart';
@@ -34,11 +36,13 @@ class PdfCreatePresentationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final titleController = TextEditingController();
+    final descriptionController = TextEditingController();
     return Scaffold(
       appBar: AppBar(
           leading: BackButton(
             onPressed: () {
-              context.router.push(const PresentationsRoute());
+              context.router.push(PresentationsRoute());
             },
           ),
           title: Text(
@@ -57,7 +61,7 @@ class PdfCreatePresentationScreen extends StatelessWidget {
                     if (context.router.canPop()) {
                       context.router.pop(true);
                     } else {
-                      context.router.push(const PresentationsRoute());
+                      context.router.push(PresentationsRoute());
                     }
                     return null;
                   },
@@ -88,25 +92,35 @@ class PdfCreatePresentationScreen extends StatelessWidget {
                         isPending: state.isPending,
                         pdfFragmentList: state.pdfFragmentList,
                         countFileGenerated: state.countFileGenerated,
+                        titleController: titleController,
+                        descriptionController: descriptionController,
+                        links: state.links,
                       )))),
     );
   }
 }
 
 class _ScreenView extends StatefulWidget {
-  const _ScreenView(
-      {super.key,
-      required this.channels,
-      required this.selectedChannel,
-      this.pdfFragmentList,
-      required this.isPending,
-      this.countFileGenerated});
+  const _ScreenView({
+    super.key,
+    required this.channels,
+    required this.selectedChannel,
+    this.pdfFragmentList,
+    required this.isPending,
+    this.countFileGenerated,
+    required this.titleController,
+    required this.descriptionController,
+    this.links,
+  });
 
   final List<Channel> channels;
   final Channel selectedChannel;
   final List<PdfFragmentSample>? pdfFragmentList;
   final bool isPending;
   final int? countFileGenerated;
+  final TextEditingController titleController;
+  final TextEditingController descriptionController;
+  final List<PresentationLink>? links;
 
   @override
   State<_ScreenView> createState() => _ScreenViewState();
@@ -125,15 +139,12 @@ class _ScreenViewState extends State<_ScreenView> {
   bool isTitleOverImage = false;
   late String title;
 
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-    title = titleController.text;
-    titleController.addListener(() {
-      title = titleController.text;
+    title = widget.titleController.text;
+    widget.titleController.addListener(() {
+      title = widget.titleController.text;
     });
     if (widget.pdfFragmentList != null) {
       for (var i = 0; i < widget.pdfFragmentList!.length; i++) {
@@ -201,8 +212,8 @@ class _ScreenViewState extends State<_ScreenView> {
             children: [
               const SizedBox(height: 24),
               NameAndDescriptionWidget(
-                titleController: titleController,
-                descriptionController: descriptionController,
+                titleController: widget.titleController,
+                descriptionController: widget.descriptionController,
               ),
               const SizedBox(height: 20),
               CommonElevatedButton(
@@ -261,8 +272,47 @@ class _ScreenViewState extends State<_ScreenView> {
                                 extensionList[i] = e;
                               },
                               isTitleOverImage: false,
-                              title: title)
+                              title: title,
+                              audioPathList: audioPathList,
+                              durationList: audioDurationList,
+                            )
                 ],
+                const SizedBox(
+                  height: 12,
+                ),
+                if (widget.links?.isNotEmpty ?? false) ...[
+                  Text(LocaleKeys.links.tr()),
+                  ListView.separated(
+                    itemBuilder: (context, index) => LinkItem(
+                      link: widget.links!.elementAt(index),
+                      index: index,
+                      onDelete: (i) =>
+                          BlocProvider.of<PdfCreatePresentationBloc>(context)
+                              .add(PdfCreatePresentationEvent.deleteLink(i)),
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 12,
+                    ),
+                    itemCount: widget.links!.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                  ),
+                ],
+                const SizedBox(
+                  height: 12,
+                ),
+                CommonElevatedButton(
+                    text: 'Add link',
+                    onPressed: () async {
+                      final result = await _showLinksDialog(context);
+                      if (result is PresentationLink) {
+                        if (mounted) {
+                          BlocProvider.of<PdfCreatePresentationBloc>(context)
+                              .add(PdfCreatePresentationEvent.addLink(
+                                  link: result));
+                        }
+                      }
+                    }),
                 const SizedBox(
                   height: 12,
                 ),
@@ -283,18 +333,18 @@ class _ScreenViewState extends State<_ScreenView> {
                             audioExtension: extensionList[i],
                             isTitleOverImage: isTitleOverImage));
                       }
-                      if (titleController.text.trim().isEmpty) {
+                      if (widget.titleController.text.trim().isEmpty) {
                         CommonFunctions.showMessage(context,
                             LocaleKeys.noPresentationTitle.tr(), Reason.error);
-                        print(' no presentatio titlr. returning');
+
                         return;
                       }
                       BlocProvider.of<PdfCreatePresentationBloc>(context).add(
                           PdfCreatePresentationEvent.savePdfPresentation(
                               pdfFile: pdfFile!,
                               pdfFileName: pdfFileName!,
-                              title: titleController.text,
-                              description: descriptionController.text,
+                              title: widget.titleController.text,
+                              description: widget.descriptionController.text,
                               pdfFragmentList: pdfFragmentList,
                               isAudio: isAudio));
 
@@ -335,13 +385,54 @@ class _ScreenViewState extends State<_ScreenView> {
                         extensionList[i] = e;
                       },
                       isTitleOverImage: false,
-                      title: title),
+                      title: title,
+                      audioPathList: audioPathList,
+                      durationList: audioDurationList,
+                    ),
         ),
         const SizedBox(
           width: 12,
         ),
       ],
     ]);
+  }
+
+  Future<PresentationLink?>? _showLinksDialog(BuildContext context) async {
+    final linkController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final result = await showDialog(
+        context: context,
+        builder: (context) => SizedBox(
+              width: 500,
+              child: SimpleDialog(
+                  title: Text(LocaleKeys.addLink.tr()),
+                  contentPadding: const EdgeInsets.all(24),
+                  children: [
+                    NameAndDescriptionWidget(
+                        titleLabelName: LocaleKeys.link.tr(),
+                        titleController: linkController,
+                        descriptionController: descriptionController),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    CommonElevatedButton(
+                        text: 'Add link',
+                        onPressed: () {
+                          context.router.pop(PresentationLink(
+                            description: descriptionController.text,
+                            link: linkController.text,
+                          ));
+                        }),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextButton(
+                        onPressed: () => context.router.pop(),
+                        child: Text(LocaleKeys.buttonCancel.tr()))
+                  ]),
+            ));
+
+    return result;
   }
 }
 
@@ -355,6 +446,8 @@ class _FragmentListView extends StatelessWidget {
     required this.isAudio,
     required this.isTitleOverImage,
     required this.title,
+    required this.audioPathList,
+    required this.durationList,
   }) : super(key: key);
 
   final List<PdfFragmentSample> pdfFragmentList;
@@ -365,6 +458,8 @@ class _FragmentListView extends StatelessWidget {
   final bool isAudio;
   final bool isTitleOverImage;
   final String title;
+  final List<String?> audioPathList;
+  final List<int?> durationList;
 
   @override
   Widget build(BuildContext context) {
@@ -388,6 +483,8 @@ class _FragmentListView extends StatelessWidget {
           },
           isTitleOverImage: isTitleOverImage,
           title: title,
+          audioPath: audioPathList.elementAt(index),
+          duration: durationList.elementAt(index),
         );
       },
     );
@@ -404,14 +501,18 @@ class FragmentListItem extends StatefulWidget {
     required this.isAudio,
     required this.isTitleOverImage,
     required this.title,
+    this.audioPath,
+    this.duration,
   });
 
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final Uint8List imageData;
+  final String? audioPath;
   final bool isAudio;
   final bool isTitleOverImage;
   final String title;
+  final int? duration;
 
   final void Function(Uint8List?, String? path, int? seconds, String? extension)
       onPathChanged;
@@ -423,6 +524,7 @@ class FragmentListItem extends StatefulWidget {
 class _FragmentListItemState extends State<FragmentListItem> {
   late bool showPlayer;
   String? audioPath;
+  Uint8List? audioBytes;
   int? duration;
   late bool isAudio;
   late bool isTitleOverImage;
@@ -474,39 +576,40 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         descriptionController: widget.descriptionController),
                   ),
                   if (isAudio) ...[
-                    showPlayer
+                    widget.audioPath != null || audioPath != null
                         ? Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 25),
                             child: AudioPlayerWidget(
-                              duration: duration ?? 0,
-                              urlSource: audioPath,
+                              duration: duration ?? widget.duration!,
+                              urlSource: audioPath ?? widget.audioPath,
                               onDelete: () {
                                 setState(() => showPlayer = false);
                                 widget.onPathChanged(null, null, null, null);
                               },
                             ),
                           )
-                        // : CommonElevatedButton(
-                        //     onPressed: () async {
-                        //       final result = await _showRecorder(context,
-                        //           imageData: widget.imageData);
-                        //       if (result != null) {
-                        //         setState(() {
-                        //           audioPath = result.path;
-                        //           duration = result.duration;
-                        //         });
-                        //         final audioBytes = result.audioBytes;
-                        //         showPlayer = true;
+                        : CommonElevatedButton(
+                            onPressed: () async {
+                              final result = await _showRecorder(context,
+                                  imageData: widget.imageData);
+                              if (result != null) {
+                                setState(() {
+                                  audioPath = result.path;
+                                  duration = result.duration;
+                                  audioBytes = result.audioBytes;
+                                });
 
-                        //         final durationInSeconds =
-                        //             await getDuration(audioPath!);
-                        //         print(durationInSeconds);
-                        //         widget.onPathChanged(
-                        //             audioBytes, audioPath, durationInSeconds);
-                        //       }
-                        //     },
-                        //     text: 'Записать аудио'),
-                        : const SizedBox(),
+                                showPlayer = true;
+
+                                final durationInSeconds =
+                                    await getDuration(audioPath!);
+                                print(durationInSeconds);
+                                widget.onPathChanged(audioBytes, audioPath,
+                                    durationInSeconds, 'opus');
+                              }
+                            },
+                            text: LocaleKeys.buttonRecord.tr(),
+                          ),
                     const SizedBox(height: 32),
                     CommonElevatedButton(
                         onPressed: () async {
@@ -519,6 +622,7 @@ class _FragmentListItemState extends State<FragmentListItem> {
                               'm4b',
                               'm4p',
                               'mp4',
+                              'wav'
                             ],
                           );
                           if (result != null) {
@@ -531,7 +635,8 @@ class _FragmentListItemState extends State<FragmentListItem> {
                                 extension?.toLowerCase() != 'mp3' &&
                                 extension?.toLowerCase() != 'm4b' &&
                                 extension?.toLowerCase() != 'm4p' &&
-                                extension?.toLowerCase() != 'mp4') return;
+                                extension?.toLowerCase() != 'mp4' &&
+                                extension?.toLowerCase() != 'wav') return;
 
                             // Преобразование Uint8List в Blob
                             final blob = html.Blob(
@@ -595,27 +700,26 @@ class _FragmentListItemState extends State<FragmentListItem> {
                       },
                     ),
                   )
-                // : CommonElevatedButton(
-                //     onPressed: () async {
-                //       final result = await _showRecorder(context,
-                //           imageData: widget.imageData);
-                //       if (result != null) {
-                //         setState(() {
-                //           audioPath = result.path;
-                //           duration = result.duration;
-                //         });
-                //         final audioBytes = result.audioBytes;
-                //         showPlayer = true;
+                : CommonElevatedButton(
+                    onPressed: () async {
+                      final result = await _showRecorder(context,
+                          imageData: widget.imageData);
+                      if (result != null) {
+                        setState(() {
+                          audioPath = result.path;
+                          duration = result.duration;
+                        });
+                        final audioBytes = result.audioBytes;
+                        showPlayer = true;
 
-                //         final durationInSeconds =
-                //             await getDuration(audioPath!);
-                //         print(durationInSeconds);
-                //         widget.onPathChanged(
-                //             audioBytes, audioPath, durationInSeconds);
-                //       }
-                //     },
-                //     text: 'Записать аудио'),
-                : const SizedBox(),
+                        final durationInSeconds = await getDuration(audioPath!);
+
+                        widget.onPathChanged(
+                            audioBytes, audioPath, durationInSeconds, 'opus');
+                      }
+                    },
+                    text: LocaleKeys.buttonRecord.tr(),
+                  ),
             const SizedBox(height: 32),
             CommonElevatedButton(
                 onPressed: () async {
@@ -628,6 +732,7 @@ class _FragmentListItemState extends State<FragmentListItem> {
                       'm4b',
                       'm4p',
                       'mp4',
+                      'wav'
                     ],
                   );
                   if (result != null) {
@@ -640,7 +745,8 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         extension?.toLowerCase() != 'mp3' &&
                         extension?.toLowerCase() != 'm4b' &&
                         extension?.toLowerCase() != 'm4p' &&
-                        extension?.toLowerCase() != 'mp4') return;
+                        extension?.toLowerCase() != 'mp4' &&
+                        extension?.toLowerCase() != 'wav') return;
 
                     // Преобразование Uint8List в Blob
                     final blob = html.Blob(

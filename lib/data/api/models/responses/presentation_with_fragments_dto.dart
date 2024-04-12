@@ -1,3 +1,4 @@
+import 'package:introbox/data/api/models/responses/presentation_link_dto.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:introbox/data/api/models/responses/pdf_fragment_dto.dart';
@@ -15,7 +16,9 @@ class PresentationWithFragmentsDto {
       required this.createdAt,
       this.pdfFile,
       required this.fragmentDtoList,
-      required this.channelDto});
+      required this.channelDto,
+      this.links,
+      this.firstImage});
 
   @JsonKey(name: 'id') // "first_name":"nfgn"
   final String id;
@@ -23,6 +26,8 @@ class PresentationWithFragmentsDto {
   final String title;
   @JsonKey(name: 'description') // "first_name":"nfgn"
   final String? description;
+  @JsonKey(name: 'first_image') // "first_name":"nfgn"
+  final String? firstImage;
   @JsonKey(name: 'created_at') // "first_name":"nfgn"
   final String createdAt;
   @JsonKey(name: 'pdf_file') // "first_name":"nfgn"
@@ -33,6 +38,9 @@ class PresentationWithFragmentsDto {
 
   @JsonKey(name: 'fragments') // "last_name":"dhdrthdtr"
   final List<PdfFragmentDto> fragmentDtoList;
+
+  @JsonKey(name: 'links') // "last---_name":"dhdrthdtr"
+  final List<PresentationLinkDto>? links;
 
   static PresentationWithFragmentsDto fromJson(Object json) =>
       _$PresentationWithFragmentsDtoFromJson(json as Map<String, dynamic>);

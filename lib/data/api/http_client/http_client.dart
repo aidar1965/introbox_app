@@ -193,7 +193,7 @@ class DioClient {
                 } else {
                   contentTypeHeader = null;
                 }
-
+                print('repeat request');
                 final response = await _dio!.request(
                     dioError.requestOptions.path,
                     queryParameters: dioError.requestOptions.queryParameters,
@@ -265,6 +265,7 @@ class DioClient {
           await authenticateController.onAccessTokensUpdated(TokenPair(
               accessToken: receivedAccessToken,
               refreshToken: receivedRefreshToken));
+          setTokens(receivedAccessToken, receivedRefreshToken);
         }
 
         return data;
@@ -331,6 +332,7 @@ class DioClient {
 
           return null;
         }
+
         _dioOptions.headers['Content-Type'] = 'multipart/form-data';
       } else {
         _dioOptions.headers['Content-Type'] = 'application/json';
@@ -342,6 +344,10 @@ class DioClient {
 
       switch (request.methodType) {
         case AvailableApiMethods.get:
+          print(url);
+          request.queryParameters?.forEach((key, value) {
+            print('$key: $value');
+          });
           response =
               await _dio!.get(url, queryParameters: request.queryParameters);
           break;

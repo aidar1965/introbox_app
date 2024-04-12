@@ -157,9 +157,11 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     PresentationsRoute.name: (routeData) {
+      final args = routeData.argsAs<PresentationsRouteArgs>(
+          orElse: () => const PresentationsRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PresentationsScreen(),
+        child: PresentationsScreen(key: args.key),
       );
     },
     PresentationPlayerRoute.name: (routeData) {
@@ -666,16 +668,31 @@ class PresentationAddFragmentRouteArgs {
 
 /// generated route for
 /// [PresentationsScreen]
-class PresentationsRoute extends PageRouteInfo<void> {
-  const PresentationsRoute({List<PageRouteInfo>? children})
-      : super(
+class PresentationsRoute extends PageRouteInfo<PresentationsRouteArgs> {
+  PresentationsRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           PresentationsRoute.name,
+          args: PresentationsRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'PresentationsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PresentationsRouteArgs> page =
+      PageInfo<PresentationsRouteArgs>(name);
+}
+
+class PresentationsRouteArgs {
+  const PresentationsRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'PresentationsRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

@@ -14,6 +14,7 @@ import 'package:introbox/presentation/common/common_functions.dart';
 
 import '../../../../../domain/models/pdf_fragment.dart';
 
+import '../../../../domain/models/presentation_link.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../auto_router/app_router.dart';
 import '../../../common/common_loading_error_widget.dart';
@@ -21,8 +22,10 @@ import '../../../utils/responsive.dart';
 import '../../../values/dynamic_palette.dart';
 import '../../../values/palette.dart';
 import '../../../widgets/audio_player.dart';
+import '../../../widgets/link_item.dart';
 import '../../../widgets/name_and_description.dart';
 //import '../audio_recording/audio_recording_screen.dart';
+import '../audio_recording/audio_recording_screen.dart';
 import 'bloc/edit_presentation_bloc.dart';
 
 @RoutePage()
@@ -34,6 +37,11 @@ class EditPresentationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController presentationTitleController =
+        TextEditingController();
+
+    final TextEditingController presentationDescriptionController =
+        TextEditingController();
     return Scaffold(
         appBar: AppBar(
           title: Text(LocaleKeys.editPresentation.tr()),
@@ -73,6 +81,12 @@ class EditPresentationScreen extends StatelessWidget {
                         fragmentUpdatePending: state.fragmentUpdatePending,
                         fragmentDeletePending: state.deleteFragmentPending,
                         presentationId: id,
+                        countFilesGenerated: state.countFileGenerated,
+                        links: state.links,
+                        presentationTitleController:
+                            presentationTitleController,
+                        presentationDescriptionController:
+                            presentationDescriptionController,
                       ))),
         ));
   }
@@ -99,22 +113,33 @@ class _ScreenView extends StatefulWidget {
     super.key,
     required this.fragments,
     required this.selectedFragment,
-    this.title,
-    this.description,
     required this.presentationUpdatePending,
     required this.fragmentUpdatePending,
     required this.fragmentDeletePending,
     required this.presentationId,
+    this.countFilesGenerated,
+    required this.title,
+    this.description,
+    this.links,
+    required this.presentationTitleController,
+    required this.presentationDescriptionController,
   });
 
   final List<PdfFragment> fragments;
   final PdfFragment selectedFragment;
-  final String? title;
-  final String? description;
+
   final bool presentationUpdatePending;
   final bool fragmentUpdatePending;
   final bool fragmentDeletePending;
   final String presentationId;
+  final int? countFilesGenerated;
+  final String title;
+  final String? description;
+  final List<PresentationLink>? links;
+
+  final TextEditingController presentationTitleController;
+
+  final TextEditingController presentationDescriptionController;
 
   @override
   State<_ScreenView> createState() => _ScreenViewState();
@@ -125,12 +150,6 @@ class _ScreenViewState extends State<_ScreenView> {
       TextEditingController();
 
   final TextEditingController selectedFragmentDescriptionController =
-      TextEditingController();
-
-  final TextEditingController presentationTitleController =
-      TextEditingController();
-
-  final TextEditingController presentationDescriptionController =
       TextEditingController();
 
   final ScrollController scrollController = ScrollController();
@@ -154,8 +173,8 @@ class _ScreenViewState extends State<_ScreenView> {
     selectedFragmentTitleController.text = widget.selectedFragment.title;
     selectedFragmentDescriptionController.text =
         widget.selectedFragment.description ?? '';
-    presentationTitleController.text = widget.title ?? '';
-    presentationDescriptionController.text = widget.description ?? '';
+    widget.presentationTitleController.text = widget.title;
+    widget.presentationDescriptionController.text = widget.description ?? '';
     if (Responsive.isMobile(context) == false) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,70 +185,96 @@ class _ScreenViewState extends State<_ScreenView> {
               Expanded(
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height - 260,
-                  child: widget.selectedFragment.imagePath?.contains('http') ??
-                          false
-                      ? Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            CachedNetworkImage(
-                              imageUrl: widget.selectedFragment.imagePath!,
-                              fit: BoxFit.cover,
-                            ),
-                            if (isTitleOverImage)
-                              Positioned(
-                                  bottom: 20,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Opacity(
-                                        opacity: 0.5,
-                                        child: DecoratedBox(
-                                            decoration: const BoxDecoration(
-                                                color: Colors.black),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
-                                              child: Text(
-                                                widget.selectedFragment.title,
-                                                style: const TextStyle(
-                                                    color: Colors.white),
+                  child: widget.countFilesGenerated == null
+                      ? widget.selectedFragment.imagePath != null
+                          ? widget.selectedFragment.imagePath
+                                      ?.contains('http') ??
+                                  false
+                              ? Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl:
+                                          widget.selectedFragment.imagePath!,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    if (isTitleOverImage)
+                                      Positioned(
+                                          bottom: 20,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Opacity(
+                                                opacity: 0.5,
+                                                child: DecoratedBox(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                Colors.black),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16.0),
+                                                      child: Text(
+                                                        widget.selectedFragment
+                                                            .title,
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    )),
                                               ),
-                                            )),
-                                      ),
-                                    ],
-                                  ))
-                          ],
-                        )
-                      : Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.memory(widget.selectedFragment.imageBytes!,
-                                fit: BoxFit.cover),
-                            if (widget.selectedFragment.isTitleOverImage)
-                              Positioned(
-                                  bottom: 20,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Opacity(
-                                        opacity: 0.5,
-                                        child: DecoratedBox(
-                                            decoration: const BoxDecoration(
-                                                color: Colors.black),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
-                                              child: Text(
-                                                widget.selectedFragment.title,
-                                                style: const TextStyle(
-                                                    color: Colors.white),
+                                            ],
+                                          ))
+                                  ],
+                                )
+                              : Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Image.memory(
+                                        widget.selectedFragment.imageBytes!,
+                                        fit: BoxFit.cover),
+                                    if (widget
+                                        .selectedFragment.isTitleOverImage)
+                                      Positioned(
+                                          bottom: 20,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Opacity(
+                                                opacity: 0.5,
+                                                child: DecoratedBox(
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            color:
+                                                                Colors.black),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              16.0),
+                                                      child: Text(
+                                                        widget.selectedFragment
+                                                            .title,
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
+                                                      ),
+                                                    )),
                                               ),
-                                            )),
-                                      ),
-                                    ],
-                                  ))
-                          ],
-                        ),
+                                            ],
+                                          ))
+                                  ],
+                                )
+                          : widget.selectedFragment.imageBytes != null
+                              ? Image.memory(
+                                  widget.selectedFragment.imageBytes!)
+                              : Center(
+                                  child: Text(widget.selectedFragment.title))
+                      : Center(
+                          child: Text(
+                              '${LocaleKeys.slidesGeneration.tr()}${widget.countFilesGenerated}')),
                 ),
               ),
               SizedBox(
@@ -250,9 +295,9 @@ class _ScreenViewState extends State<_ScreenView> {
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0, top: 12),
                           child: NameAndDescriptionWidget(
-                            titleController: presentationTitleController,
+                            titleController: widget.presentationTitleController,
                             descriptionController:
-                                presentationDescriptionController,
+                                widget.presentationDescriptionController,
                             titleLabelName: LocaleKeys.presentationName.tr(),
                             descriptionLabelName:
                                 LocaleKeys.presentationDescription.tr(),
@@ -261,18 +306,57 @@ class _ScreenViewState extends State<_ScreenView> {
                         const SizedBox(
                           height: 12,
                         ),
+                        if (widget.links?.isNotEmpty ?? false) ...[
+                          Text(LocaleKeys.links.tr()),
+                          ListView.separated(
+                            itemBuilder: (context, index) => LinkItem(
+                              link: widget.links!.elementAt(index),
+                              index: index,
+                              onDelete: (i) {
+                                BlocProvider.of<EditPresentationBloc>(context)
+                                    .add(EditPresentationEvent.deleteLink(i));
+                              },
+                            ),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                              height: 12,
+                            ),
+                            itemCount: widget.links!.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                          ),
+                        ],
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        CommonElevatedButton(
+                            text: 'Add link',
+                            onPressed: () async {
+                              final result = await _showLinksDialog(context);
+                              if (result is PresentationLink) {
+                                if (mounted) {
+                                  BlocProvider.of<EditPresentationBloc>(context)
+                                      .add(EditPresentationEvent.addLink(
+                                          link: result));
+                                }
+                              }
+                            }),
+                        const SizedBox(
+                          height: 12,
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: CommonElevatedButton(
                             isPending: widget.presentationUpdatePending,
-                            text: 'Сохранить',
+                            text: LocaleKeys.buttonSave.tr(),
                             onPressed: () => BlocProvider.of<
                                     EditPresentationBloc>(context)
                                 .add(EditPresentationEvent.updatePresentation(
-                                    title: presentationTitleController.text,
-                                    description:
-                                        presentationDescriptionController
-                                            .text)),
+                                    title:
+                                        widget.presentationTitleController.text,
+                                    description: widget
+                                        .presentationDescriptionController
+                                        .text)),
                           ),
                         ),
                         const SizedBox(
@@ -300,7 +384,6 @@ class _ScreenViewState extends State<_ScreenView> {
                         const SizedBox(
                           height: 12,
                         ),
-
                         Padding(
                           padding: const EdgeInsets.only(right: 12.0),
                           child: NameAndDescriptionWidget(
@@ -334,34 +417,34 @@ class _ScreenViewState extends State<_ScreenView> {
                                           fragment: widget.selectedFragment)),
                             ),
                           ),
-                        // const SizedBox(
-                        //   height: 12,
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(right: 12.0),
-                        //   child: CommonElevatedButton(
-                        //       text: 'Записать аудио',
-                        //       onPressed: () async {
-                        //         final result = await showDialog(
-                        //             context: context,
-                        //             builder: (context) => Dialog.fullscreen(
-                        //                     child: AudioRecordingScreen(
-                        //                   imageData: widget
-                        //                       .selectedFragment.imageBytes,
-                        //                   imagePath:
-                        //                       widget.selectedFragment.imagePath,
-                        //                 )));
-                        //         if (result != null && context.mounted) {
-                        //           BlocProvider.of<EditPresentationBloc>(context)
-                        //               .add(EditPresentationEvent.audioAdded(
-                        //                   fragment: widget.selectedFragment,
-                        //                   extension: 'mp3',
-                        //                   audioPath: result.path!,
-                        //                   audioBytes: result.audioBytes!,
-                        //                   duration: result.duration!));
-                        //         }
-                        //       }),
-                        // ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12.0),
+                          child: CommonElevatedButton(
+                              text: LocaleKeys.buttonRecord.tr(),
+                              onPressed: () async {
+                                final result = await showDialog(
+                                    context: context,
+                                    builder: (context) => Dialog.fullscreen(
+                                            child: AudioRecordingScreen(
+                                          imageData: widget
+                                              .selectedFragment.imageBytes,
+                                          imagePath:
+                                              widget.selectedFragment.imagePath,
+                                        )));
+                                if (result != null && context.mounted) {
+                                  BlocProvider.of<EditPresentationBloc>(context)
+                                      .add(EditPresentationEvent.audioAdded(
+                                          fragment: widget.selectedFragment,
+                                          extension: 'opus',
+                                          audioPath: result.path!,
+                                          audioBytes: result.audioBytes!,
+                                          duration: result.duration!));
+                                }
+                              }),
+                        ),
                         const SizedBox(
                           height: 12,
                         ),
@@ -382,6 +465,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                     'm4b',
                                     'm4p',
                                     'mp4',
+                                    'wav'
                                   ],
                                 );
                                 if (result != null) {
@@ -395,7 +479,8 @@ class _ScreenViewState extends State<_ScreenView> {
                                       extension?.toLowerCase() != 'mp3' &&
                                       extension?.toLowerCase() != 'm4b' &&
                                       extension?.toLowerCase() != 'm4p' &&
-                                      extension?.toLowerCase() != 'mp4') return;
+                                      extension?.toLowerCase() != 'mp4' &&
+                                      extension?.toLowerCase() != 'wav') return;
 
                                   // Преобразование Uint8List в Blob
                                   final blob = html.Blob(
@@ -448,9 +533,10 @@ class _ScreenViewState extends State<_ScreenView> {
                                     BlocProvider.of<EditPresentationBloc>(
                                             context)
                                         .add(EditPresentationEvent.imageAdded(
-                                      fragment: widget.selectedFragment,
-                                      imageBytes: imageBytes!,
-                                    ));
+                                            fragment: widget.selectedFragment,
+                                            imageBytes: imageBytes!,
+                                            extension:
+                                                result.files.first.extension));
                                   }
                                 }
                               }),
@@ -476,7 +562,6 @@ class _ScreenViewState extends State<_ScreenView> {
                                 });
                               }),
                         ),
-
                         const SizedBox(
                           height: 12,
                         ),
@@ -545,8 +630,34 @@ class _ScreenViewState extends State<_ScreenView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     if (index > 0 && index < widget.fragments.length + 1) {
-                      return _FragmentCard(
-                          fragment: widget.fragments.elementAt(index - 1));
+                      return DecoratedBox(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color:
+                                    widget.fragments.elementAt(index - 1).id ==
+                                            widget.selectedFragment.id
+                                        ? Colors.black
+                                        : Colors.white)),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              '$index',
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            _FragmentCard(
+                                fragment:
+                                    widget.fragments.elementAt(index - 1)),
+                          ],
+                        ),
+                      );
                     } else {
                       return const SizedBox();
                     }
@@ -569,8 +680,8 @@ class _ScreenViewState extends State<_ScreenView> {
           child: Column(
             children: [
               NameAndDescriptionWidget(
-                titleController: presentationTitleController,
-                descriptionController: presentationDescriptionController,
+                titleController: widget.presentationTitleController,
+                descriptionController: widget.presentationDescriptionController,
                 titleLabelName: LocaleKeys.presentationName.tr(),
                 descriptionLabelName: LocaleKeys.presentationDescription.tr(),
               ),
@@ -582,8 +693,9 @@ class _ScreenViewState extends State<_ScreenView> {
                 text: LocaleKeys.buttonSave.tr(),
                 onPressed: () => BlocProvider.of<EditPresentationBloc>(context)
                     .add(EditPresentationEvent.updatePresentation(
-                        title: presentationTitleController.text,
-                        description: presentationDescriptionController.text)),
+                        title: widget.presentationTitleController.text,
+                        description:
+                            widget.presentationDescriptionController.text)),
               ),
               const SizedBox(
                 height: 12,
@@ -620,7 +732,6 @@ class _ScreenViewState extends State<_ScreenView> {
                             const SizedBox(
                               height: 12,
                             ),
-
                             NameAndDescriptionWidget(
                               titleController: selectedFragmentTitleController,
                               descriptionController:
@@ -652,34 +763,35 @@ class _ScreenViewState extends State<_ScreenView> {
                                           fragment: widget.selectedFragment)),
                                 ),
                               ),
-                            // const SizedBox(
-                            //   height: 12,
-                            // ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(right: 12.0),
-                            //   child: CommonElevatedButton(
-                            //       text: 'Записать аудио',
-                            //       onPressed: () async {
-                            //         final result = await showDialog(
-                            //             context: context,
-                            //             builder: (context) => Dialog.fullscreen(
-                            //                     child: AudioRecordingScreen(
-                            //                   imageData: widget
-                            //                       .selectedFragment.imageBytes,
-                            //                   imagePath:
-                            //                       widget.selectedFragment.imagePath,
-                            //                 )));
-                            //         if (result != null && context.mounted) {
-                            //           BlocProvider.of<EditPresentationBloc>(context)
-                            //               .add(EditPresentationEvent.audioAdded(
-                            //                   fragment: widget.selectedFragment,
-                            //                   extension: 'mp3',
-                            //                   audioPath: result.path!,
-                            //                   audioBytes: result.audioBytes!,
-                            //                   duration: result.duration!));
-                            //         }
-                            //       }),
-                            // ),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: CommonElevatedButton(
+                                  text: LocaleKeys.buttonRecord.tr(),
+                                  onPressed: () async {
+                                    final result = await showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog.fullscreen(
+                                                child: AudioRecordingScreen(
+                                              imageData: widget
+                                                  .selectedFragment.imageBytes,
+                                              imagePath: widget
+                                                  .selectedFragment.imagePath,
+                                            )));
+                                    if (result != null && context.mounted) {
+                                      BlocProvider.of<EditPresentationBloc>(
+                                              context)
+                                          .add(EditPresentationEvent.audioAdded(
+                                              fragment: widget.selectedFragment,
+                                              extension: 'mp3',
+                                              audioPath: result.path!,
+                                              audioBytes: result.audioBytes!,
+                                              duration: result.duration!));
+                                    }
+                                  }),
+                            ),
                             const SizedBox(
                               height: 12,
                             ),
@@ -698,6 +810,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                       'm4b',
                                       'm4p',
                                       'mp4',
+                                      'wav'
                                     ],
                                   );
                                   if (result != null) {
@@ -712,7 +825,8 @@ class _ScreenViewState extends State<_ScreenView> {
                                         extension?.toLowerCase() != 'm4b' &&
                                         extension?.toLowerCase() != 'm4p' &&
                                         extension?.toLowerCase() != 'wav' &&
-                                        extension?.toLowerCase() != 'mp4')
+                                        extension?.toLowerCase() != 'mp4' &&
+                                        extension?.toLowerCase() != 'wav')
                                       return;
 
                                     // Преобразование Uint8List в Blob
@@ -763,13 +877,13 @@ class _ScreenViewState extends State<_ScreenView> {
                                       BlocProvider.of<EditPresentationBloc>(
                                               context)
                                           .add(EditPresentationEvent.imageAdded(
-                                        fragment: widget.selectedFragment,
-                                        imageBytes: imageBytes!,
-                                      ));
+                                              fragment: widget.selectedFragment,
+                                              imageBytes: imageBytes!,
+                                              extension: result
+                                                  .files.first.extension));
                                     }
                                   }
                                 }),
-
                             const SizedBox(
                               height: 12,
                             ),
@@ -869,6 +983,44 @@ class _ScreenViewState extends State<_ScreenView> {
     duration = await aup.getDuration();
     return duration?.inSeconds ?? 0;
   }
+
+  Future<PresentationLink?>? _showLinksDialog(BuildContext context) async {
+    final linkController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final result = await showDialog(
+        context: context,
+        builder: (context) => SizedBox(
+              width: 500,
+              child: SimpleDialog(
+                  title: Text(LocaleKeys.addLink.tr()),
+                  contentPadding: const EdgeInsets.all(24),
+                  children: [
+                    NameAndDescriptionWidget(
+                        titleLabelName: LocaleKeys.link.tr(),
+                        titleController: linkController,
+                        descriptionController: descriptionController),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    CommonElevatedButton(
+                        text: 'Add link',
+                        onPressed: () {
+                          context.router.pop(PresentationLink(
+                            description: descriptionController.text,
+                            link: linkController.text,
+                          ));
+                        }),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    TextButton(
+                        onPressed: () => context.router.pop(),
+                        child: Text(LocaleKeys.buttonCancel.tr()))
+                  ]),
+            ));
+
+    return result;
+  }
 }
 
 class _VerticalFragmentCard extends StatelessWidget {
@@ -889,10 +1041,20 @@ class _VerticalFragmentCard extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: fragment.imagePath?.contains('http') ?? false
                     ? CachedNetworkImage(
-                        progressIndicatorBuilder: (context, _, __) =>
-                            const Center(child: CircularProgressIndicator()),
+                        progressIndicatorBuilder:
+                            (context, imageUrl, progress) => Center(
+                                  child: CircularProgressIndicator(
+                                      value: progress.progress != null
+                                          ? progress.progress!
+                                          : null),
+                                ),
                         imageUrl: fragment.imagePath!)
-                    : Image.memory(fragment.imageBytes!))),
+                    : fragment.imageBytes != null
+                        ? Image.memory(fragment.imageBytes!)
+                        : SizedBox(
+                            height: 300,
+                            child: Center(child: Text(LocaleKeys.noImage.tr())),
+                          ))),
       ],
     );
   }
@@ -916,11 +1078,19 @@ class _FragmentCard extends StatelessWidget {
                     width: Responsive.isMobile(context) == false ? 355 : null,
                     child: fragment.imagePath?.contains('http') ?? false
                         ? CachedNetworkImage(
-                            progressIndicatorBuilder: (context, _, __) =>
-                                const Center(
-                                    child: CircularProgressIndicator()),
+                            progressIndicatorBuilder:
+                                (context, imageUrl, progress) => Center(
+                                      child: CircularProgressIndicator(
+                                          value: progress.progress != null
+                                              ? progress.progress!
+                                              : null),
+                                    ),
                             imageUrl: fragment.imagePath!)
-                        : Image.memory(fragment.imageBytes!)))),
+                        : fragment.imageBytes != null
+                            ? Image.memory(fragment.imageBytes!)
+                            : Center(
+                                child: Text(LocaleKeys.noImage.tr()),
+                              )))),
       ],
     );
   }

@@ -4,7 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:introbox/domain/models/channel.dart';
 import 'package:introbox/generated/locale_keys.g.dart';
 import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 import 'package:introbox/presentation/extetsions/context_extensions.dart';
@@ -24,7 +26,9 @@ import 'bloc/presentations_bloc.dart';
 
 @RoutePage()
 class PresentationsScreen extends StatelessWidget {
-  const PresentationsScreen({Key? key}) : super(key: key);
+  PresentationsScreen({Key? key}) : super(key: key);
+
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +200,11 @@ class PresentationsScreen extends StatelessWidget {
                     BlocProvider.of<PresentationsBloc>(context)
                         .add(const PresentationsEvent.reloadData()),
                 child: _PresentationList(
-                    presentations: state.presentations, courses: state.courses),
+                  presentations: state.presentations,
+                  courses: state.courses,
+                  controller: controller,
+                  channels: state.channels,
+                ),
               )),
           loadingError: (_) => Scaffold(
               appBar: AppBar(
@@ -214,36 +222,146 @@ class PresentationsScreen extends StatelessWidget {
   }
 }
 
-class _PresentationList extends StatelessWidget {
-  const _PresentationList(
-      {super.key, required this.presentations, required this.courses});
+class _PresentationList extends StatefulWidget {
+  _PresentationList(
+      {super.key,
+      required this.presentations,
+      required this.courses,
+      required this.controller,
+      required this.channels});
 
   final List<Presentation> presentations;
   final List<Course> courses;
+  final List<Channel> channels;
+  final TextEditingController controller;
+
+  @override
+  State<_PresentationList> createState() => _PresentationListState();
+}
+
+class _PresentationListState extends State<_PresentationList> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      print('end of page');
+      // Загрузка новых данных
+      _loadMoreData();
+    }
+  }
+
+  void _loadMoreData() {
+    BlocProvider.of<PresentationsBloc>(context).add(
+        PresentationsEvent.initialDataRequested(
+            searchText: widget.controller.text));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return presentations.isNotEmpty
-        ? ListView.separated(
-            itemCount: presentations.length,
-            padding: EdgeInsets.all(Responsive.isMobile(context) ? 12 : 24),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 12,
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Responsive.isMobile(context) ? 12 : 150,
+              vertical: Responsive.isMobile(context) ? 12 : 24,
             ),
-            itemBuilder: (BuildContext context, int index) {
-              return PresentationItem(
-                presentation: presentations.elementAt(index),
-                courses: courses,
-                onDeleteConfirm: () =>
-                    BlocProvider.of<PresentationsBloc>(context).add(
-                        PresentationsEvent.deletePresentation(
-                            presentations.elementAt(index).id)),
-              );
-            },
-          )
-        : Center(
-            child: Text(LocaleKeys.presentationsNotFound.tr()),
-          );
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Expanded(
+                  child: SearchBar(
+                    onSubmitted: (_) =>
+                        BlocProvider.of<PresentationsBloc>(context).add(
+                            PresentationsEvent.initialDataRequested(
+                                searchText: widget.controller.text)),
+                    hintText: LocaleKeys.hintSearch.tr(),
+                    hintStyle: const MaterialStatePropertyAll<TextStyle>(
+                        TextStyle(color: Colors.grey)),
+                    controller: widget.controller,
+                    elevation: const MaterialStatePropertyAll<double>(1),
+                    backgroundColor:
+                        const MaterialStatePropertyAll<Color>(Colors.white),
+                    textStyle: const MaterialStatePropertyAll<TextStyle>(
+                        TextStyle(color: Colors.black)),
+                    trailing: [
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          widget.controller.text = '';
+                          BlocProvider.of<PresentationsBloc>(context)
+                              .add(const PresentationsEvent.reloadData());
+                        },
+                      )
+                    ],
+                    onChanged: (t) {
+                      if (t.isEmpty) {
+                        BlocProvider.of<PresentationsBloc>(context)
+                            .add(const PresentationsEvent.reloadData());
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                IconButton(
+                    onPressed: () {
+                      BlocProvider.of<PresentationsBloc>(context).add(
+                          PresentationsEvent.initialDataRequested(
+                              searchText: widget.controller.text));
+                    },
+                    icon: const Icon(Icons.search))
+              ],
+            ),
+          ),
+        ),
+        widget.presentations.isNotEmpty
+            ? SliverList.separated(
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        left: Responsive.isMobile(context) ? 12 : 24,
+                        right: Responsive.isMobile(context) ? 12 : 24),
+                    child: PresentationItem(
+                      presentation: widget.presentations.elementAt(index),
+                      courses: widget.courses,
+                      channels: widget.channels,
+                      onDeleteConfirm: () =>
+                          BlocProvider.of<PresentationsBloc>(context).add(
+                              PresentationsEvent.deletePresentation(
+                                  widget.presentations.elementAt(index).id)),
+                    ),
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 12,
+                ),
+                itemCount: widget.presentations.length,
+              )
+            : SliverToBoxAdapter(
+                child: Center(
+                  child: Text(LocaleKeys.presentationsNotFound.tr()),
+                ),
+              ),
+        const SliverToBoxAdapter(
+          child: SizedBox(height: 32),
+        )
+      ],
+    );
   }
 }
 
@@ -252,11 +370,13 @@ class PresentationItem extends StatelessWidget {
       {super.key,
       required this.presentation,
       required this.onDeleteConfirm,
-      required this.courses});
+      required this.courses,
+      required this.channels});
 
   final Presentation presentation;
   final Function() onDeleteConfirm;
   final List<Course> courses;
+  final List<Channel> channels;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +399,8 @@ class PresentationItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  if (presentation.firstImage != null)
+                  if (presentation.firstImage != null &&
+                      presentation.firstImage!.isNotEmpty)
                     SizedBox(
                         height: 100,
                         width: 100,
@@ -331,6 +452,15 @@ class PresentationItem extends StatelessWidget {
                     width: 12,
                   ),
                   if (Responsive.isMobile(context) == false) ...[
+                    IconButton(
+                      tooltip: LocaleKeys.channel.tr(),
+                      onPressed: () => onAddToChannelClicked(context,
+                          presentationId: presentation.id,
+                          channels: channels,
+                          selectedChannel: presentation.channel),
+                      icon: SvgPicture.asset('assets/images/all-channels-1.svg',
+                          height: 24),
+                    ),
                     IconButton(
                       tooltip: LocaleKeys.addToCourse.tr(),
                       onPressed: () => onAddToCourseClicked(
@@ -468,6 +598,17 @@ class PresentationItem extends StatelessWidget {
                       return [
                         PopupMenuItem(
                             child: Text(
+                              'Change channel',
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () => onAddToChannelClicked(
+                                  context,
+                                  presentationId: presentation.id,
+                                  channels: channels,
+                                  selectedChannel: presentation.channel,
+                                )),
+                        PopupMenuItem(
+                            child: Text(
                               LocaleKeys.addToCourse.tr(),
                               style: const TextStyle(color: Colors.black),
                             ),
@@ -513,15 +654,6 @@ class PresentationItem extends StatelessWidget {
                               LocaleKeys.links.tr(),
                               style: const TextStyle(color: Colors.black),
                             ),
-                            onTap: () => onAddToCourseClicked(
-                                context, presentation.id, courses)),
-                        PopupMenuItem(
-                            child: Text(
-                              presentation.hasPassword
-                                  ? LocaleKeys.passwordProtected.tr()
-                                  : LocaleKeys.noPassword.tr(),
-                              style: const TextStyle(color: Colors.black),
-                            ),
                             onTap: () {
                               showDialog(
                                   context: context,
@@ -529,6 +661,89 @@ class PresentationItem extends StatelessWidget {
                                         child: _LinkView(
                                             presentationId: presentation.id),
                                       ));
+                            }),
+                        PopupMenuItem(
+                            child: Text(
+                              presentation.hasPassword
+                                  ? LocaleKeys.passwordProtected.tr()
+                                  : LocaleKeys.noPassword.tr(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            onTap: () async {
+                              final passwordController =
+                                  TextEditingController();
+                              final confirmPasswordController =
+                                  TextEditingController();
+                              final result = await showDialog(
+                                  context: context,
+                                  builder: (context) => SizedBox(
+                                        child: SimpleDialog(
+                                          contentPadding: EdgeInsets.all(
+                                              Responsive.isMobile(context)
+                                                  ? 12
+                                                  : 24),
+                                          children: [
+                                            SizedBox(
+                                              width: 200,
+                                              child: Text(LocaleKeys
+                                                  .addPasswordMessage
+                                                  .tr()),
+                                            ),
+                                            const SizedBox(height: 12),
+                                            CommonTextField(
+                                                controller: passwordController,
+                                                obscureText: true,
+                                                labelText:
+                                                    LocaleKeys.password.tr()),
+                                            const SizedBox(height: 12),
+                                            CommonTextField(
+                                                controller:
+                                                    confirmPasswordController,
+                                                obscureText: true,
+                                                labelText: LocaleKeys
+                                                    .repeatPassword
+                                                    .tr()),
+                                            const SizedBox(height: 12),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                TextButton(
+                                                    onPressed: () =>
+                                                        context.router.pop(),
+                                                    child: Text(LocaleKeys
+                                                        .buttonCancel
+                                                        .tr())),
+                                                TextButton(
+                                                    onPressed: () {
+                                                      context.router.pop((
+                                                        password:
+                                                            passwordController
+                                                                .text,
+                                                        confirmPassword:
+                                                            confirmPasswordController
+                                                                .text
+                                                      ));
+                                                    },
+                                                    child: Text(LocaleKeys
+                                                        .buttonSave
+                                                        .tr())),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ));
+                              if (result != null &&
+                                  result is ({
+                                    String password,
+                                    String confirmPassword
+                                  })) {
+                                if (context.mounted) {
+                                  BlocProvider.of<PresentationsBloc>(context)
+                                      .add(PresentationsEvent.onPasswordChanged(
+                                          presentation.id, result));
+                                }
+                              }
                             }),
                       ];
                     })
@@ -570,6 +785,11 @@ class PresentationItem extends StatelessWidget {
 
   Future<void> onAddToCourseClicked(
       BuildContext context, String presentationId, List<Course> courses) async {
+    if (courses.isEmpty) {
+      CommonFunctions.showMessage(
+          context, LocaleKeys.coursesNotFound.tr(), Reason.error);
+      return;
+    }
     String? selectedCourseId;
     final result = await showDialog(
       context: context,
@@ -609,6 +829,29 @@ class PresentationItem extends StatelessWidget {
                 presentationId: presentationId, courseId: result));
       }
     }
+  }
+
+  onAddToChannelClicked(
+    BuildContext context, {
+    required List<Channel> channels,
+    Channel? selectedChannel,
+    required String presentationId,
+  }) {
+    String? selectedChannelId = selectedChannel?.id;
+    CommonFunctions.showStyledDialog(
+        context: context,
+        message: '',
+        negativeButtonText: LocaleKeys.buttonCancel.tr(),
+        onPositiveTap: () => BlocProvider.of<PresentationsBloc>(context).add(
+            PresentationsEvent.changeChannel(
+                presentationId: presentationId, channelId: selectedChannelId!)),
+        content: ChannelSelectWidget(
+            channels: channels,
+            selectedId: selectedChannel?.id,
+            onChannelSelect: (v) {
+              selectedChannelId = v;
+            }),
+        positiveButtonText: LocaleKeys.buttonSave.tr());
   }
 }
 
@@ -652,10 +895,11 @@ class _CourseSelectWidgetState extends State<CourseSelectWidget> {
             ))
         .toList();
     return Column(children: [
+      /// TODO: еще на странице есть
       ListTile(
-        title: Text(
+        title: const Text(
           'Отдельная презентация',
-          style: const TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.black),
         ),
         leading: Radio(
           value: null,
@@ -669,6 +913,56 @@ class _CourseSelectWidgetState extends State<CourseSelectWidget> {
         ),
       ),
       ...courseSelectWidgets,
+    ]);
+  }
+}
+
+class ChannelSelectWidget extends StatefulWidget {
+  const ChannelSelectWidget(
+      {super.key,
+      required this.channels,
+      required this.onChannelSelect,
+      this.selectedId});
+
+  final List<Channel> channels;
+  final Function(String) onChannelSelect;
+  final String? selectedId;
+
+  @override
+  State<ChannelSelectWidget> createState() => _ChannelSelectWidgetState();
+}
+
+class _ChannelSelectWidgetState extends State<ChannelSelectWidget> {
+  String? selectedChannelId;
+  late List<Widget> channelSelectWidgets;
+  @override
+  void initState() {
+    super.initState();
+    selectedChannelId = widget.selectedId;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    channelSelectWidgets = widget.channels
+        .map((channel) => ListTile(
+              title: Text(
+                channel.title,
+                style: const TextStyle(color: Colors.black),
+              ),
+              leading: Radio(
+                value: channel.id,
+                groupValue: selectedChannelId,
+                onChanged: (value) {
+                  setState(() {
+                    selectedChannelId = value!;
+                  });
+                  widget.onChannelSelect(value!);
+                },
+              ),
+            ))
+        .toList();
+    return Column(children: [
+      ...channelSelectWidgets,
     ]);
   }
 }

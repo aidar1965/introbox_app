@@ -24,7 +24,7 @@ class CommonNavigationDrawer extends StatelessWidget {
               if (context.router.canPop()) {
                 context.router.pop();
               }
-              context.router.push(const PresentationsRoute());
+              context.router.push(PresentationsRoute());
             },
           ),
           ListTile(

@@ -143,6 +143,7 @@ class CommonFunctions {
     Function()? onNegativeTap,
     bool reverse = false,
     double? actionButtonsWidth,
+    Widget? content,
   }) {
     return showDialog<Object?>(
         context: context,
@@ -168,14 +169,15 @@ class CommonFunctions {
                     ),
                   )
                 : null,
-            content: Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(message,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.black87,
-                      )),
-            ),
+            content: content ??
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(message,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Colors.black87,
+                          )),
+                ),
             contentPadding: const EdgeInsets.fromLTRB(24, 24, 24, 16),
 
             actions: <Widget>[

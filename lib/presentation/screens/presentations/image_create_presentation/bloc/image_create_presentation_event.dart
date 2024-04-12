@@ -19,4 +19,8 @@ class ImageCreatePresentationEvent with _$ImageCreatePresentationEvent {
       {required List<ImageFragment> fragments}) = _EventOnReorderFragments;
   const factory ImageCreatePresentationEvent.onDeleteFragment(
       {required int index}) = _EventOnDeleteFragment;
+  const factory ImageCreatePresentationEvent.addLink(
+      {required PresentationLink link}) = _EventAddLink;
+  const factory ImageCreatePresentationEvent.deleteLink(int index) =
+      _EventDeleteLink;
 }

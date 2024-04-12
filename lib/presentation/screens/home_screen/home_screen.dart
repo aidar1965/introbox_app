@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // list of your tab routes
       // routes used here must be declaraed as children
       // routes of /dashboard
-      routes: const [PresentationsRoute(), ProfileRoute()],
+      routes: [PresentationsRoute(), ProfileRoute()],
       builder: (context, child) {
         // obtain the scoped TabsRouter controller using context
         final tabsRouter = AutoTabsRouter.of(context);

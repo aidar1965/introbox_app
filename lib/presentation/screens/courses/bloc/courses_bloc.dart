@@ -28,23 +28,28 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
   final api = getIt<IApi>();
   final authController = getIt<IAuthController>();
   late _ScreenState _screenState;
-  final int limit = 20;
+  final int limit = 6;
   int offset = 0;
   late int total;
+  bool isFirstLoad = true;
+  String searchText = '';
 
   Future<void> initialDataRequested(
       CoursesEvent event, Emitter<CoursesState> emitter) async {
     offset = 0;
+    isFirstLoad = true;
     _screenState = _screenState.copyWith(courses: []);
-    add(const CoursesEvent.loadMore());
+    add(CoursesEvent.loadMore(searchText: event.searchText));
   }
 
   Future<void> onLoadMore(
       _EventLoadMore event, Emitter<CoursesState> emitter) async {
-    emitter(const CoursesState.pending());
+    if (isFirstLoad) {
+      emitter(const CoursesState.pending());
+    }
     try {
-      final paginatedCourses =
-          await api.getPublicCourses(limit: limit, offset: offset);
+      final paginatedCourses = await api.getPublicCourses(
+          limit: limit, offset: offset, searchText: event.searchText);
       final courses = <Course>[
         ..._screenState.courses,
         ...paginatedCourses.courses.toList()
@@ -53,6 +58,7 @@ class CoursesBloc extends Bloc<CoursesEvent, CoursesState> {
       offset = paginatedCourses.offset;
       _screenState = _screenState.copyWith(
           courses: courses, isAuthorized: authController.isAuthenticated);
+      isFirstLoad = false;
       emitter(_screenState);
     } on Object {
       if (offset == 0) {

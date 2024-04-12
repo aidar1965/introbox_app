@@ -20,7 +20,7 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
   MyCoursesBloc() : super(const MyCoursesState.pending()) {
     on<MyCoursesEvent>(
       (event, emitter) => event.map(
-          initialDataRequested: (_) => initialDataRequested(emitter),
+          initialDataRequested: (event) => initialDataRequested(event, emitter),
           onAddCourse: (event) => onAddCourse(event, emitter),
           onDeleteCourse: (event) => onDeleteCourse(event, emitter),
           onUpdateCourse: (event) => onUpdateCourse(event, emitter),
@@ -33,14 +33,17 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
 
   final api = getIt<IApi>();
   late _ScreenState _screenState;
-  final int limit = 20;
+  final int limit = 10;
   int offset = 0;
   late int total;
+  bool isFirstLoad = true;
 
-  Future<void> initialDataRequested(Emitter<MyCoursesState> emitter) async {
+  Future<void> initialDataRequested(
+      _EventInitialDataRequested event, Emitter<MyCoursesState> emitter) async {
     offset = 0;
     _screenState = _screenState.copyWith(courses: []);
-    add(const MyCoursesEvent.loadMore());
+    isFirstLoad = true;
+    add(MyCoursesEvent.loadMore(searchText: event.searchText));
   }
 
   Future<void> onAddCourse(
@@ -100,10 +103,12 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
 
   Future<void> onLoadMore(
       _EventLoadMore event, Emitter<MyCoursesState> emitter) async {
-    emitter(const MyCoursesState.pending());
+    if (isFirstLoad) {
+      emitter(const MyCoursesState.pending());
+    }
     try {
-      final paginatedCourses =
-          await api.getCourses(limit: limit, offset: offset);
+      final paginatedCourses = await api.getCourses(
+          limit: limit, offset: offset, searchText: event.searchText);
       final courses = <Course>[
         ..._screenState.courses,
         ...paginatedCourses.courses.toList()
@@ -113,6 +118,7 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
       final channels = await api.getChannels();
       _screenState =
           _screenState.copyWith(channels: channels, courses: courses);
+      isFirstLoad = false;
       emitter(_screenState);
     } on Object {
       if (_screenState.channels.isEmpty) {
@@ -127,7 +133,28 @@ class MyCoursesBloc extends Bloc<MyCoursesEvent, MyCoursesState> {
       _EventPublishCourse event, Emitter<MyCoursesState> emitter) async {
     try {
       await api.publishCourse(id: event.id);
-      add(const MyCoursesEvent.initialDataRequested());
+      final newCourses = _screenState.courses.map((e) {
+        if (e.id != event.id) {
+          return e;
+        } else {
+          return Course(
+            title: e.title,
+            description: e.description,
+            price: e.price,
+            isPublished: e.isPublished ? false : true,
+            id: e.id,
+            channel: e.channel,
+            createdAt: e.createdAt,
+            image: e.image,
+            locale: e.locale,
+            presentations: e.presentations,
+            updatedAt: e.updatedAt,
+          );
+        }
+      }).toList();
+      //  add(const MyCoursesEvent.initialDataRequested());
+      _screenState = _screenState.copyWith(courses: newCourses);
+      emitter(_screenState);
     } on Object {
       emitter(const MyCoursesState.requestError());
       rethrow;

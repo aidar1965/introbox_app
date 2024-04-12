@@ -24,6 +24,7 @@ class AudioRecordingScreen extends StatefulWidget {
 class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
   String? _path;
   int? _duration;
+  Uint8List? _audioBytes;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,11 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
         leading: BackButton(
           onPressed: () {
             if (_path != null && _duration != null) {
-              context.router.pop((path: _path, duration: _duration));
+              context.router.pop((
+                path: _path,
+                duration: _duration,
+                audioBytes: _audioBytes,
+              ));
             } else {
               context.router.pop();
             }
@@ -53,12 +58,15 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                 : widget.imagePath != null
                     ? widget.imagePath!.contains('http')
                         ? CachedNetworkImage(
-                            progressIndicatorBuilder: (context, _, __) =>
-                                const Center(
-                                    child: CircularProgressIndicator()),
+                            progressIndicatorBuilder:
+                                (context, imageUrl, progress) => Center(
+                                    child: CircularProgressIndicator(
+                                        value: progress.progress != null
+                                            ? progress.progress!
+                                            : null)),
                             imageUrl: widget.imagePath!)
                         : Image.file(File(widget.imagePath!))
-                    : Text(LocaleKeys.noImage.tr()),
+                    : Center(child: Text(LocaleKeys.noImage.tr())),
           )),
           Positioned(
               bottom: 30,
@@ -72,6 +80,7 @@ class _AudioRecordingScreenState extends State<AudioRecordingScreen> {
                             setState(() {
                               _path = pathWithDuration.path;
                               _duration = pathWithDuration.duration;
+                              _audioBytes = pathWithDuration.audioBytes;
                             });
                           },
                         ),

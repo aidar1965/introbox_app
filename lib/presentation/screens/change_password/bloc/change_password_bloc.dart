@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/interfaces/i_api.dart';
 import '../../../../domain/locator/locator.dart';
+import '../../../../generated/locale_keys.g.dart';
 
 part 'change_password_state.dart';
 part 'change_password_event.dart';
@@ -29,8 +31,8 @@ class ChangePasswordBloc
       return;
     }
     if (event.password != event.confirmPassword) {
-      emitter(const ChangePasswordState.changePasswordError(
-          errorText: 'Повтор пароля не совпадает с введенным'));
+      emitter(ChangePasswordState.changePasswordError(
+          errorText: LocaleKeys.passwordConfirmNotFit.tr()));
       return;
     }
 

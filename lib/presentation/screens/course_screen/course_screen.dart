@@ -131,15 +131,16 @@ class _ScreenViewState extends State<_ScreenView> {
                 itemCount: widget.course.presentations!.length,
                 onReorder: reorderData),
             const SizedBox(height: 12),
-            SizedBox(
-                width: 200,
-                child: CommonElevatedButton(
-                    text: LocaleKeys.buttonChangeOrder.tr(),
-                    onPressed: () {
-                      BlocProvider.of<CourseBloc>(context).add(
-                          CourseEvent.reorderPresentations(
-                              ids: presentations.map((e) => e.id).toList()));
-                    }))
+            if (widget.course.presentations!.length > 1)
+              SizedBox(
+                  width: 200,
+                  child: CommonElevatedButton(
+                      text: LocaleKeys.buttonChangeOrder.tr(),
+                      onPressed: () {
+                        BlocProvider.of<CourseBloc>(context).add(
+                            CourseEvent.reorderPresentations(
+                                ids: presentations.map((e) => e.id).toList()));
+                      }))
           ],
         ),
       ),

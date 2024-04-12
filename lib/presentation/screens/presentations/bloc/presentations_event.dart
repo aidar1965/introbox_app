@@ -4,7 +4,7 @@ part of 'presentations_bloc.dart';
 class PresentationsEvent with _$PresentationsEvent {
   const factory PresentationsEvent.deletePresentation(String id) =
       _EventDeletePresentation;
-  const factory PresentationsEvent.initialDataRequested() =
+  const factory PresentationsEvent.initialDataRequested({String? searchText}) =
       _EventInitialDataRequested;
   const factory PresentationsEvent.reloadData() = _EventReloadData;
 
@@ -17,4 +17,7 @@ class PresentationsEvent with _$PresentationsEvent {
   const factory PresentationsEvent.addPresentationToCourse(
       {required String presentationId,
       required String courseId}) = _EventAddPresentationToCourse;
+  const factory PresentationsEvent.changeChannel(
+      {required String presentationId,
+      required String channelId}) = _EventChangeChannel;
 }

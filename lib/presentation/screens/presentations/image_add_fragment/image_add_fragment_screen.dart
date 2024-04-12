@@ -34,9 +34,10 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
   Uint8List? imageBytes;
   Uint8List? audioBytes;
   String? audioPath;
+  String? audioExtension;
   int? duration;
   bool isTitleOverImage = false;
-  late String title;
+  String? title;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                       alignment: Alignment.center,
                       children: [
                         Image.memory(imageBytes!),
-                        if (isTitleOverImage)
+                        if (isTitleOverImage && title != null)
                           Positioned(
                               bottom: 20,
                               child: Row(
@@ -71,7 +72,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(16.0),
                                           child: Text(
-                                            title,
+                                            title!,
                                             style: const TextStyle(
                                                 color: Colors.white),
                                           ),
@@ -137,7 +138,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                           alignment: Alignment.center,
                           children: [
                             Image.memory(imageBytes!),
-                            if (isTitleOverImage)
+                            if (isTitleOverImage && title != null)
                               Positioned(
                                   bottom: 20,
                                   child: Row(
@@ -152,7 +153,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                               padding:
                                                   const EdgeInsets.all(16.0),
                                               child: Text(
-                                                title,
+                                                title!,
                                                 style: const TextStyle(
                                                     color: Colors.white),
                                               ),
@@ -214,25 +215,25 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                               });
                             }),
                       ),
-                    // const SizedBox(
-                    //   height: 12,
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(right: 12.0),
-                    //   child: CommonElevatedButton(
-                    //       text: 'Записать аудио',
-                    //       onPressed: () async {
-                    //         final result = await _showRecorder(context,
-                    //             imageData: imageBytes!);
-                    //         if (result != null && context.mounted) {
-                    //           setState(() {
-                    //             audioBytes = result.audioBytes;
-                    //             audioPath = result.path;
-                    //             duration = result.duration;
-                    //           });
-                    //         }
-                    //       }),
-                    // ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: CommonElevatedButton(
+                          text: LocaleKeys.buttonRecord.tr(),
+                          onPressed: () async {
+                            final result = await _showRecorder(context,
+                                imageData: imageBytes);
+                            if (result != null && context.mounted) {
+                              setState(() {
+                                audioBytes = result.audioBytes;
+                                audioPath = result.path;
+                                duration = result.duration;
+                              });
+                            }
+                          }),
+                    ),
                     const SizedBox(
                       height: 12,
                     ),
@@ -250,6 +251,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                 'm4b',
                                 'm4p',
                                 'mp4',
+                                'wav'
                               ],
                             );
                             if (result != null) {
@@ -260,7 +262,8 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                   extension?.toLowerCase() != 'mp3' &&
                                   extension?.toLowerCase() != 'm4b' &&
                                   extension?.toLowerCase() != 'm4p' &&
-                                  extension?.toLowerCase() != 'mp4') return;
+                                  extension?.toLowerCase() != 'mp4' &&
+                                  extension?.toLowerCase() != 'wav') return;
                               final fileBytes = result.files.first.bytes;
 
                               // Преобразование Uint8List в Blob
@@ -278,17 +281,16 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                 setState(() {
                                   audioBytes = fileBytes;
                                   audioPath = dataUrl;
+                                  audioExtension = extension;
                                   duration = durationInSeconds;
                                 });
                               }
                             }
                           }),
                     ),
-
                     const SizedBox(
                       height: 12,
                     ),
-
                     Padding(
                         padding: const EdgeInsets.only(right: 12.0, bottom: 64),
                         child: CommonElevatedButton(
@@ -307,6 +309,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                         widget.descriptionController.text,
                                     isTitleOverImage: isTitleOverImage));
                               } else {
+                                print('empty title');
                                 CommonFunctions.showMessage(
                                     context,
                                     LocaleKeys.slideTitleEmpty.tr(),
@@ -326,7 +329,8 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
 
   Future<({Uint8List? audioBytes, String? path, int? duration})?> _showRecorder(
       BuildContext context,
-      {required Uint8List imageData}) async {
+      {required Uint8List? imageData}) async {
+    print('show recorder');
     final result = await showDialog(
         context: context,
         builder: (context) => Dialog.fullscreen(

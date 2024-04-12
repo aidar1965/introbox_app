@@ -8,7 +8,7 @@
     "commonSaveSuccess": "Data saved successfully",
 
     "buttons": "",
-    "buttonRepeat": "Repeat",
+    "buttonRepeat": "Retry",
     "buttonSave": "Save",
     "buttonCancel": "Cancel",
     "buttonDelete": "Delete",
@@ -17,10 +17,12 @@
     "buttonSelect": "Select",
     "buttonAdd": "Add",
     "buttonSend": "Send",
+    "buttonRecord": "Record audio",
 
     "toolTipClose": "Close",
     "toolTipName": "Title",
     "toolTipDescription": "Description",
+    "hintSearch": "Search...",
 
     "main_screen": "",
     "presentations": "Presentations",
@@ -131,6 +133,8 @@
     "deleteSlideConfirmationMessage": "Are you sure to delete the slide?",
     "noAudio": "No audio",
     "slideDeleteUnable": "You can not delete the only slide",
+    "addLink": "Add link",
+    "link": "Link",
 
     "fragments_reorder_screen": "",
     "slidesReorder": "Reorder slides",
@@ -176,6 +180,7 @@
     "register_screen": "",
     "register": "Register",
     "registerMessage": "Confirmation code has been sent to your email",
+    "passwordConfirmNotFit": "Пароль и повторение пароля не совпадают",
 
     "confirmation_screen": "",
     "confirmationSuccess": "You registered successfully",

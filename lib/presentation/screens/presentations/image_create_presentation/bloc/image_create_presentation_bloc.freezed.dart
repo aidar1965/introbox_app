@@ -25,6 +25,7 @@ mixin _$ImageCreatePresentationState {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -42,6 +43,7 @@ mixin _$ImageCreatePresentationState {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -59,6 +61,7 @@ mixin _$ImageCreatePresentationState {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -168,6 +171,7 @@ class _$_StatePending implements _StatePending {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -188,6 +192,7 @@ class _$_StatePending implements _StatePending {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -208,6 +213,7 @@ class _$_StatePending implements _StatePending {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -283,6 +289,7 @@ abstract class _$$_ScreenStateCopyWith<$Res> {
       Channel selectedChanel,
       String? title,
       String? description,
+      List<PresentationLink>? links,
       bool isPending});
 }
 
@@ -302,6 +309,7 @@ class __$$_ScreenStateCopyWithImpl<$Res>
     Object? selectedChanel = null,
     Object? title = freezed,
     Object? description = freezed,
+    Object? links = freezed,
     Object? isPending = null,
   }) {
     return _then(_$_ScreenState(
@@ -325,6 +333,10 @@ class __$$_ScreenStateCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      links: freezed == links
+          ? _value._links
+          : links // ignore: cast_nullable_to_non_nullable
+              as List<PresentationLink>?,
       isPending: null == isPending
           ? _value.isPending
           : isPending // ignore: cast_nullable_to_non_nullable
@@ -342,9 +354,11 @@ class _$_ScreenState implements _ScreenState {
       required this.selectedChanel,
       this.title,
       this.description,
+      final List<PresentationLink>? links,
       this.isPending = false})
       : _fragments = fragments,
-        _channels = channels;
+        _channels = channels,
+        _links = links;
 
   final List<ImageFragment> _fragments;
   @override
@@ -368,13 +382,23 @@ class _$_ScreenState implements _ScreenState {
   final String? title;
   @override
   final String? description;
+  final List<PresentationLink>? _links;
+  @override
+  List<PresentationLink>? get links {
+    final value = _links;
+    if (value == null) return null;
+    if (_links is EqualUnmodifiableListView) return _links;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey()
   final bool isPending;
 
   @override
   String toString() {
-    return 'ImageCreatePresentationState.screenState(fragments: $fragments, channels: $channels, selectedChanel: $selectedChanel, title: $title, description: $description, isPending: $isPending)';
+    return 'ImageCreatePresentationState.screenState(fragments: $fragments, channels: $channels, selectedChanel: $selectedChanel, title: $title, description: $description, links: $links, isPending: $isPending)';
   }
 
   @override
@@ -390,6 +414,7 @@ class _$_ScreenState implements _ScreenState {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            const DeepCollectionEquality().equals(other._links, _links) &&
             (identical(other.isPending, isPending) ||
                 other.isPending == isPending));
   }
@@ -402,6 +427,7 @@ class _$_ScreenState implements _ScreenState {
       selectedChanel,
       title,
       description,
+      const DeepCollectionEquality().hash(_links),
       isPending);
 
   @JsonKey(ignore: true)
@@ -420,6 +446,7 @@ class _$_ScreenState implements _ScreenState {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -427,8 +454,8 @@ class _$_ScreenState implements _ScreenState {
     required TResult Function(String? errorText) saveError,
     required TResult Function() initialDataNotLoaded,
   }) {
-    return screenState(
-        fragments, channels, selectedChanel, title, description, isPending);
+    return screenState(fragments, channels, selectedChanel, title, description,
+        links, isPending);
   }
 
   @override
@@ -441,6 +468,7 @@ class _$_ScreenState implements _ScreenState {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -448,8 +476,8 @@ class _$_ScreenState implements _ScreenState {
     TResult? Function(String? errorText)? saveError,
     TResult? Function()? initialDataNotLoaded,
   }) {
-    return screenState?.call(
-        fragments, channels, selectedChanel, title, description, isPending);
+    return screenState?.call(fragments, channels, selectedChanel, title,
+        description, links, isPending);
   }
 
   @override
@@ -462,6 +490,7 @@ class _$_ScreenState implements _ScreenState {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -471,8 +500,8 @@ class _$_ScreenState implements _ScreenState {
     required TResult orElse(),
   }) {
     if (screenState != null) {
-      return screenState(
-          fragments, channels, selectedChanel, title, description, isPending);
+      return screenState(fragments, channels, selectedChanel, title,
+          description, links, isPending);
     }
     return orElse();
   }
@@ -529,6 +558,7 @@ abstract class _ScreenState implements ImageCreatePresentationState {
       required final Channel selectedChanel,
       final String? title,
       final String? description,
+      final List<PresentationLink>? links,
       final bool isPending}) = _$_ScreenState;
 
   List<ImageFragment> get fragments;
@@ -536,6 +566,7 @@ abstract class _ScreenState implements ImageCreatePresentationState {
   Channel get selectedChanel;
   String? get title;
   String? get description;
+  List<PresentationLink>? get links;
   bool get isPending;
   @JsonKey(ignore: true)
   _$$_ScreenStateCopyWith<_$_ScreenState> get copyWith =>
@@ -625,6 +656,7 @@ class _$_StateSavingProcess implements _StateSavingProcess {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -645,6 +677,7 @@ class _$_StateSavingProcess implements _StateSavingProcess {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -665,6 +698,7 @@ class _$_StateSavingProcess implements _StateSavingProcess {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -781,6 +815,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -801,6 +836,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -821,6 +857,7 @@ class _$_StateSaveSuccess implements _StateSaveSuccess {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -956,6 +993,7 @@ class _$_StateSaveError implements _StateSaveError {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -976,6 +1014,7 @@ class _$_StateSaveError implements _StateSaveError {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -996,6 +1035,7 @@ class _$_StateSaveError implements _StateSaveError {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -1113,6 +1153,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)
         screenState,
     required TResult Function(int currentSlide, int totalSlides) savingProcess,
@@ -1133,6 +1174,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult? Function(int currentSlide, int totalSlides)? savingProcess,
@@ -1153,6 +1195,7 @@ class _$_StateInitialDataNotLoaded implements _StateInitialDataNotLoaded {
             Channel selectedChanel,
             String? title,
             String? description,
+            List<PresentationLink>? links,
             bool isPending)?
         screenState,
     TResult Function(int currentSlide, int totalSlides)? savingProcess,
@@ -1230,6 +1273,8 @@ mixin _$ImageCreatePresentationEvent {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1242,6 +1287,8 @@ mixin _$ImageCreatePresentationEvent {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1254,6 +1301,8 @@ mixin _$ImageCreatePresentationEvent {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1268,6 +1317,8 @@ mixin _$ImageCreatePresentationEvent {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1278,6 +1329,8 @@ mixin _$ImageCreatePresentationEvent {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -1288,6 +1341,8 @@ mixin _$ImageCreatePresentationEvent {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1365,6 +1420,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) {
     return initialDataRequested();
   }
@@ -1380,6 +1437,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) {
     return initialDataRequested?.call();
   }
@@ -1395,6 +1454,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -1415,6 +1476,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) {
     return initialDataRequested(this);
   }
@@ -1428,6 +1491,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) {
     return initialDataRequested?.call(this);
   }
@@ -1441,6 +1506,8 @@ class _$_EventInitialDataRequested implements _EventInitialDataRequested {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) {
     if (initialDataRequested != null) {
@@ -1530,6 +1597,8 @@ class _$_EventChannelSelected implements _EventChannelSelected {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) {
     return channelSelected(channel);
   }
@@ -1545,6 +1614,8 @@ class _$_EventChannelSelected implements _EventChannelSelected {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) {
     return channelSelected?.call(channel);
   }
@@ -1560,6 +1631,8 @@ class _$_EventChannelSelected implements _EventChannelSelected {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) {
     if (channelSelected != null) {
@@ -1580,6 +1653,8 @@ class _$_EventChannelSelected implements _EventChannelSelected {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) {
     return channelSelected(this);
   }
@@ -1593,6 +1668,8 @@ class _$_EventChannelSelected implements _EventChannelSelected {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) {
     return channelSelected?.call(this);
   }
@@ -1606,6 +1683,8 @@ class _$_EventChannelSelected implements _EventChannelSelected {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) {
     if (channelSelected != null) {
@@ -1719,6 +1798,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) {
     return fragmentAdded(imageFragment, title, description);
   }
@@ -1734,6 +1815,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) {
     return fragmentAdded?.call(imageFragment, title, description);
   }
@@ -1749,6 +1832,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) {
     if (fragmentAdded != null) {
@@ -1769,6 +1854,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) {
     return fragmentAdded(this);
   }
@@ -1782,6 +1869,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) {
     return fragmentAdded?.call(this);
   }
@@ -1795,6 +1884,8 @@ class _$_EventFragmentAdded implements _EventFragmentAdded {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) {
     if (fragmentAdded != null) {
@@ -1905,6 +1996,8 @@ class _$_EventSaveImagePresentation implements _EventSaveImagePresentation {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) {
     return saveImagePresentation(title, description);
   }
@@ -1920,6 +2013,8 @@ class _$_EventSaveImagePresentation implements _EventSaveImagePresentation {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) {
     return saveImagePresentation?.call(title, description);
   }
@@ -1935,6 +2030,8 @@ class _$_EventSaveImagePresentation implements _EventSaveImagePresentation {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) {
     if (saveImagePresentation != null) {
@@ -1955,6 +2052,8 @@ class _$_EventSaveImagePresentation implements _EventSaveImagePresentation {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) {
     return saveImagePresentation(this);
   }
@@ -1968,6 +2067,8 @@ class _$_EventSaveImagePresentation implements _EventSaveImagePresentation {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) {
     return saveImagePresentation?.call(this);
   }
@@ -1981,6 +2082,8 @@ class _$_EventSaveImagePresentation implements _EventSaveImagePresentation {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) {
     if (saveImagePresentation != null) {
@@ -2088,6 +2191,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) {
     return onReorderFragments(fragments);
   }
@@ -2103,6 +2208,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) {
     return onReorderFragments?.call(fragments);
   }
@@ -2118,6 +2225,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) {
     if (onReorderFragments != null) {
@@ -2138,6 +2247,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) {
     return onReorderFragments(this);
   }
@@ -2151,6 +2262,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) {
     return onReorderFragments?.call(this);
   }
@@ -2164,6 +2277,8 @@ class _$_EventOnReorderFragments implements _EventOnReorderFragments {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) {
     if (onReorderFragments != null) {
@@ -2260,6 +2375,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
         saveImagePresentation,
     required TResult Function(List<ImageFragment> fragments) onReorderFragments,
     required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
   }) {
     return onDeleteFragment(index);
   }
@@ -2275,6 +2392,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
     TResult? Function(String title, String description)? saveImagePresentation,
     TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
   }) {
     return onDeleteFragment?.call(index);
   }
@@ -2290,6 +2409,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
     TResult Function(String title, String description)? saveImagePresentation,
     TResult Function(List<ImageFragment> fragments)? onReorderFragments,
     TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
     required TResult orElse(),
   }) {
     if (onDeleteFragment != null) {
@@ -2310,6 +2431,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
     required TResult Function(_EventOnReorderFragments value)
         onReorderFragments,
     required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
   }) {
     return onDeleteFragment(this);
   }
@@ -2323,6 +2446,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
     TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
   }) {
     return onDeleteFragment?.call(this);
   }
@@ -2336,6 +2461,8 @@ class _$_EventOnDeleteFragment implements _EventOnDeleteFragment {
     TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
     TResult Function(_EventOnReorderFragments value)? onReorderFragments,
     TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
     required TResult orElse(),
   }) {
     if (onDeleteFragment != null) {
@@ -2352,5 +2479,364 @@ abstract class _EventOnDeleteFragment implements ImageCreatePresentationEvent {
   int get index;
   @JsonKey(ignore: true)
   _$$_EventOnDeleteFragmentCopyWith<_$_EventOnDeleteFragment> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventAddLinkCopyWith<$Res> {
+  factory _$$_EventAddLinkCopyWith(
+          _$_EventAddLink value, $Res Function(_$_EventAddLink) then) =
+      __$$_EventAddLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({PresentationLink link});
+}
+
+/// @nodoc
+class __$$_EventAddLinkCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationEventCopyWithImpl<$Res, _$_EventAddLink>
+    implements _$$_EventAddLinkCopyWith<$Res> {
+  __$$_EventAddLinkCopyWithImpl(
+      _$_EventAddLink _value, $Res Function(_$_EventAddLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? link = null,
+  }) {
+    return _then(_$_EventAddLink(
+      link: null == link
+          ? _value.link
+          : link // ignore: cast_nullable_to_non_nullable
+              as PresentationLink,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventAddLink implements _EventAddLink {
+  const _$_EventAddLink({required this.link});
+
+  @override
+  final PresentationLink link;
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationEvent.addLink(link: $link)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventAddLink &&
+            (identical(other.link, link) || other.link == link));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, link);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventAddLinkCopyWith<_$_EventAddLink> get copyWith =>
+      __$$_EventAddLinkCopyWithImpl<_$_EventAddLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(
+            ImageFragment imageFragment, String? title, String? description)
+        fragmentAdded,
+    required TResult Function(String title, String description)
+        saveImagePresentation,
+    required TResult Function(List<ImageFragment> fragments) onReorderFragments,
+    required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
+  }) {
+    return addLink(link);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(
+            ImageFragment imageFragment, String? title, String? description)?
+        fragmentAdded,
+    TResult? Function(String title, String description)? saveImagePresentation,
+    TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
+  }) {
+    return addLink?.call(link);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(
+            ImageFragment imageFragment, String? title, String? description)?
+        fragmentAdded,
+    TResult Function(String title, String description)? saveImagePresentation,
+    TResult Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
+    required TResult orElse(),
+  }) {
+    if (addLink != null) {
+      return addLink(link);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventFragmentAdded value) fragmentAdded,
+    required TResult Function(_EventSaveImagePresentation value)
+        saveImagePresentation,
+    required TResult Function(_EventOnReorderFragments value)
+        onReorderFragments,
+    required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+  }) {
+    return addLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
+    TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+  }) {
+    return addLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
+    TResult Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    required TResult orElse(),
+  }) {
+    if (addLink != null) {
+      return addLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventAddLink implements ImageCreatePresentationEvent {
+  const factory _EventAddLink({required final PresentationLink link}) =
+      _$_EventAddLink;
+
+  PresentationLink get link;
+  @JsonKey(ignore: true)
+  _$$_EventAddLinkCopyWith<_$_EventAddLink> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EventDeleteLinkCopyWith<$Res> {
+  factory _$$_EventDeleteLinkCopyWith(
+          _$_EventDeleteLink value, $Res Function(_$_EventDeleteLink) then) =
+      __$$_EventDeleteLinkCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int index});
+}
+
+/// @nodoc
+class __$$_EventDeleteLinkCopyWithImpl<$Res>
+    extends _$ImageCreatePresentationEventCopyWithImpl<$Res, _$_EventDeleteLink>
+    implements _$$_EventDeleteLinkCopyWith<$Res> {
+  __$$_EventDeleteLinkCopyWithImpl(
+      _$_EventDeleteLink _value, $Res Function(_$_EventDeleteLink) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? index = null,
+  }) {
+    return _then(_$_EventDeleteLink(
+      null == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EventDeleteLink implements _EventDeleteLink {
+  const _$_EventDeleteLink(this.index);
+
+  @override
+  final int index;
+
+  @override
+  String toString() {
+    return 'ImageCreatePresentationEvent.deleteLink(index: $index)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EventDeleteLink &&
+            (identical(other.index, index) || other.index == index));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, index);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EventDeleteLinkCopyWith<_$_EventDeleteLink> get copyWith =>
+      __$$_EventDeleteLinkCopyWithImpl<_$_EventDeleteLink>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialDataRequested,
+    required TResult Function(Channel channel) channelSelected,
+    required TResult Function(
+            ImageFragment imageFragment, String? title, String? description)
+        fragmentAdded,
+    required TResult Function(String title, String description)
+        saveImagePresentation,
+    required TResult Function(List<ImageFragment> fragments) onReorderFragments,
+    required TResult Function(int index) onDeleteFragment,
+    required TResult Function(PresentationLink link) addLink,
+    required TResult Function(int index) deleteLink,
+  }) {
+    return deleteLink(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialDataRequested,
+    TResult? Function(Channel channel)? channelSelected,
+    TResult? Function(
+            ImageFragment imageFragment, String? title, String? description)?
+        fragmentAdded,
+    TResult? Function(String title, String description)? saveImagePresentation,
+    TResult? Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult? Function(int index)? onDeleteFragment,
+    TResult? Function(PresentationLink link)? addLink,
+    TResult? Function(int index)? deleteLink,
+  }) {
+    return deleteLink?.call(index);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialDataRequested,
+    TResult Function(Channel channel)? channelSelected,
+    TResult Function(
+            ImageFragment imageFragment, String? title, String? description)?
+        fragmentAdded,
+    TResult Function(String title, String description)? saveImagePresentation,
+    TResult Function(List<ImageFragment> fragments)? onReorderFragments,
+    TResult Function(int index)? onDeleteFragment,
+    TResult Function(PresentationLink link)? addLink,
+    TResult Function(int index)? deleteLink,
+    required TResult orElse(),
+  }) {
+    if (deleteLink != null) {
+      return deleteLink(index);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EventInitialDataRequested value)
+        initialDataRequested,
+    required TResult Function(_EventChannelSelected value) channelSelected,
+    required TResult Function(_EventFragmentAdded value) fragmentAdded,
+    required TResult Function(_EventSaveImagePresentation value)
+        saveImagePresentation,
+    required TResult Function(_EventOnReorderFragments value)
+        onReorderFragments,
+    required TResult Function(_EventOnDeleteFragment value) onDeleteFragment,
+    required TResult Function(_EventAddLink value) addLink,
+    required TResult Function(_EventDeleteLink value) deleteLink,
+  }) {
+    return deleteLink(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult? Function(_EventChannelSelected value)? channelSelected,
+    TResult? Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult? Function(_EventSaveImagePresentation value)? saveImagePresentation,
+    TResult? Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult? Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult? Function(_EventAddLink value)? addLink,
+    TResult? Function(_EventDeleteLink value)? deleteLink,
+  }) {
+    return deleteLink?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EventInitialDataRequested value)? initialDataRequested,
+    TResult Function(_EventChannelSelected value)? channelSelected,
+    TResult Function(_EventFragmentAdded value)? fragmentAdded,
+    TResult Function(_EventSaveImagePresentation value)? saveImagePresentation,
+    TResult Function(_EventOnReorderFragments value)? onReorderFragments,
+    TResult Function(_EventOnDeleteFragment value)? onDeleteFragment,
+    TResult Function(_EventAddLink value)? addLink,
+    TResult Function(_EventDeleteLink value)? deleteLink,
+    required TResult orElse(),
+  }) {
+    if (deleteLink != null) {
+      return deleteLink(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EventDeleteLink implements ImageCreatePresentationEvent {
+  const factory _EventDeleteLink(final int index) = _$_EventDeleteLink;
+
+  int get index;
+  @JsonKey(ignore: true)
+  _$$_EventDeleteLinkCopyWith<_$_EventDeleteLink> get copyWith =>
       throw _privateConstructorUsedError;
 }

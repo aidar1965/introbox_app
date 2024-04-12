@@ -234,27 +234,27 @@ class _ScreenViewState extends State<_ScreenView> {
                                       .add(const PresentationAddFragmentEvent
                                           .deleteAudio())),
                         ),
-                      // const SizedBox(
-                      //   height: 12,
-                      // ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(right: 12.0),
-                      //   child: CommonElevatedButton(
-                      //       text: 'Записать аудио',
-                      //       onPressed: () async {
-                      //         final result = await _showRecorder(context,
-                      //             imageData: widget.image!);
-                      //         if (result != null && context.mounted) {
-                      //           BlocProvider.of<PresentationAddFragmentBloc>(
-                      //                   context)
-                      //               .add(
-                      //                   PresentationAddFragmentEvent.audioAdded(
-                      //                       audioBytes: result.audioBytes!,
-                      //                       duration: result.duration!,
-                      //                       audioPath: result.path!));
-                      //         }
-                      //       }),
-                      // ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 12.0),
+                        child: CommonElevatedButton(
+                            text: LocaleKeys.buttonRecord.tr(),
+                            onPressed: () async {
+                              final result = await _showRecorder(context,
+                                  imageData: widget.image!);
+                              if (result != null && context.mounted) {
+                                BlocProvider.of<PresentationAddFragmentBloc>(
+                                        context)
+                                    .add(
+                                        PresentationAddFragmentEvent.audioAdded(
+                                            audioBytes: result.audioBytes!,
+                                            duration: result.duration!,
+                                            audioPath: result.path!));
+                              }
+                            }),
+                      ),
                       const SizedBox(
                         height: 12,
                       ),
@@ -273,6 +273,7 @@ class _ScreenViewState extends State<_ScreenView> {
                                   'm4b',
                                   'm4p',
                                   'mp4',
+                                  'wav'
                                 ],
                               );
                               if (result != null) {
@@ -285,7 +286,8 @@ class _ScreenViewState extends State<_ScreenView> {
                                     extension?.toLowerCase() != 'mp3' &&
                                     extension?.toLowerCase() != 'm4b' &&
                                     extension?.toLowerCase() != 'm4p' &&
-                                    extension?.toLowerCase() != 'mp4') return;
+                                    extension?.toLowerCase() != 'mp4' &&
+                                    extension?.toLowerCase() != 'wav') return;
 
                                 // Преобразование Uint8List в Blob
                                 final blob = html.Blob(

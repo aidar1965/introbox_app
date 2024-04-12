@@ -18,6 +18,10 @@ PresentationWithFragmentsDto _$PresentationWithFragmentsDtoFromJson(
           .map((e) => PdfFragmentDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       channelDto: ChannelDto.fromJson(json['channel'] as Map<String, dynamic>),
+      links: (json['links'] as List<dynamic>?)
+          ?.map((e) => PresentationLinkDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      firstImage: json['first_image'] as String?,
     );
 
 Map<String, dynamic> _$PresentationWithFragmentsDtoToJson(
@@ -26,8 +30,10 @@ Map<String, dynamic> _$PresentationWithFragmentsDtoToJson(
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
+      'first_image': instance.firstImage,
       'created_at': instance.createdAt,
       'pdf_file': instance.pdfFile,
       'channel': instance.channelDto,
       'fragments': instance.fragmentDtoList,
+      'links': instance.links,
     };
