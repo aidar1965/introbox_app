@@ -35,58 +35,61 @@ class LoginScreen extends StatelessWidget {
                 body: Center(
                   child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 300),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(LocaleKeys.login.tr(),
-                              style: context.style18w600$title2),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          CommonTextField(
-                              controller: emailController,
-                              labelText: LocaleKeys.email.tr()),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          CommonTextField(
-                            controller: passwordController,
-                            labelText: LocaleKeys.password.tr(),
-                            obscureText: true,
-                            onSubmit: () => BlocProvider.of<LoginBloc>(context)
-                                .add(LoginEvent.login(
-                                    email: emailController.text,
-                                    password: passwordController.text)),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CommonElevatedButton(
-                              isPending: state.isPending,
-                              onPressed: () {
-                                BlocProvider.of<LoginBloc>(context).add(
-                                    LoginEvent.login(
-                                        email: emailController.text,
-                                        password: passwordController.text));
-                              },
-                              text: LocaleKeys.enter.tr()),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextButton(
-                              onPressed: () =>
-                                  context.router.push(RegisterRoute()),
-                              child: Text(LocaleKeys.registration.tr())),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          TextButton(
-                              onPressed: () => context.router
-                                  .push(const RecoverPasswordRoute()),
-                              child: Text(LocaleKeys.forgotPassword.tr()))
-                        ],
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(LocaleKeys.login.tr(),
+                                style: context.style18w600$title2),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            CommonTextField(
+                                controller: emailController,
+                                labelText: LocaleKeys.email.tr()),
+                            const SizedBox(
+                              height: 12,
+                            ),
+                            CommonTextField(
+                              controller: passwordController,
+                              labelText: LocaleKeys.password.tr(),
+                              obscureText: true,
+                              onSubmit: () =>
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                      LoginEvent.login(
+                                          email: emailController.text,
+                                          password: passwordController.text)),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            CommonElevatedButton(
+                                isPending: state.isPending,
+                                onPressed: () {
+                                  BlocProvider.of<LoginBloc>(context).add(
+                                      LoginEvent.login(
+                                          email: emailController.text,
+                                          password: passwordController.text));
+                                },
+                                text: LocaleKeys.enter.tr()),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextButton(
+                                onPressed: () =>
+                                    context.router.push(RegisterRoute()),
+                                child: Text(LocaleKeys.registration.tr())),
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            TextButton(
+                                onPressed: () => context.router
+                                    .push(const RecoverPasswordRoute()),
+                                child: Text(LocaleKeys.forgotPassword.tr()))
+                          ],
+                        ),
                       )),
                 ),
               );

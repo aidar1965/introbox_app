@@ -42,56 +42,58 @@ class RegisterScreen extends StatelessWidget {
                         screenState: (_) => true, orElse: () => false),
                     builder: (context, state) => state.maybeMap(
                       orElse: () => throw UnsupportedError(''),
-                      screenState: (state) => Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(LocaleKeys.registration.tr(),
-                              style: context.style18w600$title2),
-                          const SizedBox(height: 18),
-                          CommonTextField(
-                              controller: firstNameController,
-                              labelText: LocaleKeys.firstName.tr()),
-                          const SizedBox(height: 12),
-                          CommonTextField(
-                              controller: lastNameController,
-                              labelText: LocaleKeys.lastName.tr()),
-                          const SizedBox(height: 12),
-                          CommonTextField(
-                              controller: emailController,
-                              labelText: LocaleKeys.email.tr()),
-                          const SizedBox(height: 12),
-                          CommonTextField(
-                              controller: passwordController,
-                              obscureText: true,
-                              labelText: LocaleKeys.password.tr()),
-                          const SizedBox(height: 12),
-                          CommonTextField(
-                              controller: confirmPasswordController,
-                              obscureText: true,
-                              labelText: LocaleKeys.repeatPassword.tr()),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          CommonElevatedButton(
-                              isPending: state.isPending,
-                              onPressed: () {
-                                BlocProvider.of<RegisterBloc>(context).add(
-                                    RegisterEvent.register(
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                        confirmPassword:
-                                            confirmPasswordController.text,
-                                        firstName: firstNameController.text,
-                                        lastName: lastNameController.text));
-                              },
-                              text: LocaleKeys.registration.tr()),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          TextButton(
-                              onPressed: () => context.router.pop(),
-                              child: Text(LocaleKeys.login.tr()))
-                        ],
+                      screenState: (state) => SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(LocaleKeys.registration.tr(),
+                                style: context.style18w600$title2),
+                            const SizedBox(height: 18),
+                            CommonTextField(
+                                controller: firstNameController,
+                                labelText: LocaleKeys.firstName.tr()),
+                            const SizedBox(height: 12),
+                            CommonTextField(
+                                controller: lastNameController,
+                                labelText: LocaleKeys.lastName.tr()),
+                            const SizedBox(height: 12),
+                            CommonTextField(
+                                controller: emailController,
+                                labelText: LocaleKeys.email.tr()),
+                            const SizedBox(height: 12),
+                            CommonTextField(
+                                controller: passwordController,
+                                obscureText: true,
+                                labelText: LocaleKeys.password.tr()),
+                            const SizedBox(height: 12),
+                            CommonTextField(
+                                controller: confirmPasswordController,
+                                obscureText: true,
+                                labelText: LocaleKeys.repeatPassword.tr()),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            CommonElevatedButton(
+                                isPending: state.isPending,
+                                onPressed: () {
+                                  BlocProvider.of<RegisterBloc>(context).add(
+                                      RegisterEvent.register(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          confirmPassword:
+                                              confirmPasswordController.text,
+                                          firstName: firstNameController.text,
+                                          lastName: lastNameController.text));
+                                },
+                                text: LocaleKeys.registration.tr()),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextButton(
+                                onPressed: () => context.router.pop(),
+                                child: Text(LocaleKeys.login.tr()))
+                          ],
+                        ),
                       ),
                     ),
                   )))),

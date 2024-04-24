@@ -1,5 +1,6 @@
+import 'dart:io';
 import 'dart:typed_data';
-import 'dart:html' as html;
+// import 'dart:html' as html;
 import 'package:audioplayers/audioplayers.dart' as ap;
 
 import 'package:auto_route/auto_route.dart';
@@ -99,7 +100,7 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                     ),
                     Text(LocaleKeys.slideNameAndDescription.tr()),
                     Padding(
-                      padding: const EdgeInsets.only(right: 12.0),
+                      padding: const EdgeInsets.only(right: 12.0, top: 12),
                       child: NameAndDescriptionWidget(
                         titleController: widget.titleController,
                         descriptionController: widget.descriptionController,
@@ -170,27 +171,38 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                     ],
                     Padding(
                       padding: const EdgeInsets.only(right: 12.0),
-                      child: CommonElevatedButton(
-                          text: imageBytes == null
-                              ? LocaleKeys.addImage.tr()
-                              : LocaleKeys.changeImage.tr(),
-                          onPressed: () async {
-                            final result = await FilePicker.platform.pickFiles(
-                              type: FileType.custom,
-                              allowedExtensions: [
-                                'jpg',
-                                'jpeg',
-                                'png',
-                                'webp',
-                                'gif'
-                              ],
-                            );
-                            if (result != null) {
-                              setState(() {
-                                imageBytes = result.files.single.bytes!;
-                              });
-                            }
-                          }),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: CommonElevatedButton(
+                                text: imageBytes == null
+                                    ? LocaleKeys.addImage.tr()
+                                    : LocaleKeys.changeImage.tr(),
+                                onPressed: () async {
+                                  final result =
+                                      await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: [
+                                      'jpg',
+                                      'jpeg',
+                                      'png',
+                                      'webp',
+                                      'gif'
+                                    ],
+                                  );
+                                  if (result != null) {
+                                    setState(() {
+                                      imageBytes =
+                                          File(result.files.first.path!)
+                                              .readAsBytesSync();
+                                    });
+                                  }
+                                }),
+                          ),
+                          IconButton(onPressed: () {}, icon: Icon(Icons.camera))
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 12,
@@ -245,6 +257,8 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                             final result = await FilePicker.platform.pickFiles(
                               type: FileType.custom,
                               allowedExtensions: [
+                                'ogg',
+                                'opus',
                                 'mp3',
                                 'aac',
                                 'm4a',
@@ -258,29 +272,24 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                               final extension = result.files.first.extension;
 
                               if (extension?.toLowerCase() != 'm4a' &&
+                                  extension?.toLowerCase() != 'ogg' &&
+                                  extension?.toLowerCase() != 'opus' &&
                                   extension?.toLowerCase() != 'aac' &&
                                   extension?.toLowerCase() != 'mp3' &&
                                   extension?.toLowerCase() != 'm4b' &&
                                   extension?.toLowerCase() != 'm4p' &&
                                   extension?.toLowerCase() != 'mp4' &&
                                   extension?.toLowerCase() != 'wav') return;
-                              final fileBytes = result.files.first.bytes;
 
-                              // Преобразование Uint8List в Blob
-                              final blob = html.Blob(
-                                [fileBytes],
-                              );
-
-                              // Преобразование Blob в data URL
-                              final dataUrl =
-                                  html.Url.createObjectUrlFromBlob(blob);
+                              final fileBytes = File(result.files.first.path!)
+                                  .readAsBytesSync();
 
                               final durationInSeconds =
-                                  await getDuration(dataUrl);
+                                  await getDuration(result.files.first.path!);
                               if (context.mounted) {
                                 setState(() {
                                   audioBytes = fileBytes;
-                                  audioPath = dataUrl;
+                                  audioPath = result.files.first.path!;
                                   audioExtension = extension;
                                   duration = durationInSeconds;
                                 });
@@ -309,7 +318,6 @@ class _ImageAddFragmentScreenState extends State<ImageAddFragmentScreen> {
                                         widget.descriptionController.text,
                                     isTitleOverImage: isTitleOverImage));
                               } else {
-                                print('empty title');
                                 CommonFunctions.showMessage(
                                     context,
                                     LocaleKeys.slideTitleEmpty.tr(),

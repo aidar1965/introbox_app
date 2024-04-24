@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:record/record.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 
 import '../common/common_duration_widget.dart';
 
@@ -43,7 +44,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
         // We don't do anything with this but printing
 
         await _audioRecorder.start(
-          encoder: AudioEncoder.opus,
+          encoder: AudioEncoder.aacLc,
         );
 
         _recordDuration = 0;
@@ -66,8 +67,8 @@ class _AudioRecorderState extends State<AudioRecorder> {
     _recordDuration = 0;
 
     path = await _audioRecorder.stop();
-    final response = await http.get(Uri.parse(path!));
-    final audioBytes = response.bodyBytes;
+
+    final audioBytes = File(path!).readAsBytesSync();
 
     // final r = await promiseToFuture(js.context.callMethod('stopRecording', [
     //   allowInterop((audioLink) {

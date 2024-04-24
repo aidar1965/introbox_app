@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'dart:html' as html;
+import 'dart:io';
+
+// import 'dart:html' as html;
 
 import 'package:audioplayers/audioplayers.dart' as ap;
 
@@ -185,8 +187,10 @@ class _ScreenViewState extends State<_ScreenView> {
       final extension = result.files.first.extension;
 
       if (extension?.toLowerCase() != 'pdf') return;
-      final fileBytes = result.files.first.bytes;
+
+      final fileBytes = File(result.files.single.path!).readAsBytesSync();
       pdfFileName = result.files.first.name;
+
       setState(() {
         pdfFile = fileBytes;
         pdfFileName = result.files.first.name;
@@ -302,6 +306,7 @@ class _ScreenViewState extends State<_ScreenView> {
                   height: 12,
                 ),
                 CommonElevatedButton(
+                    //TODO: locale
                     text: 'Add link',
                     onPressed: () async {
                       final result = await _showLinksDialog(context);
@@ -597,15 +602,14 @@ class _FragmentListItemState extends State<FragmentListItem> {
                                   audioPath = result.path;
                                   duration = result.duration;
                                   audioBytes = result.audioBytes;
+                                  showPlayer = true;
                                 });
-
-                                showPlayer = true;
 
                                 final durationInSeconds =
                                     await getDuration(audioPath!);
                                 print(durationInSeconds);
                                 widget.onPathChanged(audioBytes, audioPath,
-                                    durationInSeconds, 'opus');
+                                    durationInSeconds, 'aac');
                               }
                             },
                             text: LocaleKeys.buttonRecord.tr(),
@@ -616,6 +620,8 @@ class _FragmentListItemState extends State<FragmentListItem> {
                           final result = await FilePicker.platform.pickFiles(
                             type: FileType.custom,
                             allowedExtensions: [
+                              'opus',
+                              'ogg',
                               'mp3',
                               'aac',
                               'm4a',
@@ -626,11 +632,14 @@ class _FragmentListItemState extends State<FragmentListItem> {
                             ],
                           );
                           if (result != null) {
-                            final fileBytes = result.files.first.bytes;
+                            final fileBytes = File(result.files.first.path!)
+                                .readAsBytesSync();
 
                             final extension = result.files.first.extension;
 
                             if (extension?.toLowerCase() != 'm4a' &&
+                                extension?.toLowerCase() != 'ogg' &&
+                                extension?.toLowerCase() != 'opus' &&
                                 extension?.toLowerCase() != 'aac' &&
                                 extension?.toLowerCase() != 'mp3' &&
                                 extension?.toLowerCase() != 'm4b' &&
@@ -638,22 +647,15 @@ class _FragmentListItemState extends State<FragmentListItem> {
                                 extension?.toLowerCase() != 'mp4' &&
                                 extension?.toLowerCase() != 'wav') return;
 
-                            // Преобразование Uint8List в Blob
-                            final blob = html.Blob(
-                              [fileBytes],
-                            );
-
-                            // Преобразование Blob в data URL
-                            final dataUrl =
-                                html.Url.createObjectUrlFromBlob(blob);
+                            final file = result.files.first;
 
                             final durationInSeconds =
-                                await getDuration(dataUrl);
+                                await getDuration(audioPath);
                             setState(() {
-                              audioPath = dataUrl;
+                              audioPath = file.path;
                               duration = durationInSeconds;
+                              showPlayer = true;
                             });
-                            showPlayer = true;
 
                             widget.onPathChanged(fileBytes, audioPath,
                                 durationInSeconds, extension);
@@ -715,7 +717,7 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         final durationInSeconds = await getDuration(audioPath!);
 
                         widget.onPathChanged(
-                            audioBytes, audioPath, durationInSeconds, 'opus');
+                            audioBytes, audioPath, durationInSeconds, 'aac');
                       }
                     },
                     text: LocaleKeys.buttonRecord.tr(),
@@ -736,11 +738,14 @@ class _FragmentListItemState extends State<FragmentListItem> {
                     ],
                   );
                   if (result != null) {
-                    final fileBytes = result.files.first.bytes;
+                    final fileBytes =
+                        File(result.files.first.path!).readAsBytesSync();
 
                     final extension = result.files.first.extension;
 
                     if (extension?.toLowerCase() != 'm4a' &&
+                        extension?.toLowerCase() != 'ogg' &&
+                        extension?.toLowerCase() != 'opus' &&
                         extension?.toLowerCase() != 'aac' &&
                         extension?.toLowerCase() != 'mp3' &&
                         extension?.toLowerCase() != 'm4b' &&
@@ -748,20 +753,13 @@ class _FragmentListItemState extends State<FragmentListItem> {
                         extension?.toLowerCase() != 'mp4' &&
                         extension?.toLowerCase() != 'wav') return;
 
-                    // Преобразование Uint8List в Blob
-                    final blob = html.Blob(
-                      [fileBytes],
-                    );
-
-                    // Преобразование Blob в data URL
-                    final dataUrl = html.Url.createObjectUrlFromBlob(blob);
-
-                    final durationInSeconds = await getDuration(dataUrl);
+                    final durationInSeconds =
+                        await getDuration(result.files.first.path);
                     setState(() {
-                      audioPath = dataUrl;
+                      audioPath = result.files.first.path;
                       duration = durationInSeconds;
+                      showPlayer = true;
                     });
-                    showPlayer = true;
 
                     widget.onPathChanged(
                         fileBytes, audioPath, durationInSeconds, extension);

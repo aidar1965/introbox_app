@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introbox/presentation/common/common_loading_error_widget.dart';
 
-import 'dart:html' as html;
+// import 'dart:html' as html;
 
 import '../../../domain/models/channel.dart';
 import '../../../domain/models/course.dart';
@@ -504,12 +504,12 @@ class _ScreenViewState extends State<_ScreenView>
                             backgroundColor:
                                 MaterialStatePropertyAll<Color>(Colors.black)),
                         onPressed: () {
-                          if (widget.openedFromApp) {
-                            context.router.pop();
-                          } else {
-                            html.window
-                                .open('https://introbox.app', 'Introbox.app');
-                          }
+                          // if (widget.openedFromApp) {
+                          //   context.router.pop();
+                          // } else {
+                          //   html.window
+                          //       .open('https://introbox.app', 'Introbox.app');
+                          // }
                         },
                         icon: const Icon(
                           Icons.close,

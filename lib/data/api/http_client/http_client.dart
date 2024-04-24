@@ -12,6 +12,8 @@ import '../models/requests/request_confirmation.dart';
 import '../models/requests/request_login.dart';
 import 'i_api_request.dart';
 import 'request_exception.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class DioClient {
   DioClient({bool useLocaleSettings = false}) {
@@ -49,6 +51,7 @@ class DioClient {
   String? _localeSettings;
   Object? requestData;
   Map<String, dynamic>? contentTypeHeader;
+  String? saveDirectory;
 
   // ---------------------------------------------------------------------------
   // инициализация HTTP-клиента с заданными настройками
@@ -310,6 +313,28 @@ class DioClient {
     dev.log(
         '< RESPONSE: ${response?.data?.toString() ?? 'Response data is null'}');
     dev.log('^------------------------------------');
+  }
+
+  Future<void> downloadFile(String urlPath) async {
+    if (saveDirectory == null) {
+      if (await Permission.storage.request().isGranted) {
+        Directory? downloadsDirectory = Platform.isAndroid
+            ? await getExternalStorageDirectory()
+            : await getApplicationDocumentsDirectory();
+        saveDirectory = downloadsDirectory?.path;
+      }
+    }
+    if (saveDirectory != null) {
+      final downloadFileName = urlPath.split('/').last;
+      final savePath = saveDirectory! + '/$downloadFileName';
+      await _dio?.download(urlPath, savePath,
+          onReceiveProgress: (received, total) {
+        if (total != -1) {
+          print((received / total * 100).toStringAsFixed(0) + "%");
+          //you can build progressbar feature too
+        }
+      });
+    }
   }
 
   // ---------------------------------------------------------------------------

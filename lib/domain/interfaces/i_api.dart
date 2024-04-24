@@ -326,4 +326,6 @@ abstract class IApi {
 
   Future<void> changeChannel(
       {required String channelId, required String presentationId});
+
+  Future<void> downloadFile(String url);
 }

@@ -1,4 +1,6 @@
-import 'dart:html' as html;
+// import 'dart:html' as html;
+
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart' as ap;
 import 'package:auto_route/auto_route.dart';
@@ -267,6 +269,8 @@ class _ScreenViewState extends State<_ScreenView> {
                                   await FilePicker.platform.pickFiles(
                                 type: FileType.custom,
                                 allowedExtensions: [
+                                  'ogg',
+                                  'opus',
                                   'mp3',
                                   'aac',
                                   'm4a',
@@ -277,11 +281,14 @@ class _ScreenViewState extends State<_ScreenView> {
                                 ],
                               );
                               if (result != null) {
-                                final fileBytes = result.files.first.bytes;
+                                final fileBytes = File(result.files.first.path!)
+                                    .readAsBytesSync();
 
                                 final extension = result.files.first.extension;
 
                                 if (extension?.toLowerCase() != 'm4a' &&
+                                    extension?.toLowerCase() != 'ogg' &&
+                                    extension?.toLowerCase() != 'opus' &&
                                     extension?.toLowerCase() != 'aac' &&
                                     extension?.toLowerCase() != 'mp3' &&
                                     extension?.toLowerCase() != 'm4b' &&
@@ -289,17 +296,8 @@ class _ScreenViewState extends State<_ScreenView> {
                                     extension?.toLowerCase() != 'mp4' &&
                                     extension?.toLowerCase() != 'wav') return;
 
-                                // Преобразование Uint8List в Blob
-                                final blob = html.Blob(
-                                  [fileBytes],
-                                );
-
-                                // Преобразование Blob в data URL
-                                final dataUrl =
-                                    html.Url.createObjectUrlFromBlob(blob);
-
                                 final durationInSeconds =
-                                    await getDuration(dataUrl);
+                                    await getDuration(result.files.first.path!);
                                 if (context.mounted) {
                                   BlocProvider.of<PresentationAddFragmentBloc>(
                                           context)
@@ -307,7 +305,8 @@ class _ScreenViewState extends State<_ScreenView> {
                                           .audioAdded(
                                               audioBytes: fileBytes!,
                                               duration: durationInSeconds,
-                                              audioPath: dataUrl));
+                                              audioPath:
+                                                  result.files.first.path!));
                                 }
                               }
                             }),

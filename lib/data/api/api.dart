@@ -879,4 +879,9 @@ class Api implements IApi {
     await httpClient.request(RequestChangeChannel(
         channelId: channelId, presentationId: presentationId));
   }
+
+  @override
+  Future<void> downloadFile(String url) async {
+    await httpClient.downloadFile(url);
+  }
 }

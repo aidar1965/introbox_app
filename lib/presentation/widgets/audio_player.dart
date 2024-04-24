@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart' as ap;
 
@@ -170,7 +171,8 @@ class AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   }
 
   Future<void> play() async {
-    if (widget.urlSource != null) {
+    if (widget.fileBites == null) {
+      //   _audioPlayer.play(ap.UrlSource(widget.urlSource!));
       _audioPlayer.play(ap.UrlSource(widget.urlSource!));
     } else {
       String? mimeType = lookupMimeType('', headerBytes: widget.fileBites!);

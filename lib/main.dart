@@ -10,7 +10,7 @@ import 'package:introbox/presentation/theme/theme_type.dart';
 //import 'domain/constants.dart';
 import 'domain/locator/locator.dart';
 import 'presentation/auto_router/app_router.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+// import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'presentation/values/dynamic_palette.dart';
 
@@ -39,7 +39,7 @@ Future<void> main() async {
       child: Application(
         isLocaleSet: localeString != null,
       )));
-  setUrlStrategy(PathUrlStrategy());
+  // setUrlStrategy(PathUrlStrategy());
 }
 
 // assuing this is the root widget of your App
